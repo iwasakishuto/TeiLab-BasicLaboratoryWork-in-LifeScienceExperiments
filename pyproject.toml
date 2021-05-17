@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "teilab"
+version = "0.1.0"
+description = "シークエンシング、生化学反応シミュレーション、および遺伝子発現プロファイリング等の生物情報科学的実験を行う。本実習は、生物化学科と合同で実施する。"
+authors = ["iwasakishuto <cabernet.rock@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.25.1"
+matplotlib = "^3.4.2"
+numpy = "^1.20.3"
+pandas = "^1.2.4"
+plotly = "^4.14.3"
+
+[tool.poetry.dev-dependencies]
+black = "^21.5b1"
+flake8 = "^3.9.2"
+flake8-mypy = "^17.8.0"
+isort = "^5.8.0"
+pytest = "^6.2.4"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
