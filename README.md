@@ -1,0 +1,2 @@
+# UiTei-BasicLaboratoryWork-in-LifeScienceExperiments
+シークエンシング、生化学反応シミュレーション、および遺伝子発現プロファイリング等の生物情報科学的実験を行う。本実習は、生物化学科と合同で実施する。
