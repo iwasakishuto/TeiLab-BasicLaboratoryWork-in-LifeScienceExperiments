@@ -1,5 +1,6 @@
 # coding: utf-8
 import os
+import sys
 import urllib
 import zipfile
 import requests
@@ -15,6 +16,7 @@ from .generic_utils import progress_reporthook_create
 from .generic_utils import verbose2print
 
 CONTENT_ENCODING2EXT:Dict[str,str] = {
+    "gzip"                      : ".gz",
     "x-gzip"                    : ".gz",
     "image/jpeg"                : ".jpg",
     "image/jpx"                 : ".jpx", 
@@ -105,6 +107,50 @@ def decide_extension(content_encoding:Optional[str]=None, content_type:Optional[
     """
     ext = CONTENT_ENCODING2EXT.get(content_encoding, CONTENT_TYPE2EXT.get(content_type, os.path.splitext(str(filename))[-1]))
     return ext
+
+def download_google_drive_file(url:str, driveId:Optional[str]=None, dirname:str=".", path:Optional[str]=None, bar_width:int=20, verbose:bool=True) -> str:
+    CHUNK_SIZE = 32768
+    DRIVE_URL  = "https://docs.google.com/uc?export=download"
+    if driveId is None:
+        q = urllib.parse.parse_qs(urllib.parse.urlparse(url).query).get("id")
+        if len(q)==0:
+            raise TypeError("Please specify the target Google Drive Id using ``url`` or ``driveId`` arguments.")
+        else:
+            driveId=q[0]
+    # Start a Session
+    params = {"id":driveId}
+    session = requests.Session()
+    response = session.get(url=DRIVE_URL, params=params, stream=True)
+    for key,val in response.cookies.items():
+        if key.startswith("download_warning"):
+            params.update({"confirm":val})
+            break
+    # Get Information from headers
+    headers = session.head(url=DRIVE_URL, params=params).headers
+    content_encoding = headers.get("Content-Encoding")
+    content_length   = "{0:.1f} [{1}]".format(*readable_bytes(int(headers.get("Content-Length", 0))))
+    content_type     = headers.get("Content-Type").split(";")[0]
+    if path is None:
+        guessed_ext = decide_extension(content_encoding, content_type)
+        path = os.path.join(dirname, driveId+guessed_ext)
+    print(
+        f"[Download] Drive ID: {driveId}",
+        f"* Content-Encoding : {content_encoding}",
+        f"* Content-Length   : {content_length}",
+        f"* Content-Type     : {content_type}",
+        f"* Save Destination : {path}",
+        "===== Progress =====",
+        sep="\n"
+    )
+    # Get contents
+    response = session.get(DRIVE_URL, params=params, stream=True)
+    with open(path, "wb") as f:
+        for i,chunk in enumerate(response.iter_content(CHUNK_SIZE), start=1):
+            if chunk: # filter out keep-alive new chunks
+                f.write(chunk)
+                sys.stdout.write("\r{0}\t{1:.1f} [{2}]".format(driveId, *readable_bytes(i*CHUNK_SIZE)))
+    return path        
+
 
 def download_file(url:str, dirname:str=".", path:Optional[str]=None, bar_width:int=20, verbose:bool=True) -> str:
     """Download a file.

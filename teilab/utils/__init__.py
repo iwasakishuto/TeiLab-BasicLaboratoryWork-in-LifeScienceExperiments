@@ -4,8 +4,10 @@ from ._config import *
 from . import download_utils
 from . import generic_utils
 
+from .download_utils import unzip
 from .download_utils import decide_extension
 from .download_utils import download_file
+from .download_utils import download_google_drive_file
 from .download_utils import get_teilab_data
 
 from .generic_utils import now_str
