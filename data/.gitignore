@@ -1,2 +1,4 @@
 *
 !.gitignore
+!sample_list.txt
+!README.md
