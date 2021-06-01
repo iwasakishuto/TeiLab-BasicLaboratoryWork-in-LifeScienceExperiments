@@ -96,7 +96,7 @@ def progress_reporthook_create(filename:str="", bar_width:int=20, verbose:bool=T
 
         speed, speed_unit = readable_bytes(speed)
         
-        sys.stdout.write(f"\r{filename}\t{percentage:.1%}[{progress_bar}] {duration:.1f}[s] {speed:.1f}[{speed_unit}/s]\teta {eta:.1f}[s]")
+        sys.stdout.write(f"\r{filename}\t{percentage:.1%}[{progress_bar}] {duration:.1f}[s] {speed:.1f}[{speed_unit}/s] eta {eta:.1f}[s]")
         if progress_size >= total_size: print()
     def progress_reporthook_non_verbose(block_count:int, block_size:int, total_size:int) -> None:
         """``reporthook`` not to report the current status."""
