@@ -15,8 +15,8 @@
 ### 使い方
 
 ```sh
-$ git clone https://github.com/iwasakishuto/jinja-SB-Admin2.git
-$ cd jinja-SB-Admin2
+$ git clone https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.git
+$ cd TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments
 $ pyenv install 3.8.9
 $ pyenv local 3.8.9
 $ python -V
