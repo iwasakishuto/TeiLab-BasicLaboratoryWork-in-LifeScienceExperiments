@@ -1,0 +1,26 @@
+teilab package
+==============
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   teilab.utils
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   teilab.question
+
+Module contents
+---------------
+
+.. automodule:: teilab
+   :members:
+   :undoc-members:
+   :show-inheritance:

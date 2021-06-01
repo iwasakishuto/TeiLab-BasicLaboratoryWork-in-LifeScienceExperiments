@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta property="og:title" content="teilab.utils.generic_utils module" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="teilab.utils.generic_utils.html" />
+  <meta property="og:description" content="" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>teilab.utils.generic_utils module &mdash; UiTei-Lab  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/custom.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="teilab.question module" href="teilab.question.html" />
+    <link rel="prev" title="teilab.utils.download_utils module" href="teilab.utils.download_utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="teilab.html">teilab package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="teilab.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="teilab.utils.html">teilab.utils package</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="teilab.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="teilab.utils.html#module-teilab.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#module-teilab">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UiTei-Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="teilab.html">teilab package</a> &raquo;</li>
+        
+          <li><a href="teilab.utils.html">teilab.utils package</a> &raquo;</li>
+        
+      <li>teilab.utils.generic_utils module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/teilab.utils.generic_utils.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-teilab.utils.generic_utils">
+<span id="teilab-utils-generic-utils-module"></span><h1>teilab.utils.generic_utils module<a class="headerlink" href="#module-teilab.utils.generic_utils" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt id="teilab.utils.generic_utils.now_str">
+<code class="sig-prename descclassname">teilab.utils.generic_utils.</code><code class="sig-name descname">now_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tz</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>datetime.timezone<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fmt</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'%Y-%m-%d&#64;%H.%M.%S'</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/teilab/utils/generic_utils.html#now_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.generic_utils.now_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns new datetime string representing current time local to tz under the control of an explicit format string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tz</strong> (<em>Optional</em><em>[</em><em>datetime.timezone</em><em>]</em><em>, </em><em>optional</em>) – Timezone object. If no <code class="docutils literal notranslate"><span class="pre">tz</span></code> is specified, uses local timezone. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>fmt</strong> (<em>str</em><em>, </em><em>optional</em>) – format string. See <a class="reference external" href="https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes">Python Documentation</a> Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;%Y-%m-%d&#64;%H.%M.%S&quot;</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Formatted current time.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">now_str</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now_str</span><span class="p">()</span>
+<span class="go">&#39;2021-06-01@11.22.14&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now_str</span><span class="p">(</span><span class="n">tz</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="o">.</span><span class="n">utc</span><span class="p">)</span>
+<span class="go">&#39;2021-06-01@02.22.16&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now_str</span><span class="p">(</span><span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;%A, </span><span class="si">%d</span><span class="s2">. %B %Y %I:%M%p&quot;</span><span class="p">)</span>
+<span class="go">&#39;Tuesday, 01. June 2021 11:22AM&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="teilab.utils.generic_utils.readable_bytes">
+<code class="sig-prename descclassname">teilab.utils.generic_utils.</code><code class="sig-name descname">readable_bytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">byte</span><span class="p">:</span> <span class="n">numbers.Number</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>numbers.Number<span class="p">, </span>str<span class="p">]</span><a class="reference internal" href="_modules/teilab/utils/generic_utils.html#readable_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.generic_utils.readable_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unit conversion for readability.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>byte</strong> (<em>Number</em>) – File byte [B].</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">readable_bytes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">byte</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">size</span><span class="p">,</span> <span class="n">unit</span> <span class="o">=</span> <span class="n">readable_bytes</span><span class="p">(</span><span class="nb">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">i</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">byte</span><span class="si">:</span><span class="s2">.1g</span><span class="si">}</span><span class="s2">[B] = </span><span class="si">{</span><span class="n">size</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+<span class="go">1e+01[B] = 10.00[B]</span>
+<span class="go">1e+04[B] = 9.77[KB]</span>
+<span class="go">1e+07[B] = 9.54[MB]</span>
+<span class="go">1e+10[B] = 9.31[GB]</span>
+<span class="go">1e+13[B] = 9.09[TB]</span>
+<span class="go">1e+16[B] = 8.88[PB]</span>
+<span class="go">1e+19[B] = 8.67[EB]</span>
+<span class="go">1e+22[B] = 8.47[ZB]</span>
+<span class="go">1e+25[B] = 8.27[YB]</span>
+<span class="go">1e+28[B] = 8271.81[YB]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="teilab.utils.generic_utils.progress_reporthook_create">
+<code class="sig-prename descclassname">teilab.utils.generic_utils.</code><code class="sig-name descname">progress_reporthook_create</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em>, <em class="sig-param"><span class="n">bar_width</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">20</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Callable<span class="p">[</span><span class="p">[</span>int<span class="p">, </span>int<span class="p">, </span>int<span class="p">]</span><span class="p">, </span>None<span class="p">]</span><a class="reference internal" href="_modules/teilab/utils/generic_utils.html#progress_reporthook_create"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.generic_utils.progress_reporthook_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a progress reporthook for <code class="docutils literal notranslate"><span class="pre">urllib.request.urlretrieve</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – Downloading filename.. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p></li>
+<li><p><strong>bar_width</strong> (<em>int</em><em>, </em><em>optional</em>) – The width of progress bar. Defaults to <code class="docutils literal notranslate"><span class="pre">20</span></code>.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to output the status. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The <code class="docutils literal notranslate"><span class="pre">reporthook</span></code> which is a callable that accepts a <code class="docutils literal notranslate"><span class="pre">block</span> <span class="pre">number</span></code>, a <code class="docutils literal notranslate"><span class="pre">read</span> <span class="pre">size</span></code>, and the <code class="docutils literal notranslate"><span class="pre">total</span> <span class="pre">file</span> <span class="pre">size</span></code> of the URL target.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Callable[[int,int,int], None]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">urllib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">progress_reporthook_create</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;hoge.zip&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;hoge.zip&quot;</span><span class="p">,</span> <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_reporthook_create</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;hoge.zip&quot;</span><span class="p">))</span>
+<span class="go">hoge.zip        1.5%[--------------------] 21.5[s] 8.0[GB/s]    eta 1415.1[s]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="teilab.question.html" class="btn btn-neutral float-right" title="teilab.question module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="teilab.utils.download_utils.html" class="btn btn-neutral float-left" title="teilab.utils.download_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2021, iwasakishuto
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+
+
+</body>
+</html>

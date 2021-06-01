@@ -1,0 +1,151 @@
+/*!
+ * Custom CSS for https://iwasakishuto.github.io/Python-Charmers/index.html
+ *
+ * Copyright 2020 Shuto Iwasaki
+ * Twitter : https://twitter.com/cabernet_rock
+ * Github  : https://github.com/iwasakishuto
+ * 
+ */
+ 
+/* .bodywrapper {
+  background: url("https://github.com/iwasakishuto/iwasakishuto.github.io/blob/master/images/background-loop.png?raw=true");
+  background-repeat: repeat-y;
+  background-size: contain;
+}
+div.document {
+  background-color: #061c32;
+} */
+div.sphinxsidebarwrapper {
+  font-family: monospace;
+}
+div.body {
+  background-color: #eeeeee;
+}
+
+dl.py.class > dt {
+  background-color: #fff8cd;
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
+
+dl.py.function > dt {
+  background-color: #f7c2c2;
+  border-radius: 0.5em;
+  padding: 0.5em;
+}
+
+div.related {
+  background-color: #722F38;
+}
+
+dl.field-list {
+  display: grid;
+  grid-template-columns: fit-content(30%) auto;
+  background-color: white;
+  padding: 5px 10px;
+}
+
+/* th, dl.field-list>dt {
+  padding: 5px;
+} */
+th, dl.field-list dt, dl.field-list dd {
+  padding: 5px;
+}
+
+/* Social Link */
+
+ul.social {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  font-size: 1.6em;
+  text-align: center;
+}
+ul.social li {
+  display: inline;
+}
+ul.social a {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
+  text-align: center;
+  font-size: 1em;
+  line-height: 45px;
+  transition: 0.5s;
+}
+ul.social a:hover {
+  -moz-transform: scale(1.5, 1.5);
+  -webkit-transform: scale(1.5, 1.5);
+  -o-transform: scale(1.5, 1.5);
+  -ms-transform: scale(1.5, 1.5);
+}
+ul.social a.sc-github, ul.social a.sc-github-alt {
+  background-color: #111010;
+  color: white;
+}
+ul.social a.sc-twitter {
+  color: white;
+  background-color: #4da7de;
+}
+div.body p, div.body dd, div.body li, div.body blockquote {
+  text-align: left!important;
+}
+div.body p, div.body dd, div.body li, div.body blockquote {
+  -moz-hyphens: none!important;
+  -ms-hyphens: none!important;
+  -webkit-hyphens: none!important;
+  hyphens: none!important;
+}
+ul.simple li strong {
+  font-family: monaco, monospace;
+  font-size: .9em;
+  color: #d14;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  white-space: nowrap;
+  padding: 1px 2px;
+}
+code.descname {
+  font: bold 1.2em monaco, monospace;
+  background-color: #f7f7f9;
+  border: 1px solid #e1e1e8;
+  white-space: nowrap;
+  padding: 2px 4px;
+}
+.py.method code.sig-name.descname {
+  color: #0000FF;
+}
+.py.attribute code.sig-name.descname {
+  color: red;
+}
+code.sig-name.descname {
+  color: #008000;
+}
+span.pre {
+  color: tomato;
+}
+span.viewcode-link {
+  font-family: monospace;
+}
+span.viewcode-link:after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f1c9";
+  padding-left: 1px;
+}
+table.docutils td, table.docutils th {
+  border: 1.8px solid black!important;
+  font-family: monaco;
+}
+
+div.sphinxsidebarwrapper span.package-name {
+  color:greenyellow;
+}
+div.sphinxsidebarwrapper span.program-name {
+  color:aqua;
+}
+div.sphinxsidebarwrapper span.package-subtitle {
+  color:white;
+  text-decoration: underline;
+}

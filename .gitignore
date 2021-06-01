@@ -1,9 +1,13 @@
 # /<=== Added by iwasakishuto <cabernet.rock@gmail.com> 
 .vscode
-Icon?
 .DS_Store
+Icon?
+# Jupyter Notebook
 *.ipynb
 !notebook/*.ipynb
+# Documentation
+src/*
+mkdocs.sh
 # ===>/
 
 # Byte-compiled / optimized / DLL files

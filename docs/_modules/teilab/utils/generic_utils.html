@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>teilab.utils.generic_utils &mdash; UiTei-Lab  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/custom.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../teilab.html">teilab package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">UiTei-Lab</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>teilab.utils.generic_utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for teilab.utils.generic_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1">#coding: utf-8</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+
+<div class="viewcode-block" id="now_str"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.now_str">[docs]</a><span class="k">def</span> <span class="nf">now_str</span><span class="p">(</span><span class="n">tz</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">@%H.%M.%S&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns new datetime string representing current time local to tz under the control of an explicit format string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        tz (Optional[datetime.timezone], optional) : Timezone object. If no ``tz`` is specified, uses local timezone. Defaults to ``None``.</span>
+<span class="sd">        fmt (str, optional)                        : format string. See `Python Documentation &lt;https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes&gt;`_ Defaults to ``&quot;%Y-%m-%d@%H.%M.%S&quot;``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: Formatted current time.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import now_str</span>
+<span class="sd">        &gt;&gt;&gt; now_str()</span>
+<span class="sd">        &#39;2021-06-01@11.22.14&#39;</span>
+<span class="sd">        &gt;&gt;&gt; now_str(tz=datetime.timezone.utc)</span>
+<span class="sd">        &#39;2021-06-01@02.22.16&#39;</span>
+<span class="sd">        &gt;&gt;&gt; now_str(fmt=&quot;%A, %d. %B %Y %I:%M%p&quot;)</span>
+<span class="sd">        &#39;Tuesday, 01. June 2021 11:22AM&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span><span class="o">=</span><span class="n">tz</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="readable_bytes"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.readable_bytes">[docs]</a><span class="k">def</span> <span class="nf">readable_bytes</span><span class="p">(</span><span class="n">byte</span><span class="p">:</span><span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Unit conversion for readability.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        byte (Number): File byte [B].</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import readable_bytes</span>
+<span class="sd">        &gt;&gt;&gt; for i in range(1,30,3):</span>
+<span class="sd">        ...     byte = pow(10,i)</span>
+<span class="sd">        ...     size, unit = readable_bytes(pow(10,i))</span>
+<span class="sd">        ...     print(f&quot;{byte:.1g}[B] = {size:.2f}[{unit}]&quot;)</span>
+<span class="sd">        1e+01[B] = 10.00[B]</span>
+<span class="sd">        1e+04[B] = 9.77[KB]</span>
+<span class="sd">        1e+07[B] = 9.54[MB]</span>
+<span class="sd">        1e+10[B] = 9.31[GB]</span>
+<span class="sd">        1e+13[B] = 9.09[TB]</span>
+<span class="sd">        1e+16[B] = 8.88[PB]</span>
+<span class="sd">        1e+19[B] = 8.67[EB]</span>
+<span class="sd">        1e+22[B] = 8.47[ZB]</span>
+<span class="sd">        1e+25[B] = 8.27[YB]</span>
+<span class="sd">        1e+28[B] = 8271.81[YB]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;K&quot;</span><span class="p">,</span><span class="s2">&quot;M&quot;</span><span class="p">,</span><span class="s2">&quot;G&quot;</span><span class="p">,</span><span class="s2">&quot;T&quot;</span><span class="p">,</span><span class="s2">&quot;P&quot;</span><span class="p">,</span><span class="s2">&quot;E&quot;</span><span class="p">,</span><span class="s2">&quot;Z&quot;</span><span class="p">,</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">units</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">1024.0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">unit</span><span class="o">==</span><span class="n">units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">break</span>
+        <span class="n">byte</span> <span class="o">/=</span> <span class="mf">1024.0</span> <span class="c1"># size &gt;&gt; 10</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="n">unit</span><span class="o">+</span><span class="s2">&quot;B&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="progress_reporthook_create"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.progress_reporthook_create">[docs]</a><span class="k">def</span> <span class="nf">progress_reporthook_create</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bar_width</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Create a progress reporthook for ``urllib.request.urlretrieve``        </span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str, optional)  : Downloading filename.. Defaults to ``&quot;&quot;``.</span>
+<span class="sd">        bar_width (int, optional) : The width of progress bar. Defaults to ``20``.</span>
+<span class="sd">        verbose (bool, optional)  : Whether to output the status. Defaults to ``True``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Callable[[int,int,int], None]: The ``reporthook`` which is a callable that accepts a ``block number``, a ``read size``, and the ``total file size`` of the URL target.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; import urllib</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import progress_reporthook_create</span>
+<span class="sd">        &gt;&gt;&gt; urllib.request.urlretrieve(url=&quot;hoge.zip&quot;, filename=&quot;hoge.zip&quot;, reporthook=progress_reporthook_create(filename=&quot;hoge.zip&quot;))</span>
+<span class="sd">        hoge.zip	1.5%[--------------------] 21.5[s] 8.0[GB/s]	eta 1415.1[s]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">progress_reporthook_verbose</span><span class="p">(</span><span class="n">block_count</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">block_size</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">total_size</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;``reporthook`` to report the current status.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            block_count (int) : The number of block.</span>
+<span class="sd">            block_size (int)  : The size of the data block.</span>
+<span class="sd">            total_size (int)  : The size of the total data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">global</span> <span class="n">_reporthook_start_time</span>
+        <span class="k">if</span> <span class="n">block_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">_reporthook_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">return</span>
+        <span class="n">progress_size</span> <span class="o">=</span> <span class="n">block_count</span><span class="o">*</span><span class="n">block_size</span>
+        <span class="n">percentage</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">progress_size</span><span class="o">/</span><span class="n">total_size</span><span class="p">)</span>
+        <span class="n">progress_bar</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">percentage</span> <span class="o">*</span> <span class="n">bar_width</span><span class="p">))</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">bar_width</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
+        
+        <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">_reporthook_start_time</span>
+        <span class="n">speed</span> <span class="o">=</span> <span class="n">progress_size</span> <span class="o">/</span> <span class="n">duration</span>
+        <span class="n">eta</span> <span class="o">=</span> <span class="p">(</span><span class="n">total_size</span><span class="o">-</span><span class="n">progress_size</span><span class="p">)</span><span class="o">/</span><span class="n">speed</span>
+
+        <span class="n">speed</span><span class="p">,</span> <span class="n">speed_unit</span> <span class="o">=</span> <span class="n">readable_bytes</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
+        
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\r</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">percentage</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">progress_bar</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">[s] </span><span class="si">{</span><span class="n">speed</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">speed_unit</span><span class="si">}</span><span class="s2">/s]</span><span class="se">\t</span><span class="s2">eta </span><span class="si">{</span><span class="n">eta</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">[s]&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">progress_size</span> <span class="o">&gt;=</span> <span class="n">total_size</span><span class="p">:</span> <span class="nb">print</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">progress_reporthook_non_verbose</span><span class="p">(</span><span class="n">block_count</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">block_size</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">total_size</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;``reporthook`` not to report the current status.&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">progress_reporthook_verbose</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="n">progress_reporthook_non_verbose</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2021, iwasakishuto
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+
+
+</body>
+</html>
