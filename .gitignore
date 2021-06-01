@@ -8,6 +8,8 @@ Icon?
 # Documentation
 src/*
 mkdocs.sh
+# Password for Datasts
+password.txt
 # ===>/
 
 # Byte-compiled / optimized / DLL files
