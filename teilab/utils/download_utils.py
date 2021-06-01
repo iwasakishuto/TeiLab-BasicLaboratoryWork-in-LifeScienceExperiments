@@ -6,10 +6,7 @@ import zipfile
 import requests
 from tqdm import tqdm
 from typing import Optional,Dict,List,Tuple
-from pathlib import Path
 
-from ._config import GAS_WEBAPP_URL
-from ._path import DATA_DIR
 from .generic_utils import now_str
 from .generic_utils import readable_bytes
 from .generic_utils import progress_reporthook_create
@@ -81,12 +78,15 @@ def unzip(path:str, verbose:bool=True) -> List[str]:
         if not os.path.exists(root):
             os.mkdir(root)
         print("[Unzip] Show file contents:")
-        with zipfile.ZipFile(path) as compressed_f:
-            for name in compressed_f.namelist():
-                compressed_f.extract(name, path=root)
-                extracted_file_path = os.path.join(root, name)
+        with zipfile.ZipFile(path) as z:
+            for info in z.infolist():
+                info.filename = info.orig_filename.encode('cp437').decode('utf-8')
+                if (os.sep!="/") and (os.sep in info.filename):
+                    info.filename = info.filename.replace(os.sep, "/")
+                z.extract(member=info, path=root)
+                extracted_file_path = os.path.join(root, info.filename)
                 extracted_file_paths.append(extracted_file_path)
-                print(f"\t* {name}")
+                print(f"\t* {info.filename}")
     return extracted_file_paths
 
 def decide_extension(content_encoding:Optional[str]=None, content_type:Optional[str]=None, filename:Optional[str]=None):
@@ -310,76 +310,3 @@ def decide_downloader(url:str) -> Downloader:
     return {
         "drive.google.com" : GoogleDriveDownloader,
     }.get(url_domain, Downloader)    
-
-def get_teilab_data(password:str, verbose:bool=True) -> str:
-    """Get data which is necessary for this class.
-
-    Args:
-        password (str)           : Password. (Because some data are ubpublished.)
-        verbose (bool, optional) : Whether print verbose or not. Defaults to ``True``.
-
-    Returns:
-        str: The path to the downloaded file.
-
-    Examples:
-        >>> from teilab.utils import get_teilab_data
-        >>> path = get_teilab_data(password="PASSWORD")
-        Try to get data from <SECRET_URL>
-        This is our unpublished data, so please treat it confidential.
-        [Download] URL: <SECRET_URL>
-        * Content-Encoding : None
-        * Content-Length   : 45.9 [MB]
-        * Content-Type     : application/zip
-        * Save Destination : PATH/TO/PASSWORD.zip
-        ===== Progress =====
-        <SECRET FILENAME>	100.0%[####################] 45.3[s] 1.0[MB/s]	eta -0.0[s]
-        Save data at PATH/TO/PASSWORD.zip
-        [Unzip] Show file contents:
-            * <SECRET_FILE_1>
-            * <SECRET_FILE_2>
-            * :
-            * <SECRET_FILE_N>
-        >>> path
-        'PATH/TO/PASSWORD.zip'
-
-    Below is the code for the GAS(Google Apps Script) API server.
-
-    .. code-block:: js
-
-        const P = PropertiesService.getScriptProperties();
-        const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(P.getProperty("sheetname"))
-        const values = sheet.getRange("A2:C").getValues();
-
-        var Password2dataURL = {};
-        for (let i=0; i<values.length; i++){
-          Password2dataURL[values[i][0]] = values[i].slice(1);
-        }
-
-        function doPost(e) {
-          var response = {message: "Invalid Password", dataURL:""};
-          var password = e.parameter.password;
-
-          if (password in Password2dataURL){
-            let data = Password2dataURL[password]
-            response.dataURL = data[0]
-            response.message = data[1]
-          }
-
-          var output = ContentService.createTextOutput();
-          output.setMimeType(ContentService.MimeType.JSON);
-          output.setContent(JSON.stringify(response));
-          return output;
-        }
-    """
-    print = verbose2print(verbose=verbose)
-    # Get the target data URL.
-    ret = requests.post(url=GAS_WEBAPP_URL, data={"password": password})
-    data = ret.json()
-    dataURL = data.get("dataURL", "")
-    message = data.get("message", "")
-    print(f"Try to get data from {dataURL}\n{message}")
-    # Use the specific ``Downloader`` to download the target data.
-    downloader = decide_downloader(url=dataURL)
-    path = downloader.download_file(url=dataURL, path=os.path.join(DATA_DIR, f"{password}.zip"), verbose=verbose, expand=True)
-    print(f"Save data at {path}")
-    return path
