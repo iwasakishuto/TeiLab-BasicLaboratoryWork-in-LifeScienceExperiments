@@ -3,6 +3,7 @@
 Icon?
 .DS_Store
 *.ipynb
+!notebook/*.ipynb
 # ===>/
 
 # Byte-compiled / optimized / DLL files

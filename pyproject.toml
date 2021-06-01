@@ -12,6 +12,7 @@ matplotlib = "^3.4.2"
 numpy = "^1.20.3"
 pandas = "^1.2.4"
 plotly = "^4.14.3"
+tqdm = "^4.61.0"
 
 [tool.poetry.dev-dependencies]
 black = "^21.5b1"
@@ -19,6 +20,7 @@ flake8 = "^3.9.2"
 flake8-mypy = "^17.8.0"
 isort = "^5.8.0"
 pytest = "^6.2.4"
+ipykernel = "^5.5.5"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
