@@ -3,7 +3,7 @@ import json
 import requests
 from typing import Optional
 
-from ._config import SLACK_WEBHOOK_URL
+from ..utils._config import SLACK_WEBHOOK_URL
 
 def ask(text:str, 
         username:Optional[str]=None, 
