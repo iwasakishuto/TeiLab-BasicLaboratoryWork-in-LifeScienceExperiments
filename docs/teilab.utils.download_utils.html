@@ -44,7 +44,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="teilab.utils.generic_utils module" href="teilab.utils.generic_utils.html" />
-    <link rel="prev" title="teilab.utils package" href="teilab.utils.html" /> 
+    <link rel="prev" title="teilab.utils.dataset_utils module" href="teilab.utils.dataset_utils.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -192,6 +192,11 @@
 <dd class="field-odd"><p>List[str]</p>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">unzip</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">unzip</span><span class="p">(</span><span class="s2">&quot;target.zip&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
@@ -210,7 +215,7 @@
 <dd class="field-even"><p>The file extension which starts with “.”</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>ext (str)</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
@@ -227,10 +232,54 @@
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt id="teilab.utils.download_utils.download_file">
-<code class="sig-prename descclassname">teilab.utils.download_utils.</code><code class="sig-name descname">download_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">dirname</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'.'</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">bar_width</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">20</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/teilab/utils/download_utils.html#download_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.download_utils.download_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Download a file.</p>
+<dl class="py class">
+<dt id="teilab.utils.download_utils.Downloader">
+<em class="property">class </em><code class="sig-prename descclassname">teilab.utils.download_utils.</code><code class="sig-name descname">Downloader</code><a class="reference internal" href="_modules/teilab/utils/download_utils.html#Downloader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.download_utils.Downloader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>General Downloader</p>
+<dl class="py method">
+<dt id="teilab.utils.download_utils.Downloader.download_file">
+<em class="property">classmethod </em><code class="sig-name descname">download_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">dirname</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'.'</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">expand</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/teilab/utils/download_utils.html#Downloader.download_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.download_utils.Downloader.download_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download a file and expand it if you want.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – The URL of the file you want to download.</p></li>
+<li><p><strong>dirname</strong> (<em>str</em><em>, </em><em>optional</em>) – The directory where downloaded data will be saved. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;.&quot;</span></code>.</p></li>
+<li><p><strong>path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Where and what name to save the downloaded file. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to print verbose or not. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>expand</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to expand the downloaded file. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The path to the downloaded file.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>path (str)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">Downloader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">Downloader</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://ui-tei.rnai.jp/&quot;</span><span class="p">)</span>
+<span class="go">[Download] URL: http://ui-tei.rnai.jp/</span>
+<span class="go">* Content-Encoding : None</span>
+<span class="go">* Content-Length   : 32.1 [KB]</span>
+<span class="go">* Content-Type     : text/html</span>
+<span class="go">* Save Destination : ./2021-06-01@21.30.html</span>
+<span class="go">===== Progress =====</span>
+<span class="go">2021-06-01@21.30.04 100.0%[####################] 0.0[s] 1.3[MB/s] eta -0.0[s]</span>
+<span class="go">Do not support to extract files with the &#39;.html&#39; extension.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="teilab.utils.download_utils.Downloader.download_target_file">
+<em class="property">static </em><code class="sig-name descname">download_target_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">dirname</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'.'</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">bar_width</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">20</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/teilab/utils/download_utils.html#Downloader.download_target_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.download_utils.Downloader.download_target_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the target file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -250,86 +299,129 @@
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">download_file</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://ui-tei.rnai.jp/&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">Downloader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">Downloader</span><span class="o">.</span><span class="n">download_target_file</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://ui-tei.rnai.jp/&quot;</span><span class="p">)</span>
 <span class="go">[Download] URL: http://ui-tei.rnai.jp/</span>
 <span class="go">* Content-Encoding : None</span>
 <span class="go">* Content-Length   : 31.8 [KB]</span>
 <span class="go">* Content-Type     : text/html</span>
 <span class="go">* Save Destination : ./2021-06-01@11.26.html</span>
 <span class="go">===== Progress =====</span>
-<span class="go">2021-06-01@11.26.48     100.0%[####################] 0.0[s] 1.0[MB/s]   eta -0.0[s]</span>
+<span class="go">2021-06-01@11.26.48 100.0%[####################] 0.0[s] 1.0[MB/s]   eta -0.0[s]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 <span class="go">True</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="py function">
-<dt id="teilab.utils.download_utils.get_teilab_data">
-<code class="sig-prename descclassname">teilab.utils.download_utils.</code><code class="sig-name descname">get_teilab_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">password</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/teilab/utils/download_utils.html#get_teilab_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.download_utils.get_teilab_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get data which is necessary for this class.</p>
+<dl class="py method">
+<dt id="teilab.utils.download_utils.Downloader.prepare_for_download">
+<em class="property">static </em><code class="sig-name descname">prepare_for_download</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em>, <em class="sig-param"><span class="n">filename</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em>, <em class="sig-param"><span class="n">dirname</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'.'</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">headers</span><span class="p">:</span> <span class="n">Dict<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">{}</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span> &#x2192; Tuple<span class="p">[</span>str<span class="p">, </span>str<span class="p">]</span><a class="reference internal" href="_modules/teilab/utils/download_utils.html#Downloader.prepare_for_download"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.download_utils.Downloader.prepare_for_download" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get Information from webfile header and prepare for downloading.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>password</strong> (<em>str</em>) – Password. (Because some data are ubpublished.)</p></li>
-<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether print verbose or not. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>url</strong> (<em>str</em><em>, </em><em>optional</em>) – The URL of the file you want to download. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p></li>
+<li><p><strong>filename</strong> (<em>str</em><em>, </em><em>optional</em>) – The filename of the target file. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p></li>
+<li><p><strong>dirname</strong> (<em>str</em><em>, </em><em>optional</em>) – The directory where downloaded data will be saved. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;.&quot;</span></code>.</p></li>
+<li><p><strong>path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Where and what name to save the downloaded file. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>headers</strong> (<em>Dict</em><em>[</em><em>str</em><em>,</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The header information of the target file. Defaults to <code class="docutils literal notranslate"><span class="pre">{}</span></code>.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to print verbose or not. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The path to the downloaded file.</p>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">filename</span></code> and <code class="docutils literal notranslate"><span class="pre">path</span></code> of the file that will be downloaded.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>Tuple[str,str]</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">get_teilab_data</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span> <span class="o">=</span> <span class="n">get_teilab_data</span><span class="p">(</span><span class="n">password</span><span class="o">=</span><span class="s2">&quot;PASSWORD&quot;</span><span class="p">)</span>
-<span class="go">Try to get data from &lt;SECRET_URL&gt;</span>
-<span class="go">This is our unpublished data, so please treat it confidential.</span>
-<span class="go">[Download] URL: &lt;SECRET_URL&gt;</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">Downloader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filename</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">Downloader</span><span class="o">.</span><span class="n">prepare_for_download</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://ui-tei.rnai.jp/&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;index.html&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">dirname</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">:</span> <span class="s2">&quot;32874&quot;</span><span class="p">,</span> <span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;text/html; charset=UTF-8&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="go">[Download] URL: http://ui-tei.rnai.jp/</span>
 <span class="go">* Content-Encoding : None</span>
-<span class="go">* Content-Length   : 45.9 [MB]</span>
-<span class="go">* Content-Type     : application/zip</span>
-<span class="go">* Save Destination : PATH/TO/PASSWORD.zip</span>
-<span class="go">===== Progress =====</span>
-<span class="go">&lt;SECRET FILENAME&gt;       100.0%[####################] 45.3[s] 1.0[MB/s]  eta -0.0[s]</span>
-<span class="go">Save data at PATH/TO/PASSWORD.zip</span>
-<span class="go">[Unzip] Show file contents:</span>
-<span class="go">    * &lt;SECRET_FILE_1&gt;</span>
-<span class="go">    * &lt;SECRET_FILE_2&gt;</span>
-<span class="go">    * :</span>
-<span class="go">    * &lt;SECRET_FILE_N&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">path</span>
-<span class="go">&#39;PATH/TO/PASSWORD.zip&#39;</span>
+<span class="go">* Content-Length   : 32.1 [KB]</span>
+<span class="go">* Content-Type     : text/html</span>
+<span class="go">* Save Destination : ./index.html</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filename</span><span class="p">,</span> <span class="n">path</span>
+<span class="go">(&#39;index.html&#39;, &#39;./index.html&#39;)</span>
 </pre></div>
 </div>
-<p>Below is the code for the GAS(Google Apps Script) API server.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">P</span> <span class="o">=</span> <span class="nx">PropertiesService</span><span class="p">.</span><span class="nx">getScriptProperties</span><span class="p">();</span>
-<span class="kr">const</span> <span class="nx">sheet</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">getActiveSpreadsheet</span><span class="p">().</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="nx">P</span><span class="p">.</span><span class="nx">getProperty</span><span class="p">(</span><span class="s2">&quot;sheetname&quot;</span><span class="p">))</span>
-<span class="kr">const</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">sheet</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="s2">&quot;A2:C&quot;</span><span class="p">).</span><span class="nx">getValues</span><span class="p">();</span>
+</dd></dl>
 
-<span class="kd">var</span> <span class="nx">Password2dataURL</span> <span class="o">=</span> <span class="p">{};</span>
-<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-  <span class="nx">Password2dataURL</span><span class="p">[</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
-<span class="p">}</span>
+</dd></dl>
 
-<span class="kd">function</span> <span class="nx">doPost</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="p">{</span><span class="nx">message</span><span class="o">:</span> <span class="s2">&quot;Invalid Password&quot;</span><span class="p">,</span> <span class="nx">dataURL</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">};</span>
-  <span class="kd">var</span> <span class="nx">password</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">password</span><span class="p">;</span>
+<dl class="py class">
+<dt id="teilab.utils.download_utils.GoogleDriveDownloader">
+<em class="property">class </em><code class="sig-prename descclassname">teilab.utils.download_utils.</code><code class="sig-name descname">GoogleDriveDownloader</code><a class="reference internal" href="_modules/teilab/utils/download_utils.html#GoogleDriveDownloader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.download_utils.GoogleDriveDownloader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#teilab.utils.download_utils.Downloader" title="teilab.utils.download_utils.Downloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">teilab.utils.download_utils.Downloader</span></code></a></p>
+<p>Specific Downloader for files in GoogleDrive</p>
+<dl class="py attribute">
+<dt id="teilab.utils.download_utils.GoogleDriveDownloader.CHUNK_SIZE">
+<code class="sig-name descname">CHUNK_SIZE</code><em class="property"> = 32768</em><a class="headerlink" href="#teilab.utils.download_utils.GoogleDriveDownloader.CHUNK_SIZE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-  <span class="k">if</span> <span class="p">(</span><span class="nx">password</span> <span class="k">in</span> <span class="nx">Password2dataURL</span><span class="p">){</span>
-    <span class="kd">let</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">Password2dataURL</span><span class="p">[</span><span class="nx">password</span><span class="p">]</span>
-    <span class="nx">response</span><span class="p">.</span><span class="nx">dataURL</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="nx">response</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-  <span class="p">}</span>
+<dl class="py attribute">
+<dt id="teilab.utils.download_utils.GoogleDriveDownloader.DRIVE_URL">
+<code class="sig-name descname">DRIVE_URL</code><em class="property"> = 'https://docs.google.com/uc?export=download'</em><a class="headerlink" href="#teilab.utils.download_utils.GoogleDriveDownloader.DRIVE_URL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
-  <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="nx">ContentService</span><span class="p">.</span><span class="nx">createTextOutput</span><span class="p">();</span>
-  <span class="nx">output</span><span class="p">.</span><span class="nx">setMimeType</span><span class="p">(</span><span class="nx">ContentService</span><span class="p">.</span><span class="nx">MimeType</span><span class="p">.</span><span class="nx">JSON</span><span class="p">);</span>
-  <span class="nx">output</span><span class="p">.</span><span class="nx">setContent</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">response</span><span class="p">));</span>
-  <span class="k">return</span> <span class="nx">output</span><span class="p">;</span>
-<span class="p">}</span>
+<dl class="py method">
+<dt id="teilab.utils.download_utils.GoogleDriveDownloader.download_target_file">
+<em class="property">static </em><code class="sig-name descname">download_target_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">dirname</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">'.'</span></em>, <em class="sig-param"><span class="n">path</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">driveId</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/teilab/utils/download_utils.html#GoogleDriveDownloader.download_target_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.download_utils.GoogleDriveDownloader.download_target_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download the target Google Drive file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – The URL of the file you want to download.</p></li>
+<li><p><strong>dirname</strong> (<em>str</em><em>, </em><em>optional</em>) – The directory where downloaded data will be saved. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;.&quot;</span></code>.</p></li>
+<li><p><strong>path</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – Where and what name to save the downloaded file. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>driveId</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The GoogleDrive’s file ID. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to print verbose or not. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>TypeError</strong> – When Google Drive File ID is not detected from <code class="docutils literal notranslate"><span class="pre">driveId</span></code> and <code class="docutils literal notranslate"><span class="pre">url</span></code> .</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The path to the downloaded file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="teilab.utils.download_utils.decide_downloader">
+<code class="sig-prename descclassname">teilab.utils.download_utils.</code><code class="sig-name descname">decide_downloader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#teilab.utils.download_utils.Downloader" title="teilab.utils.download_utils.Downloader">teilab.utils.download_utils.Downloader</a><a class="reference internal" href="_modules/teilab/utils/download_utils.html#decide_downloader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.utils.download_utils.decide_downloader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decide <code class="docutils literal notranslate"><span class="pre">Downloader</span></code> from <code class="docutils literal notranslate"><span class="pre">url</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> (<em>str</em>) – The URL of the file you want to download.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>File Downloader for target <code class="docutils literal notranslate"><span class="pre">url</span></code>.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#teilab.utils.download_utils.Downloader" title="teilab.utils.download_utils.Downloader">Downloader</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">decide_downloader</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decide_downloader</span><span class="p">(</span><span class="s2">&quot;https://www.dropbox.com/sh/ID&quot;</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+<span class="go">&#39;Downloader&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decide_downloader</span><span class="p">(</span><span class="s2">&quot;https://drive.google.com/u/0/uc?export=download&amp;id=ID&quot;</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span>
+<span class="go">&#39;GoogleDriveDownloader&#39;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -347,7 +439,7 @@
         <a href="teilab.utils.generic_utils.html" class="btn btn-neutral float-right" title="teilab.utils.generic_utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="teilab.utils.html" class="btn btn-neutral float-left" title="teilab.utils package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="teilab.utils.dataset_utils.html" class="btn btn-neutral float-left" title="teilab.utils.dataset_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

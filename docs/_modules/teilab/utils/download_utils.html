@@ -150,21 +150,20 @@
   <h1>Source code for teilab.utils.download_utils</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">urllib</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span><span class="n">Dict</span><span class="p">,</span><span class="n">List</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span><span class="n">Dict</span><span class="p">,</span><span class="n">List</span><span class="p">,</span><span class="n">Tuple</span>
 
-<span class="kn">from</span> <span class="nn">._config</span> <span class="kn">import</span> <span class="n">GAS_WEBAPP_URL</span>
-<span class="kn">from</span> <span class="nn">._path</span> <span class="kn">import</span> <span class="n">DATA_DIR</span>
 <span class="kn">from</span> <span class="nn">.generic_utils</span> <span class="kn">import</span> <span class="n">now_str</span>
 <span class="kn">from</span> <span class="nn">.generic_utils</span> <span class="kn">import</span> <span class="n">readable_bytes</span>
 <span class="kn">from</span> <span class="nn">.generic_utils</span> <span class="kn">import</span> <span class="n">progress_reporthook_create</span>
 <span class="kn">from</span> <span class="nn">.generic_utils</span> <span class="kn">import</span> <span class="n">verbose2print</span>
 
 <span class="n">CONTENT_ENCODING2EXT</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;gzip&quot;</span>                      <span class="p">:</span> <span class="s2">&quot;.gz&quot;</span><span class="p">,</span>
     <span class="s2">&quot;x-gzip&quot;</span>                    <span class="p">:</span> <span class="s2">&quot;.gz&quot;</span><span class="p">,</span>
     <span class="s2">&quot;image/jpeg&quot;</span>                <span class="p">:</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span>
     <span class="s2">&quot;image/jpx&quot;</span>                 <span class="p">:</span> <span class="s2">&quot;.jpx&quot;</span><span class="p">,</span> 
@@ -215,20 +214,29 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        List[str]: Paths to extracted files.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import unzip</span>
+<span class="sd">        &gt;&gt;&gt; unzip(&quot;target.zip&quot;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">extracted_file_paths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nb">print</span> <span class="o">=</span> <span class="n">verbose2print</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
     <span class="n">root</span><span class="p">,</span><span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Unzip] Show file contents:&quot;</span><span class="p">)</span>
-    <span class="n">extracted_file_paths</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">compressed_f</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">compressed_f</span><span class="o">.</span><span class="n">namelist</span><span class="p">():</span>
-            <span class="n">compressed_f</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
-            <span class="n">extracted_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-            <span class="n">extracted_file_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extracted_file_path</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">* </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.zip&quot;</span><span class="p">,</span> <span class="s2">&quot;.gz&quot;</span><span class="p">]:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Do not support to extract files with the &#39;</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&#39; extension.&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">root</span><span class="p">):</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Unzip] Show file contents:&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">z</span><span class="o">.</span><span class="n">infolist</span><span class="p">():</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">orig_filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;cp437&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">!=</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">filename</span><span class="p">):</span>
+                    <span class="n">info</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
+                <span class="n">z</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">member</span><span class="o">=</span><span class="n">info</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
+                <span class="n">extracted_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">extracted_file_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">extracted_file_path</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">* </span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">extracted_file_paths</span></div>
 
 <div class="viewcode-block" id="decide_extension"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.decide_extension">[docs]</a><span class="k">def</span> <span class="nf">decide_extension</span><span class="p">(</span><span class="n">content_encoding</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">content_type</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -240,7 +248,7 @@
 <span class="sd">        filename (Optional[str], optional)         : The filename.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        ext (str): The file extension which starts with &quot;.&quot;</span>
+<span class="sd">        str: The file extension which starts with &quot;.&quot;</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.utils import decide_extension</span>
@@ -254,137 +262,204 @@
 <span class="sd">        &#39;.zip&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ext</span> <span class="o">=</span> <span class="n">CONTENT_ENCODING2EXT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">content_encoding</span><span class="p">,</span> <span class="n">CONTENT_TYPE2EXT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">content_type</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">))[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="k">return</span> <span class="n">ext</span></div>
+    <span class="k">return</span> <span class="n">ext</span>     </div>
 
-<div class="viewcode-block" id="download_file"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.download_file">[docs]</a><span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bar_width</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Download a file.</span>
+<div class="viewcode-block" id="Downloader"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.Downloader">[docs]</a><span class="k">class</span> <span class="nc">Downloader</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;General Downloader&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Downloader.download_file"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.Downloader.download_file">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expand</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Download a file and expand it if you want.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        url (str)                      : The URL of the file you want to download.</span>
-<span class="sd">        dirname (str, optional)        : The directory where downloaded data will be saved. Defaults to ``&quot;.&quot;``.</span>
-<span class="sd">        path (Optional[str], optional) : Where and what name to save the downloaded file. Defaults to ``None``.</span>
-<span class="sd">        bar_width (int, optional)      : The width of progress bar. Defaults to ``20``.</span>
-<span class="sd">        verbose (bool, optional)       : Whether to print verbose or not. Defaults to ``True``.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            url (str)                      : The URL of the file you want to download.</span>
+<span class="sd">            dirname (str, optional)        : The directory where downloaded data will be saved. Defaults to ``&quot;.&quot;``.</span>
+<span class="sd">            path (Optional[str], optional) : Where and what name to save the downloaded file. Defaults to ``None``.</span>
+<span class="sd">            verbose (bool, optional)       : Whether to print verbose or not. Defaults to ``True``.</span>
+<span class="sd">            expand (bool, optional)        : Whether to expand the downloaded file. Defaults to ``True``</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        path (str) : The path to the downloaded file.</span>
-<span class="sd">    </span>
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; import os</span>
-<span class="sd">        &gt;&gt;&gt; from teilab.utils import download_file</span>
-<span class="sd">        &gt;&gt;&gt; path = download_file(url=&quot;http://ui-tei.rnai.jp/&quot;)</span>
-<span class="sd">        [Download] URL: http://ui-tei.rnai.jp/</span>
-<span class="sd">        * Content-Encoding : None</span>
-<span class="sd">        * Content-Length   : 31.8 [KB]</span>
-<span class="sd">        * Content-Type     : text/html</span>
-<span class="sd">        * Save Destination : ./2021-06-01@11.26.html</span>
-<span class="sd">        ===== Progress =====</span>
-<span class="sd">        2021-06-01@11.26.48	100.0%[####################] 0.0[s] 1.0[MB/s]	eta -0.0[s]</span>
-<span class="sd">        &gt;&gt;&gt; os.path.exists(path)</span>
-<span class="sd">        True</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="nb">print</span> <span class="o">=</span> <span class="n">verbose2print</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
-        <span class="c1"># Get Information from webfile header</span>
-        <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">web_file</span><span class="p">:</span>
-            <span class="n">headers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">web_file</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">_headers</span><span class="p">)</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            path (str) : The path to the downloaded file.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; import os</span>
+<span class="sd">            &gt;&gt;&gt; from teilab.utils import Downloader</span>
+<span class="sd">            &gt;&gt;&gt; path = Downloader.download_file(url=&quot;http://ui-tei.rnai.jp/&quot;)</span>
+<span class="sd">            [Download] URL: http://ui-tei.rnai.jp/</span>
+<span class="sd">            * Content-Encoding : None</span>
+<span class="sd">            * Content-Length   : 32.1 [KB]</span>
+<span class="sd">            * Content-Type     : text/html</span>
+<span class="sd">            * Save Destination : ./2021-06-01@21.30.html</span>
+<span class="sd">            ===== Progress =====</span>
+<span class="sd">            2021-06-01@21.30.04	100.0%[####################] 0.0[s] 1.3[MB/s] eta -0.0[s]</span>
+<span class="sd">            Do not support to extract files with the &#39;.html&#39; extension.</span>
+<span class="sd">            &gt;&gt;&gt; os.path.exists(path)</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">download_target_file</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">dirname</span><span class="o">=</span><span class="n">dirname</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">expand</span><span class="p">:</span>
+            <span class="n">unzip</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="Downloader.download_target_file"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.Downloader.download_target_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">download_target_file</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bar_width</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Download the target file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str)                      : The URL of the file you want to download.</span>
+<span class="sd">            dirname (str, optional)        : The directory where downloaded data will be saved. Defaults to ``&quot;.&quot;``.</span>
+<span class="sd">            path (Optional[str], optional) : Where and what name to save the downloaded file. Defaults to ``None``.</span>
+<span class="sd">            bar_width (int, optional)      : The width of progress bar. Defaults to ``20``.</span>
+<span class="sd">            verbose (bool, optional)       : Whether to print verbose or not. Defaults to ``True``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            path (str) : The path to the downloaded file.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; import os</span>
+<span class="sd">            &gt;&gt;&gt; from teilab.utils import Downloader</span>
+<span class="sd">            &gt;&gt;&gt; path = Downloader.download_target_file(url=&quot;http://ui-tei.rnai.jp/&quot;)</span>
+<span class="sd">            [Download] URL: http://ui-tei.rnai.jp/</span>
+<span class="sd">            * Content-Encoding : None</span>
+<span class="sd">            * Content-Length   : 31.8 [KB]</span>
+<span class="sd">            * Content-Type     : text/html</span>
+<span class="sd">            * Save Destination : ./2021-06-01@11.26.html</span>
+<span class="sd">            ===== Progress =====</span>
+<span class="sd">            2021-06-01@11.26.48	100.0%[####################] 0.0[s] 1.0[MB/s]	eta -0.0[s]</span>
+<span class="sd">            &gt;&gt;&gt; os.path.exists(path)</span>
+<span class="sd">            True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">web_file</span><span class="p">:</span>
+                <span class="n">headers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">web_file</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">_headers</span><span class="p">)</span>
+            <span class="n">filename</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">Downloader</span><span class="o">.</span><span class="n">prepare_for_download</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">),</span> <span class="n">dirname</span><span class="o">=</span><span class="n">dirname</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===== Progress =====&quot;</span><span class="p">)</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_reporthook_create</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">bar_width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">URLError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[URLError] Please check if the URL is correct, given </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="Downloader.prepare_for_download"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.Downloader.prepare_for_download">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">prepare_for_download</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="p">{},</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Get Information from webfile header and prepare for downloading.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str, optional)               : The URL of the file you want to download. Defaults to ``&quot;&quot;``.</span>
+<span class="sd">            filename (str, optional)          : The filename of the target file. Defaults to ``&quot;&quot;``.</span>
+<span class="sd">            dirname (str, optional)           : The directory where downloaded data will be saved. Defaults to ``&quot;.&quot;``.</span>
+<span class="sd">            path (Optional[str], optional)    : Where and what name to save the downloaded file. Defaults to ``None``.</span>
+<span class="sd">            headers (Dict[str,str], optional) : The header information of the target file. Defaults to ``{}``.</span>
+<span class="sd">            verbose (bool, optional)          : Whether to print verbose or not. Defaults to ``True``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple[str,str]: ``filename`` and ``path`` of the file that will be downloaded.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; from teilab.utils import Downloader</span>
+<span class="sd">            &gt;&gt;&gt; filename, path = Downloader.prepare_for_download(</span>
+<span class="sd">            ...     url=&quot;http://ui-tei.rnai.jp/&quot;,</span>
+<span class="sd">            ...     filename=&quot;index.html&quot;,</span>
+<span class="sd">            ...     dirname=&quot;.&quot;,</span>
+<span class="sd">            ...     path=None,</span>
+<span class="sd">            ...     headers={&quot;Content-Length&quot;: &quot;32874&quot;, &#39;Content-Type&#39;: &#39;text/html; charset=UTF-8&#39;}</span>
+<span class="sd">            &gt;&gt;&gt; )</span>
+<span class="sd">            [Download] URL: http://ui-tei.rnai.jp/</span>
+<span class="sd">            * Content-Encoding : None</span>
+<span class="sd">            * Content-Length   : 32.1 [KB]</span>
+<span class="sd">            * Content-Type     : text/html</span>
+<span class="sd">            * Save Destination : ./index.html</span>
+<span class="sd">            &gt;&gt;&gt; filename, path</span>
+<span class="sd">            (&#39;index.html&#39;, &#39;./index.html&#39;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">content_encoding</span> <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Encoding&quot;</span><span class="p">)</span>
         <span class="n">content_length</span>   <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:.1f}</span><span class="s2"> [</span><span class="si">{1}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">readable_bytes</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))))</span>
         <span class="n">content_type</span>     <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span> 
+        <span class="k">if</span> <span class="n">filename</span><span class="o">==</span><span class="s2">&quot;&quot;</span><span class="p">:</span> 
             <span class="n">filename</span> <span class="o">=</span> <span class="n">now_str</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">root</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
             <span class="n">guessed_ext</span> <span class="o">=</span> <span class="n">decide_extension</span><span class="p">(</span><span class="n">content_encoding</span><span class="p">,</span> <span class="n">content_type</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">root</span><span class="o">+</span><span class="n">guessed_ext</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span>
             <span class="sa">f</span><span class="s2">&quot;[Download] URL: </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="sa">f</span><span class="s2">&quot;* Content-Encoding : </span><span class="si">{</span><span class="n">content_encoding</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="sa">f</span><span class="s2">&quot;* Content-Length   : </span><span class="si">{</span><span class="n">content_length</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="sa">f</span><span class="s2">&quot;* Content-Type     : </span><span class="si">{</span><span class="n">content_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="sa">f</span><span class="s2">&quot;* Save Destination : </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;===== Progress =====&quot;</span><span class="p">,</span>
             <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="n">_</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_reporthook_create</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">bar_width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">))</span>
-    <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">URLError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[URLError] Please check if the URL is correct, given </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[</span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">path</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div></div>
 
-<div class="viewcode-block" id="get_teilab_data"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.get_teilab_data">[docs]</a><span class="k">def</span> <span class="nf">get_teilab_data</span><span class="p">(</span><span class="n">password</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Get data which is necessary for this class.</span>
+<div class="viewcode-block" id="GoogleDriveDownloader"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.GoogleDriveDownloader">[docs]</a><span class="k">class</span> <span class="nc">GoogleDriveDownloader</span><span class="p">(</span><span class="n">Downloader</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Specific Downloader for files in GoogleDrive&quot;&quot;&quot;</span>
+    <span class="n">CHUNK_SIZE</span> <span class="o">=</span> <span class="mi">32768</span>
+    <span class="n">DRIVE_URL</span>  <span class="o">=</span> <span class="s2">&quot;https://docs.google.com/uc?export=download&quot;</span>
+
+<div class="viewcode-block" id="GoogleDriveDownloader.download_target_file"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.GoogleDriveDownloader.download_target_file">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">download_target_file</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">driveId</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Download the target Google Drive file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            url (str)                         : The URL of the file you want to download.</span>
+<span class="sd">            dirname (str, optional)           : The directory where downloaded data will be saved. Defaults to ``&quot;.&quot;``.</span>
+<span class="sd">            path (Optional[str], optional)    : Where and what name to save the downloaded file. Defaults to ``None``.</span>
+<span class="sd">            driveId (Optional[str], optional) : The GoogleDrive&#39;s file ID. Defaults to ``None``.</span>
+<span class="sd">            verbose (bool, optional)          : Whether to print verbose or not. Defaults to ``True``.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When Google Drive File ID is not detected from ``driveId`` and ``url`` .</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: The path to the downloaded file.        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">driveId</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">parse_qs</span><span class="p">(</span><span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Please specify the target Google Drive Id using ``url`` or ``driveId`` arguments.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">driveId</span><span class="o">=</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># Start a Session</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="n">driveId</span><span class="p">}</span>
+        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">DRIVE_URL</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;download_warning&quot;</span><span class="p">):</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;confirm&quot;</span><span class="p">:</span><span class="n">val</span><span class="p">})</span>
+                <span class="k">break</span>
+        <span class="c1"># Get Information from headers</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">DRIVE_URL</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">headers</span>
+        <span class="n">filename</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">prepare_for_download</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">driveId</span><span class="p">,</span> <span class="n">dirname</span><span class="o">=</span><span class="n">dirname</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="c1"># Get contents</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">DRIVE_URL</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">CHUNK_SIZE</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="n">driveId</span><span class="p">)</span> <span class="k">as</span> <span class="n">pbar</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pbar</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">chunk</span><span class="p">:</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
+                        <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;Downloaded&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{0:.1f}</span><span class="s2"> [</span><span class="si">{1}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">readable_bytes</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">CHUNK_SIZE</span><span class="p">))})</span>
+        <span class="k">return</span> <span class="n">path</span></div></div>
+
+<div class="viewcode-block" id="decide_downloader"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.decide_downloader">[docs]</a><span class="k">def</span> <span class="nf">decide_downloader</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Downloader</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Decide ``Downloader`` from ``url``</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        password (str)                 : Password. (Because some data are ubpublished.)</span>
-<span class="sd">        verbose (bool, optional)       : Whether print verbose or not. Defaults to ``True``.</span>
+<span class="sd">        url (str): The URL of the file you want to download.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        str: The path to the downloaded file.</span>
+<span class="sd">        Downloader: File Downloader for target ``url``.</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from teilab.utils import get_teilab_data</span>
-<span class="sd">        &gt;&gt;&gt; path = get_teilab_data(password=&quot;PASSWORD&quot;)</span>
-<span class="sd">        Try to get data from &lt;SECRET_URL&gt;</span>
-<span class="sd">        This is our unpublished data, so please treat it confidential.</span>
-<span class="sd">        [Download] URL: &lt;SECRET_URL&gt;</span>
-<span class="sd">        * Content-Encoding : None</span>
-<span class="sd">        * Content-Length   : 45.9 [MB]</span>
-<span class="sd">        * Content-Type     : application/zip</span>
-<span class="sd">        * Save Destination : PATH/TO/PASSWORD.zip</span>
-<span class="sd">        ===== Progress =====</span>
-<span class="sd">        &lt;SECRET FILENAME&gt;	100.0%[####################] 45.3[s] 1.0[MB/s]	eta -0.0[s]</span>
-<span class="sd">        Save data at PATH/TO/PASSWORD.zip</span>
-<span class="sd">        [Unzip] Show file contents:</span>
-<span class="sd">            * &lt;SECRET_FILE_1&gt;</span>
-<span class="sd">            * &lt;SECRET_FILE_2&gt;</span>
-<span class="sd">            * :</span>
-<span class="sd">            * &lt;SECRET_FILE_N&gt;</span>
-<span class="sd">        &gt;&gt;&gt; path</span>
-<span class="sd">        &#39;PATH/TO/PASSWORD.zip&#39;</span>
-
-<span class="sd">    Below is the code for the GAS(Google Apps Script) API server.</span>
-
-<span class="sd">    .. code-block:: js</span>
-
-<span class="sd">        const P = PropertiesService.getScriptProperties();</span>
-<span class="sd">        const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(P.getProperty(&quot;sheetname&quot;))</span>
-<span class="sd">        const values = sheet.getRange(&quot;A2:C&quot;).getValues();</span>
-
-<span class="sd">        var Password2dataURL = {};</span>
-<span class="sd">        for (let i=0; i&lt;values.length; i++){</span>
-<span class="sd">          Password2dataURL[values[i][0]] = values[i].slice(1);</span>
-<span class="sd">        }</span>
-
-<span class="sd">        function doPost(e) {</span>
-<span class="sd">          var response = {message: &quot;Invalid Password&quot;, dataURL:&quot;&quot;};</span>
-<span class="sd">          var password = e.parameter.password;</span>
-
-<span class="sd">          if (password in Password2dataURL){</span>
-<span class="sd">            let data = Password2dataURL[password]</span>
-<span class="sd">            response.dataURL = data[0]</span>
-<span class="sd">            response.message = data[1]</span>
-<span class="sd">          }</span>
-
-<span class="sd">          var output = ContentService.createTextOutput();</span>
-<span class="sd">          output.setMimeType(ContentService.MimeType.JSON);</span>
-<span class="sd">          output.setContent(JSON.stringify(response));</span>
-<span class="sd">          return output;</span>
-<span class="sd">        }</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import decide_downloader</span>
+<span class="sd">        &gt;&gt;&gt; decide_downloader(&quot;https://www.dropbox.com/sh/ID&quot;).__name__</span>
+<span class="sd">        &#39;Downloader&#39;</span>
+<span class="sd">        &gt;&gt;&gt; decide_downloader(&quot;https://drive.google.com/u/0/uc?export=download&amp;id=ID&quot;).__name__</span>
+<span class="sd">        &#39;GoogleDriveDownloader&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span> <span class="o">=</span> <span class="n">verbose2print</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">GAS_WEBAPP_URL</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="n">password</span><span class="p">})</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-    <span class="n">dataURL</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;dataURL&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;message&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Try to get data from </span><span class="si">{</span><span class="n">dataURL</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">dataURL</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA_DIR</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">password</span><span class="si">}</span><span class="s2">.zip&quot;</span><span class="p">),</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Save data at </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;.zip&quot;</span><span class="p">:</span>
-        <span class="n">_</span> <span class="o">=</span> <span class="n">unzip</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">path</span></div>
+    <span class="n">url_domain</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;^https?:\/\/(.+?)\/&quot;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;drive.google.com&quot;</span> <span class="p">:</span> <span class="n">GoogleDriveDownloader</span><span class="p">,</span>
+    <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_domain</span><span class="p">,</span> <span class="n">Downloader</span><span class="p">)</span>    </div>
 </pre></div>
 
            </div>
