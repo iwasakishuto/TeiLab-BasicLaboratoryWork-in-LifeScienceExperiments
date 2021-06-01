@@ -1,9 +1,10 @@
 # coding: utf-8
 import os
-import requests
 import urllib
-from typing import Optional,Dict
+import zipfile
+import requests
 from tqdm import tqdm
+from typing import Optional,Dict,List
 from pathlib import Path
 
 from ._config import GAS_WEBAPP_URL
@@ -11,6 +12,7 @@ from ._path import DATA_DIR
 from .generic_utils import now_str
 from .generic_utils import readable_bytes
 from .generic_utils import progress_reporthook_create
+from .generic_utils import verbose2print
 
 CONTENT_ENCODING2EXT:Dict[str,str] = {
     "x-gzip"                    : ".gz",
@@ -54,6 +56,31 @@ CONTENT_TYPE2EXT:Dict[str,str] = {
     "text/html"                             : ".html",
 }
 
+def unzip(path:str, verbose:bool=True) -> List[str]:
+    """Unzip a zipped file ( Only support the file with ``.zip`` extension. )
+
+    Args:
+        path (str)               : The path to zipped file.
+        verbose (bool, optional) : Whether to print verbose or not. Defaults to ``True``.
+
+    Returns:
+        List[str]: Paths to extracted files.
+    """
+    print = verbose2print(verbose=verbose)
+    root,ext = os.path.splitext(path)
+    if not os.path.exists(root):
+        os.mkdir(root)
+
+    print("[Unzip] Show file contents:")
+    extracted_file_paths = []
+    with zipfile.ZipFile(path) as compressed_f:
+        for name in compressed_f.namelist():
+            compressed_f.extract(name, path=root)
+            extracted_file_path = os.path.join(root, name)
+            extracted_file_paths.append(extracted_file_path)
+            print(f"\t* {name}")
+    return extracted_file_paths
+
 def decide_extension(content_encoding:Optional[str]=None, content_type:Optional[str]=None, filename:Optional[str]=None):
     """Decide File Extension based on ``content_encoding`` and ``content_type``
 
@@ -87,7 +114,7 @@ def download_file(url:str, dirname:str=".", path:Optional[str]=None, bar_width:i
         dirname (str, optional)        : The directory where downloaded data will be saved. Defaults to ``"."``.
         path (Optional[str], optional) : Where and what name to save the downloaded file. Defaults to ``None``.
         bar_width (int, optional)      : The width of progress bar. Defaults to ``20``.
-        verbose (bool, optional)       : Whether print verbose or not. Defaults to ``True``.
+        verbose (bool, optional)       : Whether to print verbose or not. Defaults to ``True``.
 
     Returns:
         path (str) : The path to the downloaded file.
@@ -107,6 +134,7 @@ def download_file(url:str, dirname:str=".", path:Optional[str]=None, bar_width:i
         True
     """
     try:
+        print = verbose2print(verbose=verbose)
         # Get Information from webfile header
         with urllib.request.urlopen(url) as web_file:
             headers = dict(web_file.headers._headers)
@@ -120,16 +148,15 @@ def download_file(url:str, dirname:str=".", path:Optional[str]=None, bar_width:i
             root, _ = os.path.splitext(filename)
             guessed_ext = decide_extension(content_encoding, content_type, filename)
             path = os.path.join(dirname, root+guessed_ext)
-        if verbose:
-            print(
-                f"[Download] URL: {url}",
-                f"* Content-Encoding : {content_encoding}",
-                f"* Content-Length   : {content_length}",
-                f"* Content-Type     : {content_type}",
-                f"* Save Destination : {path}",
-                "===== Progress =====",
-                sep="\n"
-            )
+        print(
+            f"[Download] URL: {url}",
+            f"* Content-Encoding : {content_encoding}",
+            f"* Content-Length   : {content_length}",
+            f"* Content-Type     : {content_type}",
+            f"* Save Destination : {path}",
+            "===== Progress =====",
+            sep="\n"
+        )
         _, res = urllib.request.urlretrieve(url=url, filename=path, reporthook=progress_reporthook_create(filename=filename, bar_width=bar_width, verbose=verbose))
     except urllib.error.URLError:
         print(f"[URLError] Please check if the URL is correct, given {url}")
@@ -160,6 +187,11 @@ def get_teilab_data(password:str, verbose:bool=True) -> str:
         ===== Progress =====
         <SECRET FILENAME>	100.0%[####################] 45.3[s] 1.0[MB/s]	eta -0.0[s]
         Save data at PATH/TO/PASSWORD.zip
+        [Unzip] Show file contents:
+            * <SECRET_FILE_1>
+            * <SECRET_FILE_2>
+            * :
+            * <SECRET_FILE_N>
         >>> path
         'PATH/TO/PASSWORD.zip'
 
@@ -192,11 +224,14 @@ def get_teilab_data(password:str, verbose:bool=True) -> str:
           return output;
         }
     """
+    print = verbose2print(verbose=verbose)
     ret = requests.post(url=GAS_WEBAPP_URL, data={"password": password})
     data = ret.json()
     dataURL = data.get("dataURL", "")
     message = data.get("message", "")
-    if verbose: print(f"Try to get data from {dataURL}\n{message}")
+    print(f"Try to get data from {dataURL}\n{message}")
     path = download_file(url=dataURL, path=os.path.join(DATA_DIR, f"{password}.zip"), verbose=verbose)
-    if verbose: print(f"Save data at {path}")
+    print(f"Save data at {path}")
+    if os.path.splitext(path)[-1] == ".zip":
+        _ = unzip(path=path, verbose=verbose)
     return path

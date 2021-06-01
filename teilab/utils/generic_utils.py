@@ -102,3 +102,25 @@ def progress_reporthook_create(filename:str="", bar_width:int=20, verbose:bool=T
         """``reporthook`` not to report the current status."""
         pass
     return progress_reporthook_verbose if verbose else progress_reporthook_non_verbose
+
+def verbose2print(verbose:bool=True) -> callable:
+    """Create a simple print function based on verbose
+    
+    Args:
+        verbose (bool, optional) : Whether to print or not. Defaults to ``True``.
+
+    Returns:
+        callable: Print function
+
+    Examples:
+        >>> from teilab.utils import verbose2print
+        >>> print_verbose = verbose2print(verbose=True)
+        >>> print_non_verbose = verbose2print(verbose=False)
+        >>> print_verbose("Hello, world.")
+        Hello, world.
+        >>> print_non_verbose = verbose2print("Hello, world.")    
+    """
+    if verbose:
+        return print
+    else:
+        return lambda *args,**kwargs: None
