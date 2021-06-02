@@ -38,6 +38,7 @@ class TeiLabDataSets():
         verbose (bool, optional) : Whether print verbose or not. Defaults to ``True``.
 
     Attributes:
+        verbose (bool)   : Whether print verbose or not. Defaults to ``True``.
         print (callable) : Print function.
         sample (Samples) : Datasts Samples. 
         root (Path)      : Root Directory for Datasets. ( ``DATA_DIR`` )
@@ -56,6 +57,7 @@ class TeiLabDataSets():
     TARGET_GeneName:str = "VIM"             #: TARGET_GeneName (str) ``GeneName`` of the target RNA (vimentin)
     TARGET_SystematicName:str = "NM_003380" #: TARGET_SystematicName (str) ``SystematicName`` of the target RNA (vimentin)
     def __init__(self, verbose:bool=True):
+        self.verbose = verbose
         self.print:callable = verbose2print(verbose=verbose)
         self.init()
 
@@ -142,7 +144,7 @@ class TeiLabDataSets():
             else:
                 # Use the specific ``Downloader`` to download the target data.
                 downloader = decide_downloader(url=dataURL)
-                path = downloader.download_file(url=dataURL, path=path, verbose=verbose, expand=True)
+                path = downloader.download_file(url=dataURL, path=path, verbose=self.verbose, expand=True)
                 self.print(f"Saved data at {path}")
         return path
 

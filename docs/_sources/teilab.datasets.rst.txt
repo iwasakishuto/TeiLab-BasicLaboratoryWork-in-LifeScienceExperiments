@@ -1,0 +1,7 @@
+teilab.datasets module
+======================
+
+.. automodule:: teilab.datasets
+   :members:
+   :undoc-members:
+   :show-inheritance:
