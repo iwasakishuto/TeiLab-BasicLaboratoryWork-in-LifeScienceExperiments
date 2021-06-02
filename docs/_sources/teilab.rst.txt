@@ -15,6 +15,7 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
+   teilab.datasets
    teilab.question
 
 Module contents
