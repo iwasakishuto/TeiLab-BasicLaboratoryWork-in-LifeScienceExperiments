@@ -30,6 +30,15 @@ window.onload = function() {
     maxParticles: 300,
     connectParticles: true,
     sizeVariations: 5,
+    responsive: [
+      {
+        breakpoint: 1100,
+        options: {
+          maxParticles: 0,
+        }
+      }
+    ]
+    
   });
   Particles._resize()
 };
