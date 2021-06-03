@@ -3,7 +3,7 @@ import os
 import pandas as pd
 import requests
 from pathlib import Path
-from typing import List,Union
+from typing import List,Union,Optional
 
 from .utils._config import GAS_WEBAPP_URL
 from .utils._path import DATA_DIR, SAMPLE_LIST_PATH
@@ -45,7 +45,7 @@ class TeiLabDataSets():
 
     Examples:
         >>> from teilab.datasets import TeiLabDataSets
-        >>> datasets = TeiLabDataSets(verbose=True)
+        >>> datasets = TeiLabDataSets(verbose=False)
         There are not enough datasets. Use ``.get_data`` to prepare all the required datasets.
         >>> datasets.satisfied
         False
@@ -56,6 +56,8 @@ class TeiLabDataSets():
     """
     TARGET_GeneName:str = "VIM"             #: TARGET_GeneName (str) ``GeneName`` of the target RNA (vimentin)
     TARGET_SystematicName:str = "NM_003380" #: TARGET_SystematicName (str) ``SystematicName`` of the target RNA (vimentin)
+    META_COLNAMES:List[str] = ["FeatureNum","ControlType","ProbeName","GeneName","SystematicName"] #: META_COLNAMES (List[str]) Column names for metadata.
+    DATA_COLNAMES:List[str] = ["gProcessedSignal"]                                                 #: DATA_COLNAMES (List[str]) Column names for expression data.
     def __init__(self, verbose:bool=True):
         self.verbose = verbose
         self.print:callable = verbose2print(verbose=verbose)
@@ -187,7 +189,7 @@ class TeiLabDataSets():
 
         Examples:
             >>> from teilab.datasets import TeiLabDataSets
-            >>> datasets = TeiLabDataSets(verbose=True)
+            >>> datasets = TeiLabDataSets(verbose=False)
             >>> dfs = datasets.read_df("all")
             >>> len(dfs)
             13
@@ -205,3 +207,36 @@ class TeiLabDataSets():
             filepath = self.filePaths[no]
             self.print(f"Read data from '{filepath.relative_to(self.root)}'")
             return pd.read_csv(filepath_or_buffer=filepath, sep="\t", header=header)
+
+    @staticmethod
+    def reliable_filter(df:pd.DataFrame, name:Optional[str]=None) -> pd.DataFrame:
+        """Create a dataframe which means whether data is reliable or not.
+
+        Args:
+            df (pd.DataFrame)              : Input dataframe.
+            name (Optional[str], optional) : The column name. Defaults to ``None``.
+
+        Returns:
+            pd.DataFrame: Filter DataFrame which means whether data is reliable or not.
+
+        Examples:
+            >>> import pandas as pd
+            >>> from teilab.datasets import TeiLabDataSets
+            >>> datasets = TeiLabDataSets(verbose=False)
+            >>> df_sg = datasets.read_df(0)
+            >>> len(df_sg), datasets.reliable_filter(df_sg).sum().values[0]
+            (62976, 30385)
+            >>> df_us = datasets.read_df(-1)
+            >>> len(df_us), datasets.reliable_filter(df_us).sum().values[0]
+            (62976, 23434)
+        """
+        control   = df.ControlType      == 0
+        present   = df.gIsPosAndSignif  == 1
+        uniform   = df.gIsFeatNonUnifOL == 0
+        wellabove = df.gIsWellAboveBG   == 1
+        saturated = df.gIsSaturated     == 0
+        popnol    = df.gIsFeatPopnOL    == 0
+        return pd.DataFrame(
+            data=control & present & uniform & wellabove & saturated & popnol,
+            columns=name,
+        )

@@ -23,3 +23,13 @@
   });
 })(jQuery);
 
+window.onload = function() {
+  Particles.init({
+    selector: '.particle-background',
+    color: ["#cee6b4", "#1f441e"],
+    maxParticles: 300,
+    connectParticles: true,
+    sizeVariations: 5,
+  });
+  Particles._resize()
+};

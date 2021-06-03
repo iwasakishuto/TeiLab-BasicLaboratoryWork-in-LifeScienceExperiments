@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>teilab.datasets &mdash; UiTei-Lab  documentation</title>
+  <title>teilab.datasets &mdash; UiTei-Lab Documentation  documentation</title>
   
 
   
@@ -33,6 +33,7 @@
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
         <script src="../../_static/language_data.js"></script>
+        <script src="../../_static/particles.min.js"></script>
         <script src="../../_static/custom.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
@@ -53,7 +54,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab Documentation
           
 
           
@@ -77,6 +78,33 @@
         </div>
 
         
+  <div class="sidebarlogo">
+    <h4>Lab's information</h4>
+    <ul class="social">
+      
+      <li><a class="sc-book" href="http://ui-tei.rnai.jp/">
+        <i class="fa fa-book" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php">
+        <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+    <h4>Author's Social link</h4>
+    <ul class="social">
+      
+      <li><a class="sc-twitter" href="https://twitter.com/cabernet_rock">
+        <i class="fa fa-twitter" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-github" href="https://github.com/iwasakishuto">
+        <i class="fa fa-github" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+  </div>
+  
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -92,6 +120,7 @@
           
         </div>
         
+
       </div>
     </nav>
 
@@ -101,12 +130,14 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">UiTei-Lab</a>
+          <a href="../../index.html">UiTei-Lab Documentation</a>
         
       </nav>
 
 
       <div class="wy-nav-content">
+<canvas class="particle-background"></canvas>
+
         
         <div class="rst-content">
         
@@ -155,7 +186,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span><span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span><span class="n">Union</span><span class="p">,</span><span class="n">Optional</span>
 
 <span class="kn">from</span> <span class="nn">.utils._config</span> <span class="kn">import</span> <span class="n">GAS_WEBAPP_URL</span>
 <span class="kn">from</span> <span class="nn">.utils._path</span> <span class="kn">import</span> <span class="n">DATA_DIR</span><span class="p">,</span> <span class="n">SAMPLE_LIST_PATH</span>
@@ -197,7 +228,7 @@
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
-<span class="sd">        &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=True)</span>
+<span class="sd">        &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
 <span class="sd">        There are not enough datasets. Use ``.get_data`` to prepare all the required datasets.</span>
 <span class="sd">        &gt;&gt;&gt; datasets.satisfied</span>
 <span class="sd">        False</span>
@@ -208,6 +239,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">TARGET_GeneName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;VIM&quot;</span>             <span class="c1">#: TARGET_GeneName (str) ``GeneName`` of the target RNA (vimentin)</span>
     <span class="n">TARGET_SystematicName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;NM_003380&quot;</span> <span class="c1">#: TARGET_SystematicName (str) ``SystematicName`` of the target RNA (vimentin)</span>
+    <span class="n">META_COLNAMES</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;FeatureNum&quot;</span><span class="p">,</span><span class="s2">&quot;ControlType&quot;</span><span class="p">,</span><span class="s2">&quot;ProbeName&quot;</span><span class="p">,</span><span class="s2">&quot;GeneName&quot;</span><span class="p">,</span><span class="s2">&quot;SystematicName&quot;</span><span class="p">]</span> <span class="c1">#: META_COLNAMES (List[str]) Column names for metadata.</span>
+    <span class="n">DATA_COLNAMES</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;gProcessedSignal&quot;</span><span class="p">]</span>                                                 <span class="c1">#: DATA_COLNAMES (List[str]) Column names for expression data.</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print</span><span class="p">:</span><span class="n">callable</span> <span class="o">=</span> <span class="n">verbose2print</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
@@ -339,7 +372,7 @@
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
-<span class="sd">            &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=True)</span>
+<span class="sd">            &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
 <span class="sd">            &gt;&gt;&gt; dfs = datasets.read_df(&quot;all&quot;)</span>
 <span class="sd">            &gt;&gt;&gt; len(dfs)</span>
 <span class="sd">            13</span>
@@ -356,7 +389,40 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filePaths</span><span class="p">[</span><span class="n">no</span><span class="p">]</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read data from &#39;</span><span class="si">{</span><span class="n">filepath</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">filepath</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span></div></div>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">filepath</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiLabDataSets.reliable_filter"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.TeiLabDataSets.reliable_filter">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">reliable_filter</span><span class="p">(</span><span class="n">df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Create a dataframe which means whether data is reliable or not.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            df (pd.DataFrame)              : Input dataframe.</span>
+<span class="sd">            name (Optional[str], optional) : The column name. Defaults to ``None``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            pd.DataFrame: Filter DataFrame which means whether data is reliable or not.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; import pandas as pd</span>
+<span class="sd">            &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
+<span class="sd">            &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
+<span class="sd">            &gt;&gt;&gt; df_sg = datasets.read_df(0)</span>
+<span class="sd">            &gt;&gt;&gt; len(df_sg), datasets.reliable_filter(df_sg).sum().values[0]</span>
+<span class="sd">            (62976, 30385)</span>
+<span class="sd">            &gt;&gt;&gt; df_us = datasets.read_df(-1)</span>
+<span class="sd">            &gt;&gt;&gt; len(df_us), datasets.reliable_filter(df_us).sum().values[0]</span>
+<span class="sd">            (62976, 23434)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">control</span>   <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">ControlType</span>      <span class="o">==</span> <span class="mi">0</span>
+        <span class="n">present</span>   <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">gIsPosAndSignif</span>  <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">uniform</span>   <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">gIsFeatNonUnifOL</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="n">wellabove</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">gIsWellAboveBG</span>   <span class="o">==</span> <span class="mi">1</span>
+        <span class="n">saturated</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">gIsSaturated</span>     <span class="o">==</span> <span class="mi">0</span>
+        <span class="n">popnol</span>    <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">gIsFeatPopnOL</span>    <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="n">control</span> <span class="o">&amp;</span> <span class="n">present</span> <span class="o">&amp;</span> <span class="n">uniform</span> <span class="o">&amp;</span> <span class="n">wellabove</span> <span class="o">&amp;</span> <span class="n">saturated</span> <span class="o">&amp;</span> <span class="n">popnol</span><span class="p">,</span>
+            <span class="n">columns</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
            </div>
@@ -378,6 +444,7 @@
 </footer>
 
         </div>
+
       </div>
 
     </section>

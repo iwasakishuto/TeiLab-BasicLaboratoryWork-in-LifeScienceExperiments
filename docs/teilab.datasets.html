@@ -12,7 +12,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>teilab.datasets module &mdash; UiTei-Lab  documentation</title>
+  <title>teilab.datasets module &mdash; UiTei-Lab Documentation  documentation</title>
   
 
   
@@ -38,6 +38,7 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
+        <script src="_static/particles.min.js"></script>
         <script src="_static/custom.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -60,7 +61,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab Documentation
           
 
           
@@ -84,6 +85,33 @@
         </div>
 
         
+  <div class="sidebarlogo">
+    <h4>Lab's information</h4>
+    <ul class="social">
+      
+      <li><a class="sc-book" href="http://ui-tei.rnai.jp/">
+        <i class="fa fa-book" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php">
+        <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+    <h4>Author's Social link</h4>
+    <ul class="social">
+      
+      <li><a class="sc-twitter" href="https://twitter.com/cabernet_rock">
+        <i class="fa fa-twitter" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-github" href="https://github.com/iwasakishuto">
+        <i class="fa fa-github" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+  </div>
+  
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -108,6 +136,7 @@
           
         </div>
         
+
       </div>
     </nav>
 
@@ -117,12 +146,14 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">UiTei-Lab</a>
+          <a href="index.html">UiTei-Lab Documentation</a>
         
       </nav>
 
 
       <div class="wy-nav-content">
+<canvas class="particle-background"></canvas>
+
         
         <div class="rst-content">
         
@@ -286,7 +317,7 @@
 
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">TeiLabDataSets</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">datasets</span> <span class="o">=</span> <span class="n">TeiLabDataSets</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datasets</span> <span class="o">=</span> <span class="n">TeiLabDataSets</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">There are not enough datasets. Use ``.get_data`` to prepare all the required datasets.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">datasets</span><span class="o">.</span><span class="n">satisfied</span>
 <span class="go">False</span>
@@ -306,6 +337,18 @@
 <dt id="teilab.datasets.TeiLabDataSets.TARGET_SystematicName">
 <code class="sig-name descname">TARGET_SystematicName</code><em class="property">: str</em><em class="property"> = 'NM_003380'</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.TARGET_SystematicName" title="Permalink to this definition">¶</a></dt>
 <dd><p>TARGET_SystematicName (str) <code class="docutils literal notranslate"><span class="pre">SystematicName</span></code> of the target RNA (vimentin)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="teilab.datasets.TeiLabDataSets.META_COLNAMES">
+<code class="sig-name descname">META_COLNAMES</code><em class="property">: List<span class="p">[</span>str<span class="p">]</span></em><em class="property"> = ['FeatureNum', 'ControlType', 'ProbeName', 'GeneName', 'SystematicName']</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.META_COLNAMES" title="Permalink to this definition">¶</a></dt>
+<dd><p>META_COLNAMES (List[str]) Column names for metadata.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="teilab.datasets.TeiLabDataSets.DATA_COLNAMES">
+<code class="sig-name descname">DATA_COLNAMES</code><em class="property">: List<span class="p">[</span>str<span class="p">]</span></em><em class="property"> = ['gProcessedSignal']</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.DATA_COLNAMES" title="Permalink to this definition">¶</a></dt>
+<dd><p>DATA_COLNAMES (List[str]) Column names for expression data.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -437,12 +480,44 @@
 </dl>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">TeiLabDataSets</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">datasets</span> <span class="o">=</span> <span class="n">TeiLabDataSets</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datasets</span> <span class="o">=</span> <span class="n">TeiLabDataSets</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dfs</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">read_df</span><span class="p">(</span><span class="s2">&quot;all&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
 <span class="go">13</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">dfs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="go">pandas.core.frame.DataFrame</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="teilab.datasets.TeiLabDataSets.reliable_filter">
+<em class="property">static </em><code class="sig-name descname">reliable_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">name</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.reliable_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.reliable_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a dataframe which means whether data is reliable or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – Input dataframe.</p></li>
+<li><p><strong>name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – The column name. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Filter DataFrame which means whether data is reliable or not.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">TeiLabDataSets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datasets</span> <span class="o">=</span> <span class="n">TeiLabDataSets</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_sg</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">read_df</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">df_sg</span><span class="p">),</span> <span class="n">datasets</span><span class="o">.</span><span class="n">reliable_filter</span><span class="p">(</span><span class="n">df_sg</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">(62976, 30385)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_us</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">read_df</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">df_us</span><span class="p">),</span> <span class="n">datasets</span><span class="o">.</span><span class="n">reliable_filter</span><span class="p">(</span><span class="n">df_us</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">(62976, 23434)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -480,6 +555,7 @@
 </footer>
 
         </div>
+
       </div>
 
     </section>

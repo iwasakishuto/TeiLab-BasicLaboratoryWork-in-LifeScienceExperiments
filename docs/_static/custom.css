@@ -1,3 +1,62 @@
+/*!
+ * Custom CSS for https://iwasakishuto.github.io/Python-Charmers/index.html
+ *
+ * Copyright 2020 Shuto Iwasaki
+ * Twitter : https://twitter.com/cabernet_rock
+ * Github  : https://github.com/iwasakishuto
+ * 
+*/
+
+/* Navigation, Background */
+.particle-background {
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: #9ecca4;
+}
+.wy-nav-content {
+  min-height: 100vh;
+}
+a, a:visited {
+  color: #355f7c;
+}
+.wy-side-nav-search .wy-dropdown>a:visited, .wy-side-nav-search>a:visited {
+  color: #fcfcfc;
+}
+.wy-nav-top a:visited {
+  color: rgb(255, 255, 255);
+}
+.wy-menu-vertical a:hover {
+  background-color: #ddd;
+}
+li.wy-breadcrumbs-aside a{
+  color: teal;
+}
+li.wy-breadcrumbs-aside a:after {
+  content: "\f1c9";
+  font-family: 'FontAwesome';
+  margin-left: 5px;
+}
+div.section {
+  margin-top: 10px;
+}
+div.wy-nav-content h1, div.wy-nav-content h2, div.wy-nav-content h3, 
+div.wy-nav-content h4, div.wy-nav-content h5, div.wy-nav-content h6 {
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #ccc;
+  font-weight: normal;
+  padding: 3px 0 2px 10px;
+  border-radius: 5px;
+}
+.wy-menu-vertical a {
+  background-color: #fcfcfc;
+  color: black;
+}
+
+
+/* Page Contents */
 dl {
   margin-bottom: 15px;
 }
@@ -7,7 +66,8 @@ dl.field-list {
   background-color: #cee6b4;
   padding: 5px 10px;
 }
-dl.field-list ul.simple li em {
+/* dl.field-list ul.simple li em */
+dl.field-list em {
   color: red;
   padding: 1px 2px;
 }
@@ -44,6 +104,83 @@ div.viewcode-block:target {
   border-radius: 5px;
 }
 
+/* Style for List of modules and packages */
+.rst-content .section ul {
+  line-height: 130%;
+  margin-bottom: 0;
+}
+.toctree-wrapper ul {
+  margin: 0!important;
+}
+.rst-content .section ul li li li li {
+  list-style-type: circle;
+}
+.rst-content .section ul li li li li li{
+  list-style-type: disc;
+}
+
+/* Social Links and Other contents */
+div.sidebarlogo h4 {
+  font-family: 'Trebuchet MS', sans-serif;
+  color: white;
+  margin: 0;
+  text-decoration: underline;
+}
+div.sidebarlogo ul {
+  margin: 10px;
+  padding: 0;
+  color: #ffffff;
+}
+div.sidebarlogo ul.social {
+  list-style-type: none;
+  font-size: 1.6em;
+  text-align: center;
+}
+div.sidebarlogo ul.social li {
+  display: inline;
+}
+div.sidebarlogo ul.social a {
+  display: inline-block;
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
+  text-align: center;
+  font-size: 1em;
+  line-height: 45px;
+  transition: 0.5s;
+}
+div.sidebarlogo ul.social a:hover {
+  -moz-transform: scale(1.5, 1.5);
+  -webkit-transform: scale(1.5, 1.5);
+  -o-transform: scale(1.5, 1.5);
+  -ms-transform: scale(1.5, 1.5);
+}
+div.sidebarlogo ul.social a.sc-book, ul.social a.sc-book-alt {
+  background-color: #111010;
+  color: white;
+}
+div.sidebarlogo ul.social a.sc-wikipedia-w, ul.social a.sc-wikipedia-w-alt {
+  background-color: white;
+  color: black;
+}
+div.sidebarlogo ul.social a.sc-github, ul.social a.sc-github-alt {
+  background-color: #111010;
+  color: white;
+}
+div.sidebarlogo ul.social a.sc-twitter {
+  color: white;
+  background-color: #4da7de;
+}
+
+/* <-- These two are inverted */
+.fa-home:before, .icon-home:before {
+  content: "";
+}
+.fa-book:before, .icon-book:before {
+  content: "";
+}
+/* These are inverted --> */
+
 /* <--- Style from Python Charmers --- */
 dl.py > dt {
   padding: 0.5em;
@@ -58,18 +195,45 @@ dl.py.function > dt {
 div.related {
   background-color: #722F38;
 }
-.py.method code.sig-name.descname {
-  color: #0000FF;
-}
-.py.attribute code.sig-name.descname {
-  color: red;
-}
-code.sig-name.descname {
+dl.py.function code.sig-name.descname {
   color: #008000;
 }
-span.pre {
-  color: tomato;
+dl.py.class code.sig-name.descname {
+  color: #ffd56b;
 }
+dl.py.method code.sig-name.descname {
+  color: #0000FF;
+}
+dl.py.attribute code.sig-name.descname {
+  color: red;
+}
+
+dl.py.class em.property:first-child, dl.py.method em.property:first-child{
+  position: relative;
+  color: red;
+  padding: 0 4px!important;
+  margin-right: 4px;
+}
+dl.py.class em.property:first-child:before, dl.py.method em.property:first-child:before,
+dl.py.class em.property:first-child:after, dl.py.method em.property:first-child:after {
+  position: absolute;
+  top: 0;
+  content: '';
+  width: 8px;
+  height: 100%;
+  display: inline-block;
+  border-top: solid 1px red;
+  border-bottom: solid 1px red;
+}
+dl.py.class em.property:first-child:before, dl.py.method em.property:first-child:before{
+  border-left: solid 1px red;
+  left: 0;
+}
+dl.py.class em.property:first-child:after, dl.py.method em.property:first-child:after{
+  border-right: solid 1px red;
+  right: 0; 
+}
+
 th, dl.field-list dt, dl.field-list dd {
   padding: 5px;
 }
