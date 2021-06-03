@@ -34,7 +34,7 @@ window.onload = function() {
       {
         breakpoint: 1100,
         options: {
-          maxParticles: 0,
+          maxParticles: 0, // disables particles.js for speed.
         }
       }
     ]
