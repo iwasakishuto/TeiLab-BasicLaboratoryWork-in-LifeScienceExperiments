@@ -30,6 +30,11 @@ class Samples():
         self.df_ = pd.read_csv(sample_list_path)
         for col in self.df_.columns:
             setattr(self, col, self.df_[col].tolist())
+        self.grouping()
+    
+    def grouping(self):
+        self.FileName
+
 
 class TeiLabDataSets():
     """Utility Datasets Class for this lecture.
@@ -177,36 +182,125 @@ class TeiLabDataSets():
         """Whether to get all necessary data or not."""
         return len(self.filePaths) == len(self.samples.FileName)
 
-    def read_df(self, no:Union[int,str,List[int]], header:Union[int,List[int]]=9) -> Union[pd.DataFrame, List[pd.DataFrame]]:
-        """Read sample data as ``pd.DataFrame``
+    def read(self, no:Union[int,str,List[int]], sep:Optional[str]="\t", header:Union[int,List[int]]="infer", nrows:Optional[int]=None, usecols:Optional[Union[List[str],callable]]=None, **kwargs) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """Read sample(s) data as ``pd.DataFrame``
 
         Args:
-            no (Union[int,List[int]])               : Target sample number(s) or ``"all"``.
-            header (Union[int,List[int]], optional) : Row number(s) to use as the column names, and the start of the data. Defaults to ``9``.
+            no (Union[int,str,List[int]])                           : Target sample number(s) or ``"all"`` .
+            sep (Optional[str], optional)                           : Delimiter to use. Defaults to ``"\\t"``
+            header (Union[int,List[int]], optional)                 : Row number(s) to use as the column names, and the start of the data. Defaults to ``"infer"``.
+            nrows (Optional[int], optional)                         : Number of rows of file to read. Useful for reading pieces of large files. Defaults to ``None``.
+            usecols (Optional[Union[List[str],callable]], optional) : Return a subset of the columns. Defaults to ``None``.
+            **kwargs (dict)                                         : Other keyword arguments for ``pd.read_csv`` .
+
+        Raises:
+            TypeError: When argument ``no`` is an instance of unexpected type or is an unexpected value.
 
         Returns:
-            Union[pd.DataFrame, List[pd.DataFrame]]: DataFrame of the specified sample data.
+            Union[pd.DataFrame, List[pd.DataFrame]]: DataFrame of the specified sample(s).
 
         Examples:
             >>> from teilab.datasets import TeiLabDataSets
             >>> datasets = TeiLabDataSets(verbose=False)
-            >>> dfs = datasets.read_df("all")
+            >>> dfs = datasets.read(no="all", header=9)
             >>> len(dfs)
             13
             >>> type(dfs[0])
             pandas.core.frame.DataFrame
         """
+        kwargs.update({"sep":sep, "header":header, "nrows":nrows,"usecols":usecols})
         if isinstance(no, list):
-            return [self.read_df(no=n, header=header) for n in no]
+            return [self._read_csv(no=n, **kwargs) for n in no]
         elif isinstance(no, str):
             if no=="all":
-                return [self.read_df(no=n, header=header) for n in range(len(self.filePaths))]
+                return [self._read_csv(no=n, **kwargs) for n in range(len(self.filePaths))]
             else:
                 raise TypeError("Please specify the sample number.")
         else:
-            filepath = self.filePaths[no]
-            self.print(f"Read data from '{filepath.relative_to(self.root)}'")
-            return pd.read_csv(filepath_or_buffer=filepath, sep="\t", header=header)
+            return self._read_csv(no=no, **kwargs)
+
+    def _read_csv(self, no:int, **kwargs) -> pd.DataFrame:
+        """Read the sample as ``pd.DataFrame``        
+
+        Args:
+            no (int)      : Target sample number.
+            kwargs (dict) : Keyword arguments for ``pd.read_csv`` .
+
+        Returns:
+            pd.DataFrame: DataFrame of the specified sample.
+
+        Examples:
+            >>> from teilab.datasets import TeiLabDataSets
+            >>> datasets = TeiLabDataSets(verbose=False)
+            >>> df = datasets._read_csv(no=0, header=9)
+            >>> len(df)
+            62976
+            >>> type(df)
+            pandas.core.frame.DataFrame
+        """
+        filepath = self.filePaths[no]
+        self.print(f"Read data from '{filepath.relative_to(self.root)}'")
+        return pd.read_csv(filepath_or_buffer=filepath, **kwargs)
+
+    def read_data(self, no:Union[int,str,List[int]]) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """Read sample(s) 'expression' data as ``pd.DataFrame``
+
+        Args:
+            no (Union[int,str,List[int]]) : Target sample number(s) or ``"all"`` .
+
+        Returns:
+            Union[pd.DataFrame, List[pd.DataFrame]]: DataFrame of the specified sample(s) 'expression' data.
+
+        Examples:
+            >>> from teilab.datasets import TeiLabDataSets
+            >>> datasets = TeiLabDataSets(verbose=False)
+            >>> dfs = datasets.read_data(no=[0,1,2])
+            >>> len(dfs)
+            3
+            >>> len(dfs[0])
+            62976
+        """
+        return self.read(no=no, header=9)
+
+    def read_meta(self, no:Union[int,str,List[int]]) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """Read sample(s) 'meta' data as ``pd.DataFrame``
+
+        Args:
+            no (Union[int,str,List[int]]) : Target sample number(s) or ``"all"`` .
+
+        Returns:
+            Union[pd.DataFrame, List[pd.DataFrame]]: DataFrame of the specified sample(s) 'meta' data.
+
+        Examples:
+            >>> from teilab.datasets import TeiLabDataSets
+            >>> datasets = TeiLabDataSets(verbose=False)
+            >>> dfs = datasets.read_meta(no="all")
+            >>> len(dfs)
+            13
+            >>> len(dfs[0])
+            1
+        """
+        return self.read(no=no, header=1, nrows=1)
+
+    def read_summary(self, no:Union[int,str,List[int]]) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+        """Read sample(s) 'summary' data as ``pd.DataFrame``
+
+        Args:
+            no (Union[int,str,List[int]]) : Target sample number(s) or ``"all"`` .
+
+        Returns:
+            Union[pd.DataFrame, List[pd.DataFrame]]: DataFrame of the specified sample(s) 'summary' data.
+
+        Examples:
+            >>> from teilab.datasets import TeiLabDataSets
+            >>> datasets = TeiLabDataSets(verbose=False)
+            >>> dfs = datasets.read_summary(no=[0,3,8,9])
+            >>> len(dfs)
+            4
+            >>> len(dfs[0])
+            1
+        """
+        return self.read(no=no, header=5, nrows=1)
 
     @staticmethod
     def reliable_filter(df:pd.DataFrame, name:Optional[str]=None) -> pd.DataFrame:
@@ -223,10 +317,10 @@ class TeiLabDataSets():
             >>> import pandas as pd
             >>> from teilab.datasets import TeiLabDataSets
             >>> datasets = TeiLabDataSets(verbose=False)
-            >>> df_sg = datasets.read_df(0)
+            >>> df_sg = datasets.read_data(0)
             >>> len(df_sg), datasets.reliable_filter(df_sg).sum().values[0]
             (62976, 30385)
-            >>> df_us = datasets.read_df(-1)
+            >>> df_us = datasets.read_data(-1)
             >>> len(df_us), datasets.reliable_filter(df_us).sum().values[0]
             (62976, 23434)
         """

@@ -212,7 +212,12 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_list_path</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">df_</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">sample_list_path</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span></div>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">df_</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grouping</span><span class="p">()</span>
+    
+<div class="viewcode-block" id="Samples.grouping"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.Samples.grouping">[docs]</a>    <span class="k">def</span> <span class="nf">grouping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">FileName</span></div></div>
+
 
 <div class="viewcode-block" id="TeiLabDataSets"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.TeiLabDataSets">[docs]</a><span class="k">class</span> <span class="nc">TeiLabDataSets</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Utility Datasets Class for this lecture.</span>
@@ -360,36 +365,125 @@
         <span class="sd">&quot;&quot;&quot;Whether to get all necessary data or not.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filePaths</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">FileName</span><span class="p">)</span>
 
-<div class="viewcode-block" id="TeiLabDataSets.read_df"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.TeiLabDataSets.read_df">[docs]</a>    <span class="k">def</span> <span class="nf">read_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">no</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="nb">str</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">header</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
-        <span class="sd">&quot;&quot;&quot;Read sample data as ``pd.DataFrame``</span>
+<div class="viewcode-block" id="TeiLabDataSets.read"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.TeiLabDataSets.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">no</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="nb">str</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="n">sep</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">header</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span><span class="o">=</span><span class="s2">&quot;infer&quot;</span><span class="p">,</span> <span class="n">nrows</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">usecols</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span><span class="n">callable</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Read sample(s) data as ``pd.DataFrame``</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            no (Union[int,List[int]])               : Target sample number(s) or ``&quot;all&quot;``.</span>
-<span class="sd">            header (Union[int,List[int]], optional) : Row number(s) to use as the column names, and the start of the data. Defaults to ``9``.</span>
+<span class="sd">            no (Union[int,str,List[int]])                           : Target sample number(s) or ``&quot;all&quot;`` .</span>
+<span class="sd">            sep (Optional[str], optional)                           : Delimiter to use. Defaults to ``&quot;\\t&quot;``</span>
+<span class="sd">            header (Union[int,List[int]], optional)                 : Row number(s) to use as the column names, and the start of the data. Defaults to ``&quot;infer&quot;``.</span>
+<span class="sd">            nrows (Optional[int], optional)                         : Number of rows of file to read. Useful for reading pieces of large files. Defaults to ``None``.</span>
+<span class="sd">            usecols (Optional[Union[List[str],callable]], optional) : Return a subset of the columns. Defaults to ``None``.</span>
+<span class="sd">            **kwargs (dict)                                         : Other keyword arguments for ``pd.read_csv`` .</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            TypeError: When argument ``no`` is an instance of unexpected type or is an unexpected value.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            Union[pd.DataFrame, List[pd.DataFrame]]: DataFrame of the specified sample data.</span>
+<span class="sd">            Union[pd.DataFrame, List[pd.DataFrame]]: DataFrame of the specified sample(s).</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
 <span class="sd">            &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
-<span class="sd">            &gt;&gt;&gt; dfs = datasets.read_df(&quot;all&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; dfs = datasets.read(no=&quot;all&quot;, header=9)</span>
 <span class="sd">            &gt;&gt;&gt; len(dfs)</span>
 <span class="sd">            13</span>
 <span class="sd">            &gt;&gt;&gt; type(dfs[0])</span>
 <span class="sd">            pandas.core.frame.DataFrame</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;sep&quot;</span><span class="p">:</span><span class="n">sep</span><span class="p">,</span> <span class="s2">&quot;header&quot;</span><span class="p">:</span><span class="n">header</span><span class="p">,</span> <span class="s2">&quot;nrows&quot;</span><span class="p">:</span><span class="n">nrows</span><span class="p">,</span><span class="s2">&quot;usecols&quot;</span><span class="p">:</span><span class="n">usecols</span><span class="p">})</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
-            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">read_df</span><span class="p">(</span><span class="n">no</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">no</span><span class="p">]</span>
+            <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_csv</span><span class="p">(</span><span class="n">no</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">no</span><span class="p">]</span>
         <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">no</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">no</span><span class="o">==</span><span class="s2">&quot;all&quot;</span><span class="p">:</span>
-                <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">read_df</span><span class="p">(</span><span class="n">no</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filePaths</span><span class="p">))]</span>
+                <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_read_csv</span><span class="p">(</span><span class="n">no</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filePaths</span><span class="p">))]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Please specify the sample number.&quot;</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filePaths</span><span class="p">[</span><span class="n">no</span><span class="p">]</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read data from &#39;</span><span class="si">{</span><span class="n">filepath</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">filepath</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_read_csv</span><span class="p">(</span><span class="n">no</span><span class="o">=</span><span class="n">no</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_read_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">no</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Read the sample as ``pd.DataFrame``        </span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            no (int)      : Target sample number.</span>
+<span class="sd">            kwargs (dict) : Keyword arguments for ``pd.read_csv`` .</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            pd.DataFrame: DataFrame of the specified sample.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
+<span class="sd">            &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
+<span class="sd">            &gt;&gt;&gt; df = datasets._read_csv(no=0, header=9)</span>
+<span class="sd">            &gt;&gt;&gt; len(df)</span>
+<span class="sd">            62976</span>
+<span class="sd">            &gt;&gt;&gt; type(df)</span>
+<span class="sd">            pandas.core.frame.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filePaths</span><span class="p">[</span><span class="n">no</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Read data from &#39;</span><span class="si">{</span><span class="n">filepath</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="p">)</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath_or_buffer</span><span class="o">=</span><span class="n">filepath</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TeiLabDataSets.read_data"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.TeiLabDataSets.read_data">[docs]</a>    <span class="k">def</span> <span class="nf">read_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">no</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="nb">str</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Read sample(s) &#39;expression&#39; data as ``pd.DataFrame``</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            no (Union[int,str,List[int]]) : Target sample number(s) or ``&quot;all&quot;`` .</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Union[pd.DataFrame, List[pd.DataFrame]]: DataFrame of the specified sample(s) &#39;expression&#39; data.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
+<span class="sd">            &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
+<span class="sd">            &gt;&gt;&gt; dfs = datasets.read_data(no=[0,1,2])</span>
+<span class="sd">            &gt;&gt;&gt; len(dfs)</span>
+<span class="sd">            3</span>
+<span class="sd">            &gt;&gt;&gt; len(dfs[0])</span>
+<span class="sd">            62976</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">no</span><span class="o">=</span><span class="n">no</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiLabDataSets.read_meta"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.TeiLabDataSets.read_meta">[docs]</a>    <span class="k">def</span> <span class="nf">read_meta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">no</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="nb">str</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Read sample(s) &#39;meta&#39; data as ``pd.DataFrame``</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            no (Union[int,str,List[int]]) : Target sample number(s) or ``&quot;all&quot;`` .</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Union[pd.DataFrame, List[pd.DataFrame]]: DataFrame of the specified sample(s) &#39;meta&#39; data.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
+<span class="sd">            &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
+<span class="sd">            &gt;&gt;&gt; dfs = datasets.read_meta(no=&quot;all&quot;)</span>
+<span class="sd">            &gt;&gt;&gt; len(dfs)</span>
+<span class="sd">            13</span>
+<span class="sd">            &gt;&gt;&gt; len(dfs[0])</span>
+<span class="sd">            1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">no</span><span class="o">=</span><span class="n">no</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TeiLabDataSets.read_summary"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.TeiLabDataSets.read_summary">[docs]</a>    <span class="k">def</span> <span class="nf">read_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">no</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span><span class="nb">str</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;Read sample(s) &#39;summary&#39; data as ``pd.DataFrame``</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            no (Union[int,str,List[int]]) : Target sample number(s) or ``&quot;all&quot;`` .</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Union[pd.DataFrame, List[pd.DataFrame]]: DataFrame of the specified sample(s) &#39;summary&#39; data.</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
+<span class="sd">            &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
+<span class="sd">            &gt;&gt;&gt; dfs = datasets.read_summary(no=[0,3,8,9])</span>
+<span class="sd">            &gt;&gt;&gt; len(dfs)</span>
+<span class="sd">            4</span>
+<span class="sd">            &gt;&gt;&gt; len(dfs[0])</span>
+<span class="sd">            1</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">no</span><span class="o">=</span><span class="n">no</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="TeiLabDataSets.reliable_filter"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.TeiLabDataSets.reliable_filter">[docs]</a>    <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">reliable_filter</span><span class="p">(</span><span class="n">df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
@@ -406,10 +500,10 @@
 <span class="sd">            &gt;&gt;&gt; import pandas as pd</span>
 <span class="sd">            &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
 <span class="sd">            &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
-<span class="sd">            &gt;&gt;&gt; df_sg = datasets.read_df(0)</span>
+<span class="sd">            &gt;&gt;&gt; df_sg = datasets.read_data(0)</span>
 <span class="sd">            &gt;&gt;&gt; len(df_sg), datasets.reliable_filter(df_sg).sum().values[0]</span>
 <span class="sd">            (62976, 30385)</span>
-<span class="sd">            &gt;&gt;&gt; df_us = datasets.read_df(-1)</span>
+<span class="sd">            &gt;&gt;&gt; df_us = datasets.read_data(-1)</span>
 <span class="sd">            &gt;&gt;&gt; len(df_us), datasets.reliable_filter(df_us).sum().values[0]</span>
 <span class="sd">            (62976, 23434)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
