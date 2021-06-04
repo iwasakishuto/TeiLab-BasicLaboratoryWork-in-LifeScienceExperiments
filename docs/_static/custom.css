@@ -59,6 +59,7 @@ div.wy-nav-content h4, div.wy-nav-content h5, div.wy-nav-content h6 {
   color: black;
 }
 
+/* <-- Utility Buttons */
 ul.utility-btns{
   margin: 10px;
   text-align: center;
@@ -67,25 +68,23 @@ ul.utility-btns{
 ul.utility-btns li {
   margin: 5px;
 }
-.btn-icon{
-  color:black!important; 
-}
 .btn-icon:before {
   font-family: 'FontAwesome';
   padding-right: 5px;
 }
-.btn-stop{ background-color: #f5abc9; }
+.btn-stop{ color:white!important; background-color: #f5abc9; }
 .btn-stop:hover, .btn-stop:focus { background-color: #ba135d; }
 .btn-stop:before { content: "\f05e"; }
-.btn-start{ background-color: #77acf1; }
+.btn-start{ color:white!important; background-color: #77acf1; }
 .btn-start:hover, .btn-start:focus { background-color: #344fa1; }
 .btn-start:before { content: "\f144"; }
-.btn-expand { background-color: #9fe6a0; }
+.btn-expand { color:black!important; background-color: #9fe6a0; }
 .btn-expand:hover, .btn-expand:focus { background-color: #4aa96c; }
 .btn-expand:before { content: "\f065"; }
-.btn-shrink { background-color: #ffdf6b; }
+.btn-shrink { color:black!important; background-color: #ffdf6b; }
 .btn-shrink:hover, .btn-shrink:focus { background-color: #fea82f; }
 .btn-shrink:before { content: "\f066"; }
+/* Utility Buttons --> */
 
 /* Page Contents */
 dl {
