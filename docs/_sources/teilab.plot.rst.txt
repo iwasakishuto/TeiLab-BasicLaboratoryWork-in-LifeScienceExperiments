@@ -1,0 +1,19 @@
+teilab.plot package
+===================
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 4
+
+   teilab.plot.matplotlib
+   teilab.plot.plotly
+
+Module contents
+---------------
+
+.. automodule:: teilab.plot
+   :members:
+   :undoc-members:
+   :show-inheritance:

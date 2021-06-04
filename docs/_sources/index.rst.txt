@@ -3,29 +3,35 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+#####################################
 Welcome to UiTei-Lab's documentation!
-=====================================
+#####################################
+
 
 .. figure:: https://camo.githubusercontent.com/207bfad0a9138764bcfb51e04353f209de425aaf201648b706936e255b749dd6/687474703a2f2f75692d7465692e726e61692e6a702f6173736574732f696d616765732f746f702d3230303830372e6a7067
    :alt: Members-in-UiTei-Laboratory
+   :target: http://ui-tei.rnai.jp/
 
+*************************************************
 Basic Laboratory Work in Life Science Experiments
--------------------------------------------------
+*************************************************
 
-In this lecture, we will perform bioinformatics experiments such as **sequencing**, **biochemical reaction simulation**, and **gene expression profiling**. This lecture is for students in , department of Bioinformatics and Systems Biology or department of Biophysics and Biochemistry.
+In this lecture, we will perform bioinformatics experiments such as **"Sequencing"**, **"Biochemical Reaction Simulation"**, and **"Gene Expression Profiling"** (← Our Lab is in charge of this). This lecture is for students in , department of Bioinformatics and Systems Biology or department of Biophysics and Biochemistry.
 
 Please refer to `Lecture's Wiki <http://ui-tei.rnai.jp/microarray/doku.php>`__ or `Repository's Wiki <https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/wiki>`__ to check the schedule.
 
+****************
 Package Contents
-^^^^^^^^^^^^^^^^
+****************
 
 .. toctree::
    :maxdepth: 5
 
    teilab
 
+************
 Installation
-~~~~~~~~~~~~
+************
 
 I recommend you to use `Pyenv <https://github.com/pyenv/pyenv#installation>`__ and `Poetry <https://github.com/python-poetry/poetry#installation>`__ to set up the required environment. 
 
@@ -42,7 +48,7 @@ I recommend you to use `Pyenv <https://github.com/pyenv/pyenv#installation>`__ a
 If you want to use Jupyter Notebook with this environment, check `this notebook <https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/%5Blocal%5D%20Start%20Jupyter%20Notebook%20with%20Poetry%20Environment.ipynb>`__.
 
 Indices and tables
-------------------
+==================
 
 * :ref:`genindex`
 * :ref:`modindex`

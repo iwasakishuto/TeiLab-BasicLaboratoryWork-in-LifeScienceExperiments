@@ -78,6 +78,10 @@
         </div>
 
         
+  <ul class="utility-btns">
+    <li><a class="btn btn-icon btn-stop" href="#" onclick="changeParticles(this);">Stop Particles</a></li>
+    <li><a class="btn btn-icon btn-expand" href="#" onclick="changeStyle(this);">Expand</a></li>
+  </ul>
   <div class="sidebarlogo">
     <h4>Lab's information</h4>
     <ul class="social">
@@ -180,6 +184,8 @@
             
   <h1>All modules for which code is available</h1>
 <ul><li><a href="teilab/datasets.html">teilab.datasets</a></li>
+<li><a href="teilab/plot/matplotlib.html">teilab.plot.matplotlib</a></li>
+<li><a href="teilab/plot/plotly.html">teilab.plot.plotly</a></li>
 <li><a href="teilab/question.html">teilab.question</a></li>
 <li><a href="teilab/utils/download_utils.html">teilab.utils.download_utils</a></li>
 <li><a href="teilab/utils/generic_utils.html">teilab.utils.generic_utils</a></li>
@@ -223,6 +229,14 @@
     
   
  
+<style id="style-expand" disabled="true">
+  .wy-nav-content {
+    max-width: 100%!important;
+  }
+</style>
+<script>
+  document.getElementById("style-expand").disabled = true;
+</script>
 
 
 </body>

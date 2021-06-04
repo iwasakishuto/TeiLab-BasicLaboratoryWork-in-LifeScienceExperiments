@@ -8,7 +8,7 @@
   <meta property="og:title" content="Welcome to UiTei-Lab’s documentation!" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="index.html" />
-  <meta property="og:description" content="Members-in-UiTei-Laboratory Basic Laboratory Work in Life Science Experiments: In this lecture, we will perform bioinformatics experiments such as sequencing, biochemical reaction simulation, and g..." />
+  <meta property="og:description" content="Members-in-UiTei-Laboratory Basic Laboratory Work in Life Science Experiments: In this lecture, we will perform bioinformatics experiments such as “Sequencing”, “Biochemical Reaction Simulation”, a..." />
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -84,6 +84,10 @@
         </div>
 
         
+  <ul class="utility-btns">
+    <li><a class="btn btn-icon btn-stop" href="#" onclick="changeParticles(this);">Stop Particles</a></li>
+    <li><a class="btn btn-icon btn-expand" href="#" onclick="changeStyle(this);">Expand</a></li>
+  </ul>
   <div class="sidebarlogo">
     <h4>Lab's information</h4>
     <ul class="social">
@@ -191,18 +195,28 @@
   <div class="section" id="welcome-to-uitei-lab-s-documentation">
 <h1>Welcome to UiTei-Lab’s documentation!<a class="headerlink" href="#welcome-to-uitei-lab-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="figure align-default">
-<img alt="Members-in-UiTei-Laboratory" src="https://camo.githubusercontent.com/207bfad0a9138764bcfb51e04353f209de425aaf201648b706936e255b749dd6/687474703a2f2f75692d7465692e726e61692e6a702f6173736574732f696d616765732f746f702d3230303830372e6a7067" />
+<a class="reference external image-reference" href="http://ui-tei.rnai.jp/"><img alt="Members-in-UiTei-Laboratory" src="https://camo.githubusercontent.com/207bfad0a9138764bcfb51e04353f209de425aaf201648b706936e255b749dd6/687474703a2f2f75692d7465692e726e61692e6a702f6173736574732f696d616765732f746f702d3230303830372e6a7067" /></a>
 </div>
 <div class="section" id="basic-laboratory-work-in-life-science-experiments">
 <h2>Basic Laboratory Work in Life Science Experiments<a class="headerlink" href="#basic-laboratory-work-in-life-science-experiments" title="Permalink to this headline">¶</a></h2>
-<p>In this lecture, we will perform bioinformatics experiments such as <strong>sequencing</strong>, <strong>biochemical reaction simulation</strong>, and <strong>gene expression profiling</strong>. This lecture is for students in , department of Bioinformatics and Systems Biology or department of Biophysics and Biochemistry.</p>
+<p>In this lecture, we will perform bioinformatics experiments such as <strong>“Sequencing”</strong>, <strong>“Biochemical Reaction Simulation”</strong>, and <strong>“Gene Expression Profiling”</strong> (← Our Lab is in charge of this). This lecture is for students in , department of Bioinformatics and Systems Biology or department of Biophysics and Biochemistry.</p>
 <p>Please refer to <a class="reference external" href="http://ui-tei.rnai.jp/microarray/doku.php">Lecture’s Wiki</a> or <a class="reference external" href="https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/wiki">Repository’s Wiki</a> to check the schedule.</p>
+</div>
 <div class="section" id="package-contents">
-<h3>Package Contents<a class="headerlink" href="#package-contents" title="Permalink to this headline">¶</a></h3>
+<h2>Package Contents<a class="headerlink" href="#package-contents" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="teilab.html">teilab package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="teilab.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="teilab.plot.html">teilab.plot package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="teilab.plot.html#submodules">Submodules</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="teilab.plot.matplotlib.html">teilab.plot.matplotlib module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="teilab.plot.plotly.html">teilab.plot.plotly module</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="teilab.plot.html#module-teilab.plot">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="teilab.utils.html">teilab.utils package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="teilab.utils.html#submodules">Submodules</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="teilab.utils.download_utils.html">teilab.utils.download_utils module</a></li>
@@ -224,8 +238,9 @@
 </li>
 </ul>
 </div>
+</div>
 <div class="section" id="installation">
-<h4>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h4>
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
 <p>I recommend you to use <a class="reference external" href="https://github.com/pyenv/pyenv#installation">Pyenv</a> and <a class="reference external" href="https://github.com/python-poetry/poetry#installation">Poetry</a> to set up the required environment.</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.git
 $ <span class="nb">cd</span> TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments
@@ -237,16 +252,14 @@ $ poetry install
 </pre></div>
 </div>
 <p>If you want to use Jupyter Notebook with this environment, check <a class="reference external" href="https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/%5Blocal%5D%20Start%20Jupyter%20Notebook%20with%20Poetry%20Environment.ipynb">this notebook</a>.</p>
-</div>
-</div>
-</div>
 <div class="section" id="indices-and-tables">
-<h2>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h2>
+<h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
+</div>
 </div>
 </div>
 
@@ -296,6 +309,14 @@ $ poetry install
     
   
  
+<style id="style-expand" disabled="true">
+  .wy-nav-content {
+    max-width: 100%!important;
+  }
+</style>
+<script>
+  document.getElementById("style-expand").disabled = true;
+</script>
 
 
 </body>

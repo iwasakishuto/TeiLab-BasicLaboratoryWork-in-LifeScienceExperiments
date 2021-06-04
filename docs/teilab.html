@@ -8,7 +8,7 @@
   <meta property="og:title" content="teilab package" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="teilab.html" />
-  <meta property="og:description" content="Subpackages: teilab.utils package- Submodules- teilab.utils.download_utils module, teilab.utils.generic_utils module., Module contents.. Submodules: teilab.datasets module, teilab.question module. ..." />
+  <meta property="og:description" content="Subpackages: teilab.plot package- Submodules- teilab.plot.matplotlib module, teilab.plot.plotly module., Module contents., teilab.utils package- Submodules- teilab.utils.download_utils module, teil..." />
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -46,7 +46,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="teilab.utils package" href="teilab.utils.html" />
+    <link rel="next" title="teilab.plot package" href="teilab.plot.html" />
     <link rel="prev" title="Welcome to UiTei-Lab’s documentation!" href="index.html" /> 
 </head>
 
@@ -85,6 +85,10 @@
         </div>
 
         
+  <ul class="utility-btns">
+    <li><a class="btn btn-icon btn-stop" href="#" onclick="changeParticles(this);">Stop Particles</a></li>
+    <li><a class="btn btn-icon btn-expand" href="#" onclick="changeStyle(this);">Expand</a></li>
+  </ul>
   <div class="sidebarlogo">
     <h4>Lab's information</h4>
     <ul class="social">
@@ -122,6 +126,7 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">teilab package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="teilab.plot.html">teilab.plot package</a></li>
 <li class="toctree-l3"><a class="reference internal" href="teilab.utils.html">teilab.utils package</a></li>
 </ul>
 </li>
@@ -207,6 +212,15 @@
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="teilab.plot.html">teilab.plot package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="teilab.plot.html#submodules">Submodules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="teilab.plot.matplotlib.html">teilab.plot.matplotlib module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.plot.plotly.html">teilab.plot.plotly module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="teilab.plot.html#module-teilab.plot">Module contents</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="teilab.utils.html">teilab.utils package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="teilab.utils.html#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="teilab.utils.download_utils.html">teilab.utils.download_utils module</a></li>
@@ -241,7 +255,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="teilab.utils.html" class="btn btn-neutral float-right" title="teilab.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="teilab.plot.html" class="btn btn-neutral float-right" title="teilab.plot package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral float-left" title="Welcome to UiTei-Lab’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -281,6 +295,14 @@
     
   
  
+<style id="style-expand" disabled="true">
+  .wy-nav-content {
+    max-width: 100%!important;
+  }
+</style>
+<script>
+  document.getElementById("style-expand").disabled = true;
+</script>
 
 
 </body>

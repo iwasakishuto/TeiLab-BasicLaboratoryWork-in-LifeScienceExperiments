@@ -1,0 +1,7 @@
+teilab.plot.matplotlib module
+=============================
+
+.. automodule:: teilab.plot.matplotlib
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,7 @@
+teilab.plot.plotly module
+=========================
+
+.. automodule:: teilab.plot.plotly
+   :members:
+   :undoc-members:
+   :show-inheritance:

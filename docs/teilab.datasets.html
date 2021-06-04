@@ -8,7 +8,7 @@
   <meta property="og:title" content="teilab.datasets module" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="teilab.datasets.html" />
-  <meta property="og:description" content="" />
+  <meta property="og:description" content="This module handles Datasets used in the lecture. The table below describes the meaning of the values in each column of the data used in the lecture. If you want to refer each class or method, clic..." />
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -85,6 +85,10 @@
         </div>
 
         
+  <ul class="utility-btns">
+    <li><a class="btn btn-icon btn-stop" href="#" onclick="changeParticles(this);">Stop Particles</a></li>
+    <li><a class="btn btn-icon btn-expand" href="#" onclick="changeStyle(this);">Expand</a></li>
+  </ul>
   <div class="sidebarlogo">
     <h4>Lab's information</h4>
     <ul class="social">
@@ -202,14 +206,401 @@
             
   <div class="section" id="module-teilab.datasets">
 <span id="teilab-datasets-module"></span><h1>teilab.datasets module<a class="headerlink" href="#module-teilab.datasets" title="Permalink to this headline">¶</a></h1>
+<p>This module handles Datasets used in the lecture. The table below describes the meaning of the values in each column of the data used in the lecture. If you want to refer each class or method, click <a class="reference internal" href="#teilab.datasets.Samples" title="teilab.datasets.Samples"><code class="xref py py-class docutils literal notranslate"><span class="pre">HERE</span></code></a> to skip it.</p>
+<p>Reference: <a class="reference external" href="https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf">Agilent Feature Extraction 12.0 Reference Guide</a></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 1%" />
+<col style="width: 1%" />
+<col style="width: 7%" />
+<col style="width: 1%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>G2505C</p></th>
+<th class="head"><p>G2600D</p></th>
+<th class="head"><p>Features</p></th>
+<th class="head"><p>Types</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>1</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">FeatureNum</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Feature number.</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>2</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Row</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Feature location: row.</p></td>
+</tr>
+<tr class="row-even"><td><p>3</p></td>
+<td><p>3</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Col</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Feature location: column.</p></td>
+</tr>
+<tr class="row-odd"><td><p>4</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">accessions</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Gene accession numbers.</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">chr_coord</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Chromosome coordinates of the feature.</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>4</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SubTypeMask</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Numeric code defining the subtype of any control feature.</p></td>
+</tr>
+<tr class="row-even"><td><p>7</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SubTypeName</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Name of the subtype of any control feature.</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Start</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Indicates the place in the transcript where the probe sequence starts.</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Sequence</span></code></p></td>
+<td><p>str</p></td>
+<td><p>The sequence of bases printed on the array.</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ProbeUID</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Unique integer for each unique probe in a design.</p></td>
+</tr>
+<tr class="row-even"><td><p>11</p></td>
+<td><p>5</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ControlType</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Feature control type.</p></td>
+</tr>
+<tr class="row-odd"><td><p>12</p></td>
+<td><p>6</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ProbeName</span></code></p></td>
+<td><p>str</p></td>
+<td><p>An Agilent-assigned identifier for the probe synthesized on the microarray.</p></td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GeneName</span></code></p></td>
+<td><p>str</p></td>
+<td><p>This is an identifier for the gene for which the probe provides expression information. The target sequence identified by the systematic name is normally a representative or consensus sequence for the gene.</p></td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>7</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SystematicName</span></code></p></td>
+<td><p>str</p></td>
+<td><p>This is an identifier for the target sequence that the probe was designed to hybridize with. Where possible, a public database identifier is used (e.g., TAIR locus identifier for Arabidopsis). <code class="docutils literal notranslate"><span class="pre">SystematicName</span></code> is reported ONLY if Gene name and Systematic name are different.</p></td>
+</tr>
+<tr class="row-even"><td><p>15</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">Description</span></code></p></td>
+<td><p>str</p></td>
+<td><p>Description of gene.</p></td>
+</tr>
+<tr class="row-odd"><td><p>16</p></td>
+<td><p>8</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PositionX</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Found coordinates (X) of the feature centroid in microns.</p></td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>9</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">PositionY</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Found coordinates (Y) of the feature centroid in microns.</p></td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gSurrogateUsed</span></code></p></td>
+<td><p>float</p></td>
+<td><p>The g surrogate value used. (If <code class="docutils literal notranslate"><span class="pre">gSurrogateUsed</span></code> is Non-zero value.) No surrogate value used. (otherwise)</p></td>
+</tr>
+<tr class="row-even"><td><p>19</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gIsFound</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>A boolean used to flag found features. The flag is applied independently in each channel. (<code class="docutils literal notranslate"><span class="pre">1</span></code> = IsFound, <code class="docutils literal notranslate"><span class="pre">0</span></code> = IsNotFound) A feature is considered Found if two conditions are true: 1) the difference between the feature signal and the local background signal is more than 1.5 times the local background noise and 2) the spot diameter is at least 0.30 times the nominal spot diameter.</p></td>
+</tr>
+<tr class="row-odd"><td><p>20</p></td>
+<td><p>10</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gProcessedSignal</span></code></p></td>
+<td><p>float</p></td>
+<td><p>The signal left after all the Feature Extraction processing steps have been completed. In the case of one color, <code class="docutils literal notranslate"><span class="pre">ProcesssedSignal</span></code> contains the Multiplicatively Detrended BackgroundSubtracted Signal if the detrending is selected and helps. If the detrending does not help, this column will contain the <code class="docutils literal notranslate"><span class="pre">BackgroundSubtractedSignal</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>21</p></td>
+<td><p>11</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gProcessedSigError</span></code></p></td>
+<td><p>float</p></td>
+<td><p>The universal or propagated error left after all the processing steps of Feature Extraction have been completed. In the case of one color, <code class="docutils literal notranslate"><span class="pre">ProcessedSignalError</span></code> has had the Error Model applied and will contain at least the larger of the universal (UEM) error or the propagated error. If multiplicative detrending is performed, <code class="docutils literal notranslate"><span class="pre">ProcessedSignalError</span></code> contains the error propagated from detrending. This is done by dividing the error by the normalized <code class="docutils literal notranslate"><span class="pre">MultDetrendSignal</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>22</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gNumPixOLHi</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of outlier pixels per feature with intensity &gt; upper threshold set via the pixel outlier rejection method. The number is computed independently in each channel. These pixels are omitted from all subsequent calculations.</p></td>
+</tr>
+<tr class="row-even"><td><p>23</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gNumPixOLLo</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of outlier pixels per feature with intensity &lt; lower threshold set via the pixel outlier rejection method. The number is computed independently in each channel. These pixels are omitted from all subsequent calculations. NOTE: The pixel outlier method is the ONLY step that removes data in Feature Extraction.</p></td>
+</tr>
+<tr class="row-odd"><td><p>24</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gNumPix</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Total number of pixels used to compute feature statistics; i.e. total number of inlier pixels/per spot; same in both channels.</p></td>
+</tr>
+<tr class="row-even"><td><p>25</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gMeanSignal</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Raw mean signal of feature from inlier pixels in green and/or red channel.</p></td>
+</tr>
+<tr class="row-odd"><td><p>26</p></td>
+<td><p>12</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gMedianSignal</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Raw median signal of feature from inlier pixels in green and/or red channel.</p></td>
+</tr>
+<tr class="row-even"><td><p>27</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gPixSDev</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Standard deviation of all inlier pixels per feature; this is computed independently in each channel.</p></td>
+</tr>
+<tr class="row-odd"><td><p>28</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gPixNormIQR</span></code></p></td>
+<td><p>float</p></td>
+<td><p>The normalized Inter-quartile range of all of the inlier pixels per feature. The range is computed independently in each channel.</p></td>
+</tr>
+<tr class="row-even"><td><p>29</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gBGNumPix</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Total number of pixels used to compute local BG statistics per spot; i.e. total number of BG inlier pixels; same in both channels.</p></td>
+</tr>
+<tr class="row-odd"><td><p>30</p></td>
+<td><p>25</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gBGMeanSignal</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Mean local background signal (local to corresponding feature) computed per channel (inlier pixels).</p></td>
+</tr>
+<tr class="row-even"><td><p>31</p></td>
+<td><p>13</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gBGMedianSignal</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Median local background signal (local to corresponding feature) computed per channel (inlier pixels).</p></td>
+</tr>
+<tr class="row-odd"><td><p>32</p></td>
+<td><p>14</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gBGPixSDev</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Standard deviation of all inlier pixels per local BG of each feature, computed independently in each channel.</p></td>
+</tr>
+<tr class="row-even"><td><p>33</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gBGPixNormIQR</span></code></p></td>
+<td><p>float</p></td>
+<td><p>The normalized Inter-quartile range of all of the inlier pixels per local BG of each feature. The range is computed independently in each channel.</p></td>
+</tr>
+<tr class="row-odd"><td><p>34</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gNumSatPix</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Total number of saturated pixels per feature, computed per channel.</p></td>
+</tr>
+<tr class="row-even"><td><p>35</p></td>
+<td><p>15</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gIsSaturated</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Boolean flag indicating if a feature is saturated or not. A feature is saturated. IF 50% of the pixels in a feature are above the saturation threshold. (<code class="docutils literal notranslate"><span class="pre">1</span></code> = Saturated, <code class="docutils literal notranslate"><span class="pre">0</span></code> = Not saturated).</p></td>
+</tr>
+<tr class="row-odd"><td><p>36</p></td>
+<td><p>16</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gIsFeatNonUnifOL</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Boolean flag indicating if a feature is a NonUniformity Outlier or not. A feature is non-uniform if the pixel noise of feature exceeds a threshold established for a “uniform” feature. <code class="docutils literal notranslate"><span class="pre">g(r)IsFeatNonUnifOL</span></code> = <code class="docutils literal notranslate"><span class="pre">1</span></code> indicates Feature is a non-uniformity outlier in g(r).</p></td>
+</tr>
+<tr class="row-even"><td><p>37</p></td>
+<td><p>17</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gIsBGNonUnifOL</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>The same concept as above but for background. <code class="docutils literal notranslate"><span class="pre">g(r)IsBGNonUnifOL</span></code> = <code class="docutils literal notranslate"><span class="pre">1</span></code> indicates Local background is a non-uniformity outlier in g(r).</p></td>
+</tr>
+<tr class="row-odd"><td><p>38</p></td>
+<td><p>18</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gIsFeatPopnOL</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Boolean flag indicating if a feature is a Population Outlier or not. Probes with replicate features on a microarray are examined using population statistics. A feature is a population outlier if its signal is less than a lower threshold or exceeds an upper threshold determined using a multiplier (1.42) times the interquartile range (i.e., IQR) of the population. <code class="docutils literal notranslate"><span class="pre">g(r)IsFeatPopnOL</span></code> = <code class="docutils literal notranslate"><span class="pre">1</span></code> indicates Feature is a population outlier in g(r).</p></td>
+</tr>
+<tr class="row-even"><td><p>39</p></td>
+<td><p>19</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gIsBGPopnOL</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>The same concept as above but for background. <code class="docutils literal notranslate"><span class="pre">g(r)IsBGPopnOL</span></code> = <code class="docutils literal notranslate"><span class="pre">1</span></code> indicates local background is a population outlier in g(r).</p></td>
+</tr>
+<tr class="row-odd"><td><p>40</p></td>
+<td><p>20</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IsManualFlag</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Boolean to flag features for downstream filtering in third party gene expression software.</p></td>
+</tr>
+<tr class="row-even"><td><p>41</p></td>
+<td><p>21</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gBGSubSignal</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Background-subtracted signal. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust. <code class="docutils literal notranslate"><span class="pre">g(r)BGSubSignal</span></code> = <code class="docutils literal notranslate"><span class="pre">g(r)MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">g(r)BGUsed</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>42</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gBGSubSigError</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Propagated standard error as computed on net g(r) background-subtracted signal. For one color, the error model is applied to the background-subtracted signal. This will contain the larger of he universal (UEM) error or the propagated error.</p></td>
+</tr>
+<tr class="row-even"><td><p>43</p></td>
+<td><p>22</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gIsPosAndSignif</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Boolean flag, established via a 2-sided t-test, indicates if the mean signal of a feature is greater than the corresponding background (selected by user) and if this difference is significant. <code class="docutils literal notranslate"><span class="pre">g(r)isPosAndSignif</span></code> = 1 indicates Feature is positive and significant above background.</p></td>
+</tr>
+<tr class="row-odd"><td><p>44</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gPValFeatEqBG</span></code></p></td>
+<td><p>float</p></td>
+<td><p>pValue from t-test of significance between g(r)Mean signal and g(r) background (selected by user).</p></td>
+</tr>
+<tr class="row-even"><td><p>45</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gNumBGUsed</span></code></p></td>
+<td><p>int</p></td>
+<td><p>Number of local background regions or features used to calculate the background used for background subtraction on this feature.</p></td>
+</tr>
+<tr class="row-odd"><td><p>46</p></td>
+<td><p>23</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gIsWellAboveBG</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Boolean flag indicating if a feature is WellAbove Background or not, feature passes <code class="docutils literal notranslate"><span class="pre">g(r)IsPosAndSignif</span></code> and additionally the g(r)BGSubSignal is greater than <code class="docutils literal notranslate"><span class="pre">2.6*g(r)BG_SD</span></code>. You can change the multiplier <code class="docutils literal notranslate"><span class="pre">2.6</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>47</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gBGUsed</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Background used to subtract from the MeanSignal; variable also used in t-test. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust. gBGUsed rBGUsed float <code class="docutils literal notranslate"><span class="pre">g(r)BGSubSignal</span></code> = <code class="docutils literal notranslate"><span class="pre">g(r)MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">g(r)BGUsed</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>48</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gBGSDUsed</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Standard deviation of background used in g(r) channel; variable also used in t-test and surrogate algorithms. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust.</p></td>
+</tr>
+<tr class="row-even"><td><p>49</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ErrorModel</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Indicates the error model that you chose for Feature Extraction or that the software uses if you have chosen the “Most Conservative” option. <code class="docutils literal notranslate"><span class="pre">0</span></code> = Propagated model chosen by you or by software. <code class="docutils literal notranslate"><span class="pre">1</span></code> = Universal error model chosen by you or by software.</p></td>
+</tr>
+<tr class="row-odd"><td><p>50</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gSpatialDetrendIsInFilteredSet</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Set to true for a given feature if it is part of the filtered set used to detrend the background. This feature is considered part of the locally weighted lowest x% of features as defined by the DetrendLowPassPercentage. <code class="docutils literal notranslate"><span class="pre">1</span></code> = Feature in filtered set. <code class="docutils literal notranslate"><span class="pre">0</span></code> = Feature not in filtered set.</p></td>
+</tr>
+<tr class="row-even"><td><p>51</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gSpatialDetrendSurfaceValue</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Value of the smoothed surface calculated by the Spatial detrend algorithm.</p></td>
+</tr>
+<tr class="row-odd"><td><p>52</p></td>
+<td><p>24</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SpotExtentX</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Diameter of the spot (X-axis).</p></td>
+</tr>
+<tr class="row-even"><td><p>53</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SpotExtentY</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Diameter of the spot (Y-axis).</p></td>
+</tr>
+<tr class="row-odd"><td><p>54</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gNetSignal</span></code></p></td>
+<td><p>float</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> minus <code class="docutils literal notranslate"><span class="pre">DarkOffset</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>55</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gMultDetrendSignal</span></code></p></td>
+<td><p>float</p></td>
+<td><p>A surface is fitted through the log of the background-subtracted signal to look for multiplicative gradients. A normalized version of that surface interpolated at each point of the microarray is stored in <code class="docutils literal notranslate"><span class="pre">MultDetrendSignal</span></code>. The surface is normalized by dividing each point by the overall average of the surface. That average is stored in <code class="docutils literal notranslate"><span class="pre">MultDetrendSurfaceAverage</span></code> as a statistic. 1-color only.</p></td>
+</tr>
+<tr class="row-odd"><td><p>56</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gProcessedBackground</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Indicates the Background signal that was selected to be used (Mean or Median).</p></td>
+</tr>
+<tr class="row-even"><td><p>57</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gProcessedBkngError</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Indicates the Background error that was selected to be used (PixSD or NormIQR) .</p></td>
+</tr>
+<tr class="row-odd"><td><p>58</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">IsUsedBGAdjust</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>A Boolean used to flag features used for computation of global BG offset. <code class="docutils literal notranslate"><span class="pre">1</span></code> = Feature used. <code class="docutils literal notranslate"><span class="pre">0</span></code> = Feature not used.</p></td>
+</tr>
+<tr class="row-even"><td><p>59</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gInterpolatedNegCtrlSub</span></code></p></td>
+<td><p>float</p></td>
+<td><p>Value at the polynomial fit of the negative controls.</p></td>
+</tr>
+<tr class="row-odd"><td><p>60</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gIsInNegCtrlRange</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Set to true for a given feature if its signal intensity is in the negative control range.</p></td>
+</tr>
+<tr class="row-even"><td><p>61</p></td>
+<td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">gIsUsedInMD</span></code></p></td>
+<td><p>bool</p></td>
+<td><p>Indicates whether this feature was included in the set used to generate the multiplicative detrend surface.</p></td>
+</tr>
+</tbody>
+</table>
 <dl class="py class">
 <dt id="teilab.datasets.Samples">
 <em class="property">class </em><code class="sig-prename descclassname">teilab.datasets.</code><code class="sig-name descname">Samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_list_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/teilab/datasets.html#Samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.Samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Utility Sample Class for this lecture.</p>
 <dl class="py attribute">
-<dt id="teilab.datasets.Samples.df_">
-<code class="sig-name descname">df_</code><a class="headerlink" href="#teilab.datasets.Samples.df_" title="Permalink to this definition">¶</a></dt>
+<dt id="teilab.datasets.Samples._df">
+<code class="sig-name descname">_df</code><a class="headerlink" href="#teilab.datasets.Samples._df" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sample information described in text file at <code class="docutils literal notranslate"><span class="pre">sample_list_path</span></code> .</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -251,18 +642,75 @@
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt id="teilab.datasets.Samples._group_names">
+<code class="sig-name descname">_group_names</code><a class="headerlink" href="#teilab.datasets.Samples._group_names" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">i-th</span></code> group’s filename prefix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="teilab.datasets.Samples._group_numbers">
+<code class="sig-name descname">_group_numbers</code><a class="headerlink" href="#teilab.datasets.Samples._group_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Which group (<code class="docutils literal notranslate"><span class="pre">no</span></code>) the <code class="docutils literal notranslate"><span class="pre">j-th</span></code> sample belongs to</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>List[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">Samples</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils._path</span> <span class="kn">import</span> <span class="n">SAMPLE_LIST_PATH</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span> <span class="o">=</span> <span class="n">Samples</span><span class="p">(</span><span class="n">sample_list_path</span><span class="o">=</span><span class="n">SAMPLE_LIST_PATH</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-<span class="go">dict_keys([&#39;df_&#39;, &#39;SampleNumber&#39;, &#39;FileName&#39;, &#39;Condition&#39;])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">samples</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+<span class="go">[&#39;Condition&#39;, &#39;FileName&#39;, &#39;SampleNumber&#39;, &#39;_df&#39;, &#39;_group_names&#39;, &#39;_group_numbers&#39;]</span>
 </pre></div>
 </div>
 <dl class="py method">
 <dt id="teilab.datasets.Samples.grouping">
-<code class="sig-name descname">grouping</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/teilab/datasets.html#Samples.grouping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.Samples.grouping" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">grouping</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/teilab/datasets.html#Samples.grouping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.Samples.grouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grouping the samples based on their filenames.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="teilab.datasets.Samples.get_group_numbers">
+<code class="sig-name descname">get_group_numbers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">group_no</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">group_name</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#Samples.get_group_numbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.Samples.get_group_numbers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the specified group index List.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>group_no</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em><em>, </em><em>optional</em>) – [description]. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>group_name</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em><em>, </em><em>optional</em>) – [description]. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>[description]</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[int]</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">Samples</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils._path</span> <span class="kn">import</span> <span class="n">SAMPLE_LIST_PATH</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span> <span class="o">=</span> <span class="n">Samples</span><span class="p">(</span><span class="n">sample_list_path</span><span class="o">=</span><span class="n">SAMPLE_LIST_PATH</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span><span class="o">.</span><span class="n">_group_names</span>
+<span class="go">[&#39;SG19378659_257236339458_S001_GE1_1200&#39;, &#39;US91503671_253949442637_S01_GE1_105&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span><span class="o">.</span><span class="n">_group_numbers</span>
+<span class="go">[0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span><span class="o">.</span><span class="n">get_group_numbers</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">[0, 1, 2, 3, 4]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span><span class="o">.</span><span class="n">get_group_numbers</span><span class="p">(</span><span class="n">group_name</span><span class="o">=</span><span class="s2">&quot;US91503671_253949442637_S01_GE1_105&quot;</span><span class="p">)</span>
+<span class="go">[5, 6, 7, 8, 9, 10, 11, 12]</span>
+</pre></div>
+</div>
+</dd></dl>
 
 </dd></dl>
 
@@ -345,15 +793,15 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.TeiLabDataSets.META_COLNAMES">
-<code class="sig-name descname">META_COLNAMES</code><em class="property">: List<span class="p">[</span>str<span class="p">]</span></em><em class="property"> = ['FeatureNum', 'ControlType', 'ProbeName', 'GeneName', 'SystematicName']</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.META_COLNAMES" title="Permalink to this definition">¶</a></dt>
-<dd><p>META_COLNAMES (List[str]) Column names for metadata.</p>
+<dt id="teilab.datasets.TeiLabDataSets.ANNO_COLNAMES">
+<code class="sig-name descname">ANNO_COLNAMES</code><em class="property">: List<span class="p">[</span>str<span class="p">]</span></em><em class="property"> = ['FeatureNum', 'ControlType', 'ProbeName', 'SystematicName']</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.ANNO_COLNAMES" title="Permalink to this definition">¶</a></dt>
+<dd><p>ANNO_COLNAMES (List[str]) Column names for annotation.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.TeiLabDataSets.DATA_COLNAMES">
-<code class="sig-name descname">DATA_COLNAMES</code><em class="property">: List<span class="p">[</span>str<span class="p">]</span></em><em class="property"> = ['gProcessedSignal']</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.DATA_COLNAMES" title="Permalink to this definition">¶</a></dt>
-<dd><p>DATA_COLNAMES (List[str]) Column names for expression data.</p>
+<dt id="teilab.datasets.TeiLabDataSets.TARGET_COLNAME">
+<code class="sig-name descname">TARGET_COLNAME</code><em class="property">: str</em><em class="property"> = 'gProcessedSignal'</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.TARGET_COLNAME" title="Permalink to this definition">¶</a></dt>
+<dd><p>TARGET_COLNAME (str) Column name for expression data.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -504,7 +952,7 @@
 
 <dl class="py method">
 <dt id="teilab.datasets.TeiLabDataSets.read_data">
-<code class="sig-name descname">read_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>List<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>List<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read sample(s) ‘expression’ data as <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -531,7 +979,7 @@
 
 <dl class="py method">
 <dt id="teilab.datasets.TeiLabDataSets.read_meta">
-<code class="sig-name descname">read_meta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>List<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_meta" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_meta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>List<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_meta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read sample(s) ‘meta’ data as <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -558,7 +1006,7 @@
 
 <dl class="py method">
 <dt id="teilab.datasets.TeiLabDataSets.read_summary">
-<code class="sig-name descname">read_summary</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>List<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_summary" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">read_summary</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>List<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_summary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read sample(s) ‘summary’ data as <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -667,6 +1115,14 @@
     
   
  
+<style id="style-expand" disabled="true">
+  .wy-nav-content {
+    max-width: 100%!important;
+  }
+</style>
+<script>
+  document.getElementById("style-expand").disabled = true;
+</script>
 
 
 </body>
