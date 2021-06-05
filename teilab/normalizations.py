@@ -9,135 +9,41 @@ Robust Multichip Analysis (RMA)
 
 In microarray analysis, many algorithms have been proposed, but the most widely used one is :fa:`file-pdf-o` `Robust Multichip Analysis (RMA) <https://academic.oup.com/biostatistics/article/4/2/249/245074>`_ , where the signal value of each spot ( ``RawData`` ) is processed and normalized according to the following flow.
 
-.. graphviz::
-
-    digraph RAMPreprocessingGraph {
-
-        graph [
-            charset   = "UTF-8";
-            label     = "Preprocessing (RMA)",
-            labelloc  = "t",
-            labeljust = "c",
-            bgcolor   = "#1f441e",
-            fontcolor = "white",
-            fontsize  = 18,
-            style     = "filled",
-            rankdir   = TB,
-            margin    = 0.2,
-            ranksep   = 1.0,
-            nodesep   = 0.9,
-            layout    = dot,
-            compound = true,
-        ];
-
-        node [
-            style     = "solid,filled",
-            fontsize  = 16,
-            fontcolor = 6,
-            fontname  = "Migu 1M",
-            color     = "#cee6b4",
-            fillcolor = "#9ecca4",
-            fixedsize = false,
-            margin    = "0.2,0.1",
-        ];
-
-        edge [
-            style         = solid,
-            fontsize      = 14,
-            fontcolor     = white,
-            fontname      = "Migu 1M",
-            color         = white,
-            labelfloat    = true,
-            labeldistance = 2.5,
-            labelangle    = 70
-        ];
-
-        RawData [shape=doublecircle margin="0" fillcolor="#29bb89" fontcolor="#be0000" color="#29bb89"];
-        Ave   [shape=circle margin="0"  fontcolor="#233e8b" fillcolor="#b6c9f0" color="#233e8b" label="ave"];
-        RawData -> Ave;
-        Ave -> gMeanSignal;
-
-        subgraph cluster_0 {
-            label     = "Background Subtraction";
-            labelloc  = "t";
-            labeljust = "l";
-            fillcolor = "#89898989";
-            fontcolor = "#ffd56b";
-            margin    = 20;
-
-            gMeanSignal                [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5"];
-            gBGUsed                    [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5"];
-            gBGSubSignal               [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5"];
-            rBGSubSignal               [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5"];
-            gDyeNormSignal             [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5"];
-            rDyeNormSignal             [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5"];
-            gProcessedSignal_A1        [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5" margin="0.35,0.1"];
-            Minus [shape=circle margin="0" fontcolor="#233e8b" fillcolor="#b6c9f0" color="#233e8b" label="-"];
-            BackgroundSubtraction     [shape=record  label="Background Subtraction|DFA"];
-            DyeNormalization          [shape=diamond margin=0.05];
-            SurrogateVariableAnalysis [shape=box     margin=0.1 label="SVA"];
-
-            gMeanSignal -> BackgroundSubtraction;
-            BackgroundSubtraction -> gBGUsed;
-            gMeanSignal -> Minus;
-            gBGUsed -> Minus;
-            Minus -> gBGSubSignal;
-            gBGSubSignal -> DyeNormalization;
-            rBGSubSignal -> DyeNormalization;
-            DyeNormalization -> gDyeNormSignal;
-            DyeNormalization -> rDyeNormSignal;
-            gDyeNormSignal -> SurrogateVariableAnalysis;
-            SurrogateVariableAnalysis -> gProcessedSignal_A1;
-        };
-
-        subgraph cluster_1 {
-            label     = "Normalization Between Samples";
-            labelloc  = "t";
-            labeljust = "l";
-            fillcolor = "#89898989";
-            fontcolor = "#ffd56b";
-            margin    = 20;
-
-            gProcessedSignal_B         [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5" margin="0.35,0.1"];
-            gProcessedSignal_A2        [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5" margin="0.35,0.1"];
-            gProcessedSignal_A1_normed [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5" margin="0.4,0.1"];
-            gProcessedSignal_B_normed  [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5" margin="0.4,0.1"];
-            gProcessedSignal_A2_normed [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5" margin="0.4,0.1"];
-            QuantileNormalization     [shape=diamond margin=0.05];
-
-            gProcessedSignal_A1 -> QuantileNormalization;
-            gProcessedSignal_B -> QuantileNormalization;
-            gProcessedSignal_A2 -> QuantileNormalization;
-            QuantileNormalization -> gProcessedSignal_A1_normed;
-            QuantileNormalization -> gProcessedSignal_B_normed;
-            QuantileNormalization -> gProcessedSignal_A2_normed;
-        };
-
-        subgraph cluster_2 {
-            label     = "Summarization";
-            labelloc  = "t";
-            labeljust = "l";
-            fillcolor = "#89898989";
-            fontcolor = "#ffd56b";
-            margin    = 20;
-
-            gProcessedSignal_A_normed  [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5" margin="0.4,0.1"];
-            Summarization              [shape=diamond margin=0.05];
-
-            gProcessedSignal_A1_normed -> Summarization;
-            gProcessedSignal_A2_normed -> Summarization;
-            Summarization -> gProcessedSignal_A_normed;
-        };
-
-    }
+.. graphviz:: _graphviz/RobustMultichipAnalysis.dot
 
 *************************
 1. Background Subtraction
 *************************
 
+バックグラウンド補正は、Non-specific Hybridization に由来するシグナル強度を差し引くためのものです。ここでは、「観察されたシグナルの強度は、真のシグナルの強度とバックグラウンドシグナルの強度とが合成されたものである」と仮定します。
+
+そこで、あるマイクロアレイについて、
+
+- 真のシグナル強度分布は指数分布
+- バックグラウンドの強度分布は正規分布
+
+となると仮定し、その仮定の元で最も現象を表現しているパラメータを推定することで、バックグラウンドの強度分布を計算し、これを差し引くことで真のシグナル強度を推定します。
+
+TODO: もっとここを詰めねば。論文読みます。
+
+
 ********************************
 2. Normalization Between Samples
 ********************************
+
+ここでは、各マイクロアレイ「間の」正規化を行います。一つのマイクロアレイ実験の結果から言えることは非常に限られており、他の（処理群やコントロール群）実験結果と比較することが解析の基本になりますが、一般的に実験においては、実験操作や機材の特性によってバイアスが生じることは避けられません。
+
+For example, if you want to :fa:`file-pdf-o` `characterize the changes in global gene expression in the livers of H1/siRNAinsulin-CMV/hIDE transgenic (Tg) mice in response to the reduced bioavailability of insulin <https://pubmed.ncbi.nlm.nih.gov/17982690/>`_ , and the expression level of each RNA in Tg mice was generally lower than that of non-Tg mice, **you may mistakenly conclude that almost all of the RNAs were down-regulated respectively by reduced bioavailability of insulin.**
+
+そこで、バイアスの影響が軽減するように、得られた値に補正をかけることが必要です。この操作は「各サンプルの遺伝子発現の強度分布はほとんど変わらない」という仮定が成り立つ時のみ意味を成すため、扱いには注意が必要です。
+
+
+There are numerous proposals for normalizing unbalanced data between samples (:fa:`file-pdf-o` `This review paper summarizes 23 normalization methods developed for unbalanced transcriptome data <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6988798/>`), but we will introduce only two of them.
+
+
+1. Quantile
+2. percen tile
+
 
 ****************
 3. Summarization
