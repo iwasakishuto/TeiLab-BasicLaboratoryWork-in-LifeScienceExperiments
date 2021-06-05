@@ -1,0 +1,412 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta property="og:title" content="teilab.normalizations module" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="teilab.normalizations.html" />
+  <meta property="og:description" content="Differential gene expression can be an outcome of true biological variability or experimental artifacts. Normalization techniques have been used to minimize the effect of experimental artifacts on ..." />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>teilab.normalizations module &mdash; UiTei-Lab Documentation  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/popup.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/custom.js"></script>
+        <script src="_static/particles.min.js"></script>
+        <script src="_static/popup.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="teilab.question module" href="teilab.question.html" />
+    <link rel="prev" title="teilab.datasets module" href="teilab.datasets.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+  <ul class="utility-btns">
+    <li><a class="btn btn-icon btn-stop" href="#" onclick="changeParticles(this);">Stop Particles</a></li>
+    <li><a class="btn btn-icon btn-expand" href="#" onclick="changeStyle(this);">Expand</a></li>
+  </ul>
+  <div class="sidebarlogo">
+    <h4>Lab's information</h4>
+    <ul class="social">
+      
+      <li><a class="sc-book" href="http://ui-tei.rnai.jp/">
+        <i class="fa fa-book" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php">
+        <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+    <h4>Author's Social link</h4>
+    <ul class="social">
+      
+      <li><a class="sc-twitter" href="https://twitter.com/cabernet_rock">
+        <i class="fa fa-twitter" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-github" href="https://github.com/iwasakishuto">
+        <i class="fa fa-github" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+  </div>
+  
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="teilab.html">teilab package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="teilab.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="teilab.datasets.html">teilab.datasets module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">teilab.normalizations module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#robust-multichip-analysis-rma">Robust Multichip Analysis (RMA)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.question.html">teilab.question module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#module-teilab">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UiTei-Lab Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<canvas class="particle-background"></canvas>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="teilab.html">teilab package</a> &raquo;</li>
+        
+      <li>teilab.normalizations module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/teilab.normalizations.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-teilab.normalizations">
+<span id="teilab-normalizations-module"></span><h1>teilab.normalizations module<a class="headerlink" href="#module-teilab.normalizations" title="Permalink to this headline">¶</a></h1>
+<p>Differential gene expression can be an outcome of true biological variability or experimental artifacts. Normalization techniques have been used to minimize the effect of experimental artifacts on differential gene expression analysis.</p>
+<div class="section" id="robust-multichip-analysis-rma">
+<h2>Robust Multichip Analysis (RMA)<a class="headerlink" href="#robust-multichip-analysis-rma" title="Permalink to this headline">¶</a></h2>
+<p>In microarray analysis, many algorithms have been proposed, but the most widely used one is <em class="fa fa-file-pdf-o"></em> <a class="reference external" href="https://academic.oup.com/biostatistics/article/4/2/249/245074">Robust Multichip Analysis (RMA)</a> , where the signal value of each spot ( <code class="docutils literal notranslate"><span class="pre">RawData</span></code> ) is processed and normalized according to the following flow.</p>
+<div class="graphviz"><img src="_images/graphviz-59891fe76c73e2a293ab1fe01cd731e7d7fd79dc.png" alt="digraph RAMPreprocessingGraph {
+
+    graph [
+        charset   = &quot;UTF-8&quot;;
+        label     = &quot;Preprocessing (RMA)&quot;,
+        labelloc  = &quot;t&quot;,
+        labeljust = &quot;c&quot;,
+        bgcolor   = &quot;#1f441e&quot;,
+        fontcolor = &quot;white&quot;,
+        fontsize  = 18,
+        style     = &quot;filled&quot;,
+        rankdir   = TB,
+        margin    = 0.2,
+        ranksep   = 1.0,
+        nodesep   = 0.9,
+        layout    = dot,
+        compound = true,
+    ];
+
+    node [
+        style     = &quot;solid,filled&quot;,
+        fontsize  = 16,
+        fontcolor = 6,
+        fontname  = &quot;Migu 1M&quot;,
+        color     = &quot;#cee6b4&quot;,
+        fillcolor = &quot;#9ecca4&quot;,
+        fixedsize = false,
+        margin    = &quot;0.2,0.1&quot;,
+    ];
+
+    edge [
+        style         = solid,
+        fontsize      = 14,
+        fontcolor     = white,
+        fontname      = &quot;Migu 1M&quot;,
+        color         = white,
+        labelfloat    = true,
+        labeldistance = 2.5,
+        labelangle    = 70
+    ];
+
+    RawData [shape=doublecircle margin=&quot;0&quot; fillcolor=&quot;#29bb89&quot; fontcolor=&quot;#be0000&quot; color=&quot;#29bb89&quot;];
+    Ave   [shape=circle margin=&quot;0&quot;  fontcolor=&quot;#233e8b&quot; fillcolor=&quot;#b6c9f0&quot; color=&quot;#233e8b&quot; label=&quot;ave&quot;];
+    RawData -&gt; Ave;
+    Ave -&gt; gMeanSignal;
+
+    subgraph cluster_0 {
+        label     = &quot;Background Subtraction&quot;;
+        labelloc  = &quot;t&quot;;
+        labeljust = &quot;l&quot;;
+        fillcolor = &quot;#89898989&quot;;
+        fontcolor = &quot;#ffd56b&quot;;
+        margin    = 20;
+
+        gMeanSignal                [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
+        gBGUsed                    [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
+        gBGSubSignal               [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
+        rBGSubSignal               [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
+        gDyeNormSignal             [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
+        rDyeNormSignal             [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
+        gProcessedSignal_A1        [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.35,0.1&quot;];
+        Minus [shape=circle margin=&quot;0&quot; fontcolor=&quot;#233e8b&quot; fillcolor=&quot;#b6c9f0&quot; color=&quot;#233e8b&quot; label=&quot;-&quot;];
+        BackgroundSubtraction     [shape=record  label=&quot;Background Subtraction|DFA&quot;];
+        DyeNormalization          [shape=diamond margin=0.05];
+        SurrogateVariableAnalysis [shape=box     margin=0.1 label=&quot;SVA&quot;];
+
+        gMeanSignal -&gt; BackgroundSubtraction;
+        BackgroundSubtraction -&gt; gBGUsed;
+        gMeanSignal -&gt; Minus;
+        gBGUsed -&gt; Minus;
+        Minus -&gt; gBGSubSignal;
+        gBGSubSignal -&gt; DyeNormalization;
+        rBGSubSignal -&gt; DyeNormalization;
+        DyeNormalization -&gt; gDyeNormSignal;
+        DyeNormalization -&gt; rDyeNormSignal;
+        gDyeNormSignal -&gt; SurrogateVariableAnalysis;
+        SurrogateVariableAnalysis -&gt; gProcessedSignal_A1;
+    };
+
+    subgraph cluster_1 {
+        label     = &quot;Normalization Between Samples&quot;;
+        labelloc  = &quot;t&quot;;
+        labeljust = &quot;l&quot;;
+        fillcolor = &quot;#89898989&quot;;
+        fontcolor = &quot;#ffd56b&quot;;
+        margin    = 20;
+
+        gProcessedSignal_B         [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.35,0.1&quot;];
+        gProcessedSignal_A2        [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.35,0.1&quot;];
+        gProcessedSignal_A1_normed [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.4,0.1&quot;];
+        gProcessedSignal_B_normed  [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.4,0.1&quot;];
+        gProcessedSignal_A2_normed [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.4,0.1&quot;];
+        QuantileNormalization     [shape=diamond margin=0.05];
+
+        gProcessedSignal_A1 -&gt; QuantileNormalization;
+        gProcessedSignal_B -&gt; QuantileNormalization;
+        gProcessedSignal_A2 -&gt; QuantileNormalization;
+        QuantileNormalization -&gt; gProcessedSignal_A1_normed;
+        QuantileNormalization -&gt; gProcessedSignal_B_normed;
+        QuantileNormalization -&gt; gProcessedSignal_A2_normed;
+    };
+
+    subgraph cluster_2 {
+        label     = &quot;Summarization&quot;;
+        labelloc  = &quot;t&quot;;
+        labeljust = &quot;l&quot;;
+        fillcolor = &quot;#89898989&quot;;
+        fontcolor = &quot;#ffd56b&quot;;
+        margin    = 20;
+
+        gProcessedSignal_A_normed  [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.4,0.1&quot;];
+        Summarization              [shape=diamond margin=0.05];
+
+        gProcessedSignal_A1_normed -&gt; Summarization;
+        gProcessedSignal_A2_normed -&gt; Summarization;
+        Summarization -&gt; gProcessedSignal_A_normed;
+    };
+
+}" class="graphviz" /></div>
+<div class="section" id="background-subtraction">
+<h3>1. Background Subtraction<a class="headerlink" href="#background-subtraction" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="normalization-between-samples">
+<h3>2. Normalization Between Samples<a class="headerlink" href="#normalization-between-samples" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="summarization">
+<h3>3. Summarization<a class="headerlink" href="#summarization" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/scipy/scipy/blob/v1.6.3/scipy/signal/signaltools.py#L3384-L3467">https://github.com/scipy/scipy/blob/v1.6.3/scipy/signal/signaltools.py#L3384-L3467</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="teilab.question.html" class="btn btn-neutral float-right" title="teilab.question module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="teilab.datasets.html" class="btn btn-neutral float-left" title="teilab.datasets module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2021, iwasakishuto
+
+    </p>
+  </div> 
+
+</footer>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+<style id="style-expand" disabled="true">
+  .wy-nav-content {
+    max-width: 100%!important;
+  }
+</style>
+<script>
+  document.getElementById("style-expand").disabled = true;
+</script>
+
+
+</body>
+</html>

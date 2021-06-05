@@ -1,0 +1,7 @@
+teilab.normalizations module
+============================
+
+.. automodule:: teilab.normalizations
+   :members:
+   :undoc-members:
+   :show-inheritance:

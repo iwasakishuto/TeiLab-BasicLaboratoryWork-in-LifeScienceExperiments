@@ -1,29 +1,39 @@
-(function (){
+function isFunction(func) {
+  return func && {}.toString.call(func) === '[object Function]';
+ }
+// Update the "window.onload"
+function addOnLoad(fn){
+  if (isFunction(fn)){
+    var old = window.onload;
+    window.onload = isFunction(old) 
+      ? function(){old();fn();} 
+      : fn
+  }
+}
 
-  $(function(){
-    $("dl.py.method dt:has(em.property)").addClass("dt-property");
-  });
+// (function (){
+//   $(function(){
+//     $("dl.py.method dt:has(em.property)").addClass("dt-property");
+//   });
+//   $(function(){
+//     var items = document.querySelectorAll('div.sphinxsidebarwrapper li[class*="toctree-"]');
+//     items.forEach((item) => {
+//       var text  = item.querySelector("a").innerHTML
+//       var text_components = text.split(".");
+//       var num_components = text_components.length;
+//       if (num_components>0){
+//         text = text_components[num_components-1];
+//       }
+//       text = text.replace(/\spackage/g,' <span class="package-name">package</span>')
+//                 .replace(/(.*)\smodule/g, '<span class="program-name">$1.py</span>')
+//                 .replace(/(Subpackages|Submodules)/g,'<span class="package-subtitle">$1</span>');
+//       item.querySelector("a").innerHTML = text
+//     });
+//   });
+// })(jQuery);
 
-  $(function(){
-
-    var items = document.querySelectorAll('div.sphinxsidebarwrapper li[class*="toctree-"]');
-    items.forEach((item) => {
-      var text  = item.querySelector("a").innerHTML
-      var text_components = text.split(".");
-      var num_components = text_components.length;
-      if (num_components>0){
-        text = text_components[num_components-1];
-      }
-      text = text.replace(/\spackage/g,' <span class="package-name">package</span>')
-                .replace(/(.*)\smodule/g, '<span class="program-name">$1.py</span>')
-                .replace(/(Subpackages|Submodules)/g,'<span class="package-subtitle">$1</span>');
-      item.querySelector("a").innerHTML = text
-    });
-
-  });
-})(jQuery);
-
-window.onload = function() {
+// Initialization for Stating Moving Background Particles
+const initializeParticles = function(){
   Particles.init({
     selector: '.particle-background',
     color: ["#cee6b4", "#1f441e"],
@@ -37,13 +47,13 @@ window.onload = function() {
           maxParticles: 0, // disables particles.js for speed.
         }
       }
-    ]
-    
+    ]    
   });
-  Particles._resize()
-};
-
-// Utility Functions
+  Particles._resize();
+}
+addOnLoad(initializeParticles);
+// <--- [Utility Functions (Button)] ---
+// Start & Stop the Particles Movings.
 const changeParticles = function(e){
   if (Particles.options.maxParticles==0){
     Particles.options.maxParticles = 300;
@@ -59,7 +69,7 @@ const changeParticles = function(e){
   Particles._refresh();
   return false;
 }
-
+// Change the display style (width)
 const changeStyle = function(e){
   let target_style = document.getElementById('style-expand');
   if (target_style.disabled){
@@ -75,3 +85,4 @@ const changeStyle = function(e){
   }
   return false;
 }
+// --- [Utility Functions (Button)]  --->

@@ -17,6 +17,7 @@ Submodules
    :maxdepth: 4
 
    teilab.datasets
+   teilab.normalizations
    teilab.question
 
 Module contents
