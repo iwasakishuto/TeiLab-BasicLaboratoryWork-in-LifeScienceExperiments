@@ -34,26 +34,34 @@ TODO: もっとここを詰めねば。論文読みます。
 
 ここでは、各マイクロアレイ「間の」正規化を行います。一つのマイクロアレイ実験の結果から言えることは非常に限られており、他の（処理群やコントロール群）実験結果と比較することが解析の基本になりますが、一般的に実験においては、実験操作や機材の特性によってバイアスが生じることは避けられません。
 
-For example, if you want to :fa:`file-pdf-o` `characterize the changes in global gene expression in the livers of H1/siRNAinsulin-CMV/hIDE transgenic (Tg) mice in response to the reduced bioavailability of insulin <https://pubmed.ncbi.nlm.nih.gov/17982690/>`_ , and the expression level of each RNA in Tg mice was generally lower than that of non-Tg mice, **you may mistakenly conclude that almost all of the RNAs were down-regulated respectively by reduced bioavailability of insulin.**
+For example, if you want to characterize the changes in global gene expression in the livers of H1/siRNAinsulin-CMV/hIDE transgenic (Tg) mice in response to the reduced bioavailability of insulin [#ref1]_, and the expression level of each RNA in Tg mice was generally lower than that of non-Tg mice, **you may mistakenly conclude that almost all of the RNAs were down-regulated respectively by reduced bioavailability of insulin.**
+
+.. [#ref1] :fa:`file-pdf-o` `Microarray analysis of insulin-regulated gene expression in the liver: the use of transgenic mice co-expressing insulin-siRNA and human IDE as an animal model <https://pubmed.ncbi.nlm.nih.gov/17982690/>`_
 
 そこで、バイアスの影響が軽減するように、得られた値に補正をかけることが必要です。この操作は各手法ごとに定義されるある仮定に基づいているので、取り扱いには注意が必要です。
 
-There are numerous proposals for normalizing unbalanced data between samples (:fa:`file-pdf-o` `This review paper summarizes 23 normalization methods developed for unbalanced transcriptome data <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6988798/>`), but we will introduce only three of them.
+There are numerous proposals for normalizing unbalanced data between samples (:fa:`file-pdf-o` `This review paper <https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6988798/>`_ summarizes 23 normalization methods developed for unbalanced transcriptome data), but we will introduce only three of them.
 
-1. Percentile
-2. Quantile
-3. LOWESS
+.. note::
+
+    1. :ref:`Percentile <target to percentile section>`
+    2. :ref:`Quantile <target to quantile section>`
+    3. :ref:`LOWESS <target to lowess section>`
+
+.. _target to percentile section:
 
 1. Percentile
 =============
 
-da
+.. _target to quantile section:
 
 2. Quantile
 ===========
 
 - 遺伝子を発現量順に並べたとき、同じ順位の遺伝子は同じ発現量を示す。
 - 各サンプルの遺伝子発現の強度分布はほとんど変わらない。
+
+.. _target to lowess section:
 
 3. LOWESS
 =========
