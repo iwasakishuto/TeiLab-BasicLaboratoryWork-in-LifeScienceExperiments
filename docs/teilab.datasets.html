@@ -3,28 +3,35 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
   <meta property="og:title" content="teilab.datasets module" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="teilab.datasets.html" />
   <meta property="og:description" content="This module handles Datasets used in the lecture. The table below describes the meaning of the values in each column of the data used in the lecture. If you want to refer each class or method, clic..." />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>teilab.datasets module &mdash; UiTei-Lab Documentation  documentation</title>
+  <title>teilab.datasets module &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/popup.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="_static/favicon.png"/>
   
+
   
+  
+
   
 
   
@@ -34,19 +41,21 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script src="_static/particles.min.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script src="_static/custom.js"></script>
+        <script src="_static/particles.min.js"></script>
+        <script src="_static/popup.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="teilab.question module" href="teilab.question.html" />
+    <link rel="next" title="teilab.normalizations module" href="teilab.normalizations.html" />
     <link rel="prev" title="teilab.utils.generic_utils module" href="teilab.utils.generic_utils.html" /> 
 </head>
 
@@ -61,7 +70,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab Documentation
+            <a href="index.html" class="icon icon-home"> UiTei-Lab's Course Documentation
           
 
           
@@ -127,7 +136,11 @@
 <li class="toctree-l1 current"><a class="reference internal" href="teilab.html">teilab package</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="teilab.html#subpackages">Subpackages</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="teilab.html#submodules">Submodules</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">teilab.datasets module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">teilab.datasets module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#features">FEATURES</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.normalizations.html">teilab.normalizations module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="teilab.question.html">teilab.question module</a></li>
 </ul>
 </li>
@@ -150,7 +163,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">UiTei-Lab Documentation</a>
+          <a href="index.html">UiTei-Lab's Course Documentation</a>
         
       </nav>
 
@@ -162,6 +175,8 @@
         <div class="rst-content">
         
           
+
+
 
 
 
@@ -190,7 +205,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/teilab.datasets.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -208,6 +223,15 @@
 <span id="teilab-datasets-module"></span><h1>teilab.datasets module<a class="headerlink" href="#module-teilab.datasets" title="Permalink to this headline">¶</a></h1>
 <p>This module handles Datasets used in the lecture. The table below describes the meaning of the values in each column of the data used in the lecture. If you want to refer each class or method, click <a class="reference internal" href="#teilab.datasets.Samples" title="teilab.datasets.Samples"><code class="xref py py-class docutils literal notranslate"><span class="pre">HERE</span></code></a> to skip it.</p>
 <p>Reference: <a class="reference external" href="https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf">Agilent Feature Extraction 12.0 Reference Guide</a></p>
+<div class="section" id="features">
+<h2>FEATURES<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">TeiLabDataSets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datasets</span> <span class="o">=</span> <span class="n">TeiLabDataSets</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">read_data</span><span class="p">(</span><span class="n">no</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_data</span><span class="o">.</span><span class="n">columns</span>
+<span class="go">    Index([&#39;FEATURES&#39;, &#39;FeatureNum&#39;, &#39;Row&#39;, &#39;Col&#39;, &#39;accessions&#39;, ... ], dtype=&#39;object&#39;)</span>
+</pre></div>
+</div>
 <table class="docutils align-default">
 <colgroup>
 <col style="width: 1%" />
@@ -331,7 +355,7 @@
 <td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">gSurrogateUsed</span></code></p></td>
 <td><p>float</p></td>
-<td><p>The g surrogate value used. (If <code class="docutils literal notranslate"><span class="pre">gSurrogateUsed</span></code> is Non-zero value.) No surrogate value used. (otherwise)</p></td>
+<td><p>If <code class="docutils literal notranslate"><span class="pre">gSurrogateUsed</span></code> is Non-zero value, The g surrogate value used. Otherwise, No surrogate value used.</p></td>
 </tr>
 <tr class="row-even"><td><p>19</p></td>
 <td></td>
@@ -469,7 +493,7 @@
 <td><p>21</p></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">gBGSubSignal</span></code></p></td>
 <td><p>float</p></td>
-<td><p>Background-subtracted signal. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust. <code class="docutils literal notranslate"><span class="pre">g(r)BGSubSignal</span></code> = <code class="docutils literal notranslate"><span class="pre">g(r)MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">g(r)BGUsed</span></code>.</p></td>
+<td><p>Background-subtracted signal. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust, see <a class="reference external" href="https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf">Table 34 on page 254</a> . <code class="docutils literal notranslate"><span class="pre">g(r)BGSubSignal</span></code> = <code class="docutils literal notranslate"><span class="pre">g(r)MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">g(r)BGUsed</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p>42</p></td>
 <td></td>
@@ -505,13 +529,13 @@
 <td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">gBGUsed</span></code></p></td>
 <td><p>float</p></td>
-<td><p>Background used to subtract from the MeanSignal; variable also used in t-test. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust. gBGUsed rBGUsed float <code class="docutils literal notranslate"><span class="pre">g(r)BGSubSignal</span></code> = <code class="docutils literal notranslate"><span class="pre">g(r)MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">g(r)BGUsed</span></code>.</p></td>
+<td><p>Background used to subtract from the MeanSignal; variable also used in t-test. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust, see <a class="reference external" href="https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf">Table 34 on page 254</a> . <code class="docutils literal notranslate"><span class="pre">g(r)BGSubSignal</span></code> = <code class="docutils literal notranslate"><span class="pre">g(r)MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">g(r)BGUsed</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p>48</p></td>
 <td></td>
 <td><p><code class="docutils literal notranslate"><span class="pre">gBGSDUsed</span></code></p></td>
 <td><p>float</p></td>
-<td><p>Standard deviation of background used in g(r) channel; variable also used in t-test and surrogate algorithms. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust.</p></td>
+<td><p>Standard deviation of background used in g(r) channel; variable also used in t-test and surrogate algorithms. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust, see <a class="reference external" href="https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf">Table 34 on page 254</a> .</p></td>
 </tr>
 <tr class="row-even"><td><p>49</p></td>
 <td></td>
@@ -593,14 +617,128 @@
 </tr>
 </tbody>
 </table>
+<div class="section" id="background-subtraction">
+<h3>Background Subtraction<a class="headerlink" href="#background-subtraction" title="Permalink to this headline">¶</a></h3>
+<p>The feature background-subtracted signal, <code class="docutils literal notranslate"><span class="pre">BGSubSignal</span></code>, is calculated by subtracting a value called the <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code> from the feature mean signal.</p>
+<div class="math notranslate nohighlight">
+\[\text{ BGSubSignal } = \text{ MeanSignal } - \text{ BGUsed }\]</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">BGSubSignal</span></code> and <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code> depend on the type of background method and the settings for spatial detrend and global background adjust. See the following table.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 16%" />
+<col style="width: 14%" />
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Background Subtraction Method</p></th>
+<th class="head"><p>Background Subtraction Variable</p></th>
+<th class="head"><p>SpDe OFF / GBA OFF</p></th>
+<th class="head"><p>SpDe ON / GBA OFF</p></th>
+<th class="head"><p>SpDe OFF /  GBA ON</p></th>
+<th class="head"><p>SpDe ON / GBA ON</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td rowspan="3"><p>No background subtract</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGUsed</span></code> =</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGMeanSignal</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SDSV</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGAdjust</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">SDSV</span></code> + <code class="docutils literal notranslate"><span class="pre">BGAdjust</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BGSDUsed</span></code> =</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGPixSDev</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGPixSDev</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGPixSDev</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGPixSDev</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BGSubSignal</span></code> =</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+</tr>
+<tr class="row-odd"><td rowspan="3"><p>Local Background</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGUsed</span></code> =</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGMeanSignal</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGMeanSignal</span></code> + <code class="docutils literal notranslate"><span class="pre">SDSV</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGMeanSignal</span></code> + <code class="docutils literal notranslate"><span class="pre">BGAdjust</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGMeanSignal</span></code> + <code class="docutils literal notranslate"><span class="pre">SDSV</span></code> + <code class="docutils literal notranslate"><span class="pre">BGAdjust</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BGSDUsed</span></code> =</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGPixSDev</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGPixSDev</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGPixSDev</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGPixSDev</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BGSubSignal</span></code> =</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+</tr>
+<tr class="row-even"><td rowspan="3"><p>Global Background method</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">BGUsed</span></code> =</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GBGIA</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GBGIA</span></code> + <code class="docutils literal notranslate"><span class="pre">SDSV</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GBGIA</span></code> + <code class="docutils literal notranslate"><span class="pre">BGAdjust</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GBGIA</span></code> + <code class="docutils literal notranslate"><span class="pre">SDSV</span></code> + <code class="docutils literal notranslate"><span class="pre">BGAdjust</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">BGSDUsed</span></code> =</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GBGISD</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GBGISD</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GBGISD</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">GBGISD</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">BGSubSignal</span></code> =</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">MeanSignal</span></code> - <code class="docutils literal notranslate"><span class="pre">BGUsed</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><p>SpDe: Spatial Detrend</p></li>
+<li><p>SDSV: <code class="docutils literal notranslate"><span class="pre">SpatialDetrendSurfaceValue</span></code></p></li>
+<li><p>GBA: Global Bkgnd Adjust</p></li>
+<li><p>GBGISD: <code class="docutils literal notranslate"><span class="pre">GlobalBGInlierSDev</span></code></p></li>
+<li><p>GBGISD: <code class="docutils literal notranslate"><span class="pre">GlobalBGInlierSDev</span></code></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">TeiLabDataSets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datasets</span> <span class="o">=</span> <span class="n">TeiLabDataSets</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_meta</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">read_meta</span><span class="p">(</span><span class="n">no</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_meta</span><span class="p">[</span><span class="s2">&quot;BGSubtractor_BGSubMethod&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">    7</span>
+</pre></div>
+</div>
+<p>The BGSubMethod of <code class="docutils literal notranslate"><span class="pre">7</span></code> corresponds to “No Background Subtraction method” (see <a class="reference external" href="https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf">Table 17 on page 129</a> .).</p>
+<ul class="simple">
+<li><p>Global Background Adjustment is turned Off.</p></li>
+<li><p>Spatial Detrending is turned On.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">TeiLabDataSets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">datasets</span> <span class="o">=</span> <span class="n">TeiLabDataSets</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_data</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">read_data</span><span class="p">(</span><span class="n">no</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">all</span><span class="p">(</span><span class="n">df_data</span><span class="p">[</span><span class="s2">&quot;gBGUsed&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">df_data</span><span class="p">[</span><span class="s2">&quot;gSpatialDetrendSurfaceValue&quot;</span><span class="p">])</span>
+<span class="go">    True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">all</span><span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">df_data</span><span class="p">[</span><span class="s2">&quot;gBGSDUsed&quot;</span><span class="p">]</span><span class="o">-</span><span class="n">df_data</span><span class="p">[</span><span class="s2">&quot;gBGPixSDev&quot;</span><span class="p">])</span><span class="o">/</span><span class="n">df_data</span><span class="p">[</span><span class="s2">&quot;gBGSDUsed&quot;</span><span class="p">])</span><span class="o">&lt;</span><span class="mf">1e-3</span><span class="p">)</span>
+<span class="go">    True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">all</span><span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="n">df_data</span><span class="p">[</span><span class="s2">&quot;gBGSubSignal&quot;</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">df_data</span><span class="p">[</span><span class="s2">&quot;gMeanSignal&quot;</span><span class="p">]</span><span class="o">-</span><span class="n">df_data</span><span class="p">[</span><span class="s2">&quot;gBGUsed&quot;</span><span class="p">]))</span><span class="o">/</span><span class="n">df_data</span><span class="p">[</span><span class="s2">&quot;gBGSubSignal&quot;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mf">1.4e-1</span><span class="p">)</span>
+<span class="go">    True</span>
+</pre></div>
+</div>
 <dl class="py class">
-<dt id="teilab.datasets.Samples">
-<em class="property">class </em><code class="sig-prename descclassname">teilab.datasets.</code><code class="sig-name descname">Samples</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sample_list_path</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/teilab/datasets.html#Samples"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.Samples" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.Samples">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">teilab.datasets.</span></span><span class="sig-name descname"><span class="pre">Samples</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample_list_path</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/teilab/datasets.html#Samples"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.Samples" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Utility Sample Class for this lecture.</p>
 <dl class="py attribute">
-<dt id="teilab.datasets.Samples._df">
-<code class="sig-name descname">_df</code><a class="headerlink" href="#teilab.datasets.Samples._df" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.Samples._df">
+<span class="sig-name descname"><span class="pre">_df</span></span><a class="headerlink" href="#teilab.datasets.Samples._df" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sample information described in text file at <code class="docutils literal notranslate"><span class="pre">sample_list_path</span></code> .</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -610,8 +748,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.Samples.SampleNumber">
-<code class="sig-name descname">SampleNumber</code><a class="headerlink" href="#teilab.datasets.Samples.SampleNumber" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.Samples.SampleNumber">
+<span class="sig-name descname"><span class="pre">SampleNumber</span></span><a class="headerlink" href="#teilab.datasets.Samples.SampleNumber" title="Permalink to this definition">¶</a></dt>
 <dd><p>Index numbers for each sample.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -621,8 +759,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.Samples.FileName">
-<code class="sig-name descname">FileName</code><a class="headerlink" href="#teilab.datasets.Samples.FileName" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.Samples.FileName">
+<span class="sig-name descname"><span class="pre">FileName</span></span><a class="headerlink" href="#teilab.datasets.Samples.FileName" title="Permalink to this definition">¶</a></dt>
 <dd><p>File namse for each sample.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -632,8 +770,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.Samples.Condition">
-<code class="sig-name descname">Condition</code><a class="headerlink" href="#teilab.datasets.Samples.Condition" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.Samples.Condition">
+<span class="sig-name descname"><span class="pre">Condition</span></span><a class="headerlink" href="#teilab.datasets.Samples.Condition" title="Permalink to this definition">¶</a></dt>
 <dd><p>Experimental conditions for each sample.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -643,8 +781,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.Samples._group_names">
-<code class="sig-name descname">_group_names</code><a class="headerlink" href="#teilab.datasets.Samples._group_names" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.Samples._group_names">
+<span class="sig-name descname"><span class="pre">_group_names</span></span><a class="headerlink" href="#teilab.datasets.Samples._group_names" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal notranslate"><span class="pre">i-th</span></code> group’s filename prefix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -654,8 +792,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.Samples._group_numbers">
-<code class="sig-name descname">_group_numbers</code><a class="headerlink" href="#teilab.datasets.Samples._group_numbers" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.Samples._group_numbers">
+<span class="sig-name descname"><span class="pre">_group_numbers</span></span><a class="headerlink" href="#teilab.datasets.Samples._group_numbers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Which group (<code class="docutils literal notranslate"><span class="pre">no</span></code>) the <code class="docutils literal notranslate"><span class="pre">j-th</span></code> sample belongs to</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -673,14 +811,14 @@
 </pre></div>
 </div>
 <dl class="py method">
-<dt id="teilab.datasets.Samples.grouping">
-<code class="sig-name descname">grouping</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/teilab/datasets.html#Samples.grouping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.Samples.grouping" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.Samples.grouping">
+<span class="sig-name descname"><span class="pre">grouping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/teilab/datasets.html#Samples.grouping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.Samples.grouping" title="Permalink to this definition">¶</a></dt>
 <dd><p>Grouping the samples based on their filenames.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="teilab.datasets.Samples.get_group_numbers">
-<code class="sig-name descname">get_group_numbers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">group_no</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">group_name</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>int<span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#Samples.get_group_numbers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.Samples.get_group_numbers" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.Samples.get_group_numbers">
+<span class="sig-name descname"><span class="pre">get_group_numbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_no</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/datasets.html#Samples.get_group_numbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.Samples.get_group_numbers" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the specified group index List.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -715,8 +853,8 @@
 </dd></dl>
 
 <dl class="py class">
-<dt id="teilab.datasets.TeiLabDataSets">
-<em class="property">class </em><code class="sig-prename descclassname">teilab.datasets.</code><code class="sig-name descname">TeiLabDataSets</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">verbose</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">teilab.datasets.</span></span><span class="sig-name descname"><span class="pre">TeiLabDataSets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">bool</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Utility Datasets Class for this lecture.</p>
 <dl class="field-list simple">
@@ -725,8 +863,8 @@
 </dd>
 </dl>
 <dl class="py attribute">
-<dt id="teilab.datasets.TeiLabDataSets.verbose">
-<code class="sig-name descname">verbose</code><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.verbose" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.verbose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether print verbose or not. Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -736,8 +874,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.TeiLabDataSets.print">
-<code class="sig-name descname">print</code><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.print" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.print">
+<span class="sig-name descname"><span class="pre">print</span></span><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.print" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -747,8 +885,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.TeiLabDataSets.sample">
-<code class="sig-name descname">sample</code><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.sample" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.sample">
+<span class="sig-name descname"><span class="pre">sample</span></span><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.sample" title="Permalink to this definition">¶</a></dt>
 <dd><p>Datasts Samples.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -758,8 +896,8 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.TeiLabDataSets.root">
-<code class="sig-name descname">root</code><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.root" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.root">
+<span class="sig-name descname"><span class="pre">root</span></span><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.root" title="Permalink to this definition">¶</a></dt>
 <dd><p>Root Directory for Datasets. ( <code class="docutils literal notranslate"><span class="pre">DATA_DIR</span></code> )</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -781,38 +919,38 @@
 </pre></div>
 </div>
 <dl class="py attribute">
-<dt id="teilab.datasets.TeiLabDataSets.TARGET_GeneName">
-<code class="sig-name descname">TARGET_GeneName</code><em class="property">: str</em><em class="property"> = 'VIM'</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.TARGET_GeneName" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.TARGET_GeneName">
+<span class="sig-name descname"><span class="pre">TARGET_GeneName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">str)</span> <span class="pre">``GeneName``</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">target</span> <span class="pre">RNA</span> <span class="pre">(vimentin</span></em><span class="sig-paren">)</span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'VIM'</span></em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.TARGET_GeneName" title="Permalink to this definition">¶</a></dt>
 <dd><p>TARGET_GeneName (str) <code class="docutils literal notranslate"><span class="pre">GeneName</span></code> of the target RNA (vimentin)</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.TeiLabDataSets.TARGET_SystematicName">
-<code class="sig-name descname">TARGET_SystematicName</code><em class="property">: str</em><em class="property"> = 'NM_003380'</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.TARGET_SystematicName" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.TARGET_SystematicName">
+<span class="sig-name descname"><span class="pre">TARGET_SystematicName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">str)</span> <span class="pre">``SystematicName``</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">target</span> <span class="pre">RNA</span> <span class="pre">(vimentin</span></em><span class="sig-paren">)</span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'NM_003380'</span></em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.TARGET_SystematicName" title="Permalink to this definition">¶</a></dt>
 <dd><p>TARGET_SystematicName (str) <code class="docutils literal notranslate"><span class="pre">SystematicName</span></code> of the target RNA (vimentin)</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.TeiLabDataSets.ANNO_COLNAMES">
-<code class="sig-name descname">ANNO_COLNAMES</code><em class="property">: List<span class="p">[</span>str<span class="p">]</span></em><em class="property"> = ['FeatureNum', 'ControlType', 'ProbeName', 'SystematicName']</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.ANNO_COLNAMES" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.ANNO_COLNAMES">
+<span class="sig-name descname"><span class="pre">ANNO_COLNAMES</span></span><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"> <span class="pre">=</span> <span class="pre">['FeatureNum',</span> <span class="pre">'ControlType',</span> <span class="pre">'ProbeName',</span> <span class="pre">'SystematicName']</span></em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.ANNO_COLNAMES" title="Permalink to this definition">¶</a></dt>
 <dd><p>ANNO_COLNAMES (List[str]) Column names for annotation.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="teilab.datasets.TeiLabDataSets.TARGET_COLNAME">
-<code class="sig-name descname">TARGET_COLNAME</code><em class="property">: str</em><em class="property"> = 'gProcessedSignal'</em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.TARGET_COLNAME" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.TARGET_COLNAME">
+<span class="sig-name descname"><span class="pre">TARGET_COLNAME</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><em class="property"> <span class="pre">=</span> <span class="pre">'gProcessedSignal'</span></em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.TARGET_COLNAME" title="Permalink to this definition">¶</a></dt>
 <dd><p>TARGET_COLNAME (str) Column name for expression data.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="teilab.datasets.TeiLabDataSets.init">
-<code class="sig-name descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.init" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.init" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialization</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="teilab.datasets.TeiLabDataSets.get_data">
-<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">password</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.get_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.get_data">
+<span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.get_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get data which is necessary for this lecture.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -849,13 +987,13 @@
 </pre></div>
 </div>
 <p>Below is the code for the GAS(Google Apps Script) API server.</p>
-<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kr">const</span> <span class="nx">P</span> <span class="o">=</span> <span class="nx">PropertiesService</span><span class="p">.</span><span class="nx">getScriptProperties</span><span class="p">();</span>
-<span class="kr">const</span> <span class="nx">sheet</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">getActiveSpreadsheet</span><span class="p">().</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="nx">P</span><span class="p">.</span><span class="nx">getProperty</span><span class="p">(</span><span class="s2">&quot;sheetname&quot;</span><span class="p">))</span>
-<span class="kr">const</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">sheet</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="s2">&quot;A2:C&quot;</span><span class="p">).</span><span class="nx">getValues</span><span class="p">();</span>
+<div class="highlight-js notranslate"><div class="highlight"><pre><span></span><span class="kd">const</span> <span class="nx">P</span> <span class="o">=</span> <span class="nx">PropertiesService</span><span class="p">.</span><span class="nx">getScriptProperties</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">sheet</span> <span class="o">=</span> <span class="nx">SpreadsheetApp</span><span class="p">.</span><span class="nx">getActiveSpreadsheet</span><span class="p">().</span><span class="nx">getSheetByName</span><span class="p">(</span><span class="nx">P</span><span class="p">.</span><span class="nx">getProperty</span><span class="p">(</span><span class="s2">&quot;sheetname&quot;</span><span class="p">))</span>
+<span class="kd">const</span> <span class="nx">values</span> <span class="o">=</span> <span class="nx">sheet</span><span class="p">.</span><span class="nx">getRange</span><span class="p">(</span><span class="s2">&quot;A2:C&quot;</span><span class="p">).</span><span class="nx">getValues</span><span class="p">();</span>
 
 <span class="kd">var</span> <span class="nx">Password2dataURL</span> <span class="o">=</span> <span class="p">{};</span>
-<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
-  <span class="nx">Password2dataURL</span><span class="p">[</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span><span class="o">=</span><span class="mf">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">&lt;</span><span class="nx">values</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+  <span class="nx">Password2dataURL</span><span class="p">[</span><span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="mf">0</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">values</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">slice</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">doPost</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
@@ -864,8 +1002,8 @@
 
   <span class="k">if</span> <span class="p">(</span><span class="nx">password</span> <span class="k">in</span> <span class="nx">Password2dataURL</span><span class="p">){</span>
     <span class="kd">let</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">Password2dataURL</span><span class="p">[</span><span class="nx">password</span><span class="p">]</span>
-    <span class="nx">response</span><span class="p">.</span><span class="nx">dataURL</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="nx">response</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">dataURL</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="mf">0</span><span class="p">]</span>
+    <span class="nx">response</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="mf">1</span><span class="p">]</span>
   <span class="p">}</span>
 
   <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="nx">ContentService</span><span class="p">.</span><span class="nx">createTextOutput</span><span class="p">();</span>
@@ -878,8 +1016,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="teilab.datasets.TeiLabDataSets.get_filePaths">
-<code class="sig-name descname">get_filePaths</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; List<span class="p">[</span>pathlib.Path<span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.get_filePaths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.get_filePaths" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.get_filePaths">
+<span class="sig-name descname"><span class="pre">get_filePaths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pathlib.Path</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.get_filePaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.get_filePaths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the path list of files used in the lecture.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -901,21 +1039,21 @@
 </div>
 </dd></dl>
 
-<dl class="py method">
-<dt id="teilab.datasets.TeiLabDataSets.filePaths">
-<em class="property">property </em><code class="sig-name descname">filePaths</code><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.filePaths" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.filePaths">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">filePaths</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[pathlib.Path]</span></em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.filePaths" title="Permalink to this definition">¶</a></dt>
 <dd><p>The path lists for datasets.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt id="teilab.datasets.TeiLabDataSets.satisfied">
-<em class="property">property </em><code class="sig-name descname">satisfied</code><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.satisfied" title="Permalink to this definition">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.satisfied">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">satisfied</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.satisfied" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether to get all necessary data or not.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="teilab.datasets.TeiLabDataSets.read">
-<code class="sig-name descname">read</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="n">sep</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">'\t'</span></em>, <em class="sig-param"><span class="n">header</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">'infer'</span></em>, <em class="sig-param"><span class="n">nrows</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>int<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">usecols</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>Union<span class="p">[</span>List<span class="p">[</span>str<span class="p">]</span><span class="p">, </span>callable<span class="p">]</span><span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>List<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">no</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sep</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'\t'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'infer'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrows</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">usecols</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span> </span><span class="pre">callable</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read sample(s) data as <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -951,8 +1089,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="teilab.datasets.TeiLabDataSets.read_data">
-<code class="sig-name descname">read_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>List<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.read_data">
+<span class="sig-name descname"><span class="pre">read_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">no</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read sample(s) ‘expression’ data as <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -978,8 +1116,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="teilab.datasets.TeiLabDataSets.read_meta">
-<code class="sig-name descname">read_meta</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>List<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_meta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_meta" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.read_meta">
+<span class="sig-name descname"><span class="pre">read_meta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">no</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_meta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_meta" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read sample(s) ‘meta’ data as <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1005,8 +1143,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="teilab.datasets.TeiLabDataSets.read_summary">
-<code class="sig-name descname">read_summary</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">no</span><span class="p">:</span> <span class="n">Union<span class="p">[</span>int<span class="p">, </span>str<span class="p">, </span>List<span class="p">[</span>int<span class="p">]</span><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; Union<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">, </span>List<span class="p">[</span>pandas.core.frame.DataFrame<span class="p">]</span><span class="p">]</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_summary" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.read_summary">
+<span class="sig-name descname"><span class="pre">read_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">no</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span> </span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">pandas.core.frame.DataFrame</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.read_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.read_summary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read sample(s) ‘summary’ data as <code class="docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1032,8 +1170,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="teilab.datasets.TeiLabDataSets.reliable_filter">
-<em class="property">static </em><code class="sig-name descname">reliable_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">name</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span> &#x2192; pandas.core.frame.DataFrame<a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.reliable_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.reliable_filter" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="teilab.datasets.TeiLabDataSets.reliable_filter">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">reliable_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="reference internal" href="_modules/teilab/datasets.html#TeiLabDataSets.reliable_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.TeiLabDataSets.reliable_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a dataframe which means whether data is reliable or not.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1066,35 +1204,29 @@
 </dd></dl>
 
 </div>
+</div>
+</div>
 
 
            </div>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="teilab.question.html" class="btn btn-neutral float-right" title="teilab.question module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="teilab.utils.generic_utils.html" class="btn btn-neutral float-left" title="teilab.utils.generic_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="teilab.normalizations.html" class="btn btn-neutral float-right" title="teilab.normalizations module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="teilab.utils.generic_utils.html" class="btn btn-neutral float-left" title="teilab.utils.generic_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2021, iwasakishuto
+        &#169; Copyright 2021, iwasakishuto.
 
     </p>
   </div> 
 
 </footer>
-
         </div>
 
       </div>

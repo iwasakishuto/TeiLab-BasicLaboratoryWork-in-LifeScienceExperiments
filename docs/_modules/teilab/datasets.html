@@ -3,23 +3,30 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>teilab.datasets &mdash; UiTei-Lab Documentation  documentation</title>
+  <title>teilab.datasets &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
   
 
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/popup.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="../../_static/favicon.png"/>
   
+
   
+  
+
   
 
   
@@ -29,12 +36,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
-        <script src="../../_static/particles.min.js"></script>
         <script src="../../_static/custom.js"></script>
+        <script src="../../_static/particles.min.js"></script>
+        <script src="../../_static/popup.js"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -54,7 +62,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab Documentation
+            <a href="../../index.html" class="icon icon-home"> UiTei-Lab's Course Documentation
           
 
           
@@ -134,7 +142,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">UiTei-Lab Documentation</a>
+          <a href="../../index.html">UiTei-Lab's Course Documentation</a>
         
       </nav>
 
@@ -146,6 +154,8 @@
         <div class="rst-content">
         
           
+
+
 
 
 
@@ -190,6 +200,18 @@
 
 <span class="sd">Reference: `Agilent Feature Extraction 12.0 Reference Guide &lt;https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf&gt;`_</span>
 
+<span class="sd">########</span>
+<span class="sd">FEATURES</span>
+<span class="sd">########</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">    &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
+<span class="sd">    &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=True)</span>
+<span class="sd">    &gt;&gt;&gt; df_data = datasets.read_data(no=0)</span>
+<span class="sd">    &gt;&gt;&gt; df_data.columns</span>
+<span class="sd">        Index([&#39;FEATURES&#39;, &#39;FeatureNum&#39;, &#39;Row&#39;, &#39;Col&#39;, &#39;accessions&#39;, ... ], dtype=&#39;object&#39;)</span>
+
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
 <span class="sd">| G2505C | G2600D |              Features              | Types |                                                                                                                                                                                                                                          Description                                                                                                                                                                                                                                          |</span>
 <span class="sd">+========+========+====================================+=======+===============================================================================================================================================================================================================================================================================================================================================================================================================================================================================================+</span>
@@ -227,7 +249,7 @@
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
 <span class="sd">| 17     |  9     | ``PositionY``                      | float | Found coordinates (Y) of the feature centroid in microns.                                                                                                                                                                                                                                                                                                                                                                                                                                     |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
-<span class="sd">| 18     |        | ``gSurrogateUsed``                 | float | The g surrogate value used. (If ``gSurrogateUsed`` is Non-zero value.) No surrogate value used. (otherwise)                                                                                                                                                                                                                                                                                                                                                                                   |</span>
+<span class="sd">| 18     |        | ``gSurrogateUsed``                 | float | If ``gSurrogateUsed`` is Non-zero value, The g surrogate value used. Otherwise, No surrogate value used.                                                                                                                                                                                                                                                                                                                                                                                      |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
 <span class="sd">| 19     |        | ``gIsFound``                       | bool  | A boolean used to flag found features. The flag is applied independently in each channel. (``1`` = IsFound, ``0`` = IsNotFound) A feature is considered Found if two conditions are true: 1) the difference between the feature signal and the local background signal is more than 1.5 times the local background noise and 2) the spot diameter is at least 0.30 times the nominal spot diameter.                                                                                           |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
@@ -273,7 +295,7 @@
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
 <span class="sd">| 40     | 20     | ``IsManualFlag``                   | bool  | Boolean to flag features for downstream filtering in third party gene expression software.                                                                                                                                                                                                                                                                                                                                                                                                    |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
-<span class="sd">| 41     | 21     | ``gBGSubSignal``                   | float | Background-subtracted signal. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust. ``g(r)BGSubSignal`` = ``g(r)MeanSignal`` - ``g(r)BGUsed``.                                                                                                                                                                                                                                               |</span>
+<span class="sd">| 41     | 21     | ``gBGSubSignal``                   | float | Background-subtracted signal. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust, see `Table 34 on page 254 &lt;https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf&gt;`_ . ``g(r)BGSubSignal`` = ``g(r)MeanSignal`` - ``g(r)BGUsed``.                                                                                                                             |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
 <span class="sd">| 42     |        | ``gBGSubSigError``                 | float | Propagated standard error as computed on net g(r) background-subtracted signal. For one color, the error model is applied to the background-subtracted signal. This will contain the larger of he universal (UEM) error or the propagated error.                                                                                                                                                                                                                                              |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
@@ -285,9 +307,9 @@
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
 <span class="sd">| 46     | 23     | ``gIsWellAboveBG``                 | bool  | Boolean flag indicating if a feature is WellAbove Background or not, feature passes ``g(r)IsPosAndSignif`` and additionally the g(r)BGSubSignal is greater than ``2.6*g(r)BG_SD``. You can change the multiplier ``2.6``.                                                                                                                                                                                                                                                                     |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
-<span class="sd">| 47     |        | ``gBGUsed``                        | float | Background used to subtract from the MeanSignal; variable also used in t-test. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust. gBGUsed rBGUsed float ``g(r)BGSubSignal`` = ``g(r)MeanSignal`` - ``g(r)BGUsed``.                                                                                                                                                                        |</span>
+<span class="sd">| 47     |        | ``gBGUsed``                        | float | Background used to subtract from the MeanSignal; variable also used in t-test. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust, see `Table 34 on page 254 &lt;https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf&gt;`_ . ``g(r)BGSubSignal`` = ``g(r)MeanSignal`` - ``g(r)BGUsed``.                                                                            |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
-<span class="sd">| 48     |        | ``gBGSDUsed``                      | float | Standard deviation of background used in g(r) channel; variable also used in t-test and surrogate algorithms. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust.                                                                                                                                                                                                                          |</span>
+<span class="sd">| 48     |        | ``gBGSDUsed``                      | float | Standard deviation of background used in g(r) channel; variable also used in t-test and surrogate algorithms. To display the values used to calculate this variable using different background signals and settings of spatial detrend and global background adjust, see `Table 34 on page 254 &lt;https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf&gt;`_ .                                                                                                        |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
 <span class="sd">| 49     |        | ``ErrorModel``                     | bool  | Indicates the error model that you chose for Feature Extraction or that the software uses if you have chosen the &quot;Most Conservative&quot; option. ``0`` = Propagated model chosen by you or by software. ``1`` = Universal error model chosen by you or by software.                                                                                                                                                                                                                               |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
@@ -315,6 +337,71 @@
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
 <span class="sd">| 61     |        | ``gIsUsedInMD``                    | bool  | Indicates whether this feature was included in the set used to generate the multiplicative detrend surface.                                                                                                                                                                                                                                                                                                                                                                                   |</span>
 <span class="sd">+--------+--------+------------------------------------+-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+</span>
+
+<span class="sd">**********************</span>
+<span class="sd">Background Subtraction</span>
+<span class="sd">**********************</span>
+
+<span class="sd">The feature background-subtracted signal, ``BGSubSignal``, is calculated by subtracting a value called the ``BGUsed`` from the feature mean signal.</span>
+
+<span class="sd">.. math::</span>
+
+<span class="sd">    \\text{ BGSubSignal } = \\text{ MeanSignal } - \\text{ BGUsed }</span>
+
+<span class="sd">where ``BGSubSignal`` and ``BGUsed`` depend on the type of background method and the settings for spatial detrend and global background adjust. See the following table.</span>
+
+<span class="sd">+-------------------------------+---------------------------------+-----------------------------+--------------------------------+---------------------------------+---------------------------------------------+</span>
+<span class="sd">| Background Subtraction Method | Background Subtraction Variable |     SpDe OFF / GBA OFF      |         SpDe ON / GBA OFF      |         SpDe OFF /  GBA ON      |                     SpDe ON / GBA ON        |</span>
+<span class="sd">+===============================+=================================+=============================+================================+=================================+=============================================+</span>
+<span class="sd">| No background subtract        | ``BGUsed`` =                    | ``BGMeanSignal``            | ``SDSV``                       | ``BGAdjust``                    | ``SDSV`` + ``BGAdjust``                     |</span>
+<span class="sd">+                               +---------------------------------+-----------------------------+--------------------------------+---------------------------------+---------------------------------------------+</span>
+<span class="sd">|                               | ``BGSDUsed`` =                  | ``BGPixSDev``               | ``BGPixSDev``                  | ``BGPixSDev``                   | ``BGPixSDev``                               |</span>
+<span class="sd">+                               +---------------------------------+-----------------------------+--------------------------------+---------------------------------+---------------------------------------------+</span>
+<span class="sd">|                               | ``BGSubSignal`` =               | ``MeanSignal``              | ``MeanSignal`` - ``BGUsed``    | ``MeanSignal`` - ``BGUsed``     | ``MeanSignal`` - ``BGUsed``                 |</span>
+<span class="sd">+-------------------------------+---------------------------------+-----------------------------+--------------------------------+---------------------------------+---------------------------------------------+</span>
+<span class="sd">| Local Background              | ``BGUsed`` =                    | ``BGMeanSignal``            | ``BGMeanSignal`` + ``SDSV``    | ``BGMeanSignal`` + ``BGAdjust`` | ``BGMeanSignal`` + ``SDSV`` + ``BGAdjust``  |</span>
+<span class="sd">+                               +---------------------------------+-----------------------------+--------------------------------+---------------------------------+---------------------------------------------+</span>
+<span class="sd">|                               | ``BGSDUsed`` =                  | ``BGPixSDev``               | ``BGPixSDev``                  | ``BGPixSDev``                   | ``BGPixSDev``                               |</span>
+<span class="sd">+                               +---------------------------------+-----------------------------+--------------------------------+---------------------------------+---------------------------------------------+</span>
+<span class="sd">|                               | ``BGSubSignal`` =               | ``MeanSignal`` - ``BGUsed`` | ``MeanSignal`` - ``BGUsed``    | ``MeanSignal`` - ``BGUsed``     | ``MeanSignal`` - ``BGUsed``                 |</span>
+<span class="sd">+-------------------------------+---------------------------------+-----------------------------+--------------------------------+---------------------------------+---------------------------------------------+</span>
+<span class="sd">| Global Background method      | ``BGUsed`` =                    | ``GBGIA``                   | ``GBGIA`` + ``SDSV``           | ``GBGIA`` + ``BGAdjust``        | ``GBGIA`` + ``SDSV`` + ``BGAdjust``         |</span>
+<span class="sd">+                               +---------------------------------+-----------------------------+--------------------------------+---------------------------------+---------------------------------------------+</span>
+<span class="sd">|                               | ``BGSDUsed`` =                  | ``GBGISD``                  | ``GBGISD``                     | ``GBGISD``                      | ``GBGISD``                                  |</span>
+<span class="sd">+                               +---------------------------------+-----------------------------+--------------------------------+---------------------------------+---------------------------------------------+</span>
+<span class="sd">|                               | ``BGSubSignal`` =               | ``MeanSignal`` - ``BGUsed`` | ``MeanSignal`` - ``BGUsed``    | ``MeanSignal`` - ``BGUsed``     | ``MeanSignal`` - ``BGUsed``                 |</span>
+<span class="sd">+-------------------------------+---------------------------------+-----------------------------+--------------------------------+---------------------------------+---------------------------------------------+</span>
+
+<span class="sd">- SpDe: Spatial Detrend</span>
+<span class="sd">- SDSV: ``SpatialDetrendSurfaceValue``</span>
+<span class="sd">- GBA: Global Bkgnd Adjust</span>
+<span class="sd">- GBGISD: ``GlobalBGInlierSDev``</span>
+<span class="sd">- GBGISD: ``GlobalBGInlierSDev``</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">    &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
+<span class="sd">    &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
+<span class="sd">    &gt;&gt;&gt; df_meta = datasets.read_meta(no=-1)</span>
+<span class="sd">    &gt;&gt;&gt; df_meta[&quot;BGSubtractor_BGSubMethod&quot;].values[0]</span>
+<span class="sd">        7</span>
+
+<span class="sd">The BGSubMethod of ``7`` corresponds to &quot;No Background Subtraction method&quot; (see `Table 17 on page 129 &lt;https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf&gt;`_ .).</span>
+
+<span class="sd">- Global Background Adjustment is turned Off.</span>
+<span class="sd">- Spatial Detrending is turned On.</span>
+
+<span class="sd">.. code-block:: python</span>
+
+<span class="sd">    &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
+<span class="sd">    &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
+<span class="sd">    &gt;&gt;&gt; df_data = datasets.read_data(no=-1)</span>
+<span class="sd">    &gt;&gt;&gt; all(df_data[&quot;gBGUsed&quot;] == df_data[&quot;gSpatialDetrendSurfaceValue&quot;])</span>
+<span class="sd">        True</span>
+<span class="sd">    &gt;&gt;&gt; all(abs((df_data[&quot;gBGSDUsed&quot;]-df_data[&quot;gBGPixSDev&quot;])/df_data[&quot;gBGSDUsed&quot;])&lt;1e-3)</span>
+<span class="sd">        True</span>
+<span class="sd">    &gt;&gt;&gt; all(abs((df_data[&quot;gBGSubSignal&quot;]-(df_data[&quot;gMeanSignal&quot;]-df_data[&quot;gBGUsed&quot;]))/df_data[&quot;gBGSubSignal&quot;]) &lt; 1.4e-1)</span>
+<span class="sd">        True</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -691,20 +778,17 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2021, iwasakishuto
+        &#169; Copyright 2021, iwasakishuto.
 
     </p>
   </div> 
 
 </footer>
-
         </div>
 
       </div>

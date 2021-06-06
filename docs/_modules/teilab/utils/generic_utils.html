@@ -3,23 +3,30 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>teilab.utils.generic_utils &mdash; UiTei-Lab Documentation  documentation</title>
+  <title>teilab.utils.generic_utils &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/popup.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="../../../_static/favicon.png"/>
   
+
   
+  
+
   
 
   
@@ -29,12 +36,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
-        <script src="../../../_static/particles.min.js"></script>
         <script src="../../../_static/custom.js"></script>
+        <script src="../../../_static/particles.min.js"></script>
+        <script src="../../../_static/popup.js"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -54,7 +62,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab Documentation
+            <a href="../../../index.html" class="icon icon-home"> UiTei-Lab's Course Documentation
           
 
           
@@ -134,7 +142,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">UiTei-Lab Documentation</a>
+          <a href="../../../index.html">UiTei-Lab's Course Documentation</a>
         
       </nav>
 
@@ -146,6 +154,8 @@
         <div class="rst-content">
         
           
+
+
 
 
 
@@ -190,7 +200,7 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span><span class="n">Callable</span><span class="p">,</span><span class="n">Optional</span><span class="p">,</span><span class="n">Dict</span><span class="p">,</span><span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
 
 <div class="viewcode-block" id="now_str"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.now_str">[docs]</a><span class="k">def</span> <span class="nf">now_str</span><span class="p">(</span><span class="n">tz</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">@%H.%M.%S&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
@@ -311,26 +321,45 @@
         <span class="k">return</span> <span class="nb">print</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="dict2str"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.dict2str">[docs]</a><span class="k">def</span> <span class="nf">dict2str</span><span class="p">(</span><span class="n">d</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">],</span> <span class="n">item_separator</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="n">key_separator</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;=&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Convert a dictionary to string.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        d (Dict[Any,Any])              : A dictionary.</span>
+<span class="sd">        item_separator (str, optional) : A separator between items. Defaults to ``&quot;, &quot;``.</span>
+<span class="sd">        key_separator (str, optional)  : A separator between keys. Defaults to ``&quot;=&quot;``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        str: A textual summary of the contents of the dictionary.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import dict2str</span>
+<span class="sd">        &gt;&gt;&gt; dict2str({&quot;key1&quot;:&quot;val&quot;, &quot;key2&quot;:1})</span>
+<span class="sd">        &#39;key1=val, key2=1&#39;</span>
+<span class="sd">        &gt;&gt;&gt; dict2str({&quot;key1&quot;:&quot;val&quot;, &quot;key2&quot;:1}, key_separator=&quot;:&quot;)</span>
+<span class="sd">        &#39;key1:val, key2:1&#39;</span>
+<span class="sd">        &gt;&gt;&gt; dict2str({&quot;key1&quot;:&quot;val&quot;, &quot;key2&quot;:1}, item_separator=&quot;🤔&quot;)</span>
+<span class="sd">        &#39;key1=val🤔key2=1&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">item_separator</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}{</span><span class="n">key_separator</span><span class="si">}{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span></div>
 </pre></div>
 
            </div>
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2021, iwasakishuto
+        &#169; Copyright 2021, iwasakishuto.
 
     </p>
   </div> 
 
 </footer>
-
         </div>
 
       </div>

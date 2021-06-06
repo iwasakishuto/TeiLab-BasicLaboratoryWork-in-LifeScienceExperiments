@@ -7,10 +7,12 @@ Differential gene expression can be an outcome of true biological variability or
 Robust Multichip Analysis (RMA)
 ###############################
 
-In microarray analysis, many algorithms have been proposed, but the most widely used one is :fa:`file-pdf-o` `Robust Multichip Analysis (RMA) <https://academic.oup.com/biostatistics/article/4/2/249/245074>`_ , where the signal value of each spot ( ``RawData`` ) is processed and normalized according to the following flow.
+In microarray analysis, many algorithms have been proposed, but the most widely used one (**de facto standard**) is :fa:`file-pdf-o` `Robust Multichip Analysis (RMA) <https://academic.oup.com/biostatistics/article/4/2/249/245074>`_ , where the signal value of each spot ( ``RawData`` ) is processed and normalized according to the following flow. ( :ref:`1) Background Subtraction <target to background subtraction section>`, :ref:`2) Normalization Between Samples <target to normalization between samples section>` and :ref:`3) Summarization <target to summarization section>` )
 
 .. graphviz:: _graphviz/RobustMultichipAnalysis.dot
-      :class: popup-img                   
+      :class: popup-img
+
+.. _target to background subtraction section:
 
 *************************
 1. Background Subtraction
@@ -27,6 +29,7 @@ In microarray analysis, many algorithms have been proposed, but the most widely 
 
 TODO: もっとここを詰めねば。論文読みます。
 
+.. _target to normalization between samples section:
 
 ********************************
 2. Normalization Between Samples
@@ -46,12 +49,13 @@ There are numerous proposals for normalizing unbalanced data between samples (:f
 
     1. :ref:`Percentile <target to percentile section>`
     2. :ref:`Quantile <target to quantile section>`
-    3. :ref:`LOWESS <target to lowess section>`
 
 .. _target to percentile section:
 
 1. Percentile
 =============
+
+This is a constant adjustoment in a global manner.
 
 .. _target to quantile section:
 
@@ -61,17 +65,10 @@ There are numerous proposals for normalizing unbalanced data between samples (:f
 - 遺伝子を発現量順に並べたとき、同じ順位の遺伝子は同じ発現量を示す。
 - 各サンプルの遺伝子発現の強度分布はほとんど変わらない。
 
-.. _target to lowess section:
 
-3. LOWESS
-=========
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC100354/
 
-LOWESS(Locally Weighted Scatter Plot Smoothing)
-
-- 発現量の少ない遺伝子ほど発現量がばらつく傾向がある
-- ほとんどの遺伝子の発現は変動していない
-
-
+.. _target to summarization section:
 
 ****************
 3. Summarization
@@ -81,30 +78,35 @@ https://github.com/scipy/scipy/blob/v1.6.3/scipy/signal/signaltools.py#L3384-L34
 
 """
 import numpy as np
-import nptyping as npt
 from scipy.stats.mstats import gmean
 from typing import Any
+from nptyping import NDArray
 from numbers import Number
 
 
-def percentile(data:npt.NDArray[(Any,Any), Number], percent:Number=75) -> npt.NDArray[(Any, Any), Number]:
-    """Percentile Normalization
+def percentile(data:NDArray[(Any,Any),Number], percent:Number=75) -> NDArray[(Any,Any),Number]:
+    """Perform Percentile Normalization.
+
+    Args:
+        data (NDArray[(Any,Any),Number]) : Input data. Shape = ( ``n_samples``, ``n_features`` )
+        percent (Number, optional)       : Which percentile value to normalize. Defaults to ``75``.
 
     Returns:
-        [type]: [description]
+        NDArray[(Any,Any),Number] : percentiled data. Shape = ( ``n_samples``, ``n_features`` )
+
+    Raises:
+        ValueError: When ``percent`` tiles contain negative values.
 
     Examples:
         >>> import matplotlib.pyplot as plt
         >>> from teilab.normalizations import percentile
-        >>> from teilab.plot.matplotlib import plotDensities
+        >>> from teilab.plot.matplotlib import densityplot
         >>> n_samples, n_features = (4, 1000)
-        >>> data = np.random.RandomState(0).normal(size=(n_samples,n_features))
-        >>> # Shift each distribution.
-        >>> data = data + np.expand_dims(np.arange(n_samples), axis=1)
+        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1),  size=(n_samples,n_features))
         >>> data_percentiled = percentile(data=data, percent=75)
         >>> fig, axes = plt.subplots(ncols=2, nrows=1, figsize=(12,4))
-        >>> ax = plotDensities(data=data, title="Before Percentile", ax=axes[0])
-        >>> ax = plotDensities(data=data_percentiled, title="After Percentile", ax=axes[1])
+        >>> ax = densityplot(data=data, title="Before Percentile", ax=axes[0])
+        >>> ax = densityplot(data=data_percentiled, title="After Percentile", ax=axes[1])
     
     +--------------------------------------------------+
     |                      Results                     |
@@ -114,8 +116,59 @@ def percentile(data:npt.NDArray[(Any,Any), Number], percent:Number=75) -> npt.ND
     +--------------------------------------------------+
     """    
     a = np.percentile(a=data, q=percent, axis=1)
+    if np.any(a<0):
+        for i,val in enumerate(a):
+            if val<0: break
+        raise ValueError(f"Geometric mean cannot be calculated because the {percent}%tiles contain negative values (ex. {i}-th data's {percent}%tile = {val} < 0) ")
     return data * np.expand_dims(gmean(a)/a, axis=1)
 
+def quantile(data:NDArray[(Any,Any),Number]) -> NDArray[(Any,Any),Number]:
+    """Perform Quantile Normalization.
 
+    Args:
+        data (NDArray[(Any,Any),Number]) : Input data. Shape = ( ``n_samples``, ``n_features`` )
+
+    Returns:
+        NDArray[(Any,Any),Number] : percentiled data. Shape = ( ``n_samples``, ``n_features`` )
+
+    Raises:
+        ValueError: When ``data`` contains negative values.
+
+    Examples:
+        >>> import matplotlib.pyplot as plt
+        >>> from teilab.normalizations import percentile
+        >>> from teilab.plot.matplotlib import densityplot
+        >>> n_samples, n_features = (4, 1000)
+        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features), ) + 3.5
+        >>> data_quantiled = quantile(data=data)
+        >>> fig, axes = plt.subplots(ncols=2, nrows=1, figsize=(12,4))
+        >>> ax = densityplot(data=data, title="Before Quantile", ax=axes[0])
+        >>> ax = densityplot(data=data_quantiled, title="After Quantile", ax=axes[1])
+
+    +------------------------------------------------+
+    |                      Results                   |
+    +================================================+
+    | .. image:: _images/normalizations.quantile.jpg |
+    |    :class: popup-img                           |
+    +------------------------------------------------+
+    """
+    if np.any(data<0):
+        for i in range(data.shape[0]):
+            for j in range(data.shape[1]):
+                if data[i,j] < 0:
+                    break
+        raise ValueError(f"Geometric mean cannot be calculated because ``data`` contain negative values. (ex. data[{i}][{j}] = {data[i,j]} < 0)")
+    return gmean(a=np.sort(a=data, axis=1), axis=0)[np.argsort(np.argsort(data, axis=1), axis=1)]
+
+def lowess(data:NDArray[(Any,Any),Number]) -> NDArray[(Any,Any),Number]:
+    """Perform LOWESS Normalization.
+
+    Args:
+        data (NDArray[(Any,Any),Number]) : Input data. Shape = ( ``n_samples``, ``n_features`` )
+
+    Returns:
+        NDArray[(Any,Any),Number] : percentiled data. Shape = ( ``n_samples``, ``n_features`` )
+    """
+    return data
 
 # def normalization_between_samples(df:pd.DataFrame):

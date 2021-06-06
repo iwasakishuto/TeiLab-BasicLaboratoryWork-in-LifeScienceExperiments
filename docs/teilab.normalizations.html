@@ -3,21 +3,23 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
   <meta property="og:title" content="teilab.normalizations module" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="teilab.normalizations.html" />
   <meta property="og:description" content="Differential gene expression can be an outcome of true biological variability or experimental artifacts. Normalization techniques have been used to minimize the effect of experimental artifacts on ..." />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>teilab.normalizations module &mdash; UiTei-Lab Documentation  documentation</title>
+  <title>teilab.normalizations module &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <link rel="stylesheet" href="_static/popup.css" type="text/css" />
@@ -26,7 +28,10 @@
   
     <link rel="shortcut icon" href="_static/favicon.png"/>
   
+
   
+  
+
   
 
   
@@ -36,14 +41,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
         <script src="_static/custom.js"></script>
         <script src="_static/particles.min.js"></script>
         <script src="_static/popup.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -65,7 +69,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab Documentation
+            <a href="index.html" class="icon icon-home"> UiTei-Lab's Course Documentation
           
 
           
@@ -158,7 +162,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">UiTei-Lab Documentation</a>
+          <a href="index.html">UiTei-Lab's Course Documentation</a>
         
       </nav>
 
@@ -170,6 +174,8 @@
         <div class="rst-content">
         
           
+
+
 
 
 
@@ -198,7 +204,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/teilab.normalizations.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -217,9 +223,8 @@
 <p>Differential gene expression can be an outcome of true biological variability or experimental artifacts. Normalization techniques have been used to minimize the effect of experimental artifacts on differential gene expression analysis.</p>
 <div class="section" id="robust-multichip-analysis-rma">
 <h2>Robust Multichip Analysis (RMA)<a class="headerlink" href="#robust-multichip-analysis-rma" title="Permalink to this headline">¶</a></h2>
-<p>In microarray analysis, many algorithms have been proposed, but the most widely used one is <em class="fa fa-file-pdf-o"></em> <a class="reference external" href="https://academic.oup.com/biostatistics/article/4/2/249/245074">Robust Multichip Analysis (RMA)</a> , where the signal value of each spot ( <code class="docutils literal notranslate"><span class="pre">RawData</span></code> ) is processed and normalized according to the following flow.</p>
-<div class="graphviz"><img src="_images/graphviz-59891fe76c73e2a293ab1fe01cd731e7d7fd79dc.png" alt="digraph RAMPreprocessingGraph {
-
+<p>In microarray analysis, many algorithms have been proposed, but the most widely used one (<strong>de facto standard</strong>) is <em class="fa fa-file-pdf-o"></em> <a class="reference external" href="https://academic.oup.com/biostatistics/article/4/2/249/245074">Robust Multichip Analysis (RMA)</a> , where the signal value of each spot ( <code class="docutils literal notranslate"><span class="pre">RawData</span></code> ) is processed and normalized according to the following flow. ( <a class="reference internal" href="#target-to-background-subtraction-section"><span class="std std-ref">1) Background Subtraction</span></a>, <a class="reference internal" href="#target-to-normalization-between-samples-section"><span class="std std-ref">2) Normalization Between Samples</span></a> and <a class="reference internal" href="#target-to-summarization-section"><span class="std std-ref">3) Summarization</span></a> )</p>
+<div class="graphviz"><img src="_images/graphviz-7d9910d4a36548f0df6bfc64bf2016bd419a5dbf.png" alt="digraph RAMPreprocessingGraph {
     graph [
         charset   = &quot;UTF-8&quot;;
         label     = &quot;Preprocessing (RMA)&quot;,
@@ -241,12 +246,239 @@
         style     = &quot;solid,filled&quot;,
         fontsize  = 16,
         fontcolor = 6,
-        fontname  = &quot;Migu 1M&quot;,
+        fontname  = &quot;monospace&quot;,
         color     = &quot;#cee6b4&quot;,
         fillcolor = &quot;#9ecca4&quot;,
         fixedsize = false,
         margin    = &quot;0.2,0.1&quot;,
     ];
+
+    RawData_row1_col1 [shape=doublecircle margin=&quot;0&quot; fillcolor=&quot;#29bb89&quot; fontcolor=&quot;#be0000&quot; color=&quot;#29bb89&quot; label=&quot;RawData\n(row1,col1)&quot;];
+    RawData_row1_col2 [shape=doublecircle margin=&quot;0&quot; fillcolor=&quot;#29bb89&quot; fontcolor=&quot;#be0000&quot; color=&quot;#29bb89&quot; label=&quot;RawData\n(row1,col2)&quot;];
+    RawData_rowN_colM [shape=doublecircle margin=&quot;0&quot; fillcolor=&quot;#29bb89&quot; fontcolor=&quot;#be0000&quot; color=&quot;#29bb89&quot; label=&quot;RawData\n(rowN,colM)&quot;];
+    Ave_row1_col1 [shape=circle margin=&quot;0&quot; fontcolor=&quot;#233e8b&quot; fillcolor=&quot;#b6c9f0&quot; color=&quot;#233e8b&quot; label=&quot;ave&quot;];
+    Ave_row1_col2 [shape=circle margin=&quot;0&quot; fontcolor=&quot;#233e8b&quot; fillcolor=&quot;#b6c9f0&quot; color=&quot;#233e8b&quot; label=&quot;ave&quot;];
+    Ave_rowN_colM [shape=circle margin=&quot;0&quot; fontcolor=&quot;#233e8b&quot; fillcolor=&quot;#b6c9f0&quot; color=&quot;#233e8b&quot; label=&quot;ave&quot;];
+    gMeanSignal_row1_col1 [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;white&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;110&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gMeanSignal&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;location&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;row1,col1&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gMeanSignal_row1_col2 [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;white&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;110&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gMeanSignal&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;location&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;row1,col2&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gMeanSignal_rowN_colM [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;white&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;110&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gMeanSignal&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;location&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;rowN,colM&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gBGUsed_row1_col1 [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;white&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;80&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gBGUsed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;location&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;row1,col1&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gBGUsed_row1_col2 [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;white&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;80&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gBGUsed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;location&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;row1,col2&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gBGUsed_rowN_colM [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;white&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;80&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gBGUsed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;location&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;rowN,colM&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gBGSubSignal               [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
+    rBGSubSignal               [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
+    gDyeNormSignal             [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
+    rDyeNormSignal             [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
+
+    Minus [shape=circle margin=&quot;0&quot; fontcolor=&quot;#233e8b&quot; fillcolor=&quot;#b6c9f0&quot; color=&quot;#233e8b&quot; label=&quot;-&quot;];
+
+    BackgroundSubtraction          [shape=diamond  fontname=&quot;fantasy&quot; label=&quot;Background Subtraction\n(+ Detrended fluctuation Analysis)&quot;];
+    DyeNormalization               [shape=diamond  fontname=&quot;fantasy&quot; margin=&quot;0.05&quot; label=&quot;(Dye Normalization)&quot;];
+    SurrogateVariableAnalysis      [shape=diamond  fontname=&quot;fantasy&quot; margin=&quot;0.05&quot; label=&quot;Surrogate Variable Analysis&quot;];
+    QuantileNormalization          [shape=diamond  fontname=&quot;fantasy&quot; margin=&quot;0.05&quot; label=&quot;Quantile Normalization&quot;];
+    Summarization                  [shape=diamond  fontname=&quot;fantasy&quot; margin=&quot;0.05&quot; label=&quot;Summarization&quot;];
+    remaining_processing_row1_col2 [shape=Mdiamond fontname=&quot;fantasy&quot; margin=&quot;0.05&quot; label=&quot;Remaining Processing&quot;]
+    remaining_processing_rowN_colM [shape=Mdiamond fontname=&quot;fantasy&quot; margin=&quot;0.05&quot; label=&quot;Remaining Processing&quot;]
+
+    gProcessedSignal_vimentin1 [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#fff5b7&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;160&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignal&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;gene&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin1&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gProcessedSignal_insulin1  [
+        shape=none 
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#fff5b7&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;160&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignal&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;gene&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;insulin1&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gProcessedSignal_vimentin3 [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#fff5b7&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;160&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignal&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;gene&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin3&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ] 
+
+    gProcessedSignals_sampleA  [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#ffc93c&quot;&gt;
+            &lt;tr&gt;
+            &lt;td rowspan=&quot;2&quot; port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;170&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignals&lt;/font&gt;&lt;/td&gt;
+            &lt;td port=&quot;vim1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin1&lt;/font&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;ins1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;insulin1&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr bgcolor=&quot;red&quot;&gt;
+            &lt;td rowspan=&quot;2&quot; port=&quot;varname&quot; align=&quot;center&quot; border=&quot;0&quot; width=&quot;170&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;26&quot; color=&quot;#1f441e&quot;&gt;SAMPLE_A&lt;/font&gt;&lt;/td&gt;
+            &lt;td port=&quot;ins1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;:&lt;/font&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;vim3&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin3&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gProcessedSignals_sampleB  [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#ffc93c&quot;&gt;
+            &lt;tr&gt;
+            &lt;td rowspan=&quot;2&quot; port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;170&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignals&lt;/font&gt;&lt;/td&gt;
+            &lt;td port=&quot;vim1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin1&lt;/font&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;ins1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;insulin1&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr bgcolor=&quot;red&quot;&gt;
+            &lt;td rowspan=&quot;2&quot; port=&quot;varname&quot; align=&quot;center&quot; border=&quot;0&quot; width=&quot;170&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;26&quot; color=&quot;#1f441e&quot;&gt;SAMPLE_B&lt;/font&gt;&lt;/td&gt;
+            &lt;td port=&quot;ins1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;:&lt;/font&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;vim3&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin3&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+
+    gProcessedSignal_vimentin1_normed [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#fff5b7&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;230&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignal_normed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;gene&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin1&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gProcessedSignal_insulin1_normed  [
+        shape=none 
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#fff5b7&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;230&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignal_normed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;gene&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;insulin1&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gProcessedSignal_vimentin3_normed [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#fff5b7&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;230&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignal_normed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;gene&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin3&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ] 
+
+    gProcessedSignal_vimentin_normed [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#fff5b7&quot;&gt;
+            &lt;tr&gt;&lt;td port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;230&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignal_normed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;gene&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ] 
+    gProcessedSignals_sampleB_normed  [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#ffc93c&quot;&gt;
+            &lt;tr&gt;
+            &lt;td rowspan=&quot;2&quot; port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;240&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignals_normed&lt;/font&gt;&lt;/td&gt;
+            &lt;td port=&quot;vim1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin1_normed&lt;/font&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;ins1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;insulin1_normed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr bgcolor=&quot;red&quot;&gt;
+            &lt;td rowspan=&quot;2&quot; port=&quot;varname&quot; align=&quot;center&quot; border=&quot;0&quot; width=&quot;170&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;26&quot; color=&quot;#1f441e&quot;&gt;SAMPLE_B&lt;/font&gt;&lt;/td&gt;
+            &lt;td port=&quot;ins1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;:&lt;/font&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;vim3&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin3_normed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
+    gProcessedSignals_sampleA_normed  [
+        shape = none
+        margin = 0
+        label = &lt;
+        &lt;table width=&quot;100&quot; border=&quot;0&quot; cellspacing=&quot;10&quot; bgcolor=&quot;#ffc93c&quot;&gt;
+            &lt;tr&gt;
+            &lt;td rowspan=&quot;2&quot; port=&quot;varname&quot; align=&quot;left&quot; border=&quot;1&quot; color=&quot;#e1e4e5&quot; bgcolor=&quot;white&quot; width=&quot;240&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;16&quot; face=&quot;monaco&quot; color=&quot;#e74c3c&quot;&gt;gProcessedSignals_normed&lt;/font&gt;&lt;/td&gt;
+            &lt;td port=&quot;vim1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin1_normed&lt;/font&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;ins1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;insulin1_normed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+            &lt;tr bgcolor=&quot;red&quot;&gt;
+            &lt;td rowspan=&quot;2&quot; port=&quot;varname&quot; align=&quot;center&quot; border=&quot;0&quot; width=&quot;170&quot; fixedsize=&quot;true&quot;&gt;&lt;font point-size=&quot;26&quot; color=&quot;#1f441e&quot;&gt;SAMPLE_A&lt;/font&gt;&lt;/td&gt;
+            &lt;td port=&quot;ins1&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;:&lt;/font&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;&lt;td port=&quot;vim3&quot;&gt;&lt;font face=&quot;Courier&quot;&gt;vimentin3_normed&lt;/font&gt;&lt;/td&gt;&lt;/tr&gt;
+        &lt;/table&gt;
+        &gt;
+    ]
 
     edge [
         style         = solid,
@@ -258,46 +490,54 @@
         labeldistance = 2.5,
         labelangle    = 70
     ];
-
-    RawData [shape=doublecircle margin=&quot;0&quot; fillcolor=&quot;#29bb89&quot; fontcolor=&quot;#be0000&quot; color=&quot;#29bb89&quot;];
-    Ave   [shape=circle margin=&quot;0&quot;  fontcolor=&quot;#233e8b&quot; fillcolor=&quot;#b6c9f0&quot; color=&quot;#233e8b&quot; label=&quot;ave&quot;];
-    RawData -&gt; Ave;
-    Ave -&gt; gMeanSignal;
-
-    subgraph cluster_0 {
+    RawData_row1_col1 -&gt; Ave_row1_col1 -&gt; gMeanSignal_row1_col1;
+    RawData_row1_col2 -&gt; Ave_row1_col2 -&gt; gMeanSignal_row1_col2;
+    RawData_rowN_colM -&gt; Ave_rowN_colM -&gt; gMeanSignal_rowN_colM;
+    subgraph cluster_1_row1_col1 {
         label     = &quot;Background Subtraction&quot;;
         labelloc  = &quot;t&quot;;
-        labeljust = &quot;l&quot;;
+        labeljust = &quot;c&quot;;
         fillcolor = &quot;#89898989&quot;;
         fontcolor = &quot;#ffd56b&quot;;
         margin    = 20;
-
-        gMeanSignal                [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
-        gBGUsed                    [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
-        gBGSubSignal               [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
-        rBGSubSignal               [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
-        gDyeNormSignal             [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
-        rDyeNormSignal             [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot;];
-        gProcessedSignal_A1        [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.35,0.1&quot;];
-        Minus [shape=circle margin=&quot;0&quot; fontcolor=&quot;#233e8b&quot; fillcolor=&quot;#b6c9f0&quot; color=&quot;#233e8b&quot; label=&quot;-&quot;];
-        BackgroundSubtraction     [shape=record  label=&quot;Background Subtraction|DFA&quot;];
-        DyeNormalization          [shape=diamond margin=0.05];
-        SurrogateVariableAnalysis [shape=box     margin=0.1 label=&quot;SVA&quot;];
-
-        gMeanSignal -&gt; BackgroundSubtraction;
-        BackgroundSubtraction -&gt; gBGUsed;
-        gMeanSignal -&gt; Minus;
-        gBGUsed -&gt; Minus;
+        gMeanSignal_row1_col1:varname -&gt; BackgroundSubtraction
+        BackgroundSubtraction -&gt; gBGUsed_row1_col1;
+        gMeanSignal_row1_col1 -&gt; Minus;
+        gBGUsed_row1_col1 -&gt; Minus;
         Minus -&gt; gBGSubSignal;
         gBGSubSignal -&gt; DyeNormalization;
         rBGSubSignal -&gt; DyeNormalization;
         DyeNormalization -&gt; gDyeNormSignal;
         DyeNormalization -&gt; rDyeNormSignal;
         gDyeNormSignal -&gt; SurrogateVariableAnalysis;
-        SurrogateVariableAnalysis -&gt; gProcessedSignal_A1;
+        SurrogateVariableAnalysis -&gt; gProcessedSignal_vimentin1;
     };
-
-    subgraph cluster_1 {
+    subgraph cluster_1_row1_col2 {
+        label     = &quot;Background Subtraction&quot;;
+        labelloc  = &quot;b&quot;;
+        labeljust = &quot;l&quot;;
+        fillcolor = &quot;#89898989&quot;;
+        fontcolor = &quot;#ffd56b&quot;;
+        margin    = 20;
+        gMeanSignal_row1_col2 -&gt; BackgroundSubtraction -&gt; gBGUsed_row1_col2 -&gt; remaining_processing_row1_col2;
+        gMeanSignal_row1_col2 -&gt; remaining_processing_row1_col2;
+        remaining_processing_row1_col2 -&gt; gProcessedSignal_insulin1;
+    }
+    subgraph cluster_1_rowN_colM {
+        label     = &quot;Background Subtraction&quot;;
+        labelloc  = &quot;b&quot;;
+        labeljust = &quot;r&quot;;
+        fillcolor = &quot;#89898989&quot;;
+        fontcolor = &quot;#ffd56b&quot;;
+        margin    = 20;
+        gMeanSignal_rowN_colM -&gt; BackgroundSubtraction -&gt; gBGUsed_rowN_colM -&gt; remaining_processing_rowN_colM;
+        gMeanSignal_rowN_colM -&gt; remaining_processing_rowN_colM
+        remaining_processing_rowN_colM -&gt; gProcessedSignal_vimentin3
+    }
+    gProcessedSignal_vimentin1 -&gt; gProcessedSignals_sampleA:vim1
+    gProcessedSignal_vimentin3 -&gt; gProcessedSignals_sampleA:vim3
+    gProcessedSignal_insulin1  -&gt; gProcessedSignals_sampleA:ins1
+    subgraph cluster_2 {
         label     = &quot;Normalization Between Samples&quot;;
         labelloc  = &quot;t&quot;;
         labeljust = &quot;l&quot;;
@@ -305,22 +545,15 @@
         fontcolor = &quot;#ffd56b&quot;;
         margin    = 20;
 
-        gProcessedSignal_B         [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.35,0.1&quot;];
-        gProcessedSignal_A2        [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.35,0.1&quot;];
-        gProcessedSignal_A1_normed [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.4,0.1&quot;];
-        gProcessedSignal_B_normed  [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.4,0.1&quot;];
-        gProcessedSignal_A2_normed [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.4,0.1&quot;];
-        QuantileNormalization     [shape=diamond margin=0.05];
-
-        gProcessedSignal_A1 -&gt; QuantileNormalization;
-        gProcessedSignal_B -&gt; QuantileNormalization;
-        gProcessedSignal_A2 -&gt; QuantileNormalization;
-        QuantileNormalization -&gt; gProcessedSignal_A1_normed;
-        QuantileNormalization -&gt; gProcessedSignal_B_normed;
-        QuantileNormalization -&gt; gProcessedSignal_A2_normed;
+        gProcessedSignals_sampleA -&gt; QuantileNormalization;
+        gProcessedSignals_sampleB -&gt; QuantileNormalization;
+        QuantileNormalization -&gt; gProcessedSignals_sampleB_normed;
+        QuantileNormalization -&gt; gProcessedSignals_sampleA_normed;
     };
-
-    subgraph cluster_2 {
+    gProcessedSignals_sampleA_normed:vim1 -&gt; gProcessedSignal_vimentin1_normed;
+    gProcessedSignals_sampleA_normed:ins1 -&gt; gProcessedSignal_insulin1_normed;
+    gProcessedSignals_sampleA_normed:vim3 -&gt; gProcessedSignal_vimentin3_normed;
+    subgraph cluster_3 {
         label     = &quot;Summarization&quot;;
         labelloc  = &quot;t&quot;;
         labeljust = &quot;l&quot;;
@@ -328,24 +561,168 @@
         fontcolor = &quot;#ffd56b&quot;;
         margin    = 20;
 
-        gProcessedSignal_A_normed  [shape=box fontname=&quot;monaco&quot; fontcolor=&quot;#e74c3c&quot; fillcolor=&quot;white&quot; color=&quot;#e1e4e5&quot; margin=&quot;0.4,0.1&quot;];
-        Summarization              [shape=diamond margin=0.05];
-
-        gProcessedSignal_A1_normed -&gt; Summarization;
-        gProcessedSignal_A2_normed -&gt; Summarization;
-        Summarization -&gt; gProcessedSignal_A_normed;
+        gProcessedSignal_vimentin1_normed -&gt; Summarization;
+        gProcessedSignal_vimentin3_normed -&gt; Summarization;
+        Summarization -&gt; gProcessedSignal_vimentin_normed;
     };
-
-}" class="graphviz" /></div>
+}" class="graphviz popup-img" /></div>
 <div class="section" id="background-subtraction">
-<h3>1. Background Subtraction<a class="headerlink" href="#background-subtraction" title="Permalink to this headline">¶</a></h3>
+<span id="target-to-background-subtraction-section"></span><h3>1. Background Subtraction<a class="headerlink" href="#background-subtraction" title="Permalink to this headline">¶</a></h3>
+<p>バックグラウンド補正は、Non-specific Hybridization に由来するシグナル強度を差し引くためのものです。ここでは、「観察されたシグナルの強度は、真のシグナルの強度とバックグラウンドシグナルの強度とが合成されたものである」と仮定します。</p>
+<p>そこで、あるマイクロアレイについて、</p>
+<ul class="simple">
+<li><p>真のシグナル強度分布は指数分布</p></li>
+<li><p>バックグラウンドの強度分布は正規分布</p></li>
+</ul>
+<p>となると仮定し、その仮定の元で最も現象を表現しているパラメータを推定することで、バックグラウンドの強度分布を計算し、これを差し引くことで真のシグナル強度を推定します。</p>
+<p>TODO: もっとここを詰めねば。論文読みます。</p>
 </div>
 <div class="section" id="normalization-between-samples">
-<h3>2. Normalization Between Samples<a class="headerlink" href="#normalization-between-samples" title="Permalink to this headline">¶</a></h3>
+<span id="target-to-normalization-between-samples-section"></span><h3>2. Normalization Between Samples<a class="headerlink" href="#normalization-between-samples" title="Permalink to this headline">¶</a></h3>
+<p>ここでは、各マイクロアレイ「間の」正規化を行います。一つのマイクロアレイ実験の結果から言えることは非常に限られており、他の（処理群やコントロール群）実験結果と比較することが解析の基本になりますが、一般的に実験においては、実験操作や機材の特性によってバイアスが生じることは避けられません。</p>
+<p>For example, if you want to characterize the changes in global gene expression in the livers of H1/siRNAinsulin-CMV/hIDE transgenic (Tg) mice in response to the reduced bioavailability of insulin <a class="footnote-reference brackets" href="#ref1" id="id2">1</a>, and the expression level of each RNA in Tg mice was generally lower than that of non-Tg mice, <strong>you may mistakenly conclude that almost all of the RNAs were down-regulated respectively by reduced bioavailability of insulin.</strong></p>
+<dl class="footnote brackets">
+<dt class="label" id="ref1"><span class="brackets"><a class="fn-backref" href="#id2">1</a></span></dt>
+<dd><p><em class="fa fa-file-pdf-o"></em> <a class="reference external" href="https://pubmed.ncbi.nlm.nih.gov/17982690/">Microarray analysis of insulin-regulated gene expression in the liver: the use of transgenic mice co-expressing insulin-siRNA and human IDE as an animal model</a></p>
+</dd>
+</dl>
+<p>そこで、バイアスの影響が軽減するように、得られた値に補正をかけることが必要です。この操作は各手法ごとに定義されるある仮定に基づいているので、取り扱いには注意が必要です。</p>
+<p>There are numerous proposals for normalizing unbalanced data between samples (<em class="fa fa-file-pdf-o"></em> <a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6988798/">This review paper</a> summarizes 23 normalization methods developed for unbalanced transcriptome data), but we will introduce only three of them.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#target-to-percentile-section"><span class="std std-ref">Percentile</span></a></p></li>
+<li><p><a class="reference internal" href="#target-to-quantile-section"><span class="std std-ref">Quantile</span></a></p></li>
+</ol>
+</div>
+<div class="section" id="percentile">
+<span id="target-to-percentile-section"></span><h4>1. Percentile<a class="headerlink" href="#percentile" title="Permalink to this headline">¶</a></h4>
+<p>This is a constant adjustoment in a global manner.</p>
+</div>
+<div class="section" id="quantile">
+<span id="target-to-quantile-section"></span><h4>2. Quantile<a class="headerlink" href="#quantile" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p>遺伝子を発現量順に並べたとき、同じ順位の遺伝子は同じ発現量を示す。</p></li>
+<li><p>各サンプルの遺伝子発現の強度分布はほとんど変わらない。</p></li>
+</ul>
+<p><a class="reference external" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC100354/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC100354/</a></p>
+</div>
 </div>
 <div class="section" id="summarization">
-<h3>3. Summarization<a class="headerlink" href="#summarization" title="Permalink to this headline">¶</a></h3>
+<span id="target-to-summarization-section"></span><h3>3. Summarization<a class="headerlink" href="#summarization" title="Permalink to this headline">¶</a></h3>
 <p><a class="reference external" href="https://github.com/scipy/scipy/blob/v1.6.3/scipy/signal/signaltools.py#L3384-L3467">https://github.com/scipy/scipy/blob/v1.6.3/scipy/signal/signaltools.py#L3384-L3467</a></p>
+<dl class="py function">
+<dt class="sig sig-object py" id="teilab.normalizations.percentile">
+<span class="sig-prename descclassname"><span class="pre">teilab.normalizations.</span></span><span class="sig-name descname"><span class="pre">percentile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._object.Object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percent</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numbers.Number</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">75</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._object.Object</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/normalizations.html#percentile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.normalizations.percentile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Percentile Normalization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>NDArray</em><em>[</em><em>(</em><em>Any</em><em>,</em><em>Any</em><em>)</em><em>,</em><em>Number</em><em>]</em>) – Input data. Shape = ( <code class="docutils literal notranslate"><span class="pre">n_samples</span></code>, <code class="docutils literal notranslate"><span class="pre">n_features</span></code> )</p></li>
+<li><p><strong>percent</strong> (<em>Number</em><em>, </em><em>optional</em>) – Which percentile value to normalize. Defaults to <code class="docutils literal notranslate"><span class="pre">75</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>percentiled data. Shape = ( <code class="docutils literal notranslate"><span class="pre">n_samples</span></code>, <code class="docutils literal notranslate"><span class="pre">n_features</span></code> )</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NDArray[(Any,Any),Number]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – When <code class="docutils literal notranslate"><span class="pre">percent</span></code> tiles contain negative values.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.normalizations</span> <span class="kn">import</span> <span class="n">percentile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.plot.matplotlib</span> <span class="kn">import</span> <span class="n">densityplot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>  <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span><span class="n">n_features</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_percentiled</span> <span class="o">=</span> <span class="n">percentile</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">percent</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">densityplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Before Percentile&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">densityplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_percentiled</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;After Percentile&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Results</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><img alt="_images/normalizations.percentile.jpg" class="popup-img" src="_images/normalizations.percentile.jpg" />
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="teilab.normalizations.quantile">
+<span class="sig-prename descclassname"><span class="pre">teilab.normalizations.</span></span><span class="sig-name descname"><span class="pre">quantile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._object.Object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._object.Object</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/normalizations.html#quantile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.normalizations.quantile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform Quantile Normalization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>NDArray</em><em>[</em><em>(</em><em>Any</em><em>,</em><em>Any</em><em>)</em><em>,</em><em>Number</em><em>]</em>) – Input data. Shape = ( <code class="docutils literal notranslate"><span class="pre">n_samples</span></code>, <code class="docutils literal notranslate"><span class="pre">n_features</span></code> )</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>percentiled data. Shape = ( <code class="docutils literal notranslate"><span class="pre">n_samples</span></code>, <code class="docutils literal notranslate"><span class="pre">n_features</span></code> )</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NDArray[(Any,Any),Number]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – When <code class="docutils literal notranslate"><span class="pre">data</span></code> contains negative values.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.normalizations</span> <span class="kn">import</span> <span class="n">percentile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.plot.matplotlib</span> <span class="kn">import</span> <span class="n">densityplot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span><span class="n">n_features</span><span class="p">),</span> <span class="p">)</span> <span class="o">+</span> <span class="mf">3.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data_quantiled</span> <span class="o">=</span> <span class="n">quantile</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">densityplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Before Quantile&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">densityplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_quantiled</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;After Quantile&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Results</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><img alt="_images/normalizations.quantile.jpg" class="popup-img" src="_images/normalizations.quantile.jpg" />
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="teilab.normalizations.lowess">
+<span class="sig-prename descclassname"><span class="pre">teilab.normalizations.</span></span><span class="sig-name descname"><span class="pre">lowess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._object.Object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._object.Object</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/normalizations.html#lowess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.normalizations.lowess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform LOWESS Normalization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>NDArray</em><em>[</em><em>(</em><em>Any</em><em>,</em><em>Any</em><em>)</em><em>,</em><em>Number</em><em>]</em>) – Input data. Shape = ( <code class="docutils literal notranslate"><span class="pre">n_samples</span></code>, <code class="docutils literal notranslate"><span class="pre">n_features</span></code> )</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>percentiled data. Shape = ( <code class="docutils literal notranslate"><span class="pre">n_samples</span></code>, <code class="docutils literal notranslate"><span class="pre">n_features</span></code> )</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>NDArray[(Any,Any),Number]</p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 </div>
 </div>
@@ -355,29 +732,21 @@
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="teilab.question.html" class="btn btn-neutral float-right" title="teilab.question module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="teilab.datasets.html" class="btn btn-neutral float-left" title="teilab.datasets module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="teilab.question.html" class="btn btn-neutral float-right" title="teilab.question module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="teilab.datasets.html" class="btn btn-neutral float-left" title="teilab.datasets module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2021, iwasakishuto
+        &#169; Copyright 2021, iwasakishuto.
 
     </p>
   </div> 
 
 </footer>
-
         </div>
 
       </div>

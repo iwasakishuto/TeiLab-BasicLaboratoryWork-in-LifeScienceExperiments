@@ -3,28 +3,35 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
   <meta property="og:title" content="teilab package" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="teilab.html" />
   <meta property="og:description" content="Subpackages: teilab.plot package- Submodules- teilab.plot.matplotlib module, teilab.plot.plotly module., Module contents., teilab.utils package- Submodules- teilab.utils.download_utils module, teil..." />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>teilab package &mdash; UiTei-Lab Documentation  documentation</title>
+  <title>teilab package &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/popup.css" type="text/css" />
 
   
   
     <link rel="shortcut icon" href="_static/favicon.png"/>
   
+
   
+  
+
   
 
   
@@ -34,12 +41,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
-        <script src="_static/particles.min.js"></script>
         <script src="_static/custom.js"></script>
+        <script src="_static/particles.min.js"></script>
+        <script src="_static/popup.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -47,7 +55,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="teilab.plot package" href="teilab.plot.html" />
-    <link rel="prev" title="Welcome to UiTei-Lab’s documentation!" href="index.html" /> 
+    <link rel="prev" title="Welcome to UiTei-Lab!!" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -61,7 +69,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> UiTei-Lab Documentation
+            <a href="index.html" class="icon icon-home"> UiTei-Lab's Course Documentation
           
 
           
@@ -132,6 +140,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="teilab.datasets.html">teilab.datasets module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.normalizations.html">teilab.normalizations module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="teilab.question.html">teilab.question module</a></li>
 </ul>
 </li>
@@ -154,7 +163,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">UiTei-Lab Documentation</a>
+          <a href="index.html">UiTei-Lab's Course Documentation</a>
         
       </nav>
 
@@ -181,6 +190,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -192,7 +203,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/teilab.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -237,7 +248,26 @@
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="teilab.datasets.html">teilab.datasets module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="teilab.datasets.html">teilab.datasets module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="teilab.datasets.html#features">FEATURES</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="teilab.datasets.html#background-subtraction">Background Subtraction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="teilab.normalizations.html">teilab.normalizations module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="teilab.normalizations.html#robust-multichip-analysis-rma">Robust Multichip Analysis (RMA)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="teilab.normalizations.html#background-subtraction">1. Background Subtraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.normalizations.html#normalization-between-samples">2. Normalization Between Samples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="teilab.normalizations.html#percentile">1. Percentile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="teilab.normalizations.html#quantile">2. Quantile</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.normalizations.html#summarization">3. Summarization</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="teilab.question.html">teilab.question module</a></li>
 </ul>
 </div>
@@ -252,29 +282,21 @@
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="teilab.plot.html" class="btn btn-neutral float-right" title="teilab.plot package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to UiTei-Lab’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="teilab.plot.html" class="btn btn-neutral float-right" title="teilab.plot package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to UiTei-Lab!!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2021, iwasakishuto
+        &#169; Copyright 2021, iwasakishuto.
 
     </p>
   </div> 
 
 </footer>
-
         </div>
 
       </div>

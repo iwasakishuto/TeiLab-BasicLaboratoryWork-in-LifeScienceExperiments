@@ -3,7 +3,7 @@ import os
 import sys
 import time
 import datetime
-from typing import Tuple, Callable, Optional
+from typing import Tuple,Callable,Optional,Dict,Any
 from numbers import Number
 
 def now_str(tz:Optional[datetime.timezone]=None, fmt:str="%Y-%m-%d@%H.%M.%S") -> str:
@@ -124,3 +124,25 @@ def verbose2print(verbose:bool=True) -> callable:
         return print
     else:
         return lambda *args,**kwargs: None
+
+def dict2str(d:Dict[Any,Any], item_separator:str=", ", key_separator:str="=") -> str:
+    """Convert a dictionary to string.
+
+    Args:
+        d (Dict[Any,Any])              : A dictionary.
+        item_separator (str, optional) : A separator between items. Defaults to ``", "``.
+        key_separator (str, optional)  : A separator between keys. Defaults to ``"="``.
+
+    Returns:
+        str: A textual summary of the contents of the dictionary.
+
+    Examples:
+        >>> from teilab.utils import dict2str
+        >>> dict2str({"key1":"val", "key2":1})
+        'key1=val, key2=1'
+        >>> dict2str({"key1":"val", "key2":1}, key_separator=":")
+        'key1:val, key2:1'
+        >>> dict2str({"key1":"val", "key2":1}, item_separator="🤔")
+        'key1=val🤔key2=1'
+    """
+    return str(item_separator).join([f"{k}{key_separator}{v}" for k,v in d.items()])

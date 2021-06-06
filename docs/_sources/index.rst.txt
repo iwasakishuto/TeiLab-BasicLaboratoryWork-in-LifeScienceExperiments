@@ -3,10 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-#####################################
-Welcome to UiTei-Lab's documentation!
-#####################################
-
+######################
+Welcome to UiTei-Lab!!
+######################
 
 .. figure:: https://camo.githubusercontent.com/207bfad0a9138764bcfb51e04353f209de425aaf201648b706936e255b749dd6/687474703a2f2f75692d7465692e726e61692e6a702f6173736574732f696d616765732f746f702d3230303830372e6a7067
    :alt: Members-in-UiTei-Laboratory

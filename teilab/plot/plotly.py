@@ -7,7 +7,7 @@ from plotly.subplots import make_subplots
 from plotly.graph_objs import Figure
 from typing import Any,Dict,List,Tuple,Optional
 
-def plotDensities(data, names=None, bins=100, range=None, fig=None, row=1, col=1, **kwargs):
+def densityplot(data, names=None, bins=100, range=None, fig=None, row=1, col=1, **kwargs):
     fig = fig or make_subplots(rows=1, cols=1)
     names = names or [f"data_{i+1}" for i in range(len(data))]
     for ith_data,name in zip(data,names):
