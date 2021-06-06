@@ -7,7 +7,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;
+  z-index: 300;
   animation: fadein 0.2s ease-out both;
   cursor: pointer;
   user-select: none;
@@ -32,7 +32,7 @@
   position: fixed;
   top: 20px;
   right: 12px;
-  z-index: 12;
+  z-index: 301;
 }
 #pixel-viewer::before {
   transform: rotate(45deg);
@@ -78,4 +78,7 @@
   100% {
     transform: scale(0.97);
   }
+}
+img.popup-img {
+  cursor: zoom-in;
 }

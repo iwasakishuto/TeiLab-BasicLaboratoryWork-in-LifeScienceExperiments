@@ -27,6 +27,8 @@ function addPopUpViewer(element){
   }
 }
 
+
 addOnLoad(function(){
-  addPopUpViewer(element="div.graphviz > img.graphviz")
+  // addPopUpViewer(element="div.graphviz > img.graphviz");
+  addPopUpViewer(element="img.popup-img");
 });
