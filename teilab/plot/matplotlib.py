@@ -24,14 +24,14 @@ def _ax_create(ax:Optional[Axes]=None, figsize:Tuple[Number,Number]=(6,4)) -> Ax
     return ax
 
 def densityplot(data:NDArray[(Any,Any),Number], 
-                names:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None, 
+                labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None, 
                 bins:Union[int,List[Number],str]=100, range:Optional[Tuple[float,float]]=None, 
                 title:str="Density Distribution", ax:Optional[Axes]=None, **kwargs) -> Axes:
     """Plot density dirstibutions.
 
     Args:
         data (NDArray[(Any,Any),Number])               : Input data. Shape = ( ``n_samples``, ``n_features`` )
-        names (List[str], optional)                    : Names for each sample. Defaults to ``[]``.
+        labels (List[str], optional)                   : Labels for each sample. Defaults to ``[]``.
         colors (List[Any], optional)                   : Colors for each sample. Defaults to ``[]``.
         cmap (Optional[Union[str,Colormap]], optional) : A ``Colormap`` object or a color map name. Defaults to ``None``.
         bins (Union[int,List[Number],str], optional)   : The number of equal-width bins in the given range. Defaults to ``100``.
@@ -43,14 +43,13 @@ def densityplot(data:NDArray[(Any,Any),Number],
         Axes: An instance of ``Axes`` with density distributions.
 
     Examples:
-        >>> import matplotlib.pyplot as plt
-        >>> from teilab.utils import dict2str
+        >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.matplotlib import densityplot
         >>> n_samples, n_features = (4, 1000)
         >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
         >>> kwarges = [{"bins":100},{"bins":10},{"bins":"auto"}]
         >>> nfigs = len(kwarges)
-        >>> fig, axes = plt.subplots(ncols=nfigs, figsize=(int(6*nfigs),4))
+        >>> fig, axes = subplots_create(ncols=nfigs, figsize=(int(6*nfigs),4), style="matplotlib")
         >>> for ax,kwargs in zip(axes,kwarges):
         ...     _ = densityplot(data, ax=ax, title=dict2str(kwargs), **kwargs)
         >>> fig.show()
@@ -63,22 +62,22 @@ def densityplot(data:NDArray[(Any,Any),Number],
     +----------------------------------------------------+
     """
     ax = _ax_create(ax=ax)
-    names = names or [f"No.{i}" for i,_ in enumerate(data)]
-    for ith_data,name in zip(data,names):
+    labels = labels or [f"No.{i}" for i,_ in enumerate(data)]
+    for ith_data,name in zip(data,labels):
         hist, bin_edges = np.histogram(a=ith_data, bins=bins, range=range, density=True)
         ax.plot(bin_edges[1:], hist, label=name)
     ax = update_layout(ax, title=title, **kwargs)
     return ax
 
 def boxplot(data:NDArray[(Any,Any),Number], 
-            names:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None, 
+            labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None, 
             vert:bool=True,
             title:str="Box Plot", ax:Optional[Axes]=None, **kwargs) -> Axes:
     """Plot box plots.
 
     Args:
         data (NDArray[(Any,Any),Number])               : Input data. Shape = ( ``n_samples``, ``n_features`` )
-        names (List[str], optional)                    : Names for each sample. Defaults to ``[]``.
+        labels (List[str], optional)                   : Labels for each sample. Defaults to ``[]``.
         colors (List[Any], optional)                   : Colors for each sample. Defaults to ``[]``.
         cmap (Optional[Union[str,Colormap]], optional) : A ``Colormap`` object or a color map name. Defaults to ``None``.
         vert (bool, optional)                          : Whether to draw vertical boxes or horizontal boxes. Defaults to ``True`` .
@@ -89,14 +88,13 @@ def boxplot(data:NDArray[(Any,Any),Number],
         Axes: An instance of ``Axes`` with box plots.
 
     Examples:
-        >>> import matplotlib.pyplot as plt
-        >>> from teilab.utils import dict2str
+        >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.matplotlib import boxplot
         >>> n_samples, n_features = (4, 1000)
         >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
         >>> kwarges = [{"vert":True},{"vert":False}]
         >>> nfigs = len(kwarges)
-        >>> fig, axes = plt.subplots(ncols=nfigs, figsize=(int(6*nfigs),4))
+        >>> fig, axes = subplots_create(ncols=nfigs, figsize=(int(6*nfigs),4), style="matplotlib")
         >>> for ax,kwargs in zip(axes,kwarges):
         ...     _ = boxplot(data, title=dict2str(kwargs), ax=ax, **kwargs)
         >>> fig.show()
@@ -110,10 +108,10 @@ def boxplot(data:NDArray[(Any,Any),Number],
     """
     ax = _ax_create(ax=ax)
     n_samples, n_features = data.shape
-    if len(names) != n_samples: names = [f"No.{i}" for i in range(n_samples)]
-    if len(colors)!= n_samples: colors = get_colorList(n=n_samples, cmap=cmap)
+    if len(labels) != n_samples: labels = [f"No.{i}" for i in range(n_samples)]
+    if len(colors)!= n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="matplotlib")
     bplot1= ax.boxplot(
-        x=data.T, vert=vert, patch_artist=True, labels=names,
+        x=data.T, vert=vert, patch_artist=True, labels=labels,
         medianprops={"color": "black"},
         flierprops={"marker":'o',"markersize":4,"markerfacecolor":"red","markeredgecolor":"black"},
     )
@@ -165,13 +163,19 @@ def update_layout(ax:Axes,
         Axes: A figure element with layout updated.
 
     Examples:
-        >>> import matplotlib.pyplot as plt
+        >>> from teilab.utils import subplots_create
         >>> from teilab.plot.matplotlib import update_layout
-        >>> fig, ax = plt.subplots()
-        >>> ax.scatter(1,1,label="center")
+        >>> fig, axes = subplots_create(ncols=2, style="matplotlib")
+        >>> for ax in axes: ax.scatter(1,1,label="center")
+        >>> _ = update_layout(ax=axes[1], xlim=(0,2), ylim=(0,2), legend=True)
         >>> fig.show()
-        >>> ax = update_layout(ax=ax, xlim=(0,2), ylim=(0,2), legend=True)
-        >>> fig.show()
+
+    +------------------------------------------------------+
+    |                    Results                           |
+    +======================================================+
+    | .. image:: _images/plot.matplotlib.update_layout.jpg |
+    |    :class: popup-img                                 |
+    +------------------------------------------------------+
     """
     ax.set_title(title)
     ax.set_xlabel(xlabel)

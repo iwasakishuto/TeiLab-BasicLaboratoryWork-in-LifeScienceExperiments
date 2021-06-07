@@ -19,3 +19,4 @@ from .generic_utils import verbose2print
 from .generic_utils import dict2str
 
 from .plot_utils import get_colorList
+from .plot_utils import subplots_create

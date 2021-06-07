@@ -14,31 +14,46 @@ from nptyping import NDArray
 from ..utils.plot_utils import get_colorList
 
 def densityplot(data:NDArray[(Any,Any),Number],
-                names:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
+                labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
                 bins:int=100, range:Optional[Tuple[float,float]]=None, 
-                title:str="Density Distribution", fig:Optional[Figure]=None, row:int=1, col:int=1, **kwargs):
-    """[summary]
+                title:str="Density Distribution", fig:Optional[Figure]=None, row:int=1, col:int=1, **kwargs) -> Figure:
+    """Plot density dirstibutions.
 
     Args:
-        data ([type]): [description]
-        names ([type], optional) : [description]. Defaults to ``None``.
-        bins (int, optional) : [description]. Defaults to ``100``.
-        range ([type], optional) : [description]. Defaults to ``None``.
-        fig ([type], optional) : [description]. Defaults to ``None``.
-        row (int, optional) : [description]. Defaults to ``1``.
-        col (int, optional) : [description]. Defaults to ``1``.
+        data (NDArray[(Any,Any),Number])               : Input data. Shape = ( ``n_samples``, ``n_features`` )
+        labels (List[str], optional)                   : Labels for each sample. Defaults to ``[]``.
+        colors (List[Any], optional)                   : Colors for each sample. Defaults to ``[]``.
+        cmap (Optional[Union[str,Colormap]], optional) : A ``Colormap`` object or a color map name. Defaults to ``None``.
+        bins (int, optional)                           : The number of equal-width bins in the given range. Defaults to ``100``.
+        range (Optional[Tuple[float,float]], optional) : The lower and upper range of the bins. If not provided, range is simply ``(data[i].min(), data[i].max())``. Defaults to ``None``.
+        title (str, optional)                          : Figure Title. Defaults to ``"Density Distribution"``.
+        fig (Optional[Figure], optional)               : An instance of Figure.
+        row (int, optional)                            : Row of subplots. Defaults to ``1``.
+        col (int, optional)                            : Column of subplots. Defaults to ``1``.
 
     Returns:
-        [type]: [description]
+        Figure: An instance of ``Figure`` with density distributions.
+
+    Examples:
+        >>> import matplotlib.pyplot as plt
+        >>> from teilab.utils import dict2str, subplots_create
+        >>> from teilab.plot.plotly import densityplot
+        >>> n_samples, n_features = (4, 1000)
+        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
+        >>> kwarges = [{"bins":100},{"bins":10},{"bins":"auto"}]
+        >>> nfigs = len(kwarges)
+        >>> fig = subplots_create(ncols=nfigs, style="plotly")
+        >>> for i,(kwargs) in enumerate(kwarges, start=1):
+        ...     _ = densityplot(data, fig=fig, title=dict2str(kwargs), col=i, width=800, height=400, **kwargs)
+        >>> fig.show()
     """
     fig = fig or make_subplots(rows=1, cols=1)
     n_samples, n_features = data.shape
-    if len(names) !=n_samples: names = [f"No.{i}" for i,_ in enumerate(data)]
+    if len(labels) !=n_samples: labels = [f"No.{i}" for i,_ in enumerate(data)]
     if len(colors)!=n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="plotly")
-    print(colors)
     for i,ith_data in enumerate(data):
         hist, bin_edges = np.histogram(a=ith_data, bins=bins, range=range, density=True)
-        fig.add_trace(trace=go.Scatter(x=bin_edges[1:], y=hist, name=names[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}), row=row, col=col)
+        fig.add_trace(trace=go.Scatter(x=bin_edges[1:], y=hist, name=labels[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}), row=row, col=col)
     fig = update_layout(fig, row=row, col=col, title=title, **kwargs)
     return fig
 
