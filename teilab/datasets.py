@@ -209,6 +209,7 @@ The BGSubMethod of ``7`` corresponds to "No Background Subtraction method" (see 
 import os
 import pandas as pd
 import requests
+from tabulate import tabulate
 from pathlib import Path
 from typing import List,Union,Optional
 
@@ -252,6 +253,11 @@ class Samples():
             group_numbers.append(group_names.index(gn))
         self._group_names:List[str] = group_names
         self._group_numbers:List[int] = group_numbers
+
+    @property
+    def groups(self):
+        table = [[i,gn,self._group_names[gn],fn] for i,(gn,fn) in enumerate(zip(self._group_numbers,self.FileName))]
+        print(tabulate(table, headers=["idx","gn","GroupName","FileName"]))
 
     def get_group_numbers(self, group_no:Optional[int]=None, group_name:Optional[str]=None) -> List[int]:
         """Get the specified group index List.

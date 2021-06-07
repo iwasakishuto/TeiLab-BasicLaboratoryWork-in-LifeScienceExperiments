@@ -927,6 +927,17 @@ python-versions = ">=3.6"
 sphinx = ">=2.0"
 
 [[package]]
+name = "tabulate"
+version = "0.8.9"
+description = "Pretty-print tabular data"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.extras]
+widechars = ["wcwidth"]
+
+[[package]]
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
@@ -1020,7 +1031,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "52f53bbc333809ead874bf7c4b53d30b2c94d7fc01b16f70674fd674cca30291"
+content-hash = "de3e75732975973ecc282e59bdf978e12726101a99e29e09faa2d0cda203b565"
 
 [metadata.files]
 alabaster = [
@@ -1638,6 +1649,10 @@ sphinxemoji = [
 sphinxext-opengraph = [
     {file = "sphinxext-opengraph-0.4.2.tar.gz", hash = "sha256:5da1a6eaab25e377b841f506ef7d7c44b539428f3d6094ccc16d1dfd3ef65501"},
     {file = "sphinxext_opengraph-0.4.2-py3-none-any.whl", hash = "sha256:a51f2604f9a5b6c0d25d3a88e694d5c02e20812dc0e482adf96c8628f9109357"},
+]
+tabulate = [
+    {file = "tabulate-0.8.9-py3-none-any.whl", hash = "sha256:d7c013fe7abbc5e491394e10fa845f8f32fe54f8dc60c6622c6cf482d25d47e4"},
+    {file = "tabulate-0.8.9.tar.gz", hash = "sha256:eb1d13f25760052e8931f2ef80aaf6045a6cceb47514db8beab24cded16f13a7"},
 ]
 toml = [
     {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
