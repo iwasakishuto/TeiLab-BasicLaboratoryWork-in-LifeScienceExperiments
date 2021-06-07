@@ -1,0 +1,7 @@
+teilab.utils.plot\_utils module
+===============================
+
+.. automodule:: teilab.utils.plot_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

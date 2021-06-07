@@ -4,16 +4,42 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from plotly.graph_objs import Figure
-from typing import Any,Dict,List,Tuple,Optional
 
-def densityplot(data, names=None, bins=100, range=None, fig=None, row=1, col=1, **kwargs):
+from numbers import Number
+from plotly.graph_objs import Figure
+from matplotlib.colors import Colormap
+from typing import Any,Dict,List,Tuple,Optional,Union
+from nptyping import NDArray
+
+from ..utils.plot_utils import get_colorList
+
+def densityplot(data:NDArray[(Any,Any),Number],
+                names:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
+                bins:int=100, range:Optional[Tuple[float,float]]=None, 
+                title:str="Density Distribution", fig:Optional[Figure]=None, row:int=1, col:int=1, **kwargs):
+    """[summary]
+
+    Args:
+        data ([type]): [description]
+        names ([type], optional) : [description]. Defaults to ``None``.
+        bins (int, optional) : [description]. Defaults to ``100``.
+        range ([type], optional) : [description]. Defaults to ``None``.
+        fig ([type], optional) : [description]. Defaults to ``None``.
+        row (int, optional) : [description]. Defaults to ``1``.
+        col (int, optional) : [description]. Defaults to ``1``.
+
+    Returns:
+        [type]: [description]
+    """
     fig = fig or make_subplots(rows=1, cols=1)
-    names = names or [f"data_{i+1}" for i in range(len(data))]
-    for ith_data,name in zip(data,names):
+    n_samples, n_features = data.shape
+    if len(names) !=n_samples: names = [f"No.{i}" for i,_ in enumerate(data)]
+    if len(colors)!=n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="plotly")
+    print(colors)
+    for i,ith_data in enumerate(data):
         hist, bin_edges = np.histogram(a=ith_data, bins=bins, range=range, density=True)
-        fig.add_trace(trace=go.Scatter(x=bin_edges[1:], y=hist, name=name, mode="lines"), row=row, col=col)
-    fig = update_layout(fig, row=row, col=col, **kwargs)
+        fig.add_trace(trace=go.Scatter(x=bin_edges[1:], y=hist, name=names[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}), row=row, col=col)
+    fig = update_layout(fig, row=row, col=col, title=title, **kwargs)
     return fig
 
 def XYplot(df:pd.DataFrame, x:str, y:str, 
@@ -66,7 +92,7 @@ def update_layout(fig:Figure, row:int=1, col:int=1,
                   title:Optional[str]=None, xlabel:Optional[str]=None, ylabel:Optional[str]=None, 
                   xlim:Optional[Tuple[Any,Any]]=None, ylim:Optional[Tuple[Any,Any]]=None, 
                   xrangeslider:Dict[str,Any]={"visible": False},
-                  font:Dict[str,Any]={"family":"verdana, arial, sans-serif", "size": 14}, legend:bool=False,
+                  font:Dict[str,Any]={"family":"verdana, arial, sans-serif", "size": 14}, legend:bool=True,
                   xaxis_type:str="linear", yaxis_type:str="linear", 
                   width:int=600, height:int=600, template:str="presentation") -> Figure:
     """Update the layout of ``plotly.graph_objs._figure.Figure`` object. See `Documentation <https://plotly.com/python/reference/layout/>`_ for details.
@@ -82,7 +108,7 @@ def update_layout(fig:Figure, row:int=1, col:int=1,
         ylim (Optional[Tuple[Any,Any]], optional) : Y axis range. Defaults to ``None``.
         xrangeslider (Dict[str,Any], optional)    : Keyword arguments for Range Slider. Defaults to ``{"visible": False}``.
         font (Dict[str,Any], optional)            : Keyword arguments for Fonts. Defaults to ``{"family": "Meiryo", "size": 20}``.
-        legend (bool, optional)                   : Whether to show legend. Defaults to ``False``.
+        legend (bool, optional)                   : Whether to show legend. Defaults to ``True``.
         xaxis_type (str, optional)                : X axis type. Defaults to ``"linear"``.
         yaxis_type (str, optional)                : Y axis type. Defaults to ``"linear"``.
         width (int, optional)                     : Figure width. Defaults to ``600``.

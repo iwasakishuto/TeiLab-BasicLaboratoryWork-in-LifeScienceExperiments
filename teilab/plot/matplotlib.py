@@ -1,12 +1,13 @@
 #coding: utf-8
 import numpy as np
 import matplotlib.pyplot as plt
-
 from numbers import Number
 from matplotlib.axes import Axes
 from matplotlib.colors import Colormap
 from typing import Any,Dict,List,Tuple,Optional,Union
 from nptyping import NDArray
+
+from ..utils.plot_utils import get_colorList
 
 def _ax_create(ax:Optional[Axes]=None, figsize:Tuple[Number,Number]=(6,4)) -> Axes:
     """Create an ``Axes`` instance.
@@ -110,9 +111,7 @@ def boxplot(data:NDArray[(Any,Any),Number],
     ax = _ax_create(ax=ax)
     n_samples, n_features = data.shape
     if len(names) != n_samples: names = [f"No.{i}" for i in range(n_samples)]
-    if len(colors)!= n_samples: 
-        cmap = plt.get_cmap(name=cmap)
-        colors = [cmap(((i+1)/(n_samples))) for i in range(n_samples)]
+    if len(colors)!= n_samples: colors = get_colorList(n=n_samples, cmap=cmap)
     bplot1= ax.boxplot(
         x=data.T, vert=vert, patch_artist=True, labels=names,
         medianprops={"color": "black"},
