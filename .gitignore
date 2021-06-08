@@ -4,7 +4,7 @@
 Icon?
 # Jupyter Notebook
 *.ipynb
-!notebook/*.ipynb
+!notebook/**/*.ipynb
 # Documentation
 src/*
 mkdocs.sh
