@@ -47,7 +47,7 @@ def densityplot(data:NDArray[(Any,Any),Number],
         >>> n_samples, n_features = (4, 1000)
         >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
         >>> kwargses = [{"bins":100},{"bins":10},{"bins":"auto"}]
-        >>> title = ", ".join([f"{i}:{dict2str(kwargs)}" for i,kwargs in enumerate(kwargses)])
+        >>> title = ", ".join([dict2str(kwargs) for kwargs in kwargses])
         >>> nfigs = len(kwargses)
         >>> fig = subplots_create(ncols=nfigs, style="plotly")
         >>> for i,(kwargs) in enumerate(kwargses, start=1):
@@ -64,50 +64,135 @@ def densityplot(data:NDArray[(Any,Any),Number],
     fig = update_layout(fig, row=row, col=col, title=title, **layoutkwargs, **kwargs)
     return fig
 
-def XYplot(df:pd.DataFrame, x:str, y:str, 
+def XYplot(df:pd.DataFrame, x:str, y:str, logarithmic:bool=True,
            color:Optional[str]=None, symbol:Optional[str]=None, size:Optional[str]=None, 
            hover_data:Optional[List[str]]=None, hover_name:Optional[str]=None, 
-           **kwargs) -> Figure:
+           fig:Optional[Figure]=None, row:int=1, col:int=1,
+           plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Figure:
     """XY plot.
 
+    - x-axis : :math:`\\log_2{(\\text{gProcessedSignal})}` for each gene in sample ``X``
+    - y-axis : :math:`\\log_2{(\\text{gProcessedSignal})}` for each gene in sample ``Y``
+
     Args:
-        df (pd.DataFrame): [description]
-        x (str): [description]
-        y (str): [description]
-        color (Optional[str], optional) : [description]. Defaults to ``None``.
-        symbol (Optional[str], optional) : [description]. Defaults to ``None``.
-        size (Optional[str], optional) : [description]. Defaults to ``None``.
-        hover_data (Optional[List[str]], optional) : [description]. Defaults to ``None``.
-        hover_name (Optional[str], optional) : [description]. Defaults to ``None``.
+        df (pd.DataFrame)                          : DataFrame
+        x (str)                                    : The column name for sample ``X``.
+        y (str)                                    : The column name for sample ``Y``.
+        color (Optional[str], optional)            : The column name in ``df`` to assign color to marks. Defaults to ``None``.
+        symbol (Optional[str], optional)           : The column name in ``df`` to assign symbols to marks. Defaults to ``None``.
+        size (Optional[str], optional)             : The column name in ``df`` to assign mark sizes. Defaults to ``None``.
+        hover_data (Optional[List[str]], optional) : Values in this column appear in bold in the hover tooltip. Defaults to ``None``.
+        hover_name (Optional[str], optional)       : Values in this column appear in the hover tooltip. Defaults to ``None``.
+        fig (Optional[Figure], optional)           : An instance of Figure.
+        row (int, optional)                        : Row of subplots. Defaults to ``1``.
+        col (int, optional)                        : Column of subplots. Defaults to ``1``.
+        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``
+        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>` .
 
     Returns:
-        Figure: [description]
+        Figure: An instance of ``Figure`` with XY plot.
+
+    .. plotly::
+        :include-source:
+        :iframe-height: 600px
+
+        >>> from teilab.datasets import TeiLabDataSets
+        >>> from teilab.plot.plotly import XYplot
+        >>> datasets = TeiLabDataSets(verbose=False)
+        >>> df_anno = datasets.read_data(no=0, usecols=datasets.ANNO_COLNAMES)
+        >>> reliable_index = set(df_anno.index)
+        >>> df_combined = df_anno.copy(deep=True)
+        >>> for no in range(2):
+        ...     df_data = datasets.read_data(no=no)
+        ...     reliable_index = reliable_index & set(datasets.reliable_filter(df=df_data))
+        ...     df_combined = pd.concat([
+        ...         df_combined, 
+        ...         df_data[[datasets.TARGET_COLNAME]].rename(columns={datasets.TARGET_COLNAME: datasets.samples.Condition[no]})
+        ...     ], axis=1)
+        >>> df_combined = df_combined.loc[reliable_index, :].reset_index(drop=True)
+        >>> fig = XYplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], hover_name="SystematicName", height=600, width=600)
+        >>> fig.show()
     """
-    df_ = df.copy(deep=True)
-    x_:str = x + "_"; y_:str = y + "_"
-    df_[x_] = df[x].apply(lambda x:np.log2(x))
-    df_[y_] = df[y].apply(lambda y:np.log2(y))
-    fig = px.scatter(data_frame=df_, x=x_, y=y_, color=color, symbol=symbol, size=size, hover_name=hover_name, hover_data=hover_data)
-    fig = update_layout(fig=fig, title=f"XY plot ({x} vs {y})", xlabel="$\log_{2}(\\text{" + x + "})$", ylabel="$\log_{2}(\\text{" + y + "})$", **kwargs)
+    fig = fig or make_subplots(rows=1, cols=1)
+    df = df.copy(deep=True)
+    if logarithmic:
+        df[x] = df[x].apply(lambda x:np.log2(x))
+        df[y] = df[y].apply(lambda y:np.log2(y))
+    fig_ = px.scatter(data_frame=df, x=x, y=y, color=color, symbol=symbol, size=size, hover_name=hover_name, hover_data=hover_data, **plotkwargs)
+    fig_.for_each_trace(fn=lambda trace:fig.add_trace(trace=trace, row=row, col=col))
+    fig = update_layout(
+        fig=fig, 
+        title=f"XY plot ({x} vs {y})", 
+        xlabel="$\\log_{2}(\\text{" + x + "})$", 
+        ylabel="$\\log_{2}(\\text{" + y + "})$", 
+        **layoutkwargs, **kwargs
+    )
     return fig
 
-def MAplot(X, Y, color=None, hovertext=None, marker_size=3, fig=None, row=1, col=1, 
-           xlabel="$\log_{10}XY$", ylabel="$\log_{2}(Y/X)$", title="MA plot", **kwargs):
-    if fig is None:
-        fig = make_subplots(rows=1, cols=1) 
-    if color is None:
-        color = np.zeros_like(X)
-    x = np.log10(X*Y)
-    y = np.log2(Y/X)
-    for c in np.unique(color):
-        idx = color==c
-        fig.add_trace(
-            trace=go.Scatter(
-                x=x[idx], y=y[idx], mode='markers', name=str(c), hovertext=hovertext[idx],
-                marker_color=c, marker_size=marker_size,
-            ), row=row, col=col
-        )
-    fig = update_layout(fig, row=row, col=col, xlabel=xlabel, ylabel=ylabel, title=title, **kwargs)
+def MAplot(df:pd.DataFrame, x:str, y:str,
+           color:Optional[str]=None, symbol:Optional[str]=None, size:Optional[str]=None,
+           hover_data:Optional[List[str]]=None, hover_name:Optional[str]=None,
+           fig:Optional[Figure]=None, row:int=1, col:int=1,
+           plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Figure:
+    """MA plot.
+
+    - x-axis : :math:`\\log_{10}{\\left(\\text{gProcessedSignal}_X\\times\\text{gProcessedSignal}_Y\\right)}`
+    - y-axis : :math:`\\log_{2}{\\left(\\text{gProcessedSignal}_Y / \\text{gProcessedSignal}_X\\right)}`
+
+    Args:
+        df (pd.DataFrame)                          : DataFrame
+        x (str)                                    : The column name for sample ``X``.
+        y (str)                                    : The column name for sample ``Y``.
+        color (Optional[str], optional)            : The column name in ``df`` to assign color to marks. Defaults to ``None``.
+        symbol (Optional[str], optional)           : The column name in ``df`` to assign symbols to marks. Defaults to ``None``.
+        size (Optional[str], optional)             : The column name in ``df`` to assign mark sizes. Defaults to ``None``.
+        hover_data (Optional[List[str]], optional) : Values in this column appear in bold in the hover tooltip. Defaults to ``None``.
+        hover_name (Optional[str], optional)       : Values in this column appear in the hover tooltip. Defaults to ``None``.
+        fig (Optional[Figure], optional)           : An instance of Figure.
+        row (int, optional)                        : Row of subplots. Defaults to ``1``.
+        col (int, optional)                        : Column of subplots. Defaults to ``1``.
+        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``
+        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>` .
+
+    Returns:
+        Figure: An instance of ``Figure`` with MA plot.
+
+    .. plotly::
+        :include-source:
+        :iframe-height: 600px
+
+        >>> from teilab.datasets import TeiLabDataSets
+        >>> from teilab.plot.plotly import MAplot
+        >>> datasets = TeiLabDataSets(verbose=False)
+        >>> df_anno = datasets.read_data(no=0, usecols=datasets.ANNO_COLNAMES)
+        >>> reliable_index = set(df_anno.index)
+        >>> df_combined = df_anno.copy(deep=True)
+        >>> for no in range(2):
+        ...     df_data = datasets.read_data(no=no)
+        ...     reliable_index = reliable_index & set(datasets.reliable_filter(df=df_data))
+        ...     df_combined = pd.concat([
+        ...         df_combined, 
+        ...         df_data[[datasets.TARGET_COLNAME]].rename(columns={datasets.TARGET_COLNAME: datasets.samples.Condition[no]})
+        ...     ], axis=1)
+        >>> df_combined = df_combined.loc[reliable_index, :].reset_index(drop=True)
+        >>> fig = MAplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], hover_name="SystematicName", height=600, width=600)
+        >>> fig.show()
+    """
+    fig = fig or make_subplots(rows=1, cols=1)
+    df = df.copy(deep=True)
+    x_axis_colname = "x-axis"
+    y_axis_colname = "y-axis"
+    df[x_axis_colname] = np.log10(df[x]*df[y])
+    df[y_axis_colname] = np.log2(df[y]/df[x])
+    fig_ = px.scatter(data_frame=df, x=x_axis_colname, y=y_axis_colname, color=color, symbol=symbol, size=size, hover_name=hover_name, hover_data=hover_data, **plotkwargs)
+    fig_.for_each_trace(fn=lambda trace:fig.add_trace(trace=trace, row=row, col=col))
+    fig = update_layout(
+        fig=fig, 
+        title=f"MA plot ({x} vs {y})", 
+        xlabel="$\\log_{10}(\\text{" + x + "}\\times\\text{" + y + "})$", 
+        ylabel="$\\log_{2}(\\left(\\text{" + y + "} / \\text{" + x + "}\\right))$", 
+        **layoutkwargs, **kwargs
+    )
     return fig
 
 def update_layout(fig:Figure, row:int=1, col:int=1, 
@@ -143,7 +228,7 @@ def update_layout(fig:Figure, row:int=1, col:int=1,
     .. plotly::
         :include-source:
         :iframe-height: 400px
-        
+
         >>> import  plotly.graph_objects as go
         >>> from plotly.subplots import make_subplots
         >>> from teilab.plot.plotly import update_layout

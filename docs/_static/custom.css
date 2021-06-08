@@ -60,15 +60,36 @@ div.wy-nav-content h4, div.wy-nav-content h5, div.wy-nav-content h6 {
 }
 
 /* <-- Extension for "sphinx_plotly_directive" */
+div.doctest + p a.reference.external:after,
 div.doctest + p a.reference.external:before {
-  content: "\f1c9";
   font-family: 'FontAwesome';
-  padding-left: .25em;
+  padding: 0 .25em;
+  color: white;
+}
+div.doctest + p a.reference.external:after{
+  content: "\f1c9";
+  padding-left: .5em; 
+}
+div.doctest + p a.reference.external:before {
+  content: "\f08e";
   padding-right: .5em;
-  color: rgb(225,109,60);
 }
 div.doctest + p a.reference.external {
-  color: rgb(212,87,54);
+  color: #fff;
+  background-color: rgb(225,109,60);
+  border: 0;
+  border-radius: 5px;
+  border-bottom: 5px solid rgb(212,87,54);
+  display: inline-block;
+  padding: .5em 2em;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: monaco, monospace;
+}
+div.doctest + p a.reference.external:hover, 
+div.doctest + p a.reference.external:hover:after,
+div.doctest + p a.reference.external:hover:before {
+  color: #ffd43b;
 }
 /* Extension for "sphinx_plotly_directive" --> */
 
