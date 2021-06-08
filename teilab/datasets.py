@@ -256,8 +256,28 @@ class Samples():
 
     @property
     def groups(self):
-        table = [[i,gn,self._group_names[gn],fn] for i,(gn,fn) in enumerate(zip(self._group_numbers,self.FileName))]
-        print(tabulate(table, headers=["idx","gn","GroupName","FileName"]))
+        return [[i,gn,self._group_names[gn],fn] for i,(gn,fn) in enumerate(zip(self._group_numbers,self.FileName))]
+
+    def show_groups(self, tablefmt:str="simple") -> None:
+        """Show groups neatly.
+
+        Args:
+            tablefmt (str, optional) : Table formats. Please choose from [``"plain"``, ``"simple"``, ``"grid"``, ``"pipe"``, ``"orgtbl"``, ``"rst"``, ``"mediawiki"``, ``"latex"``, ``"latex_raw"``, ``"latex_booktabs"``, ``"latex_longtable"``, ``"tsv"``] . Defaults to ``"simple"``.
+        
+        Examples:
+            >>> from teilab.datasets import Samples
+            >>> from teilab.utils._path import SAMPLE_LIST_PATH
+            >>> samples = Samples(sample_list_path=SAMPLE_LIST_PATH)
+            >>> samples.show_groups()
+              idx    gn  GroupName                              FileName
+            -----  ----  -------------------------------------  ---------------------------------------------------
+                0     0  SG19378659_257236339458_S001_GE1_1200  SG19378659_257236339458_S001_GE1_1200_Jun14_1_1.txt
+                1     0  SG19378659_257236339458_S001_GE1_1200  SG19378659_257236339458_S001_GE1_1200_Jun14_1_2.txt
+                :     :                   :                                            :
+               11     1  US91503671_253949442637_S01_GE1_105    US91503671_253949442637_S01_GE1_105_Dec08_1_4.txt
+               12     1  US91503671_253949442637_S01_GE1_105    US91503671_253949442637_S01_GE1_105_Dec08_2_2.txt
+        """
+        print(tabulate(tabular_data=self.groups, tablefmt=tablefmt, headers=["idx","gn","GroupName","FileName"]))
 
     def get_group_numbers(self, group_no:Optional[int]=None, group_name:Optional[str]=None) -> List[int]:
         """Get the specified group index List.
@@ -370,8 +390,12 @@ class TeiLabDataSets():
             }
 
             function doPost(e) {
-              var response = {message: "Invalid Password", dataURL:""};
               var password = e.parameter.password;
+              var response = {
+                message  : "Invalid Password", 
+                dataURL  : "",
+                password : password
+              };
 
               if (password in Password2dataURL){
                 let data = Password2dataURL[password]
@@ -384,6 +408,15 @@ class TeiLabDataSets():
               output.setContent(JSON.stringify(response));
               return output;
             }
+
+        You can also get the data with the command like ``curl`` .
+
+        .. code-block:: shell
+        
+            $ curl -L <GAS_WEBAPP_URL> \\
+                   -d password=<PASSWORD> \\
+                   -H "Content-Type: application/x-www-form-urlencoded"
+
         """
         # Get the target data URL.
         path = ""
@@ -403,6 +436,7 @@ class TeiLabDataSets():
                 downloader = decide_downloader(url=dataURL)
                 path = downloader.download_file(url=dataURL, path=path, verbose=self.verbose, expand=True)
                 self.print(f"Saved data at {path}")
+        self.samples.grouping()
         return path
 
     def get_filePaths(self) -> List[Path]:

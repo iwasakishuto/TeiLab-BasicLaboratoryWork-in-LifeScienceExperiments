@@ -16,7 +16,8 @@ from ..utils.plot_utils import get_colorList
 def densityplot(data:NDArray[(Any,Any),Number],
                 labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
                 bins:int=100, range:Optional[Tuple[float,float]]=None, 
-                title:str="Density Distribution", fig:Optional[Figure]=None, row:int=1, col:int=1, **kwargs) -> Figure:
+                title:str="Density Distribution", fig:Optional[Figure]=None, row:int=1, col:int=1, 
+                plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Figure:
     """Plot density dirstibutions.
 
     Args:
@@ -30,21 +31,27 @@ def densityplot(data:NDArray[(Any,Any),Number],
         fig (Optional[Figure], optional)               : An instance of Figure.
         row (int, optional)                            : Row of subplots. Defaults to ``1``.
         col (int, optional)                            : Column of subplots. Defaults to ``1``.
+        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Scatter``
+        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>` .
 
     Returns:
         Figure: An instance of ``Figure`` with density distributions.
+    
+    .. plotly::
+        :include-source:
+        :iframe-height: 400px
 
-    Examples:
         >>> import matplotlib.pyplot as plt
         >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.plotly import densityplot
         >>> n_samples, n_features = (4, 1000)
         >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
-        >>> kwarges = [{"bins":100},{"bins":10},{"bins":"auto"}]
-        >>> nfigs = len(kwarges)
+        >>> kwargses = [{"bins":100},{"bins":10},{"bins":"auto"}]
+        >>> title = ", ".join([f"{i}:{dict2str(kwargs)}" for i,kwargs in enumerate(kwargses)])
+        >>> nfigs = len(kwargses)
         >>> fig = subplots_create(ncols=nfigs, style="plotly")
-        >>> for i,(kwargs) in enumerate(kwarges, start=1):
-        ...     _ = densityplot(data, fig=fig, title=dict2str(kwargs), col=i, width=800, height=400, **kwargs)
+        >>> for i,(kwargs) in enumerate(kwargses, start=1):
+        ...     _ = densityplot(data, fig=fig, title=title, col=i, legend=False, width=1000, height=400, **kwargs)
         >>> fig.show()
     """
     fig = fig or make_subplots(rows=1, cols=1)
@@ -53,8 +60,8 @@ def densityplot(data:NDArray[(Any,Any),Number],
     if len(colors)!=n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="plotly")
     for i,ith_data in enumerate(data):
         hist, bin_edges = np.histogram(a=ith_data, bins=bins, range=range, density=True)
-        fig.add_trace(trace=go.Scatter(x=bin_edges[1:], y=hist, name=labels[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}), row=row, col=col)
-    fig = update_layout(fig, row=row, col=col, title=title, **kwargs)
+        fig.add_trace(trace=go.Scatter(x=bin_edges[1:], y=hist, name=labels[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}, **plotkwargs), row=row, col=col)
+    fig = update_layout(fig, row=row, col=col, title=title, **layoutkwargs, **kwargs)
     return fig
 
 def XYplot(df:pd.DataFrame, x:str, y:str, 
@@ -133,14 +140,16 @@ def update_layout(fig:Figure, row:int=1, col:int=1,
     Returns:
         Figure: Figure object with layout updated.
 
-    Examples:
+    .. plotly::
+        :include-source:
+        :iframe-height: 400px
+        
         >>> import  plotly.graph_objects as go
         >>> from plotly.subplots import make_subplots
         >>> from teilab.plot.plotly import update_layout
-        >>> fig = make_subplots(rows=1, cols=1)
-        >>> fig.add_trace(go.Scatter(x=[1,2,3],y=[4,5,6]), row=1,col=1)
-        >>> fig.show()
-        >>> fig = update_layout(fig=fig, title="Sample", ylim=(4.5,5.5))
+        >>> fig = make_subplots(rows=1, cols=2)
+        >>> for c in range(1,3): fig.add_trace(go.Scatter(x=[1,2,3],y=[4,5,6]),row=1,col=c)
+        >>> fig = update_layout(fig=fig, title="Sample", ylim=(4.5,5.5), col=2, height=400)
         >>> fig.show()
     """
     fig.update_xaxes(title=xlabel, range=xlim, rangeslider=xrangeslider, row=row, col=col)

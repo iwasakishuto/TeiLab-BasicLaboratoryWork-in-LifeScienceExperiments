@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <link rel="stylesheet" href="_static/popup.css" type="text/css" />
 
@@ -56,7 +57,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="teilab.normalizations module" href="teilab.normalizations.html" />
-    <link rel="prev" title="teilab.utils.generic_utils module" href="teilab.utils.generic_utils.html" /> 
+    <link rel="prev" title="teilab.utils.plot_utils module" href="teilab.utils.plot_utils.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -106,7 +107,7 @@
         <i class="fa fa-book" aria-hidden="true"></i>
       </a></li>
       
-      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php">
+      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php?id=2021">
         <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
       </a></li>
       
@@ -816,6 +817,36 @@
 <dd><p>Grouping the samples based on their filenames.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="teilab.datasets.Samples.groups">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">groups</span></span><a class="headerlink" href="#teilab.datasets.Samples.groups" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="teilab.datasets.Samples.show_groups">
+<span class="sig-name descname"><span class="pre">show_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tablefmt</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'simple'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="reference internal" href="_modules/teilab/datasets.html#Samples.show_groups"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.Samples.show_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show groups neatly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tablefmt</strong> (<em>str</em><em>, </em><em>optional</em>) – Table formats. Please choose from [<code class="docutils literal notranslate"><span class="pre">&quot;plain&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;simple&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;grid&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;pipe&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;orgtbl&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;rst&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;mediawiki&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;latex&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;latex_raw&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;latex_booktabs&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;latex_longtable&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;tsv&quot;</span></code>] . Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;simple&quot;</span></code>.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">Samples</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils._path</span> <span class="kn">import</span> <span class="n">SAMPLE_LIST_PATH</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span> <span class="o">=</span> <span class="n">Samples</span><span class="p">(</span><span class="n">sample_list_path</span><span class="o">=</span><span class="n">SAMPLE_LIST_PATH</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span><span class="o">.</span><span class="n">show_groups</span><span class="p">()</span>
+<span class="go">  idx    gn  GroupName                              FileName</span>
+<span class="go">-----  ----  -------------------------------------  ---------------------------------------------------</span>
+<span class="go">    0     0  SG19378659_257236339458_S001_GE1_1200  SG19378659_257236339458_S001_GE1_1200_Jun14_1_1.txt</span>
+<span class="go">    1     0  SG19378659_257236339458_S001_GE1_1200  SG19378659_257236339458_S001_GE1_1200_Jun14_1_2.txt</span>
+<span class="go">    :     :                   :                                            :</span>
+<span class="go">   11     1  US91503671_253949442637_S01_GE1_105    US91503671_253949442637_S01_GE1_105_Dec08_1_4.txt</span>
+<span class="go">   12     1  US91503671_253949442637_S01_GE1_105    US91503671_253949442637_S01_GE1_105_Dec08_2_2.txt</span>
+</pre></div>
+</div>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="teilab.datasets.Samples.get_group_numbers">
 <span class="sig-name descname"><span class="pre">get_group_numbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_no</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_name</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/datasets.html#Samples.get_group_numbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.datasets.Samples.get_group_numbers" title="Permalink to this definition">¶</a></dt>
@@ -997,8 +1028,12 @@
 <span class="p">}</span>
 
 <span class="kd">function</span> <span class="nx">doPost</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="p">{</span><span class="nx">message</span><span class="o">:</span> <span class="s2">&quot;Invalid Password&quot;</span><span class="p">,</span> <span class="nx">dataURL</span><span class="o">:</span><span class="s2">&quot;&quot;</span><span class="p">};</span>
   <span class="kd">var</span> <span class="nx">password</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">parameter</span><span class="p">.</span><span class="nx">password</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">response</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">message</span>  <span class="o">:</span> <span class="s2">&quot;Invalid Password&quot;</span><span class="p">,</span>
+    <span class="nx">dataURL</span>  <span class="o">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="nx">password</span> <span class="o">:</span> <span class="nx">password</span>
+  <span class="p">};</span>
 
   <span class="k">if</span> <span class="p">(</span><span class="nx">password</span> <span class="k">in</span> <span class="nx">Password2dataURL</span><span class="p">){</span>
     <span class="kd">let</span> <span class="nx">data</span> <span class="o">=</span> <span class="nx">Password2dataURL</span><span class="p">[</span><span class="nx">password</span><span class="p">]</span>
@@ -1011,6 +1046,12 @@
   <span class="nx">output</span><span class="p">.</span><span class="nx">setContent</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">response</span><span class="p">));</span>
   <span class="k">return</span> <span class="nx">output</span><span class="p">;</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+<p>You can also get the data with the command like <code class="docutils literal notranslate"><span class="pre">curl</span></code> .</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ curl -L &lt;GAS_WEBAPP_URL&gt; <span class="se">\</span>
+       -d <span class="nv">password</span><span class="o">=</span>&lt;PASSWORD&gt; <span class="se">\</span>
+       -H <span class="s2">&quot;Content-Type: application/x-www-form-urlencoded&quot;</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1214,7 +1255,7 @@
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="teilab.normalizations.html" class="btn btn-neutral float-right" title="teilab.normalizations module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="teilab.utils.generic_utils.html" class="btn btn-neutral float-left" title="teilab.utils.generic_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="teilab.utils.plot_utils.html" class="btn btn-neutral float-left" title="teilab.utils.plot_utils module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

@@ -42,7 +42,10 @@ def densityplot(data:NDArray[(Any,Any),Number],
     Returns:
         Axes: An instance of ``Axes`` with density distributions.
 
-    Examples:
+    .. plot::
+        :include-source:
+        :class: popup-img
+        
         >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.matplotlib import densityplot
         >>> n_samples, n_features = (4, 1000)
@@ -53,13 +56,6 @@ def densityplot(data:NDArray[(Any,Any),Number],
         >>> for ax,kwargs in zip(axes,kwarges):
         ...     _ = densityplot(data, ax=ax, title=dict2str(kwargs), **kwargs)
         >>> fig.show()
-
-    +----------------------------------------------------+
-    |                      Results                       |
-    +====================================================+
-    | .. image:: _images/plot.matplotlib.densityplot.jpg |
-    |    :class: popup-img                               |
-    +----------------------------------------------------+
     """
     ax = _ax_create(ax=ax)
     labels = labels or [f"No.{i}" for i,_ in enumerate(data)]
@@ -87,7 +83,10 @@ def boxplot(data:NDArray[(Any,Any),Number],
     Returns:
         Axes: An instance of ``Axes`` with box plots.
 
-    Examples:
+    .. plot::
+        :include-source:
+        :class: popup-img
+
         >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.matplotlib import boxplot
         >>> n_samples, n_features = (4, 1000)
@@ -98,13 +97,6 @@ def boxplot(data:NDArray[(Any,Any),Number],
         >>> for ax,kwargs in zip(axes,kwarges):
         ...     _ = boxplot(data, title=dict2str(kwargs), ax=ax, **kwargs)
         >>> fig.show()
-
-    +------------------------------------------------+
-    |                    Results                     |
-    +================================================+
-    | .. image:: _images/plot.matplotlib.boxplot.jpg |
-    |    :class: popup-img                           |
-    +------------------------------------------------+
     """
     ax = _ax_create(ax=ax)
     n_samples, n_features = data.shape
@@ -162,20 +154,16 @@ def update_layout(ax:Axes,
     Returns:
         Axes: A figure element with layout updated.
 
-    Examples:
+    .. plot::
+        :include-source:
+        :class: popup-img
+
         >>> from teilab.utils import subplots_create
         >>> from teilab.plot.matplotlib import update_layout
         >>> fig, axes = subplots_create(ncols=2, style="matplotlib")
         >>> for ax in axes: ax.scatter(1,1,label="center")
         >>> _ = update_layout(ax=axes[1], xlim=(0,2), ylim=(0,2), legend=True)
         >>> fig.show()
-
-    +------------------------------------------------------+
-    |                    Results                           |
-    +======================================================+
-    | .. image:: _images/plot.matplotlib.update_layout.jpg |
-    |    :class: popup-img                                 |
-    +------------------------------------------------------+
     """
     ax.set_title(title)
     ax.set_xlabel(xlabel)

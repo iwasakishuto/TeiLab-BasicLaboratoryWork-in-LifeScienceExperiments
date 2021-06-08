@@ -57,6 +57,14 @@ There are numerous proposals for normalizing unbalanced data between samples (:f
 
 This is a constant adjustoment in a global manner.
 
++--------------------------------------------------+
+|                    Example                       |
++==================================================+
+| .. image:: _images/normalizations.percentile.jpg |
+|    :class: popup-img                             |
++--------------------------------------------------+
+
+
 .. _target to quantile section:
 
 2. Quantile
@@ -64,6 +72,13 @@ This is a constant adjustoment in a global manner.
 
 - 遺伝子を発現量順に並べたとき、同じ順位の遺伝子は同じ発現量を示す。
 - 各サンプルの遺伝子発現の強度分布はほとんど変わらない。
+
++------------------------------------------------+
+|                    Example                     |
++================================================+
+| .. image:: _images/normalizations.quantile.jpg |
+|    :class: popup-img                           |
++------------------------------------------------+
 
 
 https://www.ncbi.nlm.nih.gov/pmc/articles/PMC100354/

@@ -9,6 +9,7 @@ Submodules
 
    teilab.utils.download_utils
    teilab.utils.generic_utils
+   teilab.utils.plot_utils
 
 Module contents
 ---------------

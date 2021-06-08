@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/popup.css" type="text/css" />
 
@@ -98,7 +99,7 @@
         <i class="fa fa-book" aria-hidden="true"></i>
       </a></li>
       
-      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php">
+      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php?id=2021">
         <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
       </a></li>
       
@@ -406,6 +407,7 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span><span class="n">Union</span><span class="p">,</span><span class="n">Optional</span>
 
@@ -449,6 +451,31 @@
             <span class="n">group_numbers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">gn</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group_names</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_names</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_group_numbers</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_numbers</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[[</span><span class="n">i</span><span class="p">,</span><span class="n">gn</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">_group_names</span><span class="p">[</span><span class="n">gn</span><span class="p">],</span><span class="n">fn</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span><span class="p">,(</span><span class="n">gn</span><span class="p">,</span><span class="n">fn</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_group_numbers</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">FileName</span><span class="p">))]</span>
+
+<div class="viewcode-block" id="Samples.show_groups"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.Samples.show_groups">[docs]</a>    <span class="k">def</span> <span class="nf">show_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tablefmt</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;simple&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Show groups neatly.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            tablefmt (str, optional) : Table formats. Please choose from [``&quot;plain&quot;``, ``&quot;simple&quot;``, ``&quot;grid&quot;``, ``&quot;pipe&quot;``, ``&quot;orgtbl&quot;``, ``&quot;rst&quot;``, ``&quot;mediawiki&quot;``, ``&quot;latex&quot;``, ``&quot;latex_raw&quot;``, ``&quot;latex_booktabs&quot;``, ``&quot;latex_longtable&quot;``, ``&quot;tsv&quot;``] . Defaults to ``&quot;simple&quot;``.</span>
+<span class="sd">        </span>
+<span class="sd">        Examples:</span>
+<span class="sd">            &gt;&gt;&gt; from teilab.datasets import Samples</span>
+<span class="sd">            &gt;&gt;&gt; from teilab.utils._path import SAMPLE_LIST_PATH</span>
+<span class="sd">            &gt;&gt;&gt; samples = Samples(sample_list_path=SAMPLE_LIST_PATH)</span>
+<span class="sd">            &gt;&gt;&gt; samples.show_groups()</span>
+<span class="sd">              idx    gn  GroupName                              FileName</span>
+<span class="sd">            -----  ----  -------------------------------------  ---------------------------------------------------</span>
+<span class="sd">                0     0  SG19378659_257236339458_S001_GE1_1200  SG19378659_257236339458_S001_GE1_1200_Jun14_1_1.txt</span>
+<span class="sd">                1     0  SG19378659_257236339458_S001_GE1_1200  SG19378659_257236339458_S001_GE1_1200_Jun14_1_2.txt</span>
+<span class="sd">                :     :                   :                                            :</span>
+<span class="sd">               11     1  US91503671_253949442637_S01_GE1_105    US91503671_253949442637_S01_GE1_105_Dec08_1_4.txt</span>
+<span class="sd">               12     1  US91503671_253949442637_S01_GE1_105    US91503671_253949442637_S01_GE1_105_Dec08_2_2.txt</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">tabulate</span><span class="p">(</span><span class="n">tabular_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">,</span> <span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;idx&quot;</span><span class="p">,</span><span class="s2">&quot;gn&quot;</span><span class="p">,</span><span class="s2">&quot;GroupName&quot;</span><span class="p">,</span><span class="s2">&quot;FileName&quot;</span><span class="p">]))</span></div>
 
 <div class="viewcode-block" id="Samples.get_group_numbers"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.Samples.get_group_numbers">[docs]</a>    <span class="k">def</span> <span class="nf">get_group_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_no</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">group_name</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Get the specified group index List.</span>
@@ -561,8 +588,12 @@
 <span class="sd">            }</span>
 
 <span class="sd">            function doPost(e) {</span>
-<span class="sd">              var response = {message: &quot;Invalid Password&quot;, dataURL:&quot;&quot;};</span>
 <span class="sd">              var password = e.parameter.password;</span>
+<span class="sd">              var response = {</span>
+<span class="sd">                message  : &quot;Invalid Password&quot;, </span>
+<span class="sd">                dataURL  : &quot;&quot;,</span>
+<span class="sd">                password : password</span>
+<span class="sd">              };</span>
 
 <span class="sd">              if (password in Password2dataURL){</span>
 <span class="sd">                let data = Password2dataURL[password]</span>
@@ -575,6 +606,15 @@
 <span class="sd">              output.setContent(JSON.stringify(response));</span>
 <span class="sd">              return output;</span>
 <span class="sd">            }</span>
+
+<span class="sd">        You can also get the data with the command like ``curl`` .</span>
+
+<span class="sd">        .. code-block:: shell</span>
+<span class="sd">        </span>
+<span class="sd">            $ curl -L &lt;GAS_WEBAPP_URL&gt; \\</span>
+<span class="sd">                   -d password=&lt;PASSWORD&gt; \\</span>
+<span class="sd">                   -H &quot;Content-Type: application/x-www-form-urlencoded&quot;</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Get the target data URL.</span>
         <span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -594,6 +634,7 @@
                 <span class="n">downloader</span> <span class="o">=</span> <span class="n">decide_downloader</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">dataURL</span><span class="p">)</span>
                 <span class="n">path</span> <span class="o">=</span> <span class="n">downloader</span><span class="o">.</span><span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">dataURL</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">verbose</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Saved data at </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">grouping</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">path</span></div>
 
 <div class="viewcode-block" id="TeiLabDataSets.get_filePaths"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.TeiLabDataSets.get_filePaths">[docs]</a>    <span class="k">def</span> <span class="nf">get_filePaths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>

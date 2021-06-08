@@ -59,6 +59,19 @@ div.wy-nav-content h4, div.wy-nav-content h5, div.wy-nav-content h6 {
   color: black;
 }
 
+/* <-- Extension for "sphinx_plotly_directive" */
+div.doctest + p a.reference.external:before {
+  content: "\f1c9";
+  font-family: 'FontAwesome';
+  padding-left: .25em;
+  padding-right: .5em;
+  color: rgb(225,109,60);
+}
+div.doctest + p a.reference.external {
+  color: rgb(212,87,54);
+}
+/* Extension for "sphinx_plotly_directive" --> */
+
 /* <-- Utility Buttons */
 ul.utility-btns{
   margin: 10px;
@@ -128,7 +141,7 @@ div.body p, div.body dd, div.body li, div.body blockquote {
 }
 div.viewcode-block:target {
   display: inline-block;
-  background-color: #ffffc7;
+  background-color: #f4debf;
   margin: -3px -5px;
   padding: 3px 5px;
   border-radius: 5px;
