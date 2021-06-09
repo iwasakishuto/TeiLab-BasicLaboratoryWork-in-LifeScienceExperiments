@@ -1,6 +1,7 @@
 #coding: utf-8
-from ._path import *
 from ._config import *
+from ._path import *
+from ._warnings import *
 from . import download_utils
 from . import generic_utils
 from . import plot_utils
