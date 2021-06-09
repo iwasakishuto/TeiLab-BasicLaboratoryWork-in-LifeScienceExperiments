@@ -23,10 +23,10 @@ def _ax_create(ax:Optional[Axes]=None, figsize:Tuple[Number,Number]=(6,4)) -> Ax
         _,ax = plt.subplots(figsize=figsize)
     return ax
 
-def densityplot(data:NDArray[(Any,Any),Number], 
-                labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None, 
-                bins:Union[int,List[Number],str]=100, range:Optional[Tuple[float,float]]=None, 
-                title:str="Density Distribution", ax:Optional[Axes]=None, **kwargs) -> Axes:
+def density_plot(data:NDArray[(Any,Any),Number], 
+                 labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None, 
+                 bins:Union[int,List[Number],str]=100, range:Optional[Tuple[float,float]]=None, 
+                 title:str="Density Distribution", ax:Optional[Axes]=None, **kwargs) -> Axes:
     """Plot density dirstibutions.
 
     Args:
@@ -47,14 +47,14 @@ def densityplot(data:NDArray[(Any,Any),Number],
         :class: popup-img
         
         >>> from teilab.utils import dict2str, subplots_create
-        >>> from teilab.plot.matplotlib import densityplot
+        >>> from teilab.plot.matplotlib import density_plot
         >>> n_samples, n_features = (4, 1000)
         >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
         >>> kwarges = [{"bins":100},{"bins":10},{"bins":"auto"}]
         >>> nfigs = len(kwarges)
         >>> fig, axes = subplots_create(ncols=nfigs, figsize=(int(6*nfigs),4), style="matplotlib")
         >>> for ax,kwargs in zip(axes,kwarges):
-        ...     _ = densityplot(data, ax=ax, title=dict2str(kwargs), **kwargs)
+        ...     _ = density_plot(data, ax=ax, title=dict2str(kwargs), **kwargs)
         >>> fig.show()
     """
     ax = _ax_create(ax=ax)

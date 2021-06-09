@@ -13,11 +13,11 @@ from nptyping import NDArray
 
 from ..utils.plot_utils import get_colorList
 
-def densityplot(data:NDArray[(Any,Any),Number],
-                labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
-                bins:int=100, range:Optional[Tuple[float,float]]=None, 
-                title:str="Density Distribution", fig:Optional[Figure]=None, row:int=1, col:int=1, 
-                plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Figure:
+def density_plot(data:NDArray[(Any,Any),Number],
+                 labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
+                 bins:int=100, range:Optional[Tuple[float,float]]=None, 
+                 title:str="Density Distribution", fig:Optional[Figure]=None, row:int=1, col:int=1, 
+                 plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Figure:
     """Plot density dirstibutions.
 
     Args:
@@ -43,7 +43,7 @@ def densityplot(data:NDArray[(Any,Any),Number],
 
         >>> import matplotlib.pyplot as plt
         >>> from teilab.utils import dict2str, subplots_create
-        >>> from teilab.plot.plotly import densityplot
+        >>> from teilab.plot.plotly import density_plot
         >>> n_samples, n_features = (4, 1000)
         >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
         >>> kwargses = [{"bins":100},{"bins":10},{"bins":"auto"}]
@@ -51,17 +51,65 @@ def densityplot(data:NDArray[(Any,Any),Number],
         >>> nfigs = len(kwargses)
         >>> fig = subplots_create(ncols=nfigs, style="plotly")
         >>> for i,(kwargs) in enumerate(kwargses, start=1):
-        ...     _ = densityplot(data, fig=fig, title=title, col=i, legend=False, width=1000, height=400, **kwargs)
+        ...     _ = density_plot(data, fig=fig, title=title, col=i, legend=False, width=1000, height=400, **kwargs)
         >>> fig.show()
     """
     fig = fig or make_subplots(rows=1, cols=1)
+    if data.ndim==1: data = data.reshape(-1,1)
     n_samples, n_features = data.shape
-    if len(labels) !=n_samples: labels = [f"No.{i}" for i,_ in enumerate(data)]
+    if len(labels)!=n_samples: labels = [f"No.{i}" for i,_ in enumerate(data)]
     if len(colors)!=n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="plotly")
     for i,ith_data in enumerate(data):
         hist, bin_edges = np.histogram(a=ith_data, bins=bins, range=range, density=True)
         fig.add_trace(trace=go.Scatter(x=bin_edges[1:], y=hist, name=labels[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}, **plotkwargs), row=row, col=col)
     fig = update_layout(fig, row=row, col=col, title=title, **layoutkwargs, **kwargs)
+    return fig
+
+def cumulative_density_plot(data:NDArray[(Any,Any),Number],
+                            labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
+                            title:str="Cumulative Density Distribution", ylabel="Frequency",
+                            fig:Optional[Figure]=None, row:int=1, col:int=1, 
+                            plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Figure:
+    """Plot cumulative density dirstibutions.
+
+    Args:
+        data (NDArray[(Any,Any),Number])               : Input data. Shape = ( ``n_samples``, ``n_features`` )
+        labels (List[str], optional)                   : Labels for each sample. Defaults to ``[]``.
+        colors (List[Any], optional)                   : Colors for each sample. Defaults to ``[]``.
+        cmap (Optional[Union[str,Colormap]], optional) : A ``Colormap`` object or a color map name. Defaults to ``None``.
+        title (str, optional)                          : Figure Title. Defaults to ``"Cumulative Density Distribution"``.
+        ylabel (str, optional)                         : Figure y-axis label. Defaults to ``"Frequency"``
+        fig (Optional[Figure], optional)               : An instance of Figure.
+        row (int, optional)                            : Row of subplots. Defaults to ``1``.
+        col (int, optional)                            : Column of subplots. Defaults to ``1``.
+        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Scatter``
+        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>` .
+
+    Returns:
+        Figure: An instance of ``Figure`` with density distributions.
+    
+    .. plotly::
+        :include-source:
+        :iframe-height: 400px
+
+        >>> import matplotlib.pyplot as plt
+        >>> from teilab.utils import dict2str, subplots_create
+        >>> from teilab.plot.plotly import cumulative_density_plot
+        >>> n_samples, n_features = (4, 1000)
+        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
+        >>> fig = cumulative_density_plot(data, fig=None, xlabel="value", width=800, height=400)
+        >>> fig.show()
+    """
+    fig = fig or make_subplots(rows=1, cols=1)
+    if data.ndim==1: data = data.reshape(-1,1)
+    data = np.sort(a=data, axis=1)
+    n_samples, n_features = data.shape
+    if len(labels)!=n_samples: labels = [f"No.{i}" for i,_ in enumerate(data)]
+    if len(colors)!=n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="plotly")
+    y = [(i+1)/n_features for i in range(n_features)]
+    for i,ith_data in enumerate(data):
+        fig.add_trace(trace=go.Scatter(x=ith_data, y=y, name=labels[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}, **plotkwargs), row=row, col=col)
+    fig = update_layout(fig, row=row, col=col, title=title, ylabel=ylabel, **layoutkwargs, **kwargs)
     return fig
 
 def XYplot(df:pd.DataFrame, x:str, y:str, logarithmic:bool=True,

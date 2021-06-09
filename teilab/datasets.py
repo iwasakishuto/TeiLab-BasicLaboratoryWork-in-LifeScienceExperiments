@@ -207,11 +207,14 @@ The BGSubMethod of ``7`` corresponds to "No Background Subtraction method" (see 
         True
 """
 import os
-import pandas as pd
 import requests
+import numpy as np
+import pandas as pd
 from tabulate import tabulate
+
 from pathlib import Path
-from typing import List,Union,Optional
+from typing import List,Union,Optional,Any
+from nptyping import NDArray
 
 from .utils._config import GAS_WEBAPP_URL
 from .utils._path import DATA_DIR, SAMPLE_LIST_PATH
@@ -222,12 +225,12 @@ class Samples():
     """Utility Sample Class for this lecture.
     
     Attributes:
-        _df (pd.DataFrame)         : Sample information described in text file at ``sample_list_path`` .
-        SampleNumber (List[str])   : Index numbers for each sample.
-        FileName (List[str])       : File namse for each sample.
-        Condition (List[str])      : Experimental conditions for each sample.
-        _group_names (List[str])   : ``i-th`` group's filename prefix.
-        _group_numbers (List[int]) : Which group (``no``) the ``j-th`` sample belongs to
+        _df (pd.DataFrame)                     : Sample information described in text file at ``sample_list_path`` .
+        SampleNumber (NDArray[Any,str])        : Index numbers for each sample.
+        FileName (NDArray[Any,str])            : File namse for each sample.
+        Condition (NDArray[Any,str])           : Experimental conditions for each sample.
+        _group_names (NDArray[Any,str])        : ``i-th`` group's filename prefix.
+        _group_numbers (NDArray[Any,np.uint8]) : Which group (``no``) the ``j-th`` sample belongs to
 
     Examples:
         >>> from teilab.datasets import Samples
@@ -239,7 +242,7 @@ class Samples():
     def __init__(self, sample_list_path:str):
         self._df = pd.read_csv(sample_list_path)
         for col in self._df.columns:
-            setattr(self, col, self._df[col].tolist())
+            setattr(self, col, self._df[col].values)
         self.grouping()
     
     def grouping(self) -> None:
@@ -251,8 +254,8 @@ class Samples():
             if gn not in group_names:
                 group_names.append(gn)
             group_numbers.append(group_names.index(gn))
-        self._group_names:List[str] = group_names
-        self._group_numbers:List[int] = group_numbers
+        self._group_names:NDArray[Any,str] = np.asarray(group_names)
+        self._group_numbers:NDArray[Any,np.uint8] = np.asarray(group_numbers, dtype=np.uint8)
 
     @property
     def groups(self):
@@ -331,8 +334,8 @@ class TeiLabDataSets():
     """
     TARGET_GeneName:str = "VIM"             #: TARGET_GeneName (str) ``GeneName`` of the target RNA (vimentin)
     TARGET_SystematicName:str = "NM_003380" #: TARGET_SystematicName (str) ``SystematicName`` of the target RNA (vimentin)
-    ANNO_COLNAMES:List[str] = ["FeatureNum","ControlType","ProbeName","SystematicName"] #: ANNO_COLNAMES (List[str]) Column names for annotation.
-    TARGET_COLNAME:str = "gProcessedSignal"                                             #: TARGET_COLNAME (str) Column name for expression data.
+    ANNO_COLNAMES:List[str] = ["FeatureNum","ProbeName","SystematicName"] #: ANNO_COLNAMES (List[str]) Column names for annotation.
+    TARGET_COLNAME:str = "gProcessedSignal"                               #: TARGET_COLNAME (str) Column name for expression data.
     def __init__(self, verbose:bool=True):
         self.verbose = verbose
         self.print:callable = verbose2print(verbose=verbose)
@@ -454,7 +457,8 @@ class TeiLabDataSets():
             >>> filelists[0].name
             'US91503671_253949442637_S01_GE1_105_Dec08_1_1.txt'
         """
-        return sorted([path for path in self.root.glob("**/*.txt") if path.name in self.samples.FileName], key=lambda x:self.samples.FileName.index(x.name))
+        fnLists = self.samples.FileName.tolist()
+        return sorted([path for path in self.root.glob("**/*.txt") if path.name in fnLists], key=lambda x:fnLists.index(x.name))
 
     @property
     def filePaths(self) -> List[Path]:

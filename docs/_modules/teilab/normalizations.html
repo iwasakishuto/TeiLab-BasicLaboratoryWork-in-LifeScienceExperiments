@@ -198,7 +198,6 @@
   <h1>Source code for teilab.normalizations</h1><div class="highlight"><pre>
 <span></span><span class="c1">#coding: utf-8</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
 <span class="sd">Differential gene expression can be an outcome of true biological variability or experimental artifacts. Normalization techniques have been used to minimize the effect of experimental artifacts on differential gene expression analysis.</span>
 
 <span class="sd">###############################</span>
@@ -216,16 +215,14 @@
 <span class="sd">1. Background Subtraction</span>
 <span class="sd">*************************</span>
 
-<span class="sd">バックグラウンド補正は、Non-specific Hybridization に由来するシグナル強度を差し引くためのものです。ここでは、「観察されたシグナルの強度は、真のシグナルの強度とバックグラウンドシグナルの強度とが合成されたものである」と仮定します。</span>
+<span class="sd">In Background Subtraction, we assume that the observed signal intensity is a combnation of the actual signal intensity and the background signal intensity (derived from Non-specific Hybridization), and aim to eliminate the influence of the latter one.</span>
 
-<span class="sd">そこで、あるマイクロアレイについて、</span>
+<span class="sd">In the general method, we make assumptions such as</span>
 
-<span class="sd">- 真のシグナル強度分布は指数分布</span>
-<span class="sd">- バックグラウンドの強度分布は正規分布</span>
+<span class="sd">- Actual signal intensity distribution is an exponential distribution.</span>
+<span class="sd">- Background signal intensity distribution is a normal distribution.</span>
 
-<span class="sd">となると仮定し、その仮定の元で最も現象を表現しているパラメータを推定することで、バックグラウンドの強度分布を計算し、これを差し引くことで真のシグナル強度を推定します。</span>
-
-<span class="sd">TODO: もっとここを詰めねば。論文読みます。</span>
+<span class="sd">Then, by optimizing the parameters to best represent the phenomenon, the background intensity distribution is calculated and subtracted.</span>
 
 <span class="sd">.. _target to normalization between samples section:</span>
 
@@ -233,15 +230,15 @@
 <span class="sd">2. Normalization Between Samples</span>
 <span class="sd">********************************</span>
 
-<span class="sd">ここでは、各マイクロアレイ「間の」正規化を行います。一つのマイクロアレイ実験の結果から言えることは非常に限られており、他の（処理群やコントロール群）実験結果と比較することが解析の基本になりますが、一般的に実験においては、実験操作や機材の特性によってバイアスが生じることは避けられません。</span>
+<span class="sd">Here, we perform normalization **&quot;between&quot;** samples. What can be said from the results of a **&quot;single sample&quot;** microarray experiment are very limited, and we should compare with other (treatment sample, control group, etc.) experimental results. Howevet, bias due to experimental operation and equipment characteristics is inevitable, and if you just compare them as they are, you will misinterpret them.</span>
 
 <span class="sd">For example, if you want to characterize the changes in global gene expression in the livers of H1/siRNAinsulin-CMV/hIDE transgenic (Tg) mice in response to the reduced bioavailability of insulin [#ref1]_, and the expression level of each RNA in Tg mice was generally lower than that of non-Tg mice, **you may mistakenly conclude that almost all of the RNAs were down-regulated respectively by reduced bioavailability of insulin.**</span>
 
 <span class="sd">.. [#ref1] :fa:`file-pdf-o` `Microarray analysis of insulin-regulated gene expression in the liver: the use of transgenic mice co-expressing insulin-siRNA and human IDE as an animal model &lt;https://pubmed.ncbi.nlm.nih.gov/17982690/&gt;`_</span>
 
-<span class="sd">そこで、バイアスの影響が軽減するように、得られた値に補正をかけることが必要です。この操作は各手法ごとに定義されるある仮定に基づいているので、取り扱いには注意が必要です。</span>
+<span class="sd">Therefore, it is necessary to reduce the influence of the bias. There are numerous proposals for normalizing unbalanced data between samples (:fa:`file-pdf-o` `This review paper &lt;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6988798/&gt;`_ summarizes 23 normalization methods developed for unbalanced transcriptome data), but each method makes some assumptions in data, so it is important to choose the correct normalization method for each experimental results.</span>
 
-<span class="sd">There are numerous proposals for normalizing unbalanced data between samples (:fa:`file-pdf-o` `This review paper &lt;https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6988798/&gt;`_ summarizes 23 normalization methods developed for unbalanced transcriptome data), but we will introduce only three of them.</span>
+<span class="sd">We will introduce two majour methods.</span>
 
 <span class="sd">.. note::</span>
 
@@ -253,7 +250,11 @@
 <span class="sd">1. Percentile</span>
 <span class="sd">=============</span>
 
-<span class="sd">This is a constant adjustoment in a global manner.</span>
+<span class="sd">This method is a constant adjustoment and the most straightforward.</span>
+
+<span class="sd">1. Calculate the x%tile for each distribution.</span>
+<span class="sd">2. Average them.</span>
+<span class="sd">3. Divide each distribution by its x%tile and multiply by averaged value.</span>
 
 <span class="sd">+--------------------------------------------------+</span>
 <span class="sd">|                    Example                       |</span>
@@ -262,14 +263,24 @@
 <span class="sd">|    :class: popup-img                             |</span>
 <span class="sd">+--------------------------------------------------+</span>
 
+<span class="sd">Defined as :func:`percentile &lt;teilab.normalizations.percentile&gt;` in this package.</span>
 
 <span class="sd">.. _target to quantile section:</span>
 
 <span class="sd">2. Quantile</span>
 <span class="sd">===========</span>
 
-<span class="sd">- 遺伝子を発現量順に並べたとき、同じ順位の遺伝子は同じ発現量を示す。</span>
-<span class="sd">- 各サンプルの遺伝子発現の強度分布はほとんど変わらない。</span>
+<span class="sd">Quantile Normalization is a technique for making all distributions identical in statistical properties. It was introduced as **&quot;quantile standardization&quot;** (in :fa:`file-pdf-o` `Analysis of Data from Viral DNA Microchips &lt;https://doi.org/10.1198%2F016214501753381814&gt;`_ ) and then renamed as **&quot;quantile normalization&quot;** (in :fa:`file-pdf-o` `A comparison of normalization methods for high density oligonucleotide array data based on variance and bias &lt;https://doi.org/10.1093%2Fbioinformatics%2F19.2.185&gt;`_ )</span>
+
+<span class="sd">To quantile normalize the all distributions, </span>
+
+<span class="sd">1. Sort each distribution.</span>
+<span class="sd">2. Average the data in the same rank.</span>
+<span class="sd">3. Replace the value of each rank with the averaged value.</span>
+
+<span class="sd">.. warning::</span>
+
+<span class="sd">    This method can be used when the assumption that &quot;the intensity distribution of gene expression in each sample is almost the same&quot; holds.</span>
 
 <span class="sd">+------------------------------------------------+</span>
 <span class="sd">|                    Example                     |</span>
@@ -278,8 +289,7 @@
 <span class="sd">|    :class: popup-img                           |</span>
 <span class="sd">+------------------------------------------------+</span>
 
-
-<span class="sd">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC100354/</span>
+<span class="sd">Defined as :func:`quantile &lt;teilab.normalizations.quantile&gt;` in this package.</span>
 
 <span class="sd">.. _target to summarization section:</span>
 
@@ -292,8 +302,11 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.stats.mstats</span> <span class="kn">import</span> <span class="n">gmean</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span>
 <span class="kn">from</span> <span class="nn">nptyping</span> <span class="kn">import</span> <span class="n">NDArray</span>
+<span class="kn">from</span> <span class="nn">pandas.core.generic</span> <span class="kn">import</span> <span class="n">NDFrame</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
 
 
@@ -373,18 +386,96 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Geometric mean cannot be calculated because ``data`` contain negative values. (ex. data[</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">][</span><span class="si">{</span><span class="n">j</span><span class="si">}</span><span class="s2">] = </span><span class="si">{</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span><span class="si">}</span><span class="s2"> &lt; 0)&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">gmean</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span></div>
 
-<div class="viewcode-block" id="lowess"><a class="viewcode-back" href="../../teilab.normalizations.html#teilab.normalizations.lowess">[docs]</a><span class="k">def</span> <span class="nf">lowess</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[(</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">),</span><span class="n">Number</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[(</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">),</span><span class="n">Number</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Perform LOWESS Normalization.</span>
+<div class="viewcode-block" id="median_polish"><a class="viewcode-back" href="../../teilab.normalizations.html#teilab.normalizations.median_polish">[docs]</a><span class="k">def</span> <span class="nf">median_polish</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[(</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">),</span><span class="n">Number</span><span class="p">],</span> <span class="n">labels</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[(</span><span class="n">Any</span><span class="p">),</span><span class="n">Any</span><span class="p">],</span> <span class="n">rtol</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">atol</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mf">1e-08</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDArray</span><span class="p">[(</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">),</span><span class="n">Number</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Median Polish</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        data (NDArray[(Any,Any),Number]) : Input data. Shape = ( ``n_samples``, ``n_features`` )</span>
+<span class="sd">        labels (NDArray[(Any),Any])      : Label (ex. ``GeneName``, or ``SystematicName`` )</span>
+<span class="sd">        rtol (float)                     : The relative tolerance parameter. Defaults to ``1e-05``</span>
+<span class="sd">        atol (float)                     : The absolute tolerance parameter. Defaults to ``1e-08``</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: When ``data.shape[1]`` is not the same as ``len(labels)``</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        NDArray[(Any,Any),Number] : percentiled data. Shape = ( ``n_samples``, ``n_features`` )</span>
+<span class="sd">        NDArray[(Any,Any),Number]: Median Polished Data.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.normalizations import median_polish</span>
+<span class="sd">        &gt;&gt;&gt; data = np.asarray([</span>
+<span class="sd">        ...     [16.1, 14.6, 19.6, 13.6, 13.6, 13.6],</span>
+<span class="sd">        ...     [ 9.0, 18.4,  6.7, 11.1,  6.7,  9.0],</span>
+<span class="sd">        ...     [22.4, 13.6, 22.4,  6.7,  9.0,  3.0],</span>
+<span class="sd">        &gt;&gt;&gt; ], dtype=float).T</span>
+<span class="sd">        &gt;&gt;&gt; n_samples, n_features = data.shape</span>
+<span class="sd">        &gt;&gt;&gt; # This means that &quot;All spots (features) are for the same gene.&quot;</span>
+<span class="sd">        &gt;&gt;&gt; labels = np.zeros(shape=n_features, dtype=np.uint8)</span>
+<span class="sd">        &gt;&gt;&gt; median_polish(data, labels=labels)</span>
+<span class="sd">        array([[16.1 , 11.25, 13.3 ],</span>
+<span class="sd">               [16.4 , 11.55, 13.6 ],</span>
+<span class="sd">               [19.6 , 14.75, 16.8 ],</span>
+<span class="sd">               [13.6 ,  8.75, 10.8 ],</span>
+<span class="sd">               [11.8 ,  6.95,  9.  ],</span>
+<span class="sd">               [13.6 ,  8.75, 10.8 ]])</span>
+
+<span class="sd">    TODO:</span>
+<span class="sd">        Speed-UP using ``joblib``, ``multiprocessing``, ``Cython``, etc.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">n_features</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data.shape[1] must be the same as len(labels), but got </span><span class="si">{</span><span class="n">n_features</span><span class="si">}</span><span class="s2">!=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;median polish&quot;</span><span class="p">):</span>
+        <span class="n">ith_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span><span class="n">labels</span><span class="o">==</span><span class="n">label</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ith_data</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="n">ith_data_original</span> <span class="o">=</span> <span class="n">ith_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">ith_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>    
+                <span class="n">feature_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">ith_data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+                <span class="n">ith_data</span> <span class="o">=</span> <span class="n">ith_data</span> <span class="o">-</span> <span class="n">feature_median</span><span class="p">[</span><span class="kc">None</span><span class="p">,:]</span>
+                <span class="n">sample_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">ith_data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">ith_data</span> <span class="o">=</span> <span class="n">ith_data</span> <span class="o">-</span> <span class="n">sample_median</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">feature_median</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">sample_median</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">):</span>
+                    <span class="k">break</span>
+            <span class="n">data</span><span class="p">[:,</span><span class="n">labels</span><span class="o">==</span><span class="n">label</span><span class="p">]</span> <span class="o">=</span> <span class="n">ith_data_original</span> <span class="o">-</span> <span class="n">ith_data</span>
     <span class="k">return</span> <span class="n">data</span></div>
 
-<span class="c1"># def normalization_between_samples(df:pd.DataFrame):</span>
+<div class="viewcode-block" id="median_polish_group_wise"><a class="viewcode-back" href="../../teilab.normalizations.html#teilab.normalizations.median_polish_group_wise">[docs]</a><span class="k">def</span> <span class="nf">median_polish_group_wise</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">NDFrame</span><span class="p">,</span> <span class="n">rtol</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mf">1e-05</span><span class="p">,</span> <span class="n">atol</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mf">1e-08</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NDFrame</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Apply Median polish group-wise.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (NDFrame)         : Input data. Shape = ( ``n_samples``, ``n_features`` )</span>
+<span class="sd">        rtol (float, optional) : [description]. Defaults to ``1e-05``.</span>
+<span class="sd">        atol (float, optional) : [description]. Defaults to ``1e-08``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        NDFrame: Median Polished Data.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.normalizations import median_polish_group_wise</span>
+<span class="sd">        &gt;&gt;&gt; data = pd.DataFrame(data=[</span>
+<span class="sd">        ...     [&quot;vimentin&quot;, 16.1, 14.6, 19.6, 13.6, 13.6, 13.6],</span>
+<span class="sd">        ...     [&quot;vimentin&quot;,  9.0, 18.4,  6.7, 11.1,  6.7,  9.0],</span>
+<span class="sd">        ...     [&quot;vimentin&quot;, 22.4, 13.6, 22.4,  6.7,  9.0,  3.0],</span>
+<span class="sd">        &gt;&gt;&gt; ], columns=[&quot;GeneName&quot;]+[f&quot;Samle.{i}&quot; for i in range(6)])</span>
+<span class="sd">        &gt;&gt;&gt; data.groupby(&quot;GeneName&quot;).apply(func=median_polish_group_wise).values</span>
+<span class="sd">        array([[16.1 , 16.4 , 19.6 , 13.6 , 11.8 , 13.6 ],</span>
+<span class="sd">               [11.25, 11.55, 14.75,  8.75,  6.95,  8.75],</span>
+<span class="sd">               [13.3 , 13.6 , 16.8 , 10.8 ,  9.  , 10.8 ]])</span>
+<span class="sd">        &gt;&gt;&gt; # If you want to see the progress, use tqdm.</span>
+<span class="sd">        &gt;&gt;&gt; from tqdm import tqdm</span>
+<span class="sd">        &gt;&gt;&gt; tqdm.pandas()</span>
+<span class="sd">        &gt;&gt;&gt; data.groupby(&quot;GeneName&quot;).progress_apply(func=median_polish_group_wise).values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data_original</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">sample_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">sample_median</span><span class="p">[:,</span><span class="kc">None</span><span class="p">]</span>
+        <span class="n">feature_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">-</span> <span class="n">feature_median</span><span class="p">[</span><span class="kc">None</span><span class="p">,:]</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">feature_median</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">sample_median</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">):</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">data_original</span> <span class="o">-</span> <span class="n">data</span></div>
 </pre></div>
 
            </div>

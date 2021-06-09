@@ -405,11 +405,14 @@
 <span class="sd">        True</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">tabulate</span> <span class="kn">import</span> <span class="n">tabulate</span>
+
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span><span class="n">Union</span><span class="p">,</span><span class="n">Optional</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span><span class="n">Union</span><span class="p">,</span><span class="n">Optional</span><span class="p">,</span><span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">nptyping</span> <span class="kn">import</span> <span class="n">NDArray</span>
 
 <span class="kn">from</span> <span class="nn">.utils._config</span> <span class="kn">import</span> <span class="n">GAS_WEBAPP_URL</span>
 <span class="kn">from</span> <span class="nn">.utils._path</span> <span class="kn">import</span> <span class="n">DATA_DIR</span><span class="p">,</span> <span class="n">SAMPLE_LIST_PATH</span>
@@ -420,12 +423,12 @@
     <span class="sd">&quot;&quot;&quot;Utility Sample Class for this lecture.</span>
 <span class="sd">    </span>
 <span class="sd">    Attributes:</span>
-<span class="sd">        _df (pd.DataFrame)         : Sample information described in text file at ``sample_list_path`` .</span>
-<span class="sd">        SampleNumber (List[str])   : Index numbers for each sample.</span>
-<span class="sd">        FileName (List[str])       : File namse for each sample.</span>
-<span class="sd">        Condition (List[str])      : Experimental conditions for each sample.</span>
-<span class="sd">        _group_names (List[str])   : ``i-th`` group&#39;s filename prefix.</span>
-<span class="sd">        _group_numbers (List[int]) : Which group (``no``) the ``j-th`` sample belongs to</span>
+<span class="sd">        _df (pd.DataFrame)                     : Sample information described in text file at ``sample_list_path`` .</span>
+<span class="sd">        SampleNumber (NDArray[Any,str])        : Index numbers for each sample.</span>
+<span class="sd">        FileName (NDArray[Any,str])            : File namse for each sample.</span>
+<span class="sd">        Condition (NDArray[Any,str])           : Experimental conditions for each sample.</span>
+<span class="sd">        _group_names (NDArray[Any,str])        : ``i-th`` group&#39;s filename prefix.</span>
+<span class="sd">        _group_numbers (NDArray[Any,np.uint8]) : Which group (``no``) the ``j-th`` sample belongs to</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.datasets import Samples</span>
@@ -437,7 +440,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sample_list_path</span><span class="p">:</span><span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">sample_list_path</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">grouping</span><span class="p">()</span>
     
 <div class="viewcode-block" id="Samples.grouping"><a class="viewcode-back" href="../../teilab.datasets.html#teilab.datasets.Samples.grouping">[docs]</a>    <span class="k">def</span> <span class="nf">grouping</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -449,8 +452,8 @@
             <span class="k">if</span> <span class="n">gn</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group_names</span><span class="p">:</span>
                 <span class="n">group_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gn</span><span class="p">)</span>
             <span class="n">group_numbers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group_names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">gn</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_group_names</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_names</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_group_numbers</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_numbers</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group_names</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">group_names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_group_numbers</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">group_numbers</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -529,8 +532,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">TARGET_GeneName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;VIM&quot;</span>             <span class="c1">#: TARGET_GeneName (str) ``GeneName`` of the target RNA (vimentin)</span>
     <span class="n">TARGET_SystematicName</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;NM_003380&quot;</span> <span class="c1">#: TARGET_SystematicName (str) ``SystematicName`` of the target RNA (vimentin)</span>
-    <span class="n">ANNO_COLNAMES</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;FeatureNum&quot;</span><span class="p">,</span><span class="s2">&quot;ControlType&quot;</span><span class="p">,</span><span class="s2">&quot;ProbeName&quot;</span><span class="p">,</span><span class="s2">&quot;SystematicName&quot;</span><span class="p">]</span> <span class="c1">#: ANNO_COLNAMES (List[str]) Column names for annotation.</span>
-    <span class="n">TARGET_COLNAME</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gProcessedSignal&quot;</span>                                             <span class="c1">#: TARGET_COLNAME (str) Column name for expression data.</span>
+    <span class="n">ANNO_COLNAMES</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;FeatureNum&quot;</span><span class="p">,</span><span class="s2">&quot;ProbeName&quot;</span><span class="p">,</span><span class="s2">&quot;SystematicName&quot;</span><span class="p">]</span> <span class="c1">#: ANNO_COLNAMES (List[str]) Column names for annotation.</span>
+    <span class="n">TARGET_COLNAME</span><span class="p">:</span><span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;gProcessedSignal&quot;</span>                               <span class="c1">#: TARGET_COLNAME (str) Column name for expression data.</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print</span><span class="p">:</span><span class="n">callable</span> <span class="o">=</span> <span class="n">verbose2print</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
@@ -652,7 +655,8 @@
 <span class="sd">            &gt;&gt;&gt; filelists[0].name</span>
 <span class="sd">            &#39;US91503671_253949442637_S01_GE1_105_Dec08_1_1.txt&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">path</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*.txt&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">FileName</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">FileName</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">))</span></div>
+        <span class="n">fnLists</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">samples</span><span class="o">.</span><span class="n">FileName</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">path</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;**/*.txt&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">fnLists</span><span class="p">],</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">fnLists</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">))</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">filePaths</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Path</span><span class="p">]:</span>
