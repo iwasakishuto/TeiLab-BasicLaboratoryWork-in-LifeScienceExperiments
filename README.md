@@ -3,6 +3,13 @@
 シークエンシング、生化学反応シミュレーション、および遺伝子発現プロファイリング等の生物情報科学的実験を行う。本実習は、生物化学科と合同で実施する。
 
 ![程研究室](https://camo.githubusercontent.com/207bfad0a9138764bcfb51e04353f209de425aaf201648b706936e255b749dd6/687474703a2f2f75692d7465692e726e61692e6a702f6173736574732f696d616765732f746f702d3230303830372e6a7067)
+[![GitHub version](https://badge.fury.io/gh/iwasakishuto%2FTeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.svg)](https://github.com/iwasakishuto/Translation-Gummy)
+[![Install This Package](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/workflows/Install%20This%20Package/badge.svg)](https://github.com/iwasakishuto/Translation-Gummy/blob/master/.github/workflows/execute_python_package.yml)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/LICENSE)
+[![実習wiki](https://img.shields.io/badge/website-wiki-9ecca4)](https://elb.translation-gummy.com/)
+[![程研HP](https://img.shields.io/badge/website-HP-9ecca4)](https://elb.translation-gummy.com/)
+[![Documentation](https://img.shields.io/badge/Documentation-portfolio-1f441e?style=flat-radius)](https://iwasakishuto.github.io/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/index.html)
+[![twitter badge](https://img.shields.io/badge/twitter-Ask%20Author-1da1f2?style=flat-radius&logo=twitter)](https://www.twitter.com/messages/compose?recipient_id=1042783905697288193&text=2021年度の生命科学基礎実験を受講しているものですが、)
 
 ## 講義基本情報
 
