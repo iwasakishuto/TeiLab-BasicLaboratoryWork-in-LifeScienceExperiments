@@ -14,3 +14,9 @@ __principal_investigator__ = "✨ 👩‍🔬 ✨"   #
 # __labcolor__ = "⚫"                    # 
 __labcolor__               = "⚪"        #
 # ====================================== #
+
+from . import datasets
+from . import normalizations
+from . import question
+from . import plot
+from . import utils

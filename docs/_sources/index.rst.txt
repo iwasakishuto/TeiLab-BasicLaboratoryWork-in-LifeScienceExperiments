@@ -11,6 +11,9 @@ Welcome to UiTei-Lab!!
    :alt: Members-in-UiTei-Laboratory
    :target: http://ui-tei.rnai.jp/
 
+|GitHub version| |Install This Package| |license| |実習wiki| |程研HP| |Documentation| |twitter badge|
+
+
 *************************************************
 Basic Laboratory Work in Life Science Experiments
 *************************************************
@@ -52,3 +55,18 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+.. |GitHub version| image:: https://badge.fury.io/gh/iwasakishuto%2FTeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.svg
+   :target: https://github.com/iwasakishuto/Translation-Gummy
+.. |Install This Package| image:: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/workflows/Install%20This%20Package/badge.svg
+   :target: https://github.com/iwasakishuto/Translation-Gummy/blob/master/.github/workflows/execute_python_package.yml
+.. |license| image:: https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000
+   :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/LICENSE
+.. |実習wiki| image:: https://img.shields.io/badge/website-wiki-9ecca4
+   :target: http://ui-tei.rnai.jp/microarray/doku.php?id=2021
+.. |程研HP| image:: https://img.shields.io/badge/website-HP-9ecca4
+   :target: http://ui-tei.rnai.jp/
+.. |Documentation| image:: https://img.shields.io/badge/Documentation-portfolio-1f441e?style=flat-radius
+   :target: https://iwasakishuto.github.io/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/index.html
+.. |twitter badge| image:: https://img.shields.io/badge/twitter-Ask%20Author-1da1f2?style=flat-radius&logo=twitter
+   :target: https://www.twitter.com/messages/compose?recipient_id=1042783905697288193&text=2021年度の生命科学基礎実験を受講しているものですが、

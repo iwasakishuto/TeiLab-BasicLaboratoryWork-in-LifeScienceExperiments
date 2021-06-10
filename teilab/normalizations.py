@@ -164,7 +164,7 @@ def quantile(data:NDArray[(Any,Any),Number]) -> NDArray[(Any,Any),Number]:
 
     Examples:
         >>> import matplotlib.pyplot as plt
-        >>> from teilab.normalizations import percentile
+        >>> from teilab.normalizations import quantile
         >>> from teilab.plot.matplotlib import densityplot
         >>> n_samples, n_features = (4, 1000)
         >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features), ) + 3.5

@@ -118,7 +118,7 @@ def verbose2print(verbose:bool=True) -> callable:
         >>> print_non_verbose = verbose2print(verbose=False)
         >>> print_verbose("Hello, world.")
         Hello, world.
-        >>> print_non_verbose = verbose2print("Hello, world.")    
+        >>> print_non_verbose("Hello, world.")    
     """
     if verbose:
         return print
