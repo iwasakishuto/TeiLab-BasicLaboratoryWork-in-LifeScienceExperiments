@@ -259,7 +259,7 @@ class Samples():
 
     @property
     def groups(self):
-        return [[i,gn,self._group_names[gn],fn] for i,(gn,fn) in enumerate(zip(self._group_numbers,self.FileName))]
+        return [[i,cnd,gn,self._group_names[gn],fn] for i,(gn,fn,cnd) in enumerate(zip(self._group_numbers,self.FileName, self.Condition))]
 
     def show_groups(self, tablefmt:str="simple") -> None:
         """Show groups neatly.
@@ -280,7 +280,7 @@ class Samples():
                11     1  US91503671_253949442637_S01_GE1_105    US91503671_253949442637_S01_GE1_105_Dec08_1_4.txt
                12     1  US91503671_253949442637_S01_GE1_105    US91503671_253949442637_S01_GE1_105_Dec08_2_2.txt
         """
-        print(tabulate(tabular_data=self.groups, tablefmt=tablefmt, headers=["idx","gn","GroupName","FileName"]))
+        print(tabulate(tabular_data=self.groups, tablefmt=tablefmt, headers=["idx","Condition","gn","GroupName","FileName"]))
 
     def get_group_numbers(self, group_no:Optional[int]=None, group_name:Optional[str]=None) -> List[int]:
         """Get the specified group index List.
