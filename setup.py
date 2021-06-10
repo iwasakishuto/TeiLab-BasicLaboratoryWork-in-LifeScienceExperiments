@@ -9,19 +9,19 @@ here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, "README.md"), encoding="utf-8") as f:
     LONG_DESCRIPTION = f.read()
 # Requirements.txt → install_requires (for Poetry)
-INSTALL_REQUIRES = []
-with open("requirements.txt", mode="r") as f:
-    valid_line = ""
-    for line in f:
-        if line.endswith("\\\n"):
-            valid_line += line.rstrip("\\\n")
-        else:
-            valid_line += line.rstrip("\\\n")
-            INSTALL_REQUIRES.append(valid_line)
-            valid_line = ""
-#     if len(valid_line)>0: INSTALL_REQUIRES.append(valid_line)
+# INSTALL_REQUIRES = []
 # with open("requirements.txt", mode="r") as f:
-#     INSTALL_REQUIRES = [line.rstrip("\n") for line in f.readlines()]
+#     valid_line = ""
+#     for line in f:
+#         if line.endswith("\\\n"):
+#             valid_line += line.rstrip("\\\n")
+#         else:
+#             valid_line += line.rstrip("\\\n")
+#             INSTALL_REQUIRES.append(valid_line)
+#             valid_line = ""
+#     if len(valid_line)>0: INSTALL_REQUIRES.append(valid_line)
+with open("requirements.txt", mode="r") as f:
+    INSTALL_REQUIRES = [line.rstrip("\n") for line in f.readlines()]
 
 def setup_package():
     metadata = dict(

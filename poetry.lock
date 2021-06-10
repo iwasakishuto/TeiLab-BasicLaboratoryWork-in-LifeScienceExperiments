@@ -216,6 +216,18 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "install-requires"
+version = "0.3.0"
+description = "Convert requirements between formats"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.extras]
+pipfile = ["requirementslib (<=1.0.11)"]
+poetry = ["poetry-setup"]
+
+[[package]]
 name = "ipykernel"
 version = "5.5.5"
 description = "IPython Kernel for Jupyter"
@@ -1073,7 +1085,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "e166c54812465576ee9a45c061cdc81e4b0fb176605233d8dbb9834a64296f01"
+content-hash = "383c57d010b1986e207d13a5b1e50e111675b2aefd58487fd280956ebc8a1e20"
 
 [metadata.files]
 alabaster = [
@@ -1231,6 +1243,9 @@ imagesize = [
 iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
+]
+install-requires = [
+    {file = "install-requires-0.3.0.tar.gz", hash = "sha256:d6229486e085a330041d3cc6f47eeb8d2fd0c255cf81a4b899b287c306deb717"},
 ]
 ipykernel = [
     {file = "ipykernel-5.5.5-py3-none-any.whl", hash = "sha256:29eee66548ee7c2edb7941de60c0ccf0a7a8dd957341db0a49c5e8e6a0fcb712"},
