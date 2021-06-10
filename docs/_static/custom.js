@@ -37,7 +37,7 @@ const initializeParticles = function(){
   Particles.init({
     selector: '.particle-background',
     color: ["#cee6b4", "#1f441e"],
-    maxParticles: 300,
+    maxParticles: 0,
     connectParticles: true,
     sizeVariations: 5,
     responsive: [

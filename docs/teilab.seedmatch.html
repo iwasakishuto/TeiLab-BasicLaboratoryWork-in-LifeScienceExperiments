@@ -5,14 +5,13 @@
 <head>
   <meta charset="utf-8" />
   
-  <meta property="og:title" content="teilab.plot package" />
+  <meta property="og:title" content="teilab.seedmatch module" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="teilab.plot.html" />
-  <meta property="og:description" content="Submodules: teilab.plot.matplotlib module, teilab.plot.plotly module. Module contents:" />
+  <meta property="og:url" content="teilab.seedmatch.html" />
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>teilab.plot package &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
+  <title>teilab.seedmatch module &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
   
 
   
@@ -55,8 +54,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="teilab.plot.matplotlib module" href="teilab.plot.matplotlib.html" />
-    <link rel="prev" title="teilab package" href="teilab.html" /> 
+    <link rel="prev" title="teilab.question module" href="teilab.question.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -134,16 +132,14 @@
             
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="teilab.html">teilab package</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="teilab.html#subpackages">Subpackages</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">teilab.plot package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-teilab.plot">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="teilab.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="teilab.datasets.html">teilab.datasets module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.normalizations.html">teilab.normalizations module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.question.html">teilab.question module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">teilab.seedmatch module</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="teilab.utils.html">teilab.utils package</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="teilab.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="teilab.html#module-teilab">Module contents</a></li>
 </ul>
 </li>
@@ -200,13 +196,13 @@
         
           <li><a href="teilab.html">teilab package</a> &raquo;</li>
         
-      <li>teilab.plot package</li>
+      <li>teilab.seedmatch module</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/teilab.plot.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/teilab.seedmatch.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -219,20 +215,47 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="teilab-plot-package">
-<h1>teilab.plot package<a class="headerlink" href="#teilab-plot-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="teilab.plot.matplotlib.html">teilab.plot.matplotlib module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="teilab.plot.plotly.html">teilab.plot.plotly module</a></li>
-</ul>
+  <div class="section" id="module-teilab.seedmatch">
+<span id="teilab-seedmatch-module"></span><h1>teilab.seedmatch module<a class="headerlink" href="#module-teilab.seedmatch" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="teilab.seedmatch.get_matched_mRNAs">
+<span class="sig-prename descclassname"><span class="pre">teilab.seedmatch.</span></span><span class="sig-name descname"><span class="pre">get_matched_mRNAs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seedseq</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="reference internal" href="_modules/teilab/seedmatch.html#get_matched_mRNAs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.seedmatch.get_matched_mRNAs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of mRNAs with <code class="docutils literal notranslate"><span class="pre">seedseq</span></code> in 3’UTR</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seedseq</strong> (<em>str</em>) – A query sequence.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A data frame with a column named <code class="docutils literal notranslate"><span class="pre">&quot;SystematicName&quot;</span></code> meaning Accession numbers for each mRNA and a column named <code class="docutils literal notranslate"><span class="pre">&quot;NumHits&quot;</span></code> meaning how many <code class="docutils literal notranslate"><span class="pre">seedseq</span></code> sequences are in its 3’UTR</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.seedmatch</span> <span class="kn">import</span> <span class="n">get_matched_mRNAs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_matched_mRNAs</span> <span class="o">=</span> <span class="n">get_matched_mRNAs</span><span class="p">(</span><span class="n">seedseq</span><span class="o">=</span><span class="s2">&quot;gagttca&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">df_matched_mRNAs</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">())</span>
+<span class="go">|      | SystematicName   |   NumHits |</span>
+<span class="go">|-----:|:-----------------|----------:|</span>
+<span class="go">|    0 | NM_001004713     |         1 |</span>
+<span class="go">|    1 | NM_173860        |         1 |</span>
+<span class="go">|    2 | NM_001005493     |         1 |</span>
+<span class="go">|    : |     :            |         : |</span>
+<span class="go">| 3643 | NM_015139        |         1 |</span>
+<span class="go">| 3644 | NM_015463        |         1 |</span>
+<span class="go">| 3645 | NM_007189        |         1 |</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">now_str</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now_str</span><span class="p">()</span>
+<span class="go">&#39;2021-06-10@23.36.12&#39;</span>
+</pre></div>
 </div>
+<p>You can also get the data with the command like <code class="docutils literal notranslate"><span class="pre">curl</span></code> .</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ curl -d <span class="s2">&quot;seedseq=gagttca&quot;</span> &lt;SEEDMATCH_URL&gt;
+</pre></div>
 </div>
-<div class="section" id="module-teilab.plot">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-teilab.plot" title="Permalink to this headline">¶</a></h2>
-</div>
+</dd></dl>
+
 </div>
 
 
@@ -241,8 +264,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="teilab.plot.matplotlib.html" class="btn btn-neutral float-right" title="teilab.plot.matplotlib module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="teilab.html" class="btn btn-neutral float-left" title="teilab package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="teilab.question.html" class="btn btn-neutral float-left" title="teilab.question module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

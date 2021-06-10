@@ -1,0 +1,7 @@
+teilab.seedmatch module
+=======================
+
+.. automodule:: teilab.seedmatch
+   :members:
+   :undoc-members:
+   :show-inheritance:

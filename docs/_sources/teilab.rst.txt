@@ -19,6 +19,7 @@ Submodules
    teilab.datasets
    teilab.normalizations
    teilab.question
+   teilab.seedmatch
 
 Module contents
 ---------------
