@@ -10,6 +10,7 @@ from plotly.graph_objs import Figure
 from matplotlib.colors import Colormap
 from typing import Any,Dict,List,Tuple,Optional,Union
 from nptyping import NDArray
+from pandas.core.series import Series
 
 from ..utils.plot_utils import get_colorList
 
@@ -55,7 +56,7 @@ def density_plot(data:NDArray[(Any,Any),Number],
         >>> fig.show()
     """
     fig = fig or make_subplots(rows=1, cols=1)
-    if data.ndim==1: data = data.reshape(-1,1)
+    if data.ndim==1: data = data.reshape(1,-1)
     n_samples, n_features = data.shape
     if len(labels)!=n_samples: labels = [f"No.{i}" for i,_ in enumerate(data)]
     if len(colors)!=n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="plotly")
@@ -65,7 +66,7 @@ def density_plot(data:NDArray[(Any,Any),Number],
     fig = update_layout(fig, row=row, col=col, title=title, **layoutkwargs, **kwargs)
     return fig
 
-def cumulative_density_plot(data:NDArray[(Any,Any),Number],
+def cumulative_density_plot(data:Union[NDArray[(Any,Any),Number],Series],
                             labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
                             title:str="Cumulative Density Distribution", ylabel="Frequency",
                             fig:Optional[Figure]=None, row:int=1, col:int=1, 
@@ -73,7 +74,7 @@ def cumulative_density_plot(data:NDArray[(Any,Any),Number],
     """Plot cumulative density dirstibutions.
 
     Args:
-        data (NDArray[(Any,Any),Number])               : Input data. Shape = ( ``n_samples``, ``n_features`` )
+        data (Union[NDArray[(Any,Any),Number],Series]) : Input data. Shape = ( ``n_samples``, ``n_features`` )
         labels (List[str], optional)                   : Labels for each sample. Defaults to ``[]``.
         colors (List[Any], optional)                   : Colors for each sample. Defaults to ``[]``.
         cmap (Optional[Union[str,Colormap]], optional) : A ``Colormap`` object or a color map name. Defaults to ``None``.
@@ -101,7 +102,8 @@ def cumulative_density_plot(data:NDArray[(Any,Any),Number],
         >>> fig.show()
     """
     fig = fig or make_subplots(rows=1, cols=1)
-    if data.ndim==1: data = data.reshape(-1,1)
+    if isinstance(data, Series): data = data.values
+    if data.ndim==1: data = data.reshape(1,-1)
     data = np.sort(a=data, axis=1)
     n_samples, n_features = data.shape
     if len(labels)!=n_samples: labels = [f"No.{i}" for i,_ in enumerate(data)]

@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta property="og:title" content="teilab.seedmatch module" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="teilab.seedmatch.html" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>teilab.seedmatch module &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/popup.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/custom.js"></script>
+        <script src="_static/particles.min.js"></script>
+        <script src="_static/popup.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="teilab.question module" href="teilab.question.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> UiTei-Lab's Course Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+  <ul class="utility-btns">
+    <li><a class="btn btn-icon btn-start" href="#" onclick="changeParticles(this);">Start Particles</a></li>
+    <li><a class="btn btn-icon btn-expand" href="#" onclick="changeStyle(this);">Expand</a></li>
+  </ul>
+  <div class="sidebarlogo">
+    <h4>Lab's information</h4>
+    <ul class="social">
+      
+      <li><a class="sc-book" href="http://ui-tei.rnai.jp/">
+        <i class="fa fa-book" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php?id=2021">
+        <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+    <h4>Author's Social link</h4>
+    <ul class="social">
+      
+      <li><a class="sc-twitter" href="https://twitter.com/cabernet_rock">
+        <i class="fa fa-twitter" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-github" href="https://github.com/iwasakishuto">
+        <i class="fa fa-github" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+  </div>
+  
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="teilab.html">teilab package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="teilab.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="teilab.datasets.html">teilab.datasets module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.normalizations.html">teilab.normalizations module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.question.html">teilab.question module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">teilab.seedmatch module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#module-teilab">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UiTei-Lab's Course Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<canvas class="particle-background"></canvas>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="teilab.html">teilab package</a> &raquo;</li>
+        
+      <li>teilab.seedmatch module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/teilab.seedmatch.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-teilab.seedmatch">
+<span id="teilab-seedmatch-module"></span><h1>teilab.seedmatch module<a class="headerlink" href="#module-teilab.seedmatch" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="teilab.seedmatch.get_matched_mRNAs">
+<span class="sig-prename descclassname"><span class="pre">teilab.seedmatch.</span></span><span class="sig-name descname"><span class="pre">get_matched_mRNAs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seedseq</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">pandas.core.frame.DataFrame</span><a class="reference internal" href="_modules/teilab/seedmatch.html#get_matched_mRNAs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.seedmatch.get_matched_mRNAs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a list of mRNAs with <code class="docutils literal notranslate"><span class="pre">seedseq</span></code> in 3’UTR</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>seedseq</strong> (<em>str</em>) – A query sequence.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A data frame with a column named <code class="docutils literal notranslate"><span class="pre">&quot;SystematicName&quot;</span></code> meaning Accession numbers for each mRNA and a column named <code class="docutils literal notranslate"><span class="pre">&quot;NumHits&quot;</span></code> meaning how many <code class="docutils literal notranslate"><span class="pre">seedseq</span></code> sequences are in its 3’UTR</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.seedmatch</span> <span class="kn">import</span> <span class="n">get_matched_mRNAs</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df_matched_mRNAs</span> <span class="o">=</span> <span class="n">get_matched_mRNAs</span><span class="p">(</span><span class="n">seedseq</span><span class="o">=</span><span class="s2">&quot;gagttca&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">df_matched_mRNAs</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">())</span>
+<span class="go">|      | SystematicName   |   NumHits |</span>
+<span class="go">|-----:|:-----------------|----------:|</span>
+<span class="go">|    0 | NM_001004713     |         1 |</span>
+<span class="go">|    1 | NM_173860        |         1 |</span>
+<span class="go">|    2 | NM_001005493     |         1 |</span>
+<span class="go">|    : |     :            |         : |</span>
+<span class="go">| 3643 | NM_015139        |         1 |</span>
+<span class="go">| 3644 | NM_015463        |         1 |</span>
+<span class="go">| 3645 | NM_007189        |         1 |</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">now_str</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now_str</span><span class="p">()</span>
+<span class="go">&#39;2021-06-10@23.36.12&#39;</span>
+</pre></div>
+</div>
+<p>You can also get the data with the command like <code class="docutils literal notranslate"><span class="pre">curl</span></code> .</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ curl -d <span class="s2">&quot;seedseq=gagttca&quot;</span> &lt;SEEDMATCH_URL&gt;
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="teilab.question.html" class="btn btn-neutral float-left" title="teilab.question module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, iwasakishuto.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+<style id="style-expand" disabled="true">
+  .wy-nav-content {
+    max-width: 100%!important;
+  }
+</style>
+<script>
+  document.getElementById("style-expand").disabled = true;
+</script>
+
+
+</body>
+</html>

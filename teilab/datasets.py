@@ -419,7 +419,6 @@ class TeiLabDataSets():
             $ curl -L <GAS_WEBAPP_URL> \\
                    -d password=<PASSWORD> \\
                    -H "Content-Type: application/x-www-form-urlencoded"
-
         """
         # Get the target data URL.
         path = ""
