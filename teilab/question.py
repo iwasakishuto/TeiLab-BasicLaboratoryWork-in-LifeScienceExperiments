@@ -4,6 +4,7 @@ import requests
 from typing import Optional
 
 from .utils._config import SLACK_WEBHOOK_URL
+from .utils._config import GAS_WEBAPP_URL
 
 def ask(text:str, 
         username:Optional[str]=None, 
@@ -11,7 +12,7 @@ def ask(text:str,
         fallback:Optional[str]=None, pretext:Optional[str]=None, 
         attachment_text:Optional[str]=None, color:str="good",
         fields_title:str="", fields_value:str="", fields_short:bool=True, 
-        webhook_url:str=SLACK_WEBHOOK_URL) -> requests.Response:
+        webhook_url:Optional[str]=None) -> requests.Response:
     """Send a question anonymously to Author's Slack using `Incoming Webhook <https://slack.com/help/articles/115005265063-Incoming-webhooks-for-Slack>`_
 
     Args:
@@ -35,6 +36,10 @@ def ask(text:str,
         >>> from teilab.utils import ask
         >>> ask(text="", username=":thinking_face:", icon_emoji=":thinking_face:")
     """
+    if webhook_url is None:
+        ret = requests.post(url=GAS_WEBAPP_URL, data={"password": "slackwebhook"})
+        webhook_url = ret.json()["dataURL"]
+
     fields = []
     if (len(fields_title)+len(fields_value))>0:
         fields.append({
