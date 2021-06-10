@@ -231,7 +231,6 @@ def median_polish(data:NDArray[(Any,Any),Number], labels:NDArray[(Any),Any], rto
         ith_data = data[:,labels==label]
         if len(ith_data)>1:
             ith_data_original = ith_data.copy()
-            print(ith_data.shape)
             while True:    
                 feature_median = np.median(ith_data, axis=0)
                 ith_data = ith_data - feature_median[None,:]
