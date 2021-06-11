@@ -56,10 +56,10 @@ def density_plot(data:NDArray[(Any,Any),Number],
         >>> from teilab.plot.matplotlib import density_plot
         >>> n_samples, n_features = (4, 1000)
         >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
-        >>> kwarges = [{"bins":100},{"bins":10},{"bins":"auto"}]
-        >>> nfigs = len(kwarges)
+        >>> kwargses = [{"bins":100},{"bins":10},{"bins":"auto"}]
+        >>> nfigs = len(kwargses)
         >>> fig, axes = subplots_create(ncols=nfigs, figsize=(int(6*nfigs),4), style="matplotlib")
-        >>> for ax,kwargs in zip(axes,kwarges):
+        >>> for ax,kwargs in zip(axes,kwargses):
         ...     _ = density_plot(data, ax=ax, title=dict2str(kwargs), **kwargs)
         >>> fig.show()
     """
@@ -151,10 +151,10 @@ def boxplot(data:NDArray[(Any,Any),Number],
         >>> from teilab.plot.matplotlib import boxplot
         >>> n_samples, n_features = (4, 1000)
         >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
-        >>> kwarges = [{"vert":True},{"vert":False}]
-        >>> nfigs = len(kwarges)
+        >>> kwargses = [{"vert":True},{"vert":False}]
+        >>> nfigs = len(kwargses)
         >>> fig, axes = subplots_create(ncols=nfigs, figsize=(int(6*nfigs),4), style="matplotlib")
-        >>> for ax,kwargs in zip(axes,kwarges):
+        >>> for ax,kwargs in zip(axes,kwargses):
         ...     _ = boxplot(data, title=dict2str(kwargs), ax=ax, **kwargs)
         >>> fig.show()
     """

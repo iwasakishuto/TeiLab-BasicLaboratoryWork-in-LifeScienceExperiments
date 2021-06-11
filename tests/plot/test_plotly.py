@@ -8,8 +8,8 @@ def test_density_plot(db):
     title = ", ".join([dict2str(kwargs) for kwargs in kwargses])
     nfigs = len(kwargses)
     fig = subplots_create(ncols=nfigs, style="plotly")
-    for i,kwargs in enumerate(kwargses, start=1):
-        _ = density_plot(data, fig=fig, title=title, col=i, legend=False, width=1000, height=400, **kwargs)
+    for col,kwargs in enumerate(kwargses, start=1):
+        _ = density_plot(data, fig=fig, title=title, col=col, legend=False, width=1000, height=400, **kwargs)
     # fig.show()
 
 def test_cumulative_density_plot(db):
@@ -19,16 +19,17 @@ def test_cumulative_density_plot(db):
     fig = cumulative_density_plot(data, fig=None, xlabel="value", width=800, height=400)
     # fig.show()
 
-# def test_boxplot(db):
-#     from teilab.utils import dict2str, subplots_create
-#     from teilab.plot.plotly import boxplot
-#     data = db.generate_normal_distributions(random_state=None, n_samples=4, n_features=1000)
-#     kwarges = [{"vert":True},{"vert":False}]
-#     nfigs = len(kwarges)
-#     fig, axes = subplots_create(ncols=nfigs, figsize=(int(6*nfigs),4), style="matplotlib")
-#     for ax,kwargs in zip(axes,kwarges):
-#         _ = boxplot(data, title=dict2str(kwargs), ax=ax, **kwargs)
-#     fig.show()
+def test_boxplot(db):
+    from teilab.utils import dict2str, subplots_create
+    from teilab.plot.plotly import boxplot
+    data = db.generate_normal_distributions(random_state=None, n_samples=4, n_features=1000)
+    kwargses = [{"vert":True},{"vert":False}]
+    title = ", ".join([dict2str(kwargs) for kwargs in kwargses])
+    nfigs = len(kwargses)
+    fig = subplots_create(ncols=nfigs, style="plotly")
+    for col,kwargs in enumerate(kwargses, start=1):
+        _ = boxplot(data, title=title, fig=fig, col=col, width=1000, height=400, **kwargs)
+    # fig.show()
 
 def test_XYplot(db):
     from teilab.plot.plotly import XYplot

@@ -197,11 +197,19 @@
             
   <h1>Source code for teilab.plot.plotly</h1><div class="highlight"><pre>
 <span></span><span class="c1">#coding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;A group of plot functions useful for analysis using matplotlib_. </span>
+
+<span class="sd">If you would like to make changes to the plot or draw other plots, please refer to the `official documentation &lt;https://plotly.com/&gt;`_.</span>
+
+<span class="sd">※ Compared to :doc:`teilab.plot.matplotlib`, you can see the difference between the two libraries. (matplotlib_, and plotly_)</span>
+
+<span class="sd">.. _matplotlib: https://github.com/matplotlib/matplotlib</span>
+<span class="sd">.. _plotly: https://github.com/plotly/plotly.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
 <span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
-<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
 
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
 <span class="kn">from</span> <span class="nn">plotly.graph_objs</span> <span class="kn">import</span> <span class="n">Figure</span>
@@ -210,7 +218,7 @@
 <span class="kn">from</span> <span class="nn">nptyping</span> <span class="kn">import</span> <span class="n">NDArray</span>
 <span class="kn">from</span> <span class="nn">pandas.core.series</span> <span class="kn">import</span> <span class="n">Series</span>
 
-<span class="kn">from</span> <span class="nn">..utils.plot_utils</span> <span class="kn">import</span> <span class="n">get_colorList</span>
+<span class="kn">from</span> <span class="nn">..utils.plot_utils</span> <span class="kn">import</span> <span class="n">get_colorList</span><span class="p">,</span> <span class="n">subplots_create</span>
 
 <div class="viewcode-block" id="density_plot"><a class="viewcode-back" href="../../../teilab.plot.plotly.html#teilab.plot.plotly.density_plot">[docs]</a><span class="k">def</span> <span class="nf">density_plot</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[(</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">),</span><span class="n">Number</span><span class="p">],</span>
                  <span class="n">labels</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="p">[],</span> <span class="n">colors</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span><span class="o">=</span><span class="p">[],</span> <span class="n">cmap</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Colormap</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
@@ -230,9 +238,9 @@
 <span class="sd">        fig (Optional[Figure], optional)               : An instance of Figure.</span>
 <span class="sd">        row (int, optional)                            : Row of subplots. Defaults to ``1``.</span>
 <span class="sd">        col (int, optional)                            : Column of subplots. Defaults to ``1``.</span>
-<span class="sd">        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Scatter``</span>
-<span class="sd">        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout &lt;teilab.plot.plotly.update_layout&gt;` .</span>
-
+<span class="sd">        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Scatter``. Defaults to ``{}``.</span>
+<span class="sd">        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout &lt;teilab.plot.plotly.update_layout&gt;`. Defaults to ``{}``.</span>
+<span class="sd">    </span>
 <span class="sd">    Returns:</span>
 <span class="sd">        Figure: An instance of ``Figure`` with density distributions.</span>
 <span class="sd">    </span>
@@ -240,7 +248,7 @@
 <span class="sd">        :include-source:</span>
 <span class="sd">        :iframe-height: 400px</span>
 
-<span class="sd">        &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.utils import dict2str, subplots_create</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.plot.plotly import density_plot</span>
 <span class="sd">        &gt;&gt;&gt; n_samples, n_features = (4, 1000)</span>
@@ -253,7 +261,7 @@
 <span class="sd">        ...     _ = density_plot(data, fig=fig, title=title, col=i, legend=False, width=1000, height=400, **kwargs)</span>
 <span class="sd">        &gt;&gt;&gt; fig.show()</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">fig</span> <span class="ow">or</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">fig</span> <span class="ow">or</span> <span class="n">subplots_create</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;plotly&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">!=</span><span class="n">n_samples</span><span class="p">:</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;No.</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span>
@@ -261,6 +269,57 @@
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">ith_data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
         <span class="n">hist</span><span class="p">,</span> <span class="n">bin_edges</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">ith_data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins</span><span class="p">,</span> <span class="nb">range</span><span class="o">=</span><span class="nb">range</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">bin_edges</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">y</span><span class="o">=</span><span class="n">hist</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;lines&quot;</span><span class="p">,</span> <span class="n">fillcolor</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;color&quot;</span><span class="p">:</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">]},</span> <span class="o">**</span><span class="n">plotkwargs</span><span class="p">),</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">update_layout</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="o">**</span><span class="n">layoutkwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span></div>
+
+<div class="viewcode-block" id="boxplot"><a class="viewcode-back" href="../../../teilab.plot.plotly.html#teilab.plot.plotly.boxplot">[docs]</a><span class="k">def</span> <span class="nf">boxplot</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[(</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">),</span><span class="n">Number</span><span class="p">],</span> 
+            <span class="n">labels</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="p">[],</span> <span class="n">colors</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span><span class="o">=</span><span class="p">[],</span> <span class="n">cmap</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Colormap</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+            <span class="n">vert</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">title</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;Box Plot&quot;</span><span class="p">,</span> <span class="n">fig</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Figure</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+            <span class="n">plotkwargs</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Any</span><span class="p">]</span><span class="o">=</span><span class="p">{},</span> <span class="n">layoutkwargs</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Any</span><span class="p">]</span><span class="o">=</span><span class="p">{},</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Figure</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Plot box plots.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data (NDArray[(Any,Any),Number])               : Input data. Shape = ( ``n_samples``, ``n_features`` )</span>
+<span class="sd">        labels (List[str], optional)                   : Labels for each sample. Defaults to ``[]``.</span>
+<span class="sd">        colors (List[Any], optional)                   : Colors for each sample. Defaults to ``[]``.</span>
+<span class="sd">        cmap (Optional[Union[str,Colormap]], optional) : A ``Colormap`` object or a color map name. Defaults to ``None``.</span>
+<span class="sd">        vert (bool, optional)                          : Whether to draw vertical boxes or horizontal boxes. Defaults to ``True`` .</span>
+<span class="sd">        title (str, optional)                          : Figure Title. Defaults to ``&quot;Box Plot&quot;``.</span>
+<span class="sd">        fig (Optional[Figure], optional)               : An instance of Figure.</span>
+<span class="sd">        row (int, optional)                            : Row of subplots. Defaults to ``1``.</span>
+<span class="sd">        col (int, optional)                            : Column of subplots. Defaults to ``1``.</span>
+<span class="sd">        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Box``. Defaults to ``{}``.</span>
+<span class="sd">        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout &lt;teilab.plot.plotly.update_layout&gt;`. Defaults to ``{}``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Figure: An instance of ``Figure`` with box plot</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+<span class="sd">        :iframe-height: 400px</span>
+
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import dict2str, subplots_create</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.plot.plotly import boxplot</span>
+<span class="sd">        &gt;&gt;&gt; n_samples, n_features = (4, 1000)</span>
+<span class="sd">        &gt;&gt;&gt; data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))</span>
+<span class="sd">        &gt;&gt;&gt; kwargses = [{&quot;vert&quot;:True},{&quot;vert&quot;:False}]</span>
+<span class="sd">        &gt;&gt;&gt; title = &quot;, &quot;.join([dict2str(kwargs) for kwargs in kwargses])</span>
+<span class="sd">        &gt;&gt;&gt; nfigs = len(kwargses)</span>
+<span class="sd">        &gt;&gt;&gt; fig = subplots_create(ncols=nfigs, style=&quot;plotly&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; for col,kwargs in enumerate(kwargses, start=1):</span>
+<span class="sd">        ...     _ = boxplot(data, title=title, fig=fig, col=col, width=1000, height=400, **kwargs)</span>
+<span class="sd">        &gt;&gt;&gt; fig.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">fig</span> <span class="ow">or</span> <span class="n">subplots_create</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;plotly&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_samples</span><span class="p">:</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;No.</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n_samples</span><span class="p">:</span> <span class="n">colors</span> <span class="o">=</span> <span class="n">get_colorList</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;plotly&quot;</span><span class="p">)</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="s2">&quot;x&quot;</span> <span class="k">if</span> <span class="n">vert</span> <span class="k">else</span> <span class="s2">&quot;y&quot;</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">ith_data</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">go</span><span class="o">.</span><span class="n">Box</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">ith_data</span><span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="n">labels</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">marker_color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="o">**</span><span class="n">plotkwargs</span><span class="p">),</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">update_layout</span><span class="p">(</span><span class="n">fig</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="o">**</span><span class="n">layoutkwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">fig</span></div>
 
@@ -281,17 +340,17 @@
 <span class="sd">        fig (Optional[Figure], optional)               : An instance of Figure.</span>
 <span class="sd">        row (int, optional)                            : Row of subplots. Defaults to ``1``.</span>
 <span class="sd">        col (int, optional)                            : Column of subplots. Defaults to ``1``.</span>
-<span class="sd">        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Scatter``</span>
-<span class="sd">        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout &lt;teilab.plot.plotly.update_layout&gt;` .</span>
+<span class="sd">        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Scatter``. Defaults to ``{}``.</span>
+<span class="sd">        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout &lt;teilab.plot.plotly.update_layout&gt;`. Defaults to ``{}``.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Figure: An instance of ``Figure`` with density distributions.</span>
+<span class="sd">        Figure: An instance of ``Figure`` with cumulative density distributions.</span>
 <span class="sd">    </span>
 <span class="sd">    .. plotly::</span>
 <span class="sd">        :include-source:</span>
 <span class="sd">        :iframe-height: 400px</span>
 
-<span class="sd">        &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.utils import dict2str, subplots_create</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.plot.plotly import cumulative_density_plot</span>
 <span class="sd">        &gt;&gt;&gt; n_samples, n_features = (4, 1000)</span>
@@ -299,7 +358,7 @@
 <span class="sd">        &gt;&gt;&gt; fig = cumulative_density_plot(data, fig=None, xlabel=&quot;value&quot;, width=800, height=400)</span>
 <span class="sd">        &gt;&gt;&gt; fig.show()</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">fig</span> <span class="ow">or</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">fig</span> <span class="ow">or</span> <span class="n">subplots_create</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;plotly&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Series</span><span class="p">):</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span>
     <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span> <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -326,6 +385,7 @@
 <span class="sd">        df (pd.DataFrame)                          : DataFrame</span>
 <span class="sd">        x (str)                                    : The column name for sample ``X``.</span>
 <span class="sd">        y (str)                                    : The column name for sample ``Y``.</span>
+<span class="sd">        logarithmic (bool)                         : Whether to log the values of ``df[x]`` and ``df[y]`` </span>
 <span class="sd">        color (Optional[str], optional)            : The column name in ``df`` to assign color to marks. Defaults to ``None``.</span>
 <span class="sd">        symbol (Optional[str], optional)           : The column name in ``df`` to assign symbols to marks. Defaults to ``None``.</span>
 <span class="sd">        size (Optional[str], optional)             : The column name in ``df`` to assign mark sizes. Defaults to ``None``.</span>
@@ -334,8 +394,8 @@
 <span class="sd">        fig (Optional[Figure], optional)           : An instance of Figure.</span>
 <span class="sd">        row (int, optional)                        : Row of subplots. Defaults to ``1``.</span>
 <span class="sd">        col (int, optional)                        : Column of subplots. Defaults to ``1``.</span>
-<span class="sd">        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``</span>
-<span class="sd">        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout &lt;teilab.plot.plotly.update_layout&gt;` .</span>
+<span class="sd">        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``. Defaults to ``{}``.</span>
+<span class="sd">        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout &lt;teilab.plot.plotly.update_layout&gt;`. Defaults to ``{}``.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Figure: An instance of ``Figure`` with XY plot.</span>
@@ -361,7 +421,7 @@
 <span class="sd">        &gt;&gt;&gt; fig = XYplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], hover_name=&quot;SystematicName&quot;, height=600, width=600)</span>
 <span class="sd">        &gt;&gt;&gt; fig.show()</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">fig</span> <span class="ow">or</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">fig</span> <span class="ow">or</span> <span class="n">subplots_create</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;plotly&quot;</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">logarithmic</span><span class="p">:</span>
         <span class="n">df</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -384,8 +444,8 @@
            <span class="n">plotkwargs</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Any</span><span class="p">]</span><span class="o">=</span><span class="p">{},</span> <span class="n">layoutkwargs</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Any</span><span class="p">]</span><span class="o">=</span><span class="p">{},</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Figure</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;MA plot.</span>
 
-<span class="sd">    - x-axis : :math:`\\log_{10}{\\left(\\text{gProcessedSignal}_X\\times\\text{gProcessedSignal}_Y\\right)}`</span>
-<span class="sd">    - y-axis : :math:`\\log_{2}{\\left(\\text{gProcessedSignal}_Y / \\text{gProcessedSignal}_X\\right)}`</span>
+<span class="sd">    - x-axis (Average) : :math:`\\log_{10}{\\left(\\text{gProcessedSignal}_X\\times\\text{gProcessedSignal}_Y\\right)}`</span>
+<span class="sd">    - y-axis (Minus)   : :math:`\\log_{2}{\\left(\\text{gProcessedSignal}_Y / \\text{gProcessedSignal}_X\\right)}`</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        df (pd.DataFrame)                          : DataFrame</span>
@@ -399,8 +459,8 @@
 <span class="sd">        fig (Optional[Figure], optional)           : An instance of Figure.</span>
 <span class="sd">        row (int, optional)                        : Row of subplots. Defaults to ``1``.</span>
 <span class="sd">        col (int, optional)                        : Column of subplots. Defaults to ``1``.</span>
-<span class="sd">        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``</span>
-<span class="sd">        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout &lt;teilab.plot.plotly.update_layout&gt;` .</span>
+<span class="sd">        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``. Defaults to ``{}``.</span>
+<span class="sd">        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout &lt;teilab.plot.plotly.update_layout&gt;`. Defaults to ``{}``.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Figure: An instance of ``Figure`` with MA plot.</span>
@@ -409,6 +469,7 @@
 <span class="sd">        :include-source:</span>
 <span class="sd">        :iframe-height: 600px</span>
 
+<span class="sd">        &gt;&gt;&gt; import pandas as pd</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.plot.plotly import MAplot</span>
 <span class="sd">        &gt;&gt;&gt; datasets = TeiLabDataSets(verbose=False)</span>
@@ -426,12 +487,14 @@
 <span class="sd">        &gt;&gt;&gt; fig = MAplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], hover_name=&quot;SystematicName&quot;, height=600, width=600)</span>
 <span class="sd">        &gt;&gt;&gt; fig.show()</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fig</span> <span class="o">=</span> <span class="n">fig</span> <span class="ow">or</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">fig</span> <span class="ow">or</span> <span class="n">subplots_create</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;plotly&quot;</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="n">x_axis_colname</span> <span class="o">=</span> <span class="s2">&quot;x-axis&quot;</span>
     <span class="n">y_axis_colname</span> <span class="o">=</span> <span class="s2">&quot;y-axis&quot;</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">x_axis_colname</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">*</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">])</span>
-    <span class="n">df</span><span class="p">[</span><span class="n">y_axis_colname</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">/</span><span class="n">df</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">*</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">])</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">y</span><span class="p">]</span><span class="o">/</span><span class="n">df</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">x_axis_colname</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">y_axis_colname</span><span class="p">]</span> <span class="o">=</span> <span class="n">Y</span>
     <span class="n">fig_</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data_frame</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">x_axis_colname</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y_axis_colname</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">symbol</span><span class="o">=</span><span class="n">symbol</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">hover_name</span><span class="o">=</span><span class="n">hover_name</span><span class="p">,</span> <span class="n">hover_data</span><span class="o">=</span><span class="n">hover_data</span><span class="p">,</span> <span class="o">**</span><span class="n">plotkwargs</span><span class="p">)</span>
     <span class="n">fig_</span><span class="o">.</span><span class="n">for_each_trace</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="k">lambda</span> <span class="n">trace</span><span class="p">:</span><span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">trace</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">))</span>
     <span class="n">fig</span> <span class="o">=</span> <span class="n">update_layout</span><span class="p">(</span>
@@ -477,10 +540,10 @@
 <span class="sd">        :include-source:</span>
 <span class="sd">        :iframe-height: 400px</span>
 
-<span class="sd">        &gt;&gt;&gt; import  plotly.graph_objects as go</span>
-<span class="sd">        &gt;&gt;&gt; from plotly.subplots import make_subplots</span>
+<span class="sd">        &gt;&gt;&gt; import plotly.graph_objects as go</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import subplots_create</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.plot.plotly import update_layout</span>
-<span class="sd">        &gt;&gt;&gt; fig = make_subplots(rows=1, cols=2)</span>
+<span class="sd">        &gt;&gt;&gt; fig = subplots_create(nrows=1, ncols=2, style=&quot;plotly&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; for c in range(1,3): fig.add_trace(go.Scatter(x=[1,2,3],y=[4,5,6]),row=1,col=c)</span>
 <span class="sd">        &gt;&gt;&gt; fig = update_layout(fig=fig, title=&quot;Sample&quot;, ylim=(4.5,5.5), col=2, height=400)</span>
 <span class="sd">        &gt;&gt;&gt; fig.show()</span>

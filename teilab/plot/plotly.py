@@ -74,6 +74,57 @@ def density_plot(data:NDArray[(Any,Any),Number],
     fig = update_layout(fig, row=row, col=col, title=title, **layoutkwargs, **kwargs)
     return fig
 
+def boxplot(data:NDArray[(Any,Any),Number], 
+            labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None, 
+            vert:bool=True,
+            title:str="Box Plot", fig:Optional[Figure]=None, row:int=1, col:int=1, 
+            plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Figure:
+    """Plot box plots.
+
+    Args:
+        data (NDArray[(Any,Any),Number])               : Input data. Shape = ( ``n_samples``, ``n_features`` )
+        labels (List[str], optional)                   : Labels for each sample. Defaults to ``[]``.
+        colors (List[Any], optional)                   : Colors for each sample. Defaults to ``[]``.
+        cmap (Optional[Union[str,Colormap]], optional) : A ``Colormap`` object or a color map name. Defaults to ``None``.
+        vert (bool, optional)                          : Whether to draw vertical boxes or horizontal boxes. Defaults to ``True`` .
+        title (str, optional)                          : Figure Title. Defaults to ``"Box Plot"``.
+        fig (Optional[Figure], optional)               : An instance of Figure.
+        row (int, optional)                            : Row of subplots. Defaults to ``1``.
+        col (int, optional)                            : Column of subplots. Defaults to ``1``.
+        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Box``. Defaults to ``{}``.
+        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>`. Defaults to ``{}``.
+
+    Returns:
+        Figure: An instance of ``Figure`` with box plot
+
+    .. plot::
+        :include-source:
+        :iframe-height: 400px
+
+        >>> import numpy as np
+        >>> from teilab.utils import dict2str, subplots_create
+        >>> from teilab.plot.plotly import boxplot
+        >>> n_samples, n_features = (4, 1000)
+        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
+        >>> kwargses = [{"vert":True},{"vert":False}]
+        >>> title = ", ".join([dict2str(kwargs) for kwargs in kwargses])
+        >>> nfigs = len(kwargses)
+        >>> fig = subplots_create(ncols=nfigs, style="plotly")
+        >>> for col,kwargs in enumerate(kwargses, start=1):
+        ...     _ = boxplot(data, title=title, fig=fig, col=col, width=1000, height=400, **kwargs)
+        >>> fig.show()
+    """
+    fig = fig or subplots_create(nrows=1, ncols=1, style="plotly")
+    if data.ndim==1: data = data.reshape(1,-1)
+    n_samples, n_features = data.shape
+    if len(labels) != n_samples: labels = [f"No.{i}" for i in range(n_samples)]
+    if len(colors) != n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="plotly")
+    key = "x" if vert else "y"
+    for i,ith_data in enumerate(data):
+        fig.add_trace(trace=go.Box(**{key: ith_data}, name=labels[i], marker_color=colors[i], **plotkwargs), row=row, col=col)
+    fig = update_layout(fig, row=row, col=col, title=title, **layoutkwargs, **kwargs)
+    return fig
+
 def cumulative_density_plot(data:Union[NDArray[(Any,Any),Number],Series],
                             labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
                             title:str="Cumulative Density Distribution", ylabel="Frequency",
