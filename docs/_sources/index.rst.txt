@@ -56,17 +56,6 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-Slack Webhook URL
------------------
-
-現在の ``webhook_url`` は ``https://hooks.slack.com/services/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`` です。これを用いて、以下のコードを実行してください。
-
-.. code:: sh
-
-   >>> from teilab.utils import ask
-   >>> ask(text="", username="username", icon_emoji=":thinking_face:", webhook_url="<webhook_url>")
-
-
 .. |GitHub version| image:: https://badge.fury.io/gh/iwasakishuto%2FTeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.svg
    :target: https://github.com/iwasakishuto/Translation-Gummy
 .. |Install This Package| image:: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/workflows/Install%20This%20Package/badge.svg
