@@ -1,5 +1,5 @@
 #coding: utf-8
-"""A group of plot functions useful for analysis using matplotlib_. 
+"""A group of plot functions useful for analysis using plotly_. 
 
 If you would like to 
 
