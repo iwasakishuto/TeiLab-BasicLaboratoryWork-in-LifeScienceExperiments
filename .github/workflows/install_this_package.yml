@@ -2,9 +2,9 @@ name: Install This Package
 
 on:
   push:
-    branches: [ master ]
+    branches: [ develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
@@ -53,4 +53,4 @@ jobs:
       timeout-minutes: 30
       run: |
         pip install pytest-github-actions-annotate-failures
-        pytest
+        pytest --dataset-passwords ${{ secrets.UITEI_DATASETS_PASSWORD1 }} ${{ secrets.UITEI_DATASETS_PASSWORD2 }}
