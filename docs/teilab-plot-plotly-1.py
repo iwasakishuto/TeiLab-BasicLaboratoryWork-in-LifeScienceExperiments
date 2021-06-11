@@ -2,7 +2,7 @@ import numpy as np
 from teilab.utils import dict2str, subplots_create
 from teilab.plot.plotly import density_plot
 n_samples, n_features = (4, 1000)
-data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
+data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples, n_features))
 kwargses = [{"bins":100},{"bins":10},{"bins":"auto"}]
 title = ", ".join([dict2str(kwargs) for kwargs in kwargses])
 nfigs = len(kwargses)

@@ -397,6 +397,7 @@
 <span class="sd">        :include-source:</span>
 <span class="sd">        :class: popup-img</span>
 
+<span class="sd">        &gt;&gt;&gt; import pandas as pd</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.plot.matplotlib import XYplot</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.utils import subplots_create</span>
@@ -459,6 +460,7 @@
 <span class="sd">        :include-source:</span>
 <span class="sd">        :class: popup-img</span>
 
+<span class="sd">        &gt;&gt;&gt; import pandas as pd</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.datasets import TeiLabDataSets</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.plot.matplotlib import MAplot</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.utils import subplots_create</span>
@@ -517,7 +519,7 @@
 
 <span class="sd">        &gt;&gt;&gt; from teilab.utils import subplots_create</span>
 <span class="sd">        &gt;&gt;&gt; from teilab.plot.matplotlib import update_layout</span>
-<span class="sd">        &gt;&gt;&gt; fig, axes = subplots_create(ncols=2, style=&quot;matplotlib&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; fig, axes = subplots_create(ncols=2, style=&quot;matplotlib&quot;, figsize=(8,4))</span>
 <span class="sd">        &gt;&gt;&gt; for ax in axes: ax.scatter(1,1,label=&quot;center&quot;)</span>
 <span class="sd">        &gt;&gt;&gt; _ = update_layout(ax=axes[1], xlim=(0,2), ylim=(0,2), legend=True)</span>
 <span class="sd">        &gt;&gt;&gt; fig.show()</span>

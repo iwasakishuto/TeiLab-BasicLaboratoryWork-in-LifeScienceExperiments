@@ -259,7 +259,7 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">dict2str</span><span class="p">,</span> <span class="n">subplots_create</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.plot.plotly</span> <span class="kn">import</span> <span class="n">density_plot</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span><span class="n">n_features</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">kwargses</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;bins&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">},{</span><span class="s2">&quot;bins&quot;</span><span class="p">:</span><span class="mi">10</span><span class="p">},{</span><span class="s2">&quot;bins&quot;</span><span class="p">:</span><span class="s2">&quot;auto&quot;</span><span class="p">}]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">dict2str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">kwargs</span> <span class="ow">in</span> <span class="n">kwargses</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nfigs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargses</span><span class="p">)</span>
@@ -300,7 +300,23 @@
 <dd class="field-odd"><p>Figure</p>
 </dd>
 </dl>
-</dd></dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">dict2str</span><span class="p">,</span> <span class="n">subplots_create</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.plot.plotly</span> <span class="kn">import</span> <span class="n">boxplot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kwargses</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;vert&quot;</span><span class="p">:</span><span class="kc">True</span><span class="p">},{</span><span class="s2">&quot;vert&quot;</span><span class="p">:</span><span class="kc">False</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">dict2str</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="k">for</span> <span class="n">kwargs</span> <span class="ow">in</span> <span class="n">kwargses</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nfigs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargses</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">subplots_create</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="n">nfigs</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;plotly&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">col</span><span class="p">,</span><span class="n">kwargs</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kwargses</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><a class="reference external" href=".//teilab-plot-plotly-2.html">Open html</a></p>
+<iframe src="teilab-plot-plotly-2.html" width="100%"
+ height="400px" frameborder="0"></iframe></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="teilab.plot.plotly.cumulative_density_plot">
@@ -330,16 +346,15 @@
 </dd>
 </dl>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">dict2str</span><span class="p">,</span> <span class="n">subplots_create</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.plot.plotly</span> <span class="kn">import</span> <span class="n">cumulative_density_plot</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span><span class="n">n_features</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">cumulative_density_plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;value&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><a class="reference external" href=".//teilab-plot-plotly-2.html">Open html</a></p>
-<iframe src="teilab-plot-plotly-2.html" width="100%"
+<p><a class="reference external" href=".//teilab-plot-plotly-3.html">Open html</a></p>
+<iframe src="teilab-plot-plotly-3.html" width="100%"
  height="400px" frameborder="0"></iframe></dd></dl>
 
 <dl class="py function">
@@ -376,7 +391,8 @@
 <dd class="field-odd"><p>Figure</p>
 </dd>
 </dl>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">TeiLabDataSets</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.datasets</span> <span class="kn">import</span> <span class="n">TeiLabDataSets</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.plot.plotly</span> <span class="kn">import</span> <span class="n">XYplot</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">datasets</span> <span class="o">=</span> <span class="n">TeiLabDataSets</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">df_anno</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">read_data</span><span class="p">(</span><span class="n">no</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">usecols</span><span class="o">=</span><span class="n">datasets</span><span class="o">.</span><span class="n">ANNO_COLNAMES</span><span class="p">)</span>
@@ -394,8 +410,8 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><a class="reference external" href=".//teilab-plot-plotly-3.html">Open html</a></p>
-<iframe src="teilab-plot-plotly-3.html" width="100%"
+<p><a class="reference external" href=".//teilab-plot-plotly-4.html">Open html</a></p>
+<iframe src="teilab-plot-plotly-4.html" width="100%"
  height="600px" frameborder="0"></iframe></dd></dl>
 
 <dl class="py function">
@@ -450,8 +466,8 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><a class="reference external" href=".//teilab-plot-plotly-4.html">Open html</a></p>
-<iframe src="teilab-plot-plotly-4.html" width="100%"
+<p><a class="reference external" href=".//teilab-plot-plotly-5.html">Open html</a></p>
+<iframe src="teilab-plot-plotly-5.html" width="100%"
  height="600px" frameborder="0"></iframe></dd></dl>
 
 <dl class="py function">
@@ -490,13 +506,14 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">subplots_create</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.plot.plotly</span> <span class="kn">import</span> <span class="n">update_layout</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">subplots_create</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;plotly&quot;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span><span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]),</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span><span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]),</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">col</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">update_layout</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Sample&quot;</span><span class="p">,</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mf">5.5</span><span class="p">),</span> <span class="n">col</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><a class="reference external" href=".//teilab-plot-plotly-5.html">Open html</a></p>
-<iframe src="teilab-plot-plotly-5.html" width="100%"
+<p><a class="reference external" href=".//teilab-plot-plotly-6.html">Open html</a></p>
+<iframe src="teilab-plot-plotly-6.html" width="100%"
  height="400px" frameborder="0"></iframe></dd></dl>
 
 </div>

@@ -54,7 +54,7 @@ def density_plot(data:NDArray[(Any,Any),Number],
         >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.plotly import density_plot
         >>> n_samples, n_features = (4, 1000)
-        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
+        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples, n_features))
         >>> kwargses = [{"bins":100},{"bins":10},{"bins":"auto"}]
         >>> title = ", ".join([dict2str(kwargs) for kwargs in kwargses])
         >>> nfigs = len(kwargses)
@@ -97,7 +97,7 @@ def boxplot(data:NDArray[(Any,Any),Number],
     Returns:
         Figure: An instance of ``Figure`` with box plot
 
-    .. plot::
+    .. plotly::
         :include-source:
         :iframe-height: 400px
 
@@ -105,7 +105,7 @@ def boxplot(data:NDArray[(Any,Any),Number],
         >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.plotly import boxplot
         >>> n_samples, n_features = (4, 1000)
-        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
+        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples, n_features))
         >>> kwargses = [{"vert":True},{"vert":False}]
         >>> title = ", ".join([dict2str(kwargs) for kwargs in kwargses])
         >>> nfigs = len(kwargses)
@@ -153,10 +153,9 @@ def cumulative_density_plot(data:Union[NDArray[(Any,Any),Number],Series],
         :iframe-height: 400px
 
         >>> import numpy as np
-        >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.plotly import cumulative_density_plot
         >>> n_samples, n_features = (4, 1000)
-        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
+        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples, n_features))
         >>> fig = cumulative_density_plot(data, fig=None, xlabel="value", width=800, height=400)
         >>> fig.show()
     """
@@ -206,6 +205,7 @@ def XYplot(df:pd.DataFrame, x:str, y:str, logarithmic:bool=True,
         :include-source:
         :iframe-height: 600px
 
+        >>> import pandas as pd
         >>> from teilab.datasets import TeiLabDataSets
         >>> from teilab.plot.plotly import XYplot
         >>> datasets = TeiLabDataSets(verbose=False)
@@ -346,7 +346,8 @@ def update_layout(fig:Figure, row:int=1, col:int=1,
         >>> from teilab.utils import subplots_create
         >>> from teilab.plot.plotly import update_layout
         >>> fig = subplots_create(nrows=1, ncols=2, style="plotly")
-        >>> for c in range(1,3): fig.add_trace(go.Scatter(x=[1,2,3],y=[4,5,6]),row=1,col=c)
+        >>> for c in range(1,3): 
+        ...     fig.add_trace(go.Scatter(x=[1,2,3],y=[4,5,6]),row=1,col=c)
         >>> fig = update_layout(fig=fig, title="Sample", ylim=(4.5,5.5), col=2, height=400)
         >>> fig.show()
     """

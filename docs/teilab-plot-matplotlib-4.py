@@ -1,3 +1,4 @@
+import pandas as pd
 from teilab.datasets import TeiLabDataSets
 from teilab.plot.matplotlib import XYplot
 from teilab.utils import subplots_create
