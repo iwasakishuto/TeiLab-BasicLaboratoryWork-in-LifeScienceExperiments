@@ -1,7 +1,10 @@
 #coding: utf-8
 """A group of plot functions useful for analysis using matplotlib_. 
 
-If you would like to make changes to the plot or draw other plots, please refer to the `official documentation <https://matplotlib.org/>`_.
+If you would like to 
+
+- make changes to the plot or draw other plots, please refer to the `official documentation <https://matplotlib.org/>`_.
+- see the analysis examples, please refer to the :fa:`home` `notebook/Local/Main-Lecture-Material-matplotlib.ipynb <https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Local/Main-Lecture-Material-matplotlib.ipynb>`_
 
 ※ Compared to :doc:`teilab.plot.plotly`, you can see the difference between the two libraries. (matplotlib_, and plotly_)
 
@@ -238,6 +241,7 @@ def XYplot(df:pd.DataFrame, x:str, y:str, logarithmic:bool=True,
 
 def MAplot(df:pd.DataFrame, x:str, y:str,
            color:Optional[str]=None, size:Optional[str]=None,
+           hlines:Union[Dict[Number,Dict[str,Any]],List[Number]]=[],
            ax:Optional[Axes]=None, 
            plotkwargs:Dict[str,Any]={},  layoutkwargs:Dict[str,Any]={}, **kwargs) -> Axes:
     """MA plot.
@@ -246,14 +250,15 @@ def MAplot(df:pd.DataFrame, x:str, y:str,
     - y-axis (Minus)  : :math:`\\log_2{(\\text{gProcessedSignal})}` for each gene in sample ``Y``
 
     Args:
-        df (pd.DataFrame)                : DataFrame
-        x (str)                          : The column name for sample ``X``.
-        y (str)                          : The column name for sample ``Y``.
-        color (Optional[str], optional)  : The column name in ``df`` to assign color to marks. Defaults to ``None``.
-        size (Optional[str], optional)   : The column name in ``df`` to assign mark sizes. Defaults to ``None``.
-        ax (Optional[Axes], optional)    : An instance of ``Axes``. Defaults to ``None``.
-        plotkwargs (Dict[str,Any])       : Keyword arguments for ``ax.plot`. Defaults to ``dict(medianprops={"color": "black"}, flierprops={"marker":'o',"markersize":4,"markerfacecolor":"red","markeredgecolor":"black"})``.
-        layoutkwargs (Dict[str,Any])     : Keyword arguments for :func:`update_layout <teilab.plot.matplotlib.update_layout>`. Defaults to ``{}``.
+        df (pd.DataFrame)                                       : DataFrame
+        x (str)                                                 : The column name for sample ``X``.
+        y (str)                                                 : The column name for sample ``Y``.
+        color (Optional[str], optional)                         : The column name in ``df`` to assign color to marks. Defaults to ``None``.
+        size (Optional[str], optional)                          : The column name in ``df`` to assign mark sizes. Defaults to ``None``.
+        hlines (Union[Dict[Number,Dict[str,Any]],List[Number]]) : Height (``y``) to draw a horizon. If given a dictionary, values means kwargs of ``ax.hlines``
+        ax (Optional[Axes], optional)                           : An instance of ``Axes``. Defaults to ``None``.
+        plotkwargs (Dict[str,Any])                              : Keyword arguments for ``ax.plot`. Defaults to ``dict(medianprops={"color": "black"}, flierprops={"marker":'o',"markersize":4,"markerfacecolor":"red","markeredgecolor":"black"})``.
+        layoutkwargs (Dict[str,Any])                            : Keyword arguments for :func:`update_layout <teilab.plot.matplotlib.update_layout>`. Defaults to ``{}``.
 
     Returns:
         Axes: An instance of ``Axes`` with MA plot.
@@ -289,6 +294,9 @@ def MAplot(df:pd.DataFrame, x:str, y:str,
     if color  is not None: color = df[color]
     if size   is not None: size  = df[size]
     ax.scatter(x=X, y=Y, s=size, c=color,  **plotkwargs)
+    if isinstance(hlines, list): hlines = dict(zip(hlines, [{} for _ in range(len(hlines))]))
+    for key,hlineskw in hlines.items():
+        ax.hlines(y=key, xmin=min(X), xmax=max(X), **hlineskw)
     ax = update_layout(
         ax=ax, 
         title=f"MA plot ({x} vs {y})", 

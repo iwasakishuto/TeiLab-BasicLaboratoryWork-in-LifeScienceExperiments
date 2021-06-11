@@ -22,9 +22,30 @@ In this lecture, we will perform bioinformatics experiments such as **"Sequencin
 
 Please refer to `Lecture's Wiki <http://ui-tei.rnai.jp/microarray/doku.php>`__ or `Repository's Wiki <https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/wiki>`__ to check the schedule.
 
-****************
+*******
+Package
+*******
+
+You can install this package with the following command etc.
+
+.. code:: sh
+
+   $ pip install "git+https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.git"
+
+This package is for facilitating the lecture, so it contains many utility functions, such as data handling and anonymous questions. 
+
+However, it also contains functions to easily plot **MAplot** and **XYplot** . If you want to know how to use those plotting functions, please refer to the followings.
+
++------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------+
+|   module   |                                                                                                            Notebook                                                                                                                         |         documentation         |
++============+=============================================================================================================================================================================================================================================+===============================+
+| plotly     | :fa:`home` `notebook/Local/Main-Lecture-Material-plotly.ipynb <https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Local/Main-Lecture-Material-plotly.ipynb>`_         | :doc:`teilab.plot.plotly`     |
++------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------+
+| matplotlib | :fa:`home` `notebook/Local/Main-Lecture-Material-matplotlib.ipynb <https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Local/Main-Lecture-Material-matplotlib.ipynb>`_ | :doc:`teilab.plot.matplotlib` |
++------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-------------------------------+
+
 Package Contents
-****************
+================
 
 .. toctree::
    :maxdepth: 5

@@ -4,10 +4,13 @@ from plotly.subplots import make_subplots
 
 from matplotlib.colors import Colormap
 from matplotlib.axes import Axes
+from plotly.graph_objects import Trace
 from matplotlib.figure import Figure as mplFigure
 from plotly.graph_objs import Figure as plotlyFigure
 from matplotlib.axes import Axes
 from typing import Any,Dict,List,Tuple,Optional,Union
+
+# <=== Utility functions for Both Plotting modules ===
 
 def get_colorList(n:int, cmap:Optional[Union[str,Colormap]]=None, style:str="matplotlib") -> List[Tuple[float,float,float,float]]:
     """Get a color List using matplotlib's colormaps. See `Choosing Colormaps in Matplotlib <https://matplotlib.org/stable/tutorials/colors/colormaps.html>` for details.
@@ -79,3 +82,33 @@ def subplots_create(nrows:int=1, ncols:int=1, sharex:Union[bool,str]=False, shar
         return make_subplots(rows=nrows, cols=ncols, shared_xaxes=sharex, shared_yaxes=sharey, **kwargs)
     else:
         return plt.subplots(nrows=nrows, ncols=ncols, sharex=sharex, sharey=sharey, **kwargs)
+
+# === Utility functions for Both Plotting modules ===>
+
+
+# <=== Utility functions for "plotly" ===
+
+def trace_transition(from_fig:plotlyFigure, to_fig:plotlyFigure, row:int=1, col:int=1) -> plotlyFigure:
+    """Trace ``Figure`` which is created by ``plotly.express``
+
+    Args:
+        from_fig (Figure)   : Move the trace that exists in this ``Figure``.
+        to_fig (Figure)     : Move trace to this ``Figure``
+        row (int, optional) : Row of subplots. Defaults to ``1``.
+        col (int, optional) : Column of subplots. Defaults to ``1``.
+
+    Returns:
+        Figure: ``to_fig`` with ``from_fig`` 's traces.
+    """
+    def transition(trace:Trace):
+        """Move the ``Trace`` from ``from_fig`` to ``to_fig``"""
+        trace.legendgroup = f'{col}-{row}'
+        to_fig.add_trace(trace=trace, row=row, col=col)
+    from_fig.for_each_trace(fn=transition)
+    return to_fig
+
+# === Utility functions for "plotly" ===>
+
+
+# <=== Utility functions for "matplotlib" ===
+# === Utility functions for "matplotlib" ===>

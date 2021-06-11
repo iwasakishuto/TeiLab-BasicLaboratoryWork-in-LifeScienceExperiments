@@ -13,5 +13,14 @@ for no in range(2):
         df_data[[datasets.TARGET_COLNAME]].rename(columns={datasets.TARGET_COLNAME: datasets.samples.Condition[no]})
     ], axis=1)
 df_combined = df_combined.loc[reliable_index, :].reset_index(drop=True)
-fig = MAplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], hover_name="SystematicName", height=600, width=600)
+fig = MAplot(
+    df=df_combined,
+    x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], hover_name="SystematicName",
+    hlines={
+        -1 : dict(fillcolor="red", marker={"color":"red"}, line={"width":1}, showlegend=False),
+        0  : dict(fillcolor="red", marker={"color":"red"}, line={"width":3}, showlegend=False),
+        1  : dict(fillcolor="red", marker={"color":"red"}, line={"width":1}, showlegend=False),
+    },
+    height=600, width=600,
+)
 fig.show()

@@ -25,9 +25,26 @@
 
 ※ スケジュール等は[実習wiki](http://ui-tei.rnai.jp/microarray/doku.php)や[このRepositoryのwiki](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/wiki)を参照して下さい
 
+## パッケージについて
+
+```sh
+$ pip install "git+https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.git"
+```
+
+などのコマンドによって、`teilab` という module をインストールすることができます。この module は
+
+- 講義で使用するデータのダウンロード
+- 講義で使用するデータの読み込み
+- 匿名での質問
+
+などの、講義で便利な関数を収録していますが、その他にも楽にXYplotやMAplotを描くことのできる関数も収録されています。そちらの使い方を確認したい方は、[ドキュメントを確認](#-ドキュメントを確認したい)されるか、以下のノートブックを参照してください。
+
+- `plotly` でグラフを描画したい方: [`notebook/Local/Main-Lecture-Material-plotly.ipynb`](https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Local/Main-Lecture-Material-plotly.ipynb)
+- `matplotlib` でグラフを描画したい方: [`notebook/Local/Main-Lecture-Material-matplotlib.ipynb`](https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Local/Main-Lecture-Material-matplotlib.ipynb)
+
 ## 使い方
 
-環境構築の容易さという観点から、基本的には[Google Colab]()を用いて講義を行いますが、
+環境構築の容易さという観点から、基本的には[Google Colaboratory](https://research.google.com/colaboratory/)を用いて講義を行いますが、
 
 - [🤗 ドキュメントを確認したい。](#-ドキュメントを確認したい)
 - [👍 自分のローカル環境で実行したい。](#-自分のローカル環境で実行したい)
@@ -42,12 +59,14 @@
 
 ![Documentation](images/documentation.png)
 
+※ なお、ドキュメントは[ここ](https://iwasakishuto.github.io/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/index.html)からでも確認できます。
+
 ### 👍 自分のローカル環境で実行したい
 
 - [Pyenv](https://github.com/pyenv/pyenv#installation)：異なるバージョンのpython環境を柔軟に構築
 - [Poetry](https://github.com/python-poetry/poetry#installation)：パッケージのバージョンや依存関係を記録
 
-を用いて、実行環境を作成することを推奨します。また、作成した環境でローカルのJupyter Notebookを起動したい場合は、<a href="https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/%5Blocal%5D%20Start%20Jupyter%20Notebook%20with%20Poetry%20Environment.ipynb">`[local] Start Jupyter Notebook with Poetry Environment.ipynb`</a>を参照して下さい。
+を用いて、実行環境を作成することを推奨します。また、作成した環境でローカルのJupyter Notebookを起動したい場合は、<a href="https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Local/Start-JupyterNotebook-with-Poetry-Environment.ipynb">このNoteBook</a>を参照して下さい。
 
 
 ```sh

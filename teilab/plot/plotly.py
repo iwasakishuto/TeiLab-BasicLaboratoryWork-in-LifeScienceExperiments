@@ -1,7 +1,10 @@
 #coding: utf-8
 """A group of plot functions useful for analysis using matplotlib_. 
 
-If you would like to make changes to the plot or draw other plots, please refer to the `official documentation <https://plotly.com/>`_.
+If you would like to 
+
+- make changes to the plot or draw other plots, please refer to the `official documentation <https://plotly.com/>`_.
+- see the analysis examples, please refer to the :fa:`home` `notebook/Local/Main-Lecture-Material-plotly.ipynb <https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Local/Main-Lecture-Material-plotly.ipynb>`_ 
 
 ※ Compared to :doc:`teilab.plot.matplotlib`, you can see the difference between the two libraries. (matplotlib_, and plotly_)
 
@@ -20,7 +23,7 @@ from typing import Any,Dict,List,Tuple,Optional,Union
 from nptyping import NDArray
 from pandas.core.series import Series
 
-from ..utils.plot_utils import get_colorList, subplots_create
+from ..utils.plot_utils import get_colorList, subplots_create, trace_transition
 
 def density_plot(data:NDArray[(Any,Any),Number],
                  labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
@@ -70,7 +73,7 @@ def density_plot(data:NDArray[(Any,Any),Number],
     if len(colors)!=n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="plotly")
     for i,ith_data in enumerate(data):
         hist, bin_edges = np.histogram(a=ith_data, bins=bins, range=range, density=True)
-        fig.add_trace(trace=go.Scatter(x=bin_edges[1:], y=hist, name=labels[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}, **plotkwargs), row=row, col=col)
+        fig.add_trace(trace=go.Scatter(x=bin_edges[1:], y=hist, name=labels[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}, legendgroup=f'{col}-{row}', **plotkwargs), row=row, col=col)
     fig = update_layout(fig, row=row, col=col, title=title, **layoutkwargs, **kwargs)
     return fig
 
@@ -119,9 +122,9 @@ def boxplot(data:NDArray[(Any,Any),Number],
     n_samples, n_features = data.shape
     if len(labels) != n_samples: labels = [f"No.{i}" for i in range(n_samples)]
     if len(colors) != n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="plotly")
-    key = "x" if vert else "y"
+    key = "y" if vert else "x"
     for i,ith_data in enumerate(data):
-        fig.add_trace(trace=go.Box(**{key: ith_data}, name=labels[i], marker_color=colors[i], **plotkwargs), row=row, col=col)
+        fig.add_trace(trace=go.Box(**{key: ith_data}, name=labels[i], marker_color=colors[i], legendgroup=f'{col}-{row}', **plotkwargs), row=row, col=col)
     fig = update_layout(fig, row=row, col=col, title=title, **layoutkwargs, **kwargs)
     return fig
 
@@ -168,7 +171,7 @@ def cumulative_density_plot(data:Union[NDArray[(Any,Any),Number],Series],
     if len(colors)!=n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="plotly")
     y = [(i+1)/n_features for i in range(n_features)]
     for i,ith_data in enumerate(data):
-        fig.add_trace(trace=go.Scatter(x=ith_data, y=y, name=labels[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}, **plotkwargs), row=row, col=col)
+        fig.add_trace(trace=go.Scatter(x=ith_data, y=y, name=labels[i], mode="lines", fillcolor=colors[i], marker={"color":colors[i]}, legendgroup=f'{col}-{row}', **plotkwargs), row=row, col=col)
     fig = update_layout(fig, row=row, col=col, title=title, ylabel=ylabel, **layoutkwargs, **kwargs)
     return fig
 
@@ -228,8 +231,11 @@ def XYplot(df:pd.DataFrame, x:str, y:str, logarithmic:bool=True,
     if logarithmic:
         df[x] = df[x].apply(lambda x:np.log2(x))
         df[y] = df[y].apply(lambda y:np.log2(y))
-    fig_ = px.scatter(data_frame=df, x=x, y=y, color=color, symbol=symbol, size=size, hover_name=hover_name, hover_data=hover_data, **plotkwargs)
-    fig_.for_each_trace(fn=lambda trace:fig.add_trace(trace=trace, row=row, col=col))
+    fig = trace_transition(
+        from_fig=px.scatter(data_frame=df, x=x, y=y, color=color, symbol=symbol, size=size, hover_name=hover_name, hover_data=hover_data, **plotkwargs),
+        to_fig=fig,
+        row=row, col=col
+    )
     fig = update_layout(
         fig=fig, 
         title=f"XY plot ({x} vs {y})", 
@@ -242,6 +248,7 @@ def XYplot(df:pd.DataFrame, x:str, y:str, logarithmic:bool=True,
 def MAplot(df:pd.DataFrame, x:str, y:str,
            color:Optional[str]=None, symbol:Optional[str]=None, size:Optional[str]=None,
            hover_data:Optional[List[str]]=None, hover_name:Optional[str]=None,
+           hlines:Union[Dict[Number,Dict[str,Any]],List[Number]]=[],
            fig:Optional[Figure]=None, row:int=1, col:int=1,
            plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Figure:
     """MA plot.
@@ -250,19 +257,20 @@ def MAplot(df:pd.DataFrame, x:str, y:str,
     - y-axis (Minus)   : :math:`\\log_{2}{\\left(\\text{gProcessedSignal}_Y / \\text{gProcessedSignal}_X\\right)}`
 
     Args:
-        df (pd.DataFrame)                          : DataFrame
-        x (str)                                    : The column name for sample ``X``.
-        y (str)                                    : The column name for sample ``Y``.
-        color (Optional[str], optional)            : The column name in ``df`` to assign color to marks. Defaults to ``None``.
-        symbol (Optional[str], optional)           : The column name in ``df`` to assign symbols to marks. Defaults to ``None``.
-        size (Optional[str], optional)             : The column name in ``df`` to assign mark sizes. Defaults to ``None``.
-        hover_data (Optional[List[str]], optional) : Values in this column appear in bold in the hover tooltip. Defaults to ``None``.
-        hover_name (Optional[str], optional)       : Values in this column appear in the hover tooltip. Defaults to ``None``.
-        fig (Optional[Figure], optional)           : An instance of Figure.
-        row (int, optional)                        : Row of subplots. Defaults to ``1``.
-        col (int, optional)                        : Column of subplots. Defaults to ``1``.
-        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``. Defaults to ``{}``.
-        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>`. Defaults to ``{}``.
+        df (pd.DataFrame)                                       : DataFrame
+        x (str)                                                 : The column name for sample ``X``.
+        y (str)                                                 : The column name for sample ``Y``.
+        color (Optional[str], optional)                         : The column name in ``df`` to assign color to marks. Defaults to ``None``.
+        symbol (Optional[str], optional)                        : The column name in ``df`` to assign symbols to marks. Defaults to ``None``.
+        size (Optional[str], optional)                          : The column name in ``df`` to assign mark sizes. Defaults to ``None``.
+        hover_data (Optional[List[str]], optional)              : Values in this column appear in bold in the hover tooltip. Defaults to ``None``.
+        hover_name (Optional[str], optional)                    : Values in this column appear in the hover tooltip. Defaults to ``None``.
+        hlines (Union[Dict[Number,Dict[str,Any]],List[Number]]) : Height (``y``) to draw a horizon. If given a dictionary, values means kwargs of ``ax.hlines``
+        fig (Optional[Figure], optional)                        : An instance of Figure.
+        row (int, optional)                                     : Row of subplots. Defaults to ``1``.
+        col (int, optional)                                     : Column of subplots. Defaults to ``1``.
+        plotkwargs (Dict[str,Any])                              : Keyword arguments for ``go.Scatter``. Defaults to ``{}``.
+        layoutkwargs (Dict[str,Any])                            : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>`. Defaults to ``{}``.
 
     Returns:
         Figure: An instance of ``Figure`` with MA plot.
@@ -286,7 +294,16 @@ def MAplot(df:pd.DataFrame, x:str, y:str,
         ...         df_data[[datasets.TARGET_COLNAME]].rename(columns={datasets.TARGET_COLNAME: datasets.samples.Condition[no]})
         ...     ], axis=1)
         >>> df_combined = df_combined.loc[reliable_index, :].reset_index(drop=True)
-        >>> fig = MAplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], hover_name="SystematicName", height=600, width=600)
+        >>> fig = MAplot(
+        ...     df=df_combined, 
+        ...     x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], hover_name="SystematicName", 
+        ...     hlines={
+        ...         -1 : dict(fillcolor="red", marker={"color":"red"}, line={"width":1}, showlegend=False),
+        ...         0  : dict(fillcolor="red", marker={"color":"red"}, line={"width":3}, showlegend=False),
+        ...         1  : dict(fillcolor="red", marker={"color":"red"}, line={"width":1}, showlegend=False),
+        ...     },
+        ...     height=600, width=600,
+        >>> )
         >>> fig.show()
     """
     fig = fig or subplots_create(nrows=1, ncols=1, style="plotly")
@@ -297,8 +314,14 @@ def MAplot(df:pd.DataFrame, x:str, y:str,
     Y = np.log2(df[y]/df[x])
     df[x_axis_colname] = X
     df[y_axis_colname] = Y
-    fig_ = px.scatter(data_frame=df, x=x_axis_colname, y=y_axis_colname, color=color, symbol=symbol, size=size, hover_name=hover_name, hover_data=hover_data, **plotkwargs)
-    fig_.for_each_trace(fn=lambda trace:fig.add_trace(trace=trace, row=row, col=col))
+    fig = trace_transition(
+        from_fig=px.scatter(data_frame=df, x=x_axis_colname, y=y_axis_colname, color=color, symbol=symbol, size=size, hover_name=hover_name, hover_data=hover_data, **plotkwargs),
+        to_fig=fig,
+        row=row, col=col
+    )    
+    if isinstance(hlines, list): hlines = dict(zip(hlines, [{} for _ in range(len(hlines))]))
+    for key,hlineskw in hlines.items():        
+        fig.add_trace(go.Scatter(x=[min(X),max(X)],y=[key,key], legendgroup=f'{col}-{row}', **hlineskw), row=row, col=col)
     fig = update_layout(
         fig=fig, 
         title=f"MA plot ({x} vs {y})", 
@@ -313,7 +336,7 @@ def update_layout(fig:Figure, row:int=1, col:int=1,
                   xlim:Optional[Tuple[Any,Any]]=None, ylim:Optional[Tuple[Any,Any]]=None, 
                   xrangeslider:Dict[str,Any]={"visible": False},
                   font:Dict[str,Any]={"family":"verdana, arial, sans-serif", "size": 14}, legend:bool=True,
-                  xaxis_type:str="linear", yaxis_type:str="linear", 
+                  xaxis_type:str="linear", yaxis_type:str="linear", legend_tracegroupgap:int=100,
                   width:int=600, height:int=600, template:str="presentation") -> Figure:
     """Update the layout of ``plotly.graph_objs._figure.Figure`` object. See `Documentation <https://plotly.com/python/reference/layout/>`_ for details.
 
@@ -331,6 +354,7 @@ def update_layout(fig:Figure, row:int=1, col:int=1,
         legend (bool, optional)                   : Whether to show legend. Defaults to ``True``.
         xaxis_type (str, optional)                : X axis type. Defaults to ``"linear"``.
         yaxis_type (str, optional)                : Y axis type. Defaults to ``"linear"``.
+        legend_tracegroupgap (int, optional)      : Gap between legend groups. Defaults to ``100``.
         width (int, optional)                     : Figure width. Defaults to ``600``.
         height (int, optional)                    : Figure height. Defaults to ``600``.
         template (str, optional)                  : Plotly themes. You can check the all template by ``python -c "import plotly.io as pio; print(pio.templates)``. Defaults to ``"plotly_white"``.
@@ -356,5 +380,6 @@ def update_layout(fig:Figure, row:int=1, col:int=1,
     fig.update_layout(
         title=title, font=font, width=width, height=height, template=template,
         showlegend=legend, xaxis_type=xaxis_type, yaxis_type=yaxis_type,
+        legend_tracegroupgap=legend_tracegroupgap,
     )
     return fig

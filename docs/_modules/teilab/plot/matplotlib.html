@@ -199,7 +199,10 @@
 <span></span><span class="c1">#coding: utf-8</span>
 <span class="sd">&quot;&quot;&quot;A group of plot functions useful for analysis using matplotlib_. </span>
 
-<span class="sd">If you would like to make changes to the plot or draw other plots, please refer to the `official documentation &lt;https://matplotlib.org/&gt;`_.</span>
+<span class="sd">If you would like to </span>
+
+<span class="sd">- make changes to the plot or draw other plots, please refer to the `official documentation &lt;https://matplotlib.org/&gt;`_.</span>
+<span class="sd">- see the analysis examples, please refer to the :fa:`home` `notebook/Local/Main-Lecture-Material-matplotlib.ipynb &lt;https://nbviewer.jupyter.org/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Local/Main-Lecture-Material-matplotlib.ipynb&gt;`_</span>
 
 <span class="sd">※ Compared to :doc:`teilab.plot.plotly`, you can see the difference between the two libraries. (matplotlib_, and plotly_)</span>
 
@@ -436,6 +439,7 @@
 
 <div class="viewcode-block" id="MAplot"><a class="viewcode-back" href="../../../teilab.plot.matplotlib.html#teilab.plot.matplotlib.MAplot">[docs]</a><span class="k">def</span> <span class="nf">MAplot</span><span class="p">(</span><span class="n">df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span>
            <span class="n">color</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">size</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+           <span class="n">hlines</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Any</span><span class="p">]],</span><span class="n">List</span><span class="p">[</span><span class="n">Number</span><span class="p">]]</span><span class="o">=</span><span class="p">[],</span>
            <span class="n">ax</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
            <span class="n">plotkwargs</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Any</span><span class="p">]</span><span class="o">=</span><span class="p">{},</span>  <span class="n">layoutkwargs</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Any</span><span class="p">]</span><span class="o">=</span><span class="p">{},</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Axes</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;MA plot.</span>
@@ -444,14 +448,15 @@
 <span class="sd">    - y-axis (Minus)  : :math:`\\log_2{(\\text{gProcessedSignal})}` for each gene in sample ``Y``</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        df (pd.DataFrame)                : DataFrame</span>
-<span class="sd">        x (str)                          : The column name for sample ``X``.</span>
-<span class="sd">        y (str)                          : The column name for sample ``Y``.</span>
-<span class="sd">        color (Optional[str], optional)  : The column name in ``df`` to assign color to marks. Defaults to ``None``.</span>
-<span class="sd">        size (Optional[str], optional)   : The column name in ``df`` to assign mark sizes. Defaults to ``None``.</span>
-<span class="sd">        ax (Optional[Axes], optional)    : An instance of ``Axes``. Defaults to ``None``.</span>
-<span class="sd">        plotkwargs (Dict[str,Any])       : Keyword arguments for ``ax.plot`. Defaults to ``dict(medianprops={&quot;color&quot;: &quot;black&quot;}, flierprops={&quot;marker&quot;:&#39;o&#39;,&quot;markersize&quot;:4,&quot;markerfacecolor&quot;:&quot;red&quot;,&quot;markeredgecolor&quot;:&quot;black&quot;})``.</span>
-<span class="sd">        layoutkwargs (Dict[str,Any])     : Keyword arguments for :func:`update_layout &lt;teilab.plot.matplotlib.update_layout&gt;`. Defaults to ``{}``.</span>
+<span class="sd">        df (pd.DataFrame)                                       : DataFrame</span>
+<span class="sd">        x (str)                                                 : The column name for sample ``X``.</span>
+<span class="sd">        y (str)                                                 : The column name for sample ``Y``.</span>
+<span class="sd">        color (Optional[str], optional)                         : The column name in ``df`` to assign color to marks. Defaults to ``None``.</span>
+<span class="sd">        size (Optional[str], optional)                          : The column name in ``df`` to assign mark sizes. Defaults to ``None``.</span>
+<span class="sd">        hlines (Union[Dict[Number,Dict[str,Any]],List[Number]]) : Height (``y``) to draw a horizon. If given a dictionary, values means kwargs of ``ax.hlines``</span>
+<span class="sd">        ax (Optional[Axes], optional)                           : An instance of ``Axes``. Defaults to ``None``.</span>
+<span class="sd">        plotkwargs (Dict[str,Any])                              : Keyword arguments for ``ax.plot`. Defaults to ``dict(medianprops={&quot;color&quot;: &quot;black&quot;}, flierprops={&quot;marker&quot;:&#39;o&#39;,&quot;markersize&quot;:4,&quot;markerfacecolor&quot;:&quot;red&quot;,&quot;markeredgecolor&quot;:&quot;black&quot;})``.</span>
+<span class="sd">        layoutkwargs (Dict[str,Any])                            : Keyword arguments for :func:`update_layout &lt;teilab.plot.matplotlib.update_layout&gt;`. Defaults to ``{}``.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Axes: An instance of ``Axes`` with MA plot.</span>
@@ -487,6 +492,9 @@
     <span class="k">if</span> <span class="n">color</span>  <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">color</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">color</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">size</span>   <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span> <span class="n">size</span>  <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">size</span><span class="p">]</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="n">size</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>  <span class="o">**</span><span class="n">plotkwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hlines</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">hlines</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">hlines</span><span class="p">,</span> <span class="p">[{}</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">hlines</span><span class="p">))]))</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">hlineskw</span> <span class="ow">in</span> <span class="n">hlines</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">xmax</span><span class="o">=</span><span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="o">**</span><span class="n">hlineskw</span><span class="p">)</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">update_layout</span><span class="p">(</span>
         <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> 
         <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;MA plot (</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> 
