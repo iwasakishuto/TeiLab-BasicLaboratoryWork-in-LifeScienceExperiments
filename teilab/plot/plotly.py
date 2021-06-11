@@ -1,9 +1,17 @@
 #coding: utf-8
+"""A group of plot functions useful for analysis using matplotlib_. 
+
+If you would like to make changes to the plot or draw other plots, please refer to the `official documentation <https://plotly.com/>`_.
+
+※ Compared to :doc:`teilab.plot.matplotlib`, you can see the difference between the two libraries. (matplotlib_, and plotly_)
+
+.. _matplotlib: https://github.com/matplotlib/matplotlib
+.. _plotly: https://github.com/plotly/plotly.py
+"""
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 
 from numbers import Number
 from plotly.graph_objs import Figure
@@ -12,7 +20,7 @@ from typing import Any,Dict,List,Tuple,Optional,Union
 from nptyping import NDArray
 from pandas.core.series import Series
 
-from ..utils.plot_utils import get_colorList
+from ..utils.plot_utils import get_colorList, subplots_create
 
 def density_plot(data:NDArray[(Any,Any),Number],
                  labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
@@ -32,9 +40,9 @@ def density_plot(data:NDArray[(Any,Any),Number],
         fig (Optional[Figure], optional)               : An instance of Figure.
         row (int, optional)                            : Row of subplots. Defaults to ``1``.
         col (int, optional)                            : Column of subplots. Defaults to ``1``.
-        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Scatter``
-        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>` .
-
+        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Scatter``. Defaults to ``{}``.
+        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>`. Defaults to ``{}``.
+    
     Returns:
         Figure: An instance of ``Figure`` with density distributions.
     
@@ -42,7 +50,7 @@ def density_plot(data:NDArray[(Any,Any),Number],
         :include-source:
         :iframe-height: 400px
 
-        >>> import matplotlib.pyplot as plt
+        >>> import numpy as np
         >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.plotly import density_plot
         >>> n_samples, n_features = (4, 1000)
@@ -55,7 +63,7 @@ def density_plot(data:NDArray[(Any,Any),Number],
         ...     _ = density_plot(data, fig=fig, title=title, col=i, legend=False, width=1000, height=400, **kwargs)
         >>> fig.show()
     """
-    fig = fig or make_subplots(rows=1, cols=1)
+    fig = fig or subplots_create(nrows=1, ncols=1, style="plotly")
     if data.ndim==1: data = data.reshape(1,-1)
     n_samples, n_features = data.shape
     if len(labels)!=n_samples: labels = [f"No.{i}" for i,_ in enumerate(data)]
@@ -83,17 +91,17 @@ def cumulative_density_plot(data:Union[NDArray[(Any,Any),Number],Series],
         fig (Optional[Figure], optional)               : An instance of Figure.
         row (int, optional)                            : Row of subplots. Defaults to ``1``.
         col (int, optional)                            : Column of subplots. Defaults to ``1``.
-        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Scatter``
-        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>` .
+        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``go.Scatter``. Defaults to ``{}``.
+        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>`. Defaults to ``{}``.
 
     Returns:
-        Figure: An instance of ``Figure`` with density distributions.
+        Figure: An instance of ``Figure`` with cumulative density distributions.
     
     .. plotly::
         :include-source:
         :iframe-height: 400px
 
-        >>> import matplotlib.pyplot as plt
+        >>> import numpy as np
         >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.plotly import cumulative_density_plot
         >>> n_samples, n_features = (4, 1000)
@@ -101,7 +109,7 @@ def cumulative_density_plot(data:Union[NDArray[(Any,Any),Number],Series],
         >>> fig = cumulative_density_plot(data, fig=None, xlabel="value", width=800, height=400)
         >>> fig.show()
     """
-    fig = fig or make_subplots(rows=1, cols=1)
+    fig = fig or subplots_create(nrows=1, ncols=1, style="plotly")
     if isinstance(data, Series): data = data.values
     if data.ndim==1: data = data.reshape(1,-1)
     data = np.sort(a=data, axis=1)
@@ -128,6 +136,7 @@ def XYplot(df:pd.DataFrame, x:str, y:str, logarithmic:bool=True,
         df (pd.DataFrame)                          : DataFrame
         x (str)                                    : The column name for sample ``X``.
         y (str)                                    : The column name for sample ``Y``.
+        logarithmic (bool)                         : Whether to log the values of ``df[x]`` and ``df[y]`` 
         color (Optional[str], optional)            : The column name in ``df`` to assign color to marks. Defaults to ``None``.
         symbol (Optional[str], optional)           : The column name in ``df`` to assign symbols to marks. Defaults to ``None``.
         size (Optional[str], optional)             : The column name in ``df`` to assign mark sizes. Defaults to ``None``.
@@ -136,8 +145,8 @@ def XYplot(df:pd.DataFrame, x:str, y:str, logarithmic:bool=True,
         fig (Optional[Figure], optional)           : An instance of Figure.
         row (int, optional)                        : Row of subplots. Defaults to ``1``.
         col (int, optional)                        : Column of subplots. Defaults to ``1``.
-        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``
-        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>` .
+        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``. Defaults to ``{}``.
+        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>`. Defaults to ``{}``.
 
     Returns:
         Figure: An instance of ``Figure`` with XY plot.
@@ -163,7 +172,7 @@ def XYplot(df:pd.DataFrame, x:str, y:str, logarithmic:bool=True,
         >>> fig = XYplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], hover_name="SystematicName", height=600, width=600)
         >>> fig.show()
     """
-    fig = fig or make_subplots(rows=1, cols=1)
+    fig = fig or subplots_create(nrows=1, ncols=1, style="plotly")
     df = df.copy(deep=True)
     if logarithmic:
         df[x] = df[x].apply(lambda x:np.log2(x))
@@ -186,8 +195,8 @@ def MAplot(df:pd.DataFrame, x:str, y:str,
            plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Figure:
     """MA plot.
 
-    - x-axis : :math:`\\log_{10}{\\left(\\text{gProcessedSignal}_X\\times\\text{gProcessedSignal}_Y\\right)}`
-    - y-axis : :math:`\\log_{2}{\\left(\\text{gProcessedSignal}_Y / \\text{gProcessedSignal}_X\\right)}`
+    - x-axis (Average) : :math:`\\log_{10}{\\left(\\text{gProcessedSignal}_X\\times\\text{gProcessedSignal}_Y\\right)}`
+    - y-axis (Minus)   : :math:`\\log_{2}{\\left(\\text{gProcessedSignal}_Y / \\text{gProcessedSignal}_X\\right)}`
 
     Args:
         df (pd.DataFrame)                          : DataFrame
@@ -201,8 +210,8 @@ def MAplot(df:pd.DataFrame, x:str, y:str,
         fig (Optional[Figure], optional)           : An instance of Figure.
         row (int, optional)                        : Row of subplots. Defaults to ``1``.
         col (int, optional)                        : Column of subplots. Defaults to ``1``.
-        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``
-        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>` .
+        plotkwargs (Dict[str,Any])                 : Keyword arguments for ``go.Scatter``. Defaults to ``{}``.
+        layoutkwargs (Dict[str,Any])               : Keyword arguments for :func:`update_layout <teilab.plot.plotly.update_layout>`. Defaults to ``{}``.
 
     Returns:
         Figure: An instance of ``Figure`` with MA plot.
@@ -211,6 +220,7 @@ def MAplot(df:pd.DataFrame, x:str, y:str,
         :include-source:
         :iframe-height: 600px
 
+        >>> import pandas as pd
         >>> from teilab.datasets import TeiLabDataSets
         >>> from teilab.plot.plotly import MAplot
         >>> datasets = TeiLabDataSets(verbose=False)
@@ -228,12 +238,14 @@ def MAplot(df:pd.DataFrame, x:str, y:str,
         >>> fig = MAplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], hover_name="SystematicName", height=600, width=600)
         >>> fig.show()
     """
-    fig = fig or make_subplots(rows=1, cols=1)
+    fig = fig or subplots_create(nrows=1, ncols=1, style="plotly")
     df = df.copy(deep=True)
     x_axis_colname = "x-axis"
     y_axis_colname = "y-axis"
-    df[x_axis_colname] = np.log10(df[x]*df[y])
-    df[y_axis_colname] = np.log2(df[y]/df[x])
+    X = np.log10(df[x]*df[y])
+    Y = np.log2(df[y]/df[x])
+    df[x_axis_colname] = X
+    df[y_axis_colname] = Y
     fig_ = px.scatter(data_frame=df, x=x_axis_colname, y=y_axis_colname, color=color, symbol=symbol, size=size, hover_name=hover_name, hover_data=hover_data, **plotkwargs)
     fig_.for_each_trace(fn=lambda trace:fig.add_trace(trace=trace, row=row, col=col))
     fig = update_layout(
@@ -279,10 +291,10 @@ def update_layout(fig:Figure, row:int=1, col:int=1,
         :include-source:
         :iframe-height: 400px
 
-        >>> import  plotly.graph_objects as go
-        >>> from plotly.subplots import make_subplots
+        >>> import plotly.graph_objects as go
+        >>> from teilab.utils import subplots_create
         >>> from teilab.plot.plotly import update_layout
-        >>> fig = make_subplots(rows=1, cols=2)
+        >>> fig = subplots_create(nrows=1, ncols=2, style="plotly")
         >>> for c in range(1,3): fig.add_trace(go.Scatter(x=[1,2,3],y=[4,5,6]),row=1,col=c)
         >>> fig = update_layout(fig=fig, title="Sample", ylim=(4.5,5.5), col=2, height=400)
         >>> fig.show()

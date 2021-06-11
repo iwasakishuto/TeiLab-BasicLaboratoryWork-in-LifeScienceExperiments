@@ -1,32 +1,35 @@
 #coding: utf-8
+"""A group of plot functions useful for analysis using matplotlib_. 
+
+If you would like to make changes to the plot or draw other plots, please refer to the `official documentation <https://matplotlib.org/>`_.
+
+※ Compared to :doc:`teilab.plot.plotly`, you can see the difference between the two libraries. (matplotlib_, and plotly_)
+
+.. _matplotlib: https://github.com/matplotlib/matplotlib
+.. _plotly: https://github.com/plotly/plotly.py
+"""
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
+
 from numbers import Number
 from matplotlib.axes import Axes
 from matplotlib.colors import Colormap
 from typing import Any,Dict,List,Tuple,Optional,Union
 from nptyping import NDArray
+from pandas.core.series import Series
 
-from ..utils.plot_utils import get_colorList
+# If you want to use LateX
+# from matplotlib import rc
+# rc('text', usetex=True)
 
-def _ax_create(ax:Optional[Axes]=None, figsize:Tuple[Number,Number]=(6,4)) -> Axes:
-    """Create an ``Axes`` instance.
-
-    Args:
-        ax (Optional[Axes], optional)            : An ``Axes`` instance. Defaults to ``None``.
-        figsize (Tuple[Number,Number], optional) : Figure size if you create a new figure. deman. Defaults to ``(6,4)``.
-
-    Returns:
-        Axes: An instance of ``Axes``
-    """
-    if ax is None:
-        _,ax = plt.subplots(figsize=figsize)
-    return ax
+from ..utils.plot_utils import get_colorList, subplots_create
 
 def density_plot(data:NDArray[(Any,Any),Number], 
                  labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None, 
                  bins:Union[int,List[Number],str]=100, range:Optional[Tuple[float,float]]=None, 
-                 title:str="Density Distribution", ax:Optional[Axes]=None, **kwargs) -> Axes:
+                 title:str="Density Distribution", ax:Optional[Axes]=None, 
+                 plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Axes:
     """Plot density dirstibutions.
 
     Args:
@@ -38,6 +41,8 @@ def density_plot(data:NDArray[(Any,Any),Number],
         range (Optional[Tuple[float,float]], optional) : The lower and upper range of the bins. If not provided, range is simply ``(data[i].min(), data[i].max())``. Defaults to ``None``.
         title (str, optional)                          : Figure Title. Defaults to ``"Density Distribution"``.
         ax (Optional[Axes], optional)                  : An instance of ``Axes``. Defaults to ``None``.
+        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``ax.plot``. Defaults to ``{}``.
+        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout <teilab.plot.matplotlib.update_layout>`. Defaults to ``{}``.
 
     Returns:
         Axes: An instance of ``Axes`` with density distributions.
@@ -46,6 +51,7 @@ def density_plot(data:NDArray[(Any,Any),Number],
         :include-source:
         :class: popup-img
         
+        >>> import numpy as np
         >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.matplotlib import density_plot
         >>> n_samples, n_features = (4, 1000)
@@ -57,18 +63,69 @@ def density_plot(data:NDArray[(Any,Any),Number],
         ...     _ = density_plot(data, ax=ax, title=dict2str(kwargs), **kwargs)
         >>> fig.show()
     """
-    ax = _ax_create(ax=ax)
-    labels = labels or [f"No.{i}" for i,_ in enumerate(data)]
-    for ith_data,name in zip(data,labels):
+    ax = ax or subplots_create(ncols=1, nrows=1, style="matplotlib")[1]
+    if data.ndim==1: data = data.reshape(1,-1)
+    n_samples, n_features = data.shape
+    if len(labels)!=n_samples: labels = [f"No.{i}" for i,_ in enumerate(data)]
+    if len(colors)!=n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="matplotlib")
+    for i,ith_data in enumerate(data):
         hist, bin_edges = np.histogram(a=ith_data, bins=bins, range=range, density=True)
-        ax.plot(bin_edges[1:], hist, label=name)
-    ax = update_layout(ax, title=title, **kwargs)
+        ax.plot(bin_edges[1:], hist, label=labels[i], color=colors[i], **plotkwargs)
+    ax = update_layout(ax, title=title, **layoutkwargs, **kwargs)
+    return ax
+
+def cumulative_density_plot(data:Union[NDArray[(Any,Any),Number],Series],
+                            labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None,
+                            title:str="Cumulative Density Distribution", ylabel="Frequency", ax:Optional[Axes]=None, 
+                            plotkwargs:Dict[str,Any]={}, layoutkwargs:Dict[str,Any]={}, **kwargs) -> Axes:
+    """Plot cumulative density dirstibutions.
+
+    Args:
+        data (Union[NDArray[(Any,Any),Number],Series]) : Input data. Shape = ( ``n_samples``, ``n_features`` )
+        labels (List[str], optional)                   : Labels for each sample. Defaults to ``[]``.
+        colors (List[Any], optional)                   : Colors for each sample. Defaults to ``[]``.
+        cmap (Optional[Union[str,Colormap]], optional) : A ``Colormap`` object or a color map name. Defaults to ``None``.
+        title (str, optional)                          : Subplot Title. Defaults to ``"Cumulative Density Distribution"``.
+        ylabel (str, optional)                         : Subplot y-axis label. Defaults to ``"Frequency"``
+        ax (Optional[Axes], optional)                  : An instance of ``Axes``. Defaults to ``None``.
+        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``ax.plot``. Defaults to ``{}``.
+        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout <teilab.plot.matplotlib.update_layout>`. Defaults to ``{}``.
+
+    Returns:
+        Axes:An instance of ``Axes`` with cumulative density distributions.
+
+    .. plot::
+        :include-source:
+        :class: popup-img
+        
+        >>> import numpy as np
+        >>> from teilab.utils import dict2str, subplots_create
+        >>> from teilab.plot.matplotlib import cumulative_density_plot
+        >>> n_samples, n_features = (4, 1000)
+        >>> data = np.random.RandomState(0).normal(loc=np.expand_dims(np.arange(n_samples), axis=1), size=(n_samples,n_features))
+        >>> fig, ax = subplots_create(figsize=(6,4), style="matplotlib")
+        >>> ax = cumulative_density_plot(data, ax=ax, xlabel="value")
+        >>> fig.show()
+    """
+    ax = ax or subplots_create(ncols=1, nrows=1, style="matplotlib")[1]
+    if isinstance(data, Series): data = data.values
+    if data.ndim==1: data = data.reshape(1,-1)
+    data = np.sort(a=data, axis=1)
+    n_samples, n_features = data.shape
+    if len(labels)!=n_samples: labels = [f"No.{i}" for i,_ in enumerate(data)]
+    if len(colors)!=n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="matplotlib")
+    y = [(i+1)/n_features for i in range(n_features)]
+    for i,ith_data in enumerate(data):
+        ax.plot(ith_data, y, label=labels[i], color=colors[i], **plotkwargs)
+    ax = update_layout(ax, title=title, ylabel=ylabel, **layoutkwargs, **kwargs)
     return ax
 
 def boxplot(data:NDArray[(Any,Any),Number], 
             labels:List[str]=[], colors:List[Any]=[], cmap:Optional[Union[str,Colormap]]=None, 
             vert:bool=True,
-            title:str="Box Plot", ax:Optional[Axes]=None, **kwargs) -> Axes:
+            title:str="Box Plot", ax:Optional[Axes]=None, 
+            plotkwargs:Dict[str,Any]=dict(medianprops={"color": "black"}, flierprops={"marker":'o',"markersize":4,"markerfacecolor":"red","markeredgecolor":"black"}),
+            layoutkwargs:Dict[str,Any]={}, **kwargs) -> Axes:
     """Plot box plots.
 
     Args:
@@ -79,6 +136,8 @@ def boxplot(data:NDArray[(Any,Any),Number],
         vert (bool, optional)                          : Whether to draw vertical boxes or horizontal boxes. Defaults to ``True`` .
         title (str, optional)                          : Figure Title. Defaults to ``"Box Plot"``.
         ax (Optional[Axes], optional)                  : An instance of ``Axes``. Defaults to ``None``.
+        plotkwargs (Dict[str,Any])                     : Keyword arguments for ``ax.plot`. Defaults to ``dict(medianprops={"color": "black"}, flierprops={"marker":'o',"markersize":4,"markerfacecolor":"red","markeredgecolor":"black"})``.
+        layoutkwargs (Dict[str,Any])                   : Keyword arguments for :func:`update_layout <teilab.plot.matplotlib.update_layout>`. Defaults to ``{}``.
 
     Returns:
         Axes: An instance of ``Axes`` with box plots.
@@ -87,6 +146,7 @@ def boxplot(data:NDArray[(Any,Any),Number],
         :include-source:
         :class: popup-img
 
+        >>> import numpy as np
         >>> from teilab.utils import dict2str, subplots_create
         >>> from teilab.plot.matplotlib import boxplot
         >>> n_samples, n_features = (4, 1000)
@@ -98,43 +158,142 @@ def boxplot(data:NDArray[(Any,Any),Number],
         ...     _ = boxplot(data, title=dict2str(kwargs), ax=ax, **kwargs)
         >>> fig.show()
     """
-    ax = _ax_create(ax=ax)
+    ax = ax or subplots_create(ncols=1, nrows=1, style="matplotlib")[1]
     n_samples, n_features = data.shape
     if len(labels) != n_samples: labels = [f"No.{i}" for i in range(n_samples)]
-    if len(colors)!= n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="matplotlib")
+    if len(colors) != n_samples: colors = get_colorList(n=n_samples, cmap=cmap, style="matplotlib")
     bplot1= ax.boxplot(
         x=data.T, vert=vert, patch_artist=True, labels=labels,
-        medianprops={"color": "black"},
-        flierprops={"marker":'o',"markersize":4,"markerfacecolor":"red","markeredgecolor":"black"},
+        **plotkwargs,
     )
     for i,patch in enumerate(bplot1['boxes']):
         patch.set_facecolor(colors[i])
         patch.set_edgecolor("black")
-    ax = update_layout(ax, title=title, **kwargs)
+    ax = update_layout(ax, title=title, **layoutkwargs, **kwargs)
     return ax
 
-def XYplot(X, Y, color=None, marker_size=3, legend=True, ax=None,
-           xlabel="$\log_{2}X$", ylabel="$\log_{2}(Y)$", title="XY plot", **kwargs):
-    ax = _ax_create(ax=ax)
-    color = np.zeros_like(X) if color is None else color
-    x = np.log2(X)
-    y = np.log2(Y)
-    for c in np.unique(color):
-        idx = color==c
-        ax.scatter(x=x[idx], y=y[idx], label=str(c), s=marker_size)
-    ax = update_layout(ax, xlabel=xlabel, ylabel=ylabel, title=title, legend=legend, **kwargs)
+def XYplot(df:pd.DataFrame, x:str, y:str, logarithmic:bool=True,
+           color:Optional[str]=None, size:Optional[int]=None,
+           ax:Optional[Axes]=None, 
+           plotkwargs:Dict[str,Any]={},  layoutkwargs:Dict[str,Any]={}, **kwargs) -> Axes:
+    """XY plot.
+
+    - x-axis : :math:`\\log_2{(\\text{gProcessedSignal})}` for each gene in sample ``X``
+    - y-axis : :math:`\\log_2{(\\text{gProcessedSignal})}` for each gene in sample ``Y``
+
+    Args:
+        df (pd.DataFrame)                : DataFrame
+        x (str)                          : The column name for sample ``X``.
+        y (str)                          : The column name for sample ``Y``.
+        logarithmic (bool)               : Whether to log the values of ``df[x]`` and ``df[y]`` 
+        color (Optional[str], optional)  : The column name in ``df`` to assign color to marks. Defaults to ``None``.
+        size (Optional[str], optional)   : The column name in ``df`` to assign mark sizes. Defaults to ``None``.
+        ax (Optional[Axes], optional)    : An instance of ``Axes``. Defaults to ``None``.
+        plotkwargs (Dict[str,Any])       : Keyword arguments for ``ax.plot`. Defaults to ``dict(medianprops={"color": "black"}, flierprops={"marker":'o',"markersize":4,"markerfacecolor":"red","markeredgecolor":"black"})``.
+        layoutkwargs (Dict[str,Any])     : Keyword arguments for :func:`update_layout <teilab.plot.matplotlib.update_layout>`. Defaults to ``{}``.
+
+    Returns:
+        Axes: An instance of ``Axes`` with XY plot.
+
+    .. plot::
+        :include-source:
+        :class: popup-img
+
+        >>> from teilab.datasets import TeiLabDataSets
+        >>> from teilab.plot.matplotlib import XYplot
+        >>> from teilab.utils import subplots_create
+        >>> datasets = TeiLabDataSets(verbose=False)
+        >>> df_anno = datasets.read_data(no=0, usecols=datasets.ANNO_COLNAMES)
+        >>> reliable_index = set(df_anno.index)
+        >>> df_combined = df_anno.copy(deep=True)
+        >>> for no in range(2):
+        ...     df_data = datasets.read_data(no=no)
+        ...     reliable_index = reliable_index & set(datasets.reliable_filter(df=df_data))
+        ...     df_combined = pd.concat([
+        ...         df_combined, 
+        ...         df_data[[datasets.TARGET_COLNAME]].rename(columns={datasets.TARGET_COLNAME: datasets.samples.Condition[no]})
+        ...     ], axis=1)
+        >>> df_combined = df_combined.loc[reliable_index, :].reset_index(drop=True)
+        >>> fig, ax = subplots_create(figsize=(6,4), style="matplotlib")
+        >>> ax = XYplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], ax=ax)
+        >>> fig.show()
+    """
+    ax = ax or subplots_create(ncols=1, nrows=1, style="matplotlib")[1]
+    df = df.copy(deep=True)
+    if logarithmic:
+        df[x] = df[x].apply(lambda x:np.log2(x))
+        df[y] = df[y].apply(lambda y:np.log2(y))
+    if color  is not None: color = df[color]
+    if size   is not None: size  = df[size]
+    ax.scatter(x=df[x], y=df[y], s=size, c=color,  **plotkwargs)
+    ax = update_layout(
+        ax=ax, 
+        title=f"XY plot ({x} vs {y})", 
+        xlabel=r"$\log_{2}(\mathrm{" + x + "})$", 
+        ylabel=r"$\log_{2}(\mathrm{" + y + "})$", 
+        **layoutkwargs, **kwargs
+    )
     return ax
 
-def MAplot(X, Y, color=None, marker_size=3, legend=True, ax=None,
-           xlabel="$\log_{10}XY$", ylabel="$\log_{2}(Y/X)$", title="MA plot", **kwargs):
-    ax = _ax_create(ax=ax)
-    color = np.zeros_like(X) if color is None else color
-    x = np.log10(X*Y)
-    y = np.log2(Y/X)
-    for c in np.unique(color):
-        idx = color==c
-        ax.scatter(x=x[idx], y=y[idx], label=str(c), s=marker_size)
-    ax = update_layout(ax, xlabel=xlabel, ylabel=ylabel, title=title, legend=legend, **kwargs)
+def MAplot(df:pd.DataFrame, x:str, y:str,
+           color:Optional[str]=None, size:Optional[str]=None,
+           ax:Optional[Axes]=None, 
+           plotkwargs:Dict[str,Any]={},  layoutkwargs:Dict[str,Any]={}, **kwargs) -> Axes:
+    """MA plot.
+
+    - x-axis (Average): :math:`\\log_2{(\\text{gProcessedSignal})}` for each gene in sample ``X``
+    - y-axis (Minus)  : :math:`\\log_2{(\\text{gProcessedSignal})}` for each gene in sample ``Y``
+
+    Args:
+        df (pd.DataFrame)                : DataFrame
+        x (str)                          : The column name for sample ``X``.
+        y (str)                          : The column name for sample ``Y``.
+        color (Optional[str], optional)  : The column name in ``df`` to assign color to marks. Defaults to ``None``.
+        size (Optional[str], optional)   : The column name in ``df`` to assign mark sizes. Defaults to ``None``.
+        ax (Optional[Axes], optional)    : An instance of ``Axes``. Defaults to ``None``.
+        plotkwargs (Dict[str,Any])       : Keyword arguments for ``ax.plot`. Defaults to ``dict(medianprops={"color": "black"}, flierprops={"marker":'o',"markersize":4,"markerfacecolor":"red","markeredgecolor":"black"})``.
+        layoutkwargs (Dict[str,Any])     : Keyword arguments for :func:`update_layout <teilab.plot.matplotlib.update_layout>`. Defaults to ``{}``.
+
+    Returns:
+        Axes: An instance of ``Axes`` with MA plot.
+
+    .. plot::
+        :include-source:
+        :class: popup-img
+
+        >>> from teilab.datasets import TeiLabDataSets
+        >>> from teilab.plot.matplotlib import MAplot
+        >>> from teilab.utils import subplots_create
+        >>> datasets = TeiLabDataSets(verbose=False)
+        >>> df_anno = datasets.read_data(no=0, usecols=datasets.ANNO_COLNAMES)
+        >>> reliable_index = set(df_anno.index)
+        >>> df_combined = df_anno.copy(deep=True)
+        >>> for no in range(2):
+        ...     df_data = datasets.read_data(no=no)
+        ...     reliable_index = reliable_index & set(datasets.reliable_filter(df=df_data))
+        ...     df_combined = pd.concat([
+        ...         df_combined, 
+        ...         df_data[[datasets.TARGET_COLNAME]].rename(columns={datasets.TARGET_COLNAME: datasets.samples.Condition[no]})
+        ...     ], axis=1)
+        >>> df_combined = df_combined.loc[reliable_index, :].reset_index(drop=True)
+        >>> fig, ax = subplots_create(figsize=(6,4), style="matplotlib")
+        >>> ax = MAplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], ax=ax)
+        >>> fig.show()    
+    """
+    ax = ax or subplots_create(ncols=1, nrows=1, style="matplotlib")[1]
+    df = df.copy(deep=True)
+    X = np.log10(df[x]*df[y])
+    Y = np.log2(df[y]/df[x])
+    if color  is not None: color = df[color]
+    if size   is not None: size  = df[size]
+    ax.scatter(x=X, y=Y, s=size, c=color,  **plotkwargs)
+    ax = update_layout(
+        ax=ax, 
+        title=f"MA plot ({x} vs {y})", 
+        xlabel=r"$\log_{10}(\mathrm{" + x + r"}\times\mathrm{" + y + "})$", 
+        ylabel=r"$\log_{2}(\mathrm{" + y + r"} / \mathrm{" + x + "})$", 
+        **layoutkwargs, **kwargs
+    )
     return ax
 
 def update_layout(ax:Axes, 
