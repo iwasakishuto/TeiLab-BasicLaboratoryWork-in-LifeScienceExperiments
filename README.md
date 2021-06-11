@@ -4,8 +4,8 @@
 
 <img src="https://camo.githubusercontent.com/207bfad0a9138764bcfb51e04353f209de425aaf201648b706936e255b749dd6/687474703a2f2f75692d7465692e726e61692e6a702f6173736574732f696d616765732f746f702d3230303830372e6a7067" width="100%">
 
-[![GitHub version](https://badge.fury.io/gh/iwasakishuto%2FTeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.svg)](https://github.com/iwasakishuto/Translation-Gummy)
-[![Install This Package](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/workflows/Install%20This%20Package/badge.svg)](https://github.com/iwasakishuto/Translation-Gummy/blob/master/.github/workflows/execute_python_package.yml)
+[![GitHub version](https://badge.fury.io/gh/iwasakishuto%2FTeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.svg)](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments)
+[![Install This Package](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/workflows/Install%20This%20Package/badge.svg)](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/.github/workflows/install_this_package.yml)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/LICENSE)
 [![実習wiki](https://img.shields.io/badge/website-wiki-9ecca4)](http://ui-tei.rnai.jp/microarray/doku.php?id=2021)
 [![程研HP](https://img.shields.io/badge/website-HP-9ecca4)](http://ui-tei.rnai.jp/)
