@@ -78,9 +78,9 @@ Indices and tables
 * :ref:`search`
 
 .. |GitHub version| image:: https://badge.fury.io/gh/iwasakishuto%2FTeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.svg
-   :target: https://github.com/iwasakishuto/Translation-Gummy
+   :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments
 .. |Install This Package| image:: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/workflows/Install%20This%20Package/badge.svg
-   :target: https://github.com/iwasakishuto/Translation-Gummy/blob/master/.github/workflows/execute_python_package.yml
+   :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/.github/workflows/install_this_package.yml
 .. |license| image:: https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000
    :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/LICENSE
 .. |実習wiki| image:: https://img.shields.io/badge/website-wiki-9ecca4

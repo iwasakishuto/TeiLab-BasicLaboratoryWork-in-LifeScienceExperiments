@@ -303,4 +303,53 @@ dl.py.class em.property:first-child:after, dl.py.method em.property:first-child:
 th, dl.field-list dt, dl.field-list dd {
   padding: 5px;
 }
+
+
+div.toctree-wrapper.compound {
+  background-color: #343131;
+  padding: 10px;
+  border-radius: 10px;
+  color: white!important;
+}
+div.toctree-wrapper.compound span:before{
+  content: "";
+  font-family: 'FontAwesome';
+  margin-right: 0;
+}
+div.toctree-wrapper.compound span.package-name {
+  color:#ffd43b;
+}
+div.toctree-wrapper.compound span.package-name:before{
+  content: "\f115";
+  color:#ffd43b;
+  margin-right: 5px;
+}
+div.toctree-wrapper.compound span.program-name {
+  color: #a8d8ff;
+}
+div.toctree-wrapper.compound span.program-name:before{
+  content: "\f1c9";
+  color: #a8d8ff;
+  margin-right: 5px;
+}
+div.toctree-wrapper.compound span.module-contents {
+  color: #f2f4c3;
+}
+div.toctree-wrapper.compound span.module-contents:before{
+  content: "\f03a";
+  color: #f2f4c3;
+  margin-right: 5px;
+}
+div.toctree-wrapper.compound span.package-subtitle {
+  color:white;
+  text-decoration: underline;
+}
+div.toctree-wrapper.compound a {
+  color: pink;
+}
+div.toctree-wrapper.compound a.chapter:hover:after {
+  color: pink;
+  content: "¶";
+  padding-left: 5px;
+}
 /* --- Style from Python Charmers ---> */

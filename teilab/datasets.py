@@ -430,7 +430,9 @@ class TeiLabDataSets():
             self.print(f"Could not get the valid URL.\n{message}")
         else:
             self.print(f"Try to get data from {dataURL}\n{message}")
-            path = os.path.join(DATA_DIR, f"{password}.zip")
+            downloader = decide_downloader(url=dataURL)
+            ret = downloader.prepare_for_download(url=dataURL, basename=password, dirname=DATA_DIR, path=None, verbose=False)
+            path = ret[1]
             if os.path.exists(path):
                 self.print(f"Data already exists, so do nothing here.")
             else:
