@@ -482,7 +482,15 @@
 <span class="sd">        ...     ], axis=1)</span>
 <span class="sd">        &gt;&gt;&gt; df_combined = df_combined.loc[reliable_index, :].reset_index(drop=True)</span>
 <span class="sd">        &gt;&gt;&gt; fig, ax = subplots_create(figsize=(6,4), style=&quot;matplotlib&quot;)</span>
-<span class="sd">        &gt;&gt;&gt; ax = MAplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], ax=ax)</span>
+<span class="sd">        &gt;&gt;&gt; ax = MAplot(</span>
+<span class="sd">        ...     df=df_combined, </span>
+<span class="sd">        ...     x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], ax=ax,</span>
+<span class="sd">        ...     hlines={</span>
+<span class="sd">        ...         -1 : dict(colors=&#39;r&#39;, linewidths=1),</span>
+<span class="sd">        ...          0 : dict(colors=&#39;r&#39;, linewidths=2),</span>
+<span class="sd">        ...          1 : dict(colors=&#39;r&#39;, linewidths=1),</span>
+<span class="sd">        ...     }</span>
+<span class="sd">        &gt;&gt;&gt; )</span>
 <span class="sd">        &gt;&gt;&gt; fig.show()    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span> <span class="ow">or</span> <span class="n">subplots_create</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;matplotlib&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>

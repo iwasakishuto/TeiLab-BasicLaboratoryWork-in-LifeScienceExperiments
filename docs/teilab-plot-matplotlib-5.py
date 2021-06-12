@@ -15,5 +15,13 @@ for no in range(2):
     ], axis=1)
 df_combined = df_combined.loc[reliable_index, :].reset_index(drop=True)
 fig, ax = subplots_create(figsize=(6,4), style="matplotlib")
-ax = MAplot(df=df_combined, x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], ax=ax)
+ax = MAplot(
+    df=df_combined,
+    x=datasets.samples.Condition[0], y=datasets.samples.Condition[1], ax=ax,
+    hlines={
+        -1 : dict(colors='r', linewidths=1),
+         0 : dict(colors='r', linewidths=2),
+         1 : dict(colors='r', linewidths=1),
+    }
+)
 fig.show()

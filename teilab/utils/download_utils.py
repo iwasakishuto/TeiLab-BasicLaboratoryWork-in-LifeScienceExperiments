@@ -52,10 +52,10 @@ CONTENT_TYPE2EXT:Dict[str,str] = {
     "application/x-unix-archive"            : ".ar",
     "application/x-compress"                : ".Z",
     "application/x-lzip"                    : ".lz",
-    "text/html"                             : ".html",
+    "text/html"                             : ".txt",
 }
 
-def unzip(path:str, verbose:bool=True) -> List[str]:
+def unzip(path:str, verbose:bool=True) -> Tuple[str,List[str]]:
     """Unzip a zipped file ( Only support the file with ``.zip`` extension. )
 
     Args:
@@ -63,7 +63,7 @@ def unzip(path:str, verbose:bool=True) -> List[str]:
         verbose (bool, optional) : Whether to print verbose or not. Defaults to ``True``.
 
     Returns:
-        List[str]: Paths to extracted files.
+        Tuple[str,List[str]]: The directory where the expanded data is stored and the List of their respective file paths.
 
     Examples:
         >>> from teilab.utils import unzip
@@ -87,15 +87,15 @@ def unzip(path:str, verbose:bool=True) -> List[str]:
                 extracted_file_path = os.path.join(root, info.filename)
                 extracted_file_paths.append(extracted_file_path)
                 print(f"\t* {info.filename}")
-    return extracted_file_paths
+    return root, extracted_file_paths
 
-def decide_extension(content_encoding:Optional[str]=None, content_type:Optional[str]=None, filename:Optional[str]=None):
+def decide_extension(content_encoding:Optional[str]=None, content_type:Optional[str]=None, basename:Optional[str]=None):
     """Decide File Extension based on ``content_encoding`` and ``content_type``
 
     Args:
         content_encoding (Optional[str], optional) : The MIME type of the resource or the data.
         content_type (Optional[str], optional)     : The Content-Encoding entity header is used to compress the media-type.
-        filename (Optional[str], optional)         : The filename.
+        basename (Optional[str], optional)         : The basename.
 
     Returns:
         str: The file extension which starts with "."
@@ -108,21 +108,22 @@ def decide_extension(content_encoding:Optional[str]=None, content_type:Optional[
         '.pdf'
         >>> decide_extension(content_encoding="image/webp", content_type="application/pdf")
         '.webp'
-        >>> decide_extension(filename="hoge.zip")
+        >>> decide_extension(basename="hoge.zip")
         '.zip'
     """
-    ext = CONTENT_ENCODING2EXT.get(content_encoding, CONTENT_TYPE2EXT.get(content_type, os.path.splitext(str(filename))[-1]))
+    ext = CONTENT_ENCODING2EXT.get(content_encoding, CONTENT_TYPE2EXT.get(content_type, os.path.splitext(str(basename))[-1]))
     return ext     
 
 class Downloader():
     """General Downloader"""
     @classmethod
-    def download_file(cls, url:str, dirname:str=".", path:Optional[str]=None, verbose:bool=True, expand:bool=True, **kwargs) -> str:
+    def download_file(cls, url:str, dirname:str=".", basename:str="", path:Optional[str]=None, verbose:bool=True, expand:bool=True, **kwargs) -> str:
         """Download a file and expand it if you want.
 
         Args:
             url (str)                      : The URL of the file you want to download.
             dirname (str, optional)        : The directory where downloaded data will be saved. Defaults to ``"."``.
+            basename (str, optional)       : The basename of the target file. Defaults to ``""``.
             path (Optional[str], optional) : Where and what name to save the downloaded file. Defaults to ``None``.
             verbose (bool, optional)       : Whether to print verbose or not. Defaults to ``True``.
             expand (bool, optional)        : Whether to expand the downloaded file. Defaults to ``True``
@@ -145,18 +146,19 @@ class Downloader():
             >>> os.path.exists(path)
             True
         """
-        path = cls.download_target_file(url=url, dirname=dirname, path=path, verbose=True, **kwargs)
+        path = cls.download_target_file(url=url, dirname=dirname, basename=basename, path=path, verbose=True, **kwargs)
         if expand:
-            unzip(path=path, verbose=verbose)
+            path, extracted_file_paths = unzip(path=path, verbose=verbose)
         return path
 
     @staticmethod
-    def download_target_file(url:str, dirname:str=".", path:Optional[str]=None, bar_width:int=20, verbose:bool=True, **kwargs) -> str:
+    def download_target_file(url:str, dirname:str=".", basename:str=".", path:Optional[str]=None, bar_width:int=20, verbose:bool=True, **kwargs) -> str:
         """Download the target file.
 
         Args:
             url (str)                      : The URL of the file you want to download.
             dirname (str, optional)        : The directory where downloaded data will be saved. Defaults to ``"."``.
+            basename (str, optional)       : The basename of the target file. Defaults to ``""``.
             path (Optional[str], optional) : Where and what name to save the downloaded file. Defaults to ``None``.
             bar_width (int, optional)      : The width of progress bar. Defaults to ``20``.
             verbose (bool, optional)       : Whether to print verbose or not. Defaults to ``True``.
@@ -181,7 +183,7 @@ class Downloader():
         try:
             with urllib.request.urlopen(url) as web_file:
                 headers = dict(web_file.headers._headers)
-            filename, path = Downloader.prepare_for_download(url=url, filename=os.path.basename(url), dirname=dirname, path=path, headers=headers, verbose=verbose)
+            filename, path = Downloader.prepare_for_download(url=url, basename=os.path.basename(url), dirname=dirname, path=path, headers=headers, verbose=verbose)
             if verbose: print("===== Progress =====")
             _, res = urllib.request.urlretrieve(url=url, filename=path, reporthook=progress_reporthook_create(filename=filename, bar_width=bar_width, verbose=verbose))
         except urllib.error.URLError:
@@ -191,16 +193,16 @@ class Downloader():
         return path
 
     @staticmethod
-    def prepare_for_download(url:str="", filename:str="", dirname:str=".", path:Optional[str]=None, headers:Dict[str,str]={}, verbose:bool=True) -> Tuple[str,str]:
+    def prepare_for_download(url:str="", dirname:str=".", basename:str="", path:Optional[str]=None, headers:Optional[Dict[str,str]]=None, verbose:bool=True) -> Tuple[str,str]:
         """Get Information from webfile header and prepare for downloading.
 
         Args:
-            url (str, optional)               : The URL of the file you want to download. Defaults to ``""``.
-            filename (str, optional)          : The filename of the target file. Defaults to ``""``.
-            dirname (str, optional)           : The directory where downloaded data will be saved. Defaults to ``"."``.
-            path (Optional[str], optional)    : Where and what name to save the downloaded file. Defaults to ``None``.
-            headers (Dict[str,str], optional) : The header information of the target file. Defaults to ``{}``.
-            verbose (bool, optional)          : Whether to print verbose or not. Defaults to ``True``.
+            url (str, optional)                         : The URL of the file you want to download. Defaults to ``""``.
+            dirname (str, optional)                     : The directory where downloaded data will be saved. Defaults to ``"."``.
+            basename (str, optional)                    : The basename of the target file. Defaults to ``""``.
+            path (Optional[str], optional)              : Where and what name to save the downloaded file. Defaults to ``None``.
+            headers (Optional[Dict[str,str]], optional) : The header information of the target file. Defaults to ``{}``.
+            verbose (bool, optional)                    : Whether to print verbose or not. Defaults to ``True``.
 
         Returns:
             Tuple[str,str]: ``filename`` and ``path`` of the file that will be downloaded.
@@ -209,10 +211,9 @@ class Downloader():
             >>> from teilab.utils import Downloader
             >>> filename, path = Downloader.prepare_for_download(
             ...     url="http://ui-tei.rnai.jp/",
-            ...     filename="index.html",
+            ...     basename="index.html",
             ...     dirname=".",
             ...     path=None,
-            ...     headers={"Content-Length": "32874", 'Content-Type': 'text/html; charset=UTF-8'}
             >>> )
             [Download] URL: http://ui-tei.rnai.jp/
             * Content-Encoding : None
@@ -222,15 +223,24 @@ class Downloader():
             >>> filename, path
             ('index.html', './index.html')
         """
+        # Get the information of the file you want to download from the header.
+        if headers is None:
+            with urllib.request.urlopen(url) as web_file:
+                headers = dict(web_file.headers._headers)
         content_encoding = headers.get("Content-Encoding")
         content_length   = "{0:.1f} [{1}]".format(*readable_bytes(int(headers.get("Content-Length", 0))))
         content_type     = headers.get("Content-Type").split(";")[0]
-        if filename=="": 
-            filename = now_str()
+        # Decide the download destination
+        if basename=="": 
+            basename = now_str()
         if path is None:
-            root, _ = os.path.splitext(filename)
-            guessed_ext = decide_extension(content_encoding, content_type, filename)
-            path = os.path.join(dirname, root+guessed_ext)
+            root, _ = os.path.splitext(basename)
+            guessed_ext = decide_extension(content_encoding, content_type, basename)
+            filename = root+guessed_ext
+            path = os.path.join(dirname, filename)
+        else:
+            filename = os.path.split(path)[-1]
+        # Show the results.
         if verbose: print(
             f"[Download] URL: {url}",
             f"* Content-Encoding : {content_encoding}",
@@ -247,28 +257,15 @@ class GoogleDriveDownloader(Downloader):
     DRIVE_URL  = "https://docs.google.com/uc?export=download"
 
     @staticmethod
-    def download_target_file(url:str, dirname:str=".", path:Optional[str]=None, driveId:Optional[str]=None, verbose:bool=True, **kwargs) -> str:
-        """Download the target Google Drive file.
-
-        Args:
-            url (str)                         : The URL of the file you want to download.
-            dirname (str, optional)           : The directory where downloaded data will be saved. Defaults to ``"."``.
-            path (Optional[str], optional)    : Where and what name to save the downloaded file. Defaults to ``None``.
-            driveId (Optional[str], optional) : The GoogleDrive's file ID. Defaults to ``None``.
-            verbose (bool, optional)          : Whether to print verbose or not. Defaults to ``True``.
-
-        Raises:
-            TypeError: When Google Drive File ID is not detected from ``driveId`` and ``url`` .
-
-        Returns:
-            str: The path to the downloaded file.        
-        """
+    def prepare_for_download(url:str="", dirname:str=".", basename:str="", path:Optional[str]=None, headers:Optional[Dict[str,str]]=None, verbose:bool=True, driveId:Optional[str]=None) -> Tuple[str,str]:
         if driveId is None:
             q = urllib.parse.parse_qs(urllib.parse.urlparse(url).query).get("id")
             if len(q)==0:
                 raise TypeError("Please specify the target Google Drive Id using ``url`` or ``driveId`` arguments.")
             else:
                 driveId=q[0]
+        if basename=="":
+            basename = driveId
         # Start a Session
         params = {"id":driveId}
         session = requests.Session()
@@ -279,7 +276,35 @@ class GoogleDriveDownloader(Downloader):
                 break
         # Get Information from headers
         headers = session.head(url=GoogleDriveDownloader.DRIVE_URL, params=params).headers
-        filename, path = GoogleDriveDownloader.prepare_for_download(url=url, filename=driveId, dirname=dirname, path=path, headers=headers, verbose=verbose)
+        return [*Downloader.prepare_for_download(
+            url=url,
+            dirname=dirname,
+            basename=basename,
+            path=path,
+            headers=headers,
+            verbose=verbose,
+        ), session, params]
+
+
+    @staticmethod
+    def download_target_file(url:str, dirname:str=".", basename:str="", path:Optional[str]=None, driveId:Optional[str]=None, verbose:bool=True, **kwargs) -> str:
+        """Download the target Google Drive file.
+
+        Args:
+            url (str)                         : The URL of the file you want to download.
+            dirname (str, optional)           : The directory where downloaded data will be saved. Defaults to ``"."``.
+            basename (str, optional)          : The basename of the target file. Defaults to ``""``.
+            path (Optional[str], optional)    : Where and what name to save the downloaded file. Defaults to ``None``.
+            driveId (Optional[str], optional) : The GoogleDrive's file ID. Defaults to ``None``.
+            verbose (bool, optional)          : Whether to print verbose or not. Defaults to ``True``.
+
+        Raises:
+            TypeError: When Google Drive File ID is not detected from ``driveId`` and ``url`` .
+
+        Returns:
+            str: The path to the downloaded file.        
+        """
+        filename, path, session, params = GoogleDriveDownloader.prepare_for_download(url=url, basename=basename, dirname=dirname, path=path, verbose=verbose)
         # Get contents
         response = session.get(GoogleDriveDownloader.DRIVE_URL, params=params, stream=True)
         with open(path, "wb") as f:

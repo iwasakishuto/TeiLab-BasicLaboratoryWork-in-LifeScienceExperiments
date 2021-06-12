@@ -430,7 +430,9 @@ class TeiLabDataSets():
             self.print(f"Could not get the valid URL.\n{message}")
         else:
             self.print(f"Try to get data from {dataURL}\n{message}")
-            path = os.path.join(DATA_DIR, f"{password}.zip")
+            downloader = decide_downloader(url=dataURL)
+            ret = downloader.prepare_for_download(url=dataURL, basename=password, dirname=DATA_DIR, path=None, verbose=False)
+            path = ret[1]
             if os.path.exists(path):
                 self.print(f"Data already exists, so do nothing here.")
             else:
@@ -441,11 +443,11 @@ class TeiLabDataSets():
         self.samples.grouping()
         return path
 
-    def get_filePaths(self) -> List[Path]:
+    def get_filePaths(self) -> NDArray[Any,Path]:
         """Get the path list of files used in the lecture.
 
         Returns:
-            List[Path]: The path lists for datasets.
+            NDArray[Path]: The path lists for datasets.
 
         Examples:
             >>> from teilab.utils import TeiLabDataSets
@@ -457,10 +459,10 @@ class TeiLabDataSets():
             'US91503671_253949442637_S01_GE1_105_Dec08_1_1.txt'
         """
         fnLists = self.samples.FileName.tolist()
-        return sorted([path for path in self.root.glob("**/*.txt") if path.name in fnLists], key=lambda x:fnLists.index(x.name))
+        return np.asarray(sorted([path for path in self.root.glob("**/*.txt") if path.name in fnLists], key=lambda x:fnLists.index(x.name)))
 
     @property
-    def filePaths(self) -> List[Path]:
+    def filePaths(self) -> NDArray[Any,Path]:
         """The path lists for datasets."""
         return self.get_filePaths()
 
