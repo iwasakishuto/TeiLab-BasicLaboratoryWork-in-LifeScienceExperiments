@@ -44,13 +44,56 @@ Follow the chart below to select the test.
 Distributions
 *************
 
+- :ref:`gamma-distribution <target to gamma-distribution section>`
+- :ref:`f-distribution <target to f-distribution section>`
+- :ref:`t-distribution <target to t-distribution section>`
+
+.. _target to gamma-distribution section:
+
+:math:`\Gamma`-distribution
+===========================
+
+The gamma function is defined as
+
+    .. math::
+       \Gamma(z) = \int_0^\infty t^{z-1} e^{-t} dt
+    
+for :math:`\Re(z) > 0` and is extended to the rest of the complex plane by analytic continuation.
+
+The gamma function is often referred to as the generalized factorial since :math:`\Gamma(n + 1) = n!` for natural numbers :math:`n`. More generally it satisfies the recurrence relation :math:`\Gamma(z + 1) = z \cdot \Gamma(z)` for complex :math:`z`, which, combined with the fact that :math:`\Gamma(1) = 1`, implies the above identity for :math:`z = n`.
+
+.. code-block:: python
+
+    >>> import numpy as np
+    >>> import matplotlib.pyplot as plt
+    >>> from scipy.special import gamma
+    >>> from scipy.integrate import quad
+    >>> def gamma_pdf(x):
+    ...     return quad(func=lambda x,z:np.power(x, z-1)*np.exp(-x), a=0, b=np.inf, args=(x))[0]
+    >>> x = np.linspace(1e-2, 5, 100)
+    >>> fig, ax = plt.subplots(figsize=(6, 4))
+    >>> ax.plot(x, gamma(x), color="red", alpha=0.5, label="scipy")
+    >>> ax.plot(x, np.vectorize(gamma_pdf)(x), color="blue", alpha=0.5, label="myfunc")
+    >>> ax.set_title(fr"$\Gamma$-distribution", fontsize=14)
+    >>> ax.legend()
+    >>> ax.set_ylim(0, 10)
+    >>> fig.savefig("statistics.distributions.gamma.jpg")
+
++-------------------------------------------------------+
+|                      Results                          |
++=======================================================+
+| .. image:: _images/statistics.distributions.gamma.jpg |
+|    :class: popup-img                                  |
++-------------------------------------------------------+
+
+.. _target to f-distribution section:
+
 f-distribution
 ==============
 
 The probability density function for `f` is:
 
 .. math::
-
     f(x, df_1, df_2) = \\frac{df_2^{df_2/2} df_1^{df_1/2} x^{df_1 / 2-1}}{(df_2+df_1 x)^{(df_1+df_2)/2}B(df_1/2, df_2/2)}
 
 for :math:`x > 0`.
@@ -68,7 +111,7 @@ for :math:`x > 0`.
         >>> fig, axes = plt.subplots(nrows=len(dfns), ncols=len(dfds), sharex=True, sharey="row", figsize=(5*len(dfns), 5*len(dfds)))
         >>> for axes_row, dfn in zip(axes, dfns):
         ...     for ax, dfd in zip(axes_row, dfds):
-        ...         ax.plot(x, f_dist.pdf(x, dfn=dfn, dfd=dfd), color="red", alpha=0.5, label="scipy")
+        ...         ax.plot(x, stats.f.pdf(x, dfn=dfn, dfd=dfd), color="red", alpha=0.5, label="scipy")
         ...         ax.plot(x, f_pdf(x, dfn=dfn,dfd=dfd), color="blue", alpha=0.5, label="myfunc")
         ...         ax.set_title(f"f-distribution (dfn={dfn}, dfd={dfd})", fontsize=14)
         ...         ax.legend()
@@ -81,10 +124,42 @@ for :math:`x > 0`.
 |    :class: popup-img                              |
 +---------------------------------------------------+
 
+.. _target to t-distribution section:
+
 t-distribution
 ==============
 
+The probability density function for `t` is:
 
+.. math::
+    f(x, \\nu) = \\frac{\Gamma((\\nu+1)/2)}{\sqrt{\pi \\nu} \Gamma(\\nu/2)}(1+x^2/\\nu)^{-(\\nu+1)/2}
+
+where :math:`x` is a real number and the degrees of freedom parameter :math:`\\nu` satisfies :math:`\\nu > 0`.
+
+.. code-block:: python
+
+    >>> import numpy as np
+    >>> import matplotlib.pyplot as plt
+    >>> from scipy import stats
+    >>> from scipy.special import gamma
+    >>> def t_pdf(x,df):
+    ...     return gamma((df+1)/2) / (np.sqrt(np.pi*df)*gamma(df/2)) * (1+x**2/df)**(-(df+1)/2)
+    >>> x = np.linspace(-3, 3, 1000)
+    >>> dfs = [1,3,7,90]
+    >>> fig, axes = plt.subplots(nrows=1, ncols=len(dfs), sharey="row", figsize=(6*len(dfs), 4))
+    >>> for ax,df in zip(axes,dfs):
+    ...     ax.plot(x, stats.t.pdf(x, df=df), color="red", alpha=0.5, label="scipy")
+    ...     ax.plot(x, t_pdf(x, df=df), color="blue", alpha=0.5, label="myfunc")
+    ...     ax.set_title(f"t-distribution (df={df})", fontsize=14)
+    ...     ax.legend()
+    >>> fig.show()
+
++---------------------------------------------------+
+|                      Results                      |
++===================================================+
+| .. image:: _images/statistics.distributions.t.jpg |
+|    :class: popup-img                              |
++---------------------------------------------------+
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -172,19 +247,16 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
             Let
 
             .. math::
-
                 \overline{A}=\\frac{1}{n}\sum_{i=1}^{n}A_{i},\quad \overline{B}=\\frac {1}{m}\sum _{i=1}^{m}B_{i}
 
             be the sample means. Let
 
             .. math::
-
                 S_{A}^{2}={\\frac {1}{n-1}}\sum _{i=1}^{n}\left(A_{i}-{\overline {A}}\\right)^{2},\quad S_{B}^{2}={\\frac {1}{m-1}}\sum _{i=1}^{m}\left(B_{i}-{\overline {B}}\\right)^{2}
 
             be the sample variances. Then the test statistic
 
             .. math::
-
                 F={\\frac  {S_{A}^{2}}{S_{B}^{2}}}
 
     Args:
