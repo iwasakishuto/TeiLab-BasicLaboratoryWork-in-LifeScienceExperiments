@@ -1,0 +1,7 @@
+teilab.statistics module
+========================
+
+.. automodule:: teilab.statistics
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,342 @@
+digraph RAMPreprocessingGraph {
+    graph [
+        charset   = "UTF-8";
+        label     = "Preprocessing (RMA)",
+        labelloc  = "t",
+        labeljust = "c",
+        bgcolor   = "#1f441e",
+        fontcolor = "white",
+        fontsize  = 18,
+        style     = "filled",
+        rankdir   = TB,
+        margin    = 0.2,
+        ranksep   = 1.0,
+        nodesep   = 0.9,
+        layout    = dot,
+        compound = true,
+    ];
+
+    node [
+        style     = "solid,filled",
+        fontsize  = 16,
+        fontcolor = 6,
+        fontname  = "monospace",
+        color     = "#cee6b4",
+        fillcolor = "#9ecca4",
+        fixedsize = false,
+        margin    = "0.2,0.1",
+    ];
+
+    RawData_row1_col1 [shape=doublecircle margin="0" fillcolor="#29bb89" fontcolor="#be0000" color="#29bb89" label="RawData\n(row1,col1)"];
+    RawData_row1_col2 [shape=doublecircle margin="0" fillcolor="#29bb89" fontcolor="#be0000" color="#29bb89" label="RawData\n(row1,col2)"];
+    RawData_rowN_colM [shape=doublecircle margin="0" fillcolor="#29bb89" fontcolor="#be0000" color="#29bb89" label="RawData\n(rowN,colM)"];
+    Ave_row1_col1 [shape=circle margin="0" fontcolor="#233e8b" fillcolor="#b6c9f0" color="#233e8b" label="ave"];
+    Ave_row1_col2 [shape=circle margin="0" fontcolor="#233e8b" fillcolor="#b6c9f0" color="#233e8b" label="ave"];
+    Ave_rowN_colM [shape=circle margin="0" fontcolor="#233e8b" fillcolor="#b6c9f0" color="#233e8b" label="ave"];
+    gMeanSignal_row1_col1 [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="white">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="110" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gMeanSignal</font></td></tr>
+            <tr><td port="location"><font face="Courier">row1,col1</font></td></tr>
+        </table>
+        >
+    ]
+    gMeanSignal_row1_col2 [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="white">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="110" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gMeanSignal</font></td></tr>
+            <tr><td port="location"><font face="Courier">row1,col2</font></td></tr>
+        </table>
+        >
+    ]
+    gMeanSignal_rowN_colM [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="white">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="110" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gMeanSignal</font></td></tr>
+            <tr><td port="location"><font face="Courier">rowN,colM</font></td></tr>
+        </table>
+        >
+    ]
+    gBGUsed_row1_col1 [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="white">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="80" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gBGUsed</font></td></tr>
+            <tr><td port="location"><font face="Courier">row1,col1</font></td></tr>
+        </table>
+        >
+    ]
+    gBGUsed_row1_col2 [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="white">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="80" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gBGUsed</font></td></tr>
+            <tr><td port="location"><font face="Courier">row1,col2</font></td></tr>
+        </table>
+        >
+    ]
+    gBGUsed_rowN_colM [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="white">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="80" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gBGUsed</font></td></tr>
+            <tr><td port="location"><font face="Courier">rowN,colM</font></td></tr>
+        </table>
+        >
+    ]
+    gBGSubSignal               [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5"];
+    rBGSubSignal               [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5"];
+    gDyeNormSignal             [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5"];
+    rDyeNormSignal             [shape=box fontname="monaco" fontcolor="#e74c3c" fillcolor="white" color="#e1e4e5"];
+
+    Minus [shape=circle margin="0" fontcolor="#233e8b" fillcolor="#b6c9f0" color="#233e8b" label="-"];
+
+    BackgroundSubtraction          [shape=diamond  fontname="fantasy" label="Background Subtraction\n(+ Detrended fluctuation Analysis)"];
+    DyeNormalization               [shape=diamond  fontname="fantasy" margin="0.05" label="(Dye Normalization)"];
+    SurrogateVariableAnalysis      [shape=diamond  fontname="fantasy" margin="0.05" label="Surrogate Variable Analysis"];
+    QuantileNormalization          [shape=diamond  fontname="fantasy" margin="0.05" label="Quantile Normalization"];
+    Summarization                  [shape=diamond  fontname="fantasy" margin="0.05" label="Summarization"];
+    remaining_processing_row1_col2 [shape=Mdiamond fontname="fantasy" margin="0.05" label="Remaining Processing"]
+    remaining_processing_rowN_colM [shape=Mdiamond fontname="fantasy" margin="0.05" label="Remaining Processing"]
+
+    gProcessedSignal_vimentin1 [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#fff5b7">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="160" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignal</font></td></tr>
+            <tr><td port="gene"><font face="Courier">vimentin1</font></td></tr>
+        </table>
+        >
+    ]
+    gProcessedSignal_insulin1  [
+        shape=none 
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#fff5b7">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="160" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignal</font></td></tr>
+            <tr><td port="gene"><font face="Courier">insulin1</font></td></tr>
+        </table>
+        >
+    ]
+    gProcessedSignal_vimentin3 [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#fff5b7">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="160" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignal</font></td></tr>
+            <tr><td port="gene"><font face="Courier">vimentin3</font></td></tr>
+        </table>
+        >
+    ] 
+
+    gProcessedSignals_sampleA  [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#ffc93c">
+            <tr>
+            <td rowspan="2" port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="170" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignals</font></td>
+            <td port="vim1"><font face="Courier">vimentin1</font></td>
+            </tr>
+            <tr><td port="ins1"><font face="Courier">insulin1</font></td></tr>
+            <tr bgcolor="red">
+            <td rowspan="2" port="varname" align="center" border="0" width="170" fixedsize="true"><font point-size="26" color="#1f441e">SAMPLE_A</font></td>
+            <td port="ins1"><font face="Courier">:</font></td>
+            </tr>
+            <tr><td port="vim3"><font face="Courier">vimentin3</font></td></tr>
+        </table>
+        >
+    ]
+    gProcessedSignals_sampleB  [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#ffc93c">
+            <tr>
+            <td rowspan="2" port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="170" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignals</font></td>
+            <td port="vim1"><font face="Courier">vimentin1</font></td>
+            </tr>
+            <tr><td port="ins1"><font face="Courier">insulin1</font></td></tr>
+            <tr bgcolor="red">
+            <td rowspan="2" port="varname" align="center" border="0" width="170" fixedsize="true"><font point-size="26" color="#1f441e">SAMPLE_B</font></td>
+            <td port="ins1"><font face="Courier">:</font></td>
+            </tr>
+            <tr><td port="vim3"><font face="Courier">vimentin3</font></td></tr>
+        </table>
+        >
+    ]
+
+    gProcessedSignal_vimentin1_normed [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#fff5b7">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="230" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignal_normed</font></td></tr>
+            <tr><td port="gene"><font face="Courier">vimentin1</font></td></tr>
+        </table>
+        >
+    ]
+    gProcessedSignal_insulin1_normed  [
+        shape=none 
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#fff5b7">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="230" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignal_normed</font></td></tr>
+            <tr><td port="gene"><font face="Courier">insulin1</font></td></tr>
+        </table>
+        >
+    ]
+    gProcessedSignal_vimentin3_normed [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#fff5b7">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="230" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignal_normed</font></td></tr>
+            <tr><td port="gene"><font face="Courier">vimentin3</font></td></tr>
+        </table>
+        >
+    ] 
+
+    gProcessedSignal_vimentin_normed [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#fff5b7">
+            <tr><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="230" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignal_normed</font></td></tr>
+            <tr><td port="gene"><font face="Courier">vimentin</font></td></tr>
+        </table>
+        >
+    ] 
+    gProcessedSignals_sampleB_normed  [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#ffc93c">
+            <tr>
+            <td rowspan="2" port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="240" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignals_normed</font></td>
+            <td port="vim1"><font face="Courier">vimentin1_normed</font></td>
+            </tr>
+            <tr><td port="ins1"><font face="Courier">insulin1_normed</font></td></tr>
+            <tr bgcolor="red">
+            <td rowspan="2" port="varname" align="center" border="0" width="170" fixedsize="true"><font point-size="26" color="#1f441e">SAMPLE_B</font></td>
+            <td port="ins1"><font face="Courier">:</font></td>
+            </tr>
+            <tr><td port="vim3"><font face="Courier">vimentin3_normed</font></td></tr>
+        </table>
+        >
+    ]
+    gProcessedSignals_sampleA_normed  [
+        shape = none
+        margin = 0
+        label = <
+        <table width="100" border="0" cellspacing="10" bgcolor="#ffc93c">
+            <tr>
+            <td rowspan="2" port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="240" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">gProcessedSignals_normed</font></td>
+            <td port="vim1"><font face="Courier">vimentin1_normed</font></td>
+            </tr>
+            <tr><td port="ins1"><font face="Courier">insulin1_normed</font></td></tr>
+            <tr bgcolor="red">
+            <td rowspan="2" port="varname" align="center" border="0" width="170" fixedsize="true"><font point-size="26" color="#1f441e">SAMPLE_A</font></td>
+            <td port="ins1"><font face="Courier">:</font></td>
+            </tr>
+            <tr><td port="vim3"><font face="Courier">vimentin3_normed</font></td></tr>
+        </table>
+        >
+    ]
+
+    edge [
+        style         = solid,
+        fontsize      = 14,
+        fontcolor     = white,
+        fontname      = "Migu 1M",
+        color         = white,
+        labelfloat    = true,
+        labeldistance = 2.5,
+        labelangle    = 70
+    ];
+    RawData_row1_col1 -> Ave_row1_col1 -> gMeanSignal_row1_col1;
+    RawData_row1_col2 -> Ave_row1_col2 -> gMeanSignal_row1_col2;
+    RawData_rowN_colM -> Ave_rowN_colM -> gMeanSignal_rowN_colM;
+    subgraph cluster_1_row1_col1 {
+        label     = "Background Subtraction";
+        labelloc  = "t";
+        labeljust = "c";
+        fillcolor = "#89898989";
+        fontcolor = "#ffd56b";
+        margin    = 20;
+        gMeanSignal_row1_col1:varname -> BackgroundSubtraction
+        BackgroundSubtraction -> gBGUsed_row1_col1;
+        gMeanSignal_row1_col1 -> Minus;
+        gBGUsed_row1_col1 -> Minus;
+        Minus -> gBGSubSignal;
+        gBGSubSignal -> DyeNormalization;
+        rBGSubSignal -> DyeNormalization;
+        DyeNormalization -> gDyeNormSignal;
+        DyeNormalization -> rDyeNormSignal;
+        gDyeNormSignal -> SurrogateVariableAnalysis;
+        SurrogateVariableAnalysis -> gProcessedSignal_vimentin1;
+    };
+    subgraph cluster_1_row1_col2 {
+        label     = "Background Subtraction";
+        labelloc  = "b";
+        labeljust = "l";
+        fillcolor = "#89898989";
+        fontcolor = "#ffd56b";
+        margin    = 20;
+        gMeanSignal_row1_col2 -> BackgroundSubtraction -> gBGUsed_row1_col2 -> remaining_processing_row1_col2;
+        gMeanSignal_row1_col2 -> remaining_processing_row1_col2;
+        remaining_processing_row1_col2 -> gProcessedSignal_insulin1;
+    }
+    subgraph cluster_1_rowN_colM {
+        label     = "Background Subtraction";
+        labelloc  = "b";
+        labeljust = "r";
+        fillcolor = "#89898989";
+        fontcolor = "#ffd56b";
+        margin    = 20;
+        gMeanSignal_rowN_colM -> BackgroundSubtraction -> gBGUsed_rowN_colM -> remaining_processing_rowN_colM;
+        gMeanSignal_rowN_colM -> remaining_processing_rowN_colM
+        remaining_processing_rowN_colM -> gProcessedSignal_vimentin3
+    }
+    gProcessedSignal_vimentin1 -> gProcessedSignals_sampleA:vim1
+    gProcessedSignal_vimentin3 -> gProcessedSignals_sampleA:vim3
+    gProcessedSignal_insulin1  -> gProcessedSignals_sampleA:ins1
+    subgraph cluster_2 {
+        label     = "Normalization Between Samples";
+        labelloc  = "t";
+        labeljust = "l";
+        fillcolor = "#89898989";
+        fontcolor = "#ffd56b";
+        margin    = 20;
+
+        gProcessedSignals_sampleA -> QuantileNormalization;
+        gProcessedSignals_sampleB -> QuantileNormalization;
+        QuantileNormalization -> gProcessedSignals_sampleB_normed;
+        QuantileNormalization -> gProcessedSignals_sampleA_normed;
+    };
+    gProcessedSignals_sampleA_normed:vim1 -> gProcessedSignal_vimentin1_normed;
+    gProcessedSignals_sampleA_normed:ins1 -> gProcessedSignal_insulin1_normed;
+    gProcessedSignals_sampleA_normed:vim3 -> gProcessedSignal_vimentin3_normed;
+    subgraph cluster_3 {
+        label     = "Summarization";
+        labelloc  = "t";
+        labeljust = "l";
+        fillcolor = "#89898989";
+        fontcolor = "#ffd56b";
+        margin    = 20;
+
+        gProcessedSignal_vimentin1_normed -> Summarization;
+        gProcessedSignal_vimentin3_normed -> Summarization;
+        Summarization -> gProcessedSignal_vimentin_normed;
+    };
+}

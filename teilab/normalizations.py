@@ -8,7 +8,7 @@ Robust Multichip Analysis (RMA)
 
 In microarray analysis, many algorithms have been proposed, but the most widely used one (**de facto standard**) is :fa:`file-pdf-o` `Robust Multichip Analysis (RMA) <https://academic.oup.com/biostatistics/article/4/2/249/245074>`_ , where the signal value of each spot ( ``RawData`` ) is processed and normalized according to the following flow. ( :ref:`1) Background Subtraction <target to background subtraction section>`, :ref:`2) Normalization Between Samples <target to normalization between samples section>` and :ref:`3) Summarization <target to summarization section>` )
 
-.. graphviz:: _graphviz/RobustMultichipAnalysis.dot
+.. graphviz:: _graphviz/graphviz_RobustMultichipAnalysis.dot
       :class: popup-img
 
 .. _target to background subtraction section:

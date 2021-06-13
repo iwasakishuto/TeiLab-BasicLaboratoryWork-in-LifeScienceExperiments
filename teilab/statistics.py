@@ -1,4 +1,40 @@
 #coding: utf-8
+"""
+**Statistical hypothesis testing** is required to determine if expression levels (``gProcessedSignal`` s) have changed between samples with siRNA and those without siRNA.
+
+    A statistical hypothesis test is a method of statistical inference. An **alternative hypothesis** is proposed for the probability distribution of the data. The comparison of the two models is deemed statistically significant if, according to a threshold probability—the significance level ( :math:`\\alpha` ) — the data would be unlikely to occur if the **null hypothesis** were true. The **pre-chosen** level of significance is the maximal allowed "false positive rate". One wants to control the risk of incorrectly rejecting a true **null hypothesis**.
+
+    The process of distinguishing between the **null hypothesis** and the **alternative hypothesis** is aided by considering two conceptual types of errors.
+
+    1. The first type of error occurs when the **null hypothesis** is wrongly rejected. (type 1 error)
+    2. The second type of error occurs when the **null hypothesis** is wrongly not rejected. (type 2 error)
+
+    Hypothesis tests based on statistical significance are another way of expressing confidence intervals (more precisely, confidence sets). In other words, every hypothesis test based on significance can be obtained via a confidence interval, and every confidence interval can be obtained via a hypothesis test based on significance. [#ref1]_
+
+    .. [#ref1] :fa:`home` `Mathematical Statistics and Data Analysis (3rd ed.) <https://www.amazon.com/Mathematical-Statistics-Analysis-Available-Enhanced/dp/0534399428>`_
+
+    .. seealso::
+        https://en.wikipedia.org/wiki/Statistical_hypothesis_testing
+
+Various alternative hypotheses can be handled by changing the value of A
+
+In this submodules, you can test each **null (alternative) hypothesis** by changing the value of ``alternative``
+
++--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
+| Terminology  | ``alternative`` | Alternative Hypothesis                   | Rejection Region                                                                |
++==============+=================+==========================================+=================================================================================+
+| right-tailed | ``"greater"``   |:math:`H_a:\sigma^2_1   >  \sigma^2_2`    | :math:`\mathbf{F}\geq F_{\\alpha}`                                               |
++--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
+| left-tailed  | ``"less"``      |:math:`H_a:\sigma^2_1   <  \sigma^2_2`    | :math:`\mathbf{F}\leq F_{1−\\alpha}`                                             |
++--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
+| two-tailed   | ``"two-sided"`` |:math:`H_a:\sigma^2_1 \\neq \sigma^2_2`    | :math:`\mathbf{F}\leq F_{1−\\alpha∕2}` or :math:`\mathbf{F}\geq F_{\\alpha∕2}`    |
++--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
+
+Follow the chart below to select the test.
+
+.. graphviz:: _graphviz/graphviz_ChoosingStatisticalTest.dot
+      :class: popup-img
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
@@ -68,7 +104,7 @@ class TestResult():
         ax = update_layout(ax=ax, title=f"{self.testname}-test (alternative: {self.alternative})\nNull-hypothesis {'holds' if self.does_H0_hold else 'rejects'}", xlabel="x", ylabel="y", legend=True)
         return ax
 
-def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> bool:
+def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
     """F-Tests for Equality of Two Variances.
 
     If the two populations are normally distributed and if :math:`H_0:\sigma^2_1=\sigma^2_2` is true then under independent sampling :math:`F` approximately follows an F-distribution (:math:`f(x, df_1, df_2)`) with degrees of freedom :math:`df_1=n_1−1` and :math:`df_2=n_2−1`.
@@ -116,18 +152,6 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
 
     Returns:
         TestResult: Structure that holds test results.
-
-    By changing the value of ``alternative``, each null hypothesis can be dealt with.
-
-    +--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
-    | Terminology  | ``alternative`` | Alternative Hypothesis                   | Rejection Region                                                                |
-    +==============+=================+==========================================+=================================================================================+
-    | right-tailed | ``"greater"``   |:math:`H_a:\sigma^2_1   >  \sigma^2_2`    | :math:`\mathbf{F}\geq F_{\\alpha}`                                               |
-    +--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
-    | left-tailed  | ``"less"``      |:math:`H_a:\sigma^2_1   <  \sigma^2_2`    | :math:`\mathbf{F}\leq F_{1−\\alpha}`                                             |
-    +--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
-    | two-tailed   | ``"two-sided"`` |:math:`H_a:\sigma^2_1 \\neq \sigma^2_2`    | :math:`\mathbf{F}\leq F_{1−\\alpha∕2}` or :math:`\mathbf{F}\geq F_{\\alpha∕2}`    |
-    +--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
 
     .. plot::
         :include-source:
@@ -179,7 +203,22 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
         test_result.plot(x=np.linspace(0.001,max(x_max,f)+1,1000))
     return test_result
 
-def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> bool:
+def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
+    """T-Tests for Equality of Two averages of related samples.
+
+    Args:
+        a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
+        alpha (float)                 : The probability of making the wrong decision when the null hypothesis is true.
+        alternative (str, optional)   : Defines the alternative hypothesis. Please choose from [ ``"two-sided"``, ``"less"``, ``"greater"`` ]. Defaults to ``"two-sided"``.
+        plot (bool, optional)         : Whether to plot F-distribution or not. Defaults to ``False``.
+        ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.
+
+    Returns:
+        TestResult: [description]
+
+    .. seealso::
+        https://en.wikipedia.org/wiki/T-test#Dependent_t-test_for_paired_samples
+    """
     n = len(a)                   #: Sample size.
     df = n-1                     #: Degrees of Freedom.
     sd = np.sum(a-b)             #: Sum of Difference.

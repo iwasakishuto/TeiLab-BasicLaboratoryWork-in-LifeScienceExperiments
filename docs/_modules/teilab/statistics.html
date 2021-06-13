@@ -1,0 +1,498 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>teilab.statistics &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/popup.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/custom.js"></script>
+        <script src="../../_static/particles.min.js"></script>
+        <script src="../../_static/popup.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> UiTei-Lab's Course Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+  <ul class="utility-btns">
+    <li><a class="btn btn-icon btn-start" href="#" onclick="changeParticles(this);">Start Particles</a></li>
+    <li><a class="btn btn-icon btn-expand" href="#" onclick="changeStyle(this);">Expand</a></li>
+  </ul>
+  <div class="sidebarlogo">
+    <h4>Lab's information</h4>
+    <ul class="social">
+      
+      <li><a class="sc-book" href="http://ui-tei.rnai.jp/">
+        <i class="fa fa-book" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php?id=2021">
+        <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+    <h4>Author's Social link</h4>
+    <ul class="social">
+      
+      <li><a class="sc-twitter" href="https://twitter.com/cabernet_rock">
+        <i class="fa fa-twitter" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-github" href="https://github.com/iwasakishuto">
+        <i class="fa fa-github" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+  </div>
+  
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../teilab.html">teilab package</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">UiTei-Lab's Course Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<canvas class="particle-background"></canvas>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>teilab.statistics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for teilab.statistics</h1><div class="highlight"><pre>
+<span></span><span class="c1">#coding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">**Statistical hypothesis testing** is required to determine if expression levels (``gProcessedSignal`` s) have changed between samples with siRNA and those without siRNA.</span>
+
+<span class="sd">    A statistical hypothesis test is a method of statistical inference. An **alternative hypothesis** is proposed for the probability distribution of the data. The comparison of the two models is deemed statistically significant if, according to a threshold probability—the significance level ( :math:`\\alpha` ) — the data would be unlikely to occur if the **null hypothesis** were true. The **pre-chosen** level of significance is the maximal allowed &quot;false positive rate&quot;. One wants to control the risk of incorrectly rejecting a true **null hypothesis**.</span>
+
+<span class="sd">    The process of distinguishing between the **null hypothesis** and the **alternative hypothesis** is aided by considering two conceptual types of errors.</span>
+
+<span class="sd">    1. The first type of error occurs when the **null hypothesis** is wrongly rejected. (type 1 error)</span>
+<span class="sd">    2. The second type of error occurs when the **null hypothesis** is wrongly not rejected. (type 2 error)</span>
+
+<span class="sd">    Hypothesis tests based on statistical significance are another way of expressing confidence intervals (more precisely, confidence sets). In other words, every hypothesis test based on significance can be obtained via a confidence interval, and every confidence interval can be obtained via a hypothesis test based on significance. [#ref1]_</span>
+
+<span class="sd">    .. [#ref1] :fa:`home` `Mathematical Statistics and Data Analysis (3rd ed.) &lt;https://www.amazon.com/Mathematical-Statistics-Analysis-Available-Enhanced/dp/0534399428&gt;`_</span>
+
+<span class="sd">    .. seealso::</span>
+<span class="sd">        https://en.wikipedia.org/wiki/Statistical_hypothesis_testing</span>
+
+<span class="sd">Various alternative hypotheses can be handled by changing the value of A</span>
+
+<span class="sd">In this submodules, you can test each **null (alternative) hypothesis** by changing the value of ``alternative``</span>
+
+<span class="sd">+--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+</span>
+<span class="sd">| Terminology  | ``alternative`` | Alternative Hypothesis                   | Rejection Region                                                                |</span>
+<span class="sd">+==============+=================+==========================================+=================================================================================+</span>
+<span class="sd">| right-tailed | ``&quot;greater&quot;``   |:math:`H_a:\sigma^2_1   &gt;  \sigma^2_2`    | :math:`\mathbf{F}\geq F_{\\alpha}`                                               |</span>
+<span class="sd">+--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+</span>
+<span class="sd">| left-tailed  | ``&quot;less&quot;``      |:math:`H_a:\sigma^2_1   &lt;  \sigma^2_2`    | :math:`\mathbf{F}\leq F_{1−\\alpha}`                                             |</span>
+<span class="sd">+--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+</span>
+<span class="sd">| two-tailed   | ``&quot;two-sided&quot;`` |:math:`H_a:\sigma^2_1 \\neq \sigma^2_2`    | :math:`\mathbf{F}\leq F_{1−\\alpha∕2}` or :math:`\mathbf{F}\geq F_{\\alpha∕2}`    |</span>
+<span class="sd">+--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+</span>
+
+<span class="sd">Follow the chart below to select the test.</span>
+
+<span class="sd">.. graphviz:: _graphviz/graphviz_ChoosingStatisticalTest.dot</span>
+<span class="sd">      :class: popup-img</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span><span class="n">Any</span><span class="p">,</span><span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
+<span class="kn">from</span> <span class="nn">nptyping</span> <span class="kn">import</span> <span class="n">NDArray</span>
+
+<span class="kn">from</span> <span class="nn">.utils.generic_utils</span> <span class="kn">import</span> <span class="n">dict2str</span>
+<span class="kn">from</span> <span class="nn">.utils.plot_utils</span> <span class="kn">import</span> <span class="n">subplots_create</span>
+<span class="kn">from</span> <span class="nn">.plot.matplotlib</span> <span class="kn">import</span> <span class="n">update_layout</span>
+
+<div class="viewcode-block" id="TestResult"><a class="viewcode-back" href="../../teilab.statistics.html#teilab.statistics.TestResult">[docs]</a><span class="k">class</span> <span class="nc">TestResult</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Structure that holds test results.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        statistic (float)            : Test-specific statistical value.</span>
+<span class="sd">        pvalue (float)               : The probability that an observed difference could have occurred just by random chance.</span>
+<span class="sd">        alpha (float)                : The probability of making the wrong decision when the null hypothesis is true.</span>
+<span class="sd">        alternative (str)            : Defines the alternative hypothesis. Please choose from [ ``&quot;two-sided&quot;``, ``&quot;less&quot;``, ``&quot;greater&quot;`` ]</span>
+<span class="sd">        accepts (Tuple[float,float]) : Regions that accepts the null hypothesis.</span>
+<span class="sd">        distribution (callable)      : Distribution used during the test.</span>
+<span class="sd">        distname (str, optional)     : The distribution name. Defaults to ``&quot;&quot;``.</span>
+<span class="sd">        testname (str, optional)     : The test name. Defaults to ``&quot;&quot;``.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        does_H0_hold (bool) : Does the null hypothesis hold?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">statistic</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">pvalue</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">alpha</span><span class="p">:</span><span class="nb">float</span><span class="p">,</span> <span class="n">alternative</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">accepts</span><span class="p">:</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span><span class="nb">float</span><span class="p">],</span> <span class="n">distribution</span><span class="p">:</span><span class="n">callable</span><span class="p">,</span> <span class="n">distname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">testname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statistic</span> <span class="o">=</span> <span class="n">statistic</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pvalue</span> <span class="o">=</span> <span class="n">pvalue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="n">alpha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alternative</span> <span class="o">=</span> <span class="n">alternative</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">accepts</span> <span class="o">=</span> <span class="n">accepts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">does_H0_hold</span> <span class="o">=</span> <span class="n">accepts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">statistic</span><span class="o">&lt;</span><span class="n">accepts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span> <span class="o">=</span> <span class="n">distribution</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">distname</span> <span class="o">=</span> <span class="n">distname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">testname</span> <span class="o">=</span> <span class="n">testname</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">testname</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2">_Result(statistic=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">statistic</span><span class="si">}</span><span class="s2">, pvalue=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">pvalue</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<div class="viewcode-block" id="TestResult.plot"><a class="viewcode-back" href="../../teilab.statistics.html#teilab.statistics.TestResult.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Number</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Axes</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;Plot the test result.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            x (Optional[NDArray[Any, Number]], optional) : X-axis Values. Defaults to ``None``.</span>
+<span class="sd">            ax (Optional[Axes], optional)                : An instance of ``Axes``. Defaults to ``None``.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Axes: An instance of ``Axes`` with test result.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span> <span class="ow">or</span> <span class="n">subplots_create</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;matplotlib&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="c1"># F-distribution</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">distname</span><span class="si">}</span><span class="s2">-distribution (</span><span class="si">{</span><span class="n">dict2str</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="p">,</span> <span class="s1">&#39;kwds&#39;</span><span class="p">,</span> <span class="p">{}))</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="c1"># Visualize the Right and Left rejection areas</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y2</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="bp">self</span><span class="o">.</span><span class="n">accepts</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Rejection Region (alpha=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y2</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="bp">self</span><span class="o">.</span><span class="n">accepts</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">)</span>
+        <span class="c1"># Indicates the position of calculated &quot;F&quot;</span>
+        <span class="n">stats_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">distribution</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statistic</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">stats_y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">fr</span><span class="s2">&quot;$(x=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">distname</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">statistic</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">,y=</span><span class="si">{</span><span class="n">stats_y</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)$&quot;</span><span class="p">)</span>
+        <span class="c1"># Update Layout.</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">update_layout</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">testname</span><span class="si">}</span><span class="s2">-test (alternative: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">alternative</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="s2">Null-hypothesis </span><span class="si">{</span><span class="s1">&#39;holds&#39;</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">does_H0_hold</span> <span class="k">else</span> <span class="s1">&#39;rejects&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ax</span></div></div>
+
+<div class="viewcode-block" id="f_test"><a class="viewcode-back" href="../../teilab.statistics.html#teilab.statistics.f_test">[docs]</a><span class="k">def</span> <span class="nf">f_test</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Number</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Number</span><span class="p">],</span> <span class="n">alpha</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">alternative</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span> <span class="n">plot</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;F-Tests for Equality of Two Variances.</span>
+
+<span class="sd">    If the two populations are normally distributed and if :math:`H_0:\sigma^2_1=\sigma^2_2` is true then under independent sampling :math:`F` approximately follows an F-distribution (:math:`f(x, df_1, df_2)`) with degrees of freedom :math:`df_1=n_1−1` and :math:`df_2=n_2−1`.</span>
+
+<span class="sd">    The probability density function for `f` is:</span>
+<span class="sd">    </span>
+<span class="sd">    .. math::</span>
+
+<span class="sd">        f(x, df_1, df_2) = \\frac{df_2^{df_2/2} df_1^{df_1/2} x^{df_1 / 2-1}}{(df_2+df_1 x)^{(df_1+df_2)/2}B(df_1/2, df_2/2)}</span>
+
+<span class="sd">    for :math:`x &gt; 0`.</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">        &gt;&gt;&gt; from scipy import stats</span>
+<span class="sd">        &gt;&gt;&gt; from scipy.special import beta</span>
+<span class="sd">        &gt;&gt;&gt; def f_pdf(x,dfn,dfd):</span>
+<span class="sd">        ...     return (dfd**(dfd/2) * dfn**(dfn/2) * x**(dfn/2-1)) / ((dfd+dfn*x)**((dfn+dfd)/2) * beta(dfn/2, dfd/2))</span>
+<span class="sd">        &gt;&gt;&gt; dfns = [2,5,12]; dfds = [2,9,12]</span>
+<span class="sd">        &gt;&gt;&gt; x = np.linspace(0.001, 5, 1000)</span>
+<span class="sd">        &gt;&gt;&gt; fig, axes = plt.subplots(nrows=len(dfns), ncols=len(dfds), sharex=True, sharey=&quot;row&quot;, figsize=(5*len(dfns), 5*len(dfds)))</span>
+<span class="sd">        &gt;&gt;&gt; for axes_row, dfn in zip(axes, dfns):</span>
+<span class="sd">        ...     for ax, dfd in zip(axes_row, dfds):</span>
+<span class="sd">        ...         ax.plot(x, f_dist.pdf(x, dfn=dfn, dfd=dfd), color=&quot;red&quot;, alpha=0.5, label=&quot;scipy&quot;)</span>
+<span class="sd">        ...         ax.plot(x, f_pdf(x, dfn=dfn,dfd=dfd), color=&quot;blue&quot;, alpha=0.5, label=&quot;myfunc&quot;)</span>
+<span class="sd">        ...         ax.set_title(f&quot;f-distribution (dfn={dfn}, dfd={dfd})&quot;, fontsize=14)</span>
+<span class="sd">        ...         ax.legend()</span>
+<span class="sd">        &gt;&gt;&gt; fig.show()</span>
+
+<span class="sd">    +---------------------------------------------------+</span>
+<span class="sd">    |                      Results                      |</span>
+<span class="sd">    +===================================================+</span>
+<span class="sd">    | .. image:: _images/statistics.f-distributions.jpg |</span>
+<span class="sd">    |    :class: popup-img                              |</span>
+<span class="sd">    +---------------------------------------------------+</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.</span>
+<span class="sd">        alpha (float)                 : The probability of making the wrong decision when the null hypothesis is true.</span>
+<span class="sd">        alternative (str, optional)   : Defines the alternative hypothesis. Please choose from [ ``&quot;two-sided&quot;``, ``&quot;less&quot;``, ``&quot;greater&quot;`` ]. Defaults to ``&quot;two-sided&quot;``.</span>
+<span class="sd">        plot (bool, optional)         : Whether to plot F-distribution or not. Defaults to ``False``.</span>
+<span class="sd">        ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        TestResult: Structure that holds test results.</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+<span class="sd">        :class: popup-img</span>
+
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import subplots_create</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.statistics import f_test</span>
+<span class="sd">        &gt;&gt;&gt; fig, axes = subplots_create(ncols=3, figsize=(18,4), style=&quot;matplotlib&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; A = np.array([6.3, 8.1, 9.4, 10.4, 8.6, 10.5, 10.2, 10.5, 10.0, 8.8])</span>
+<span class="sd">        &gt;&gt;&gt; B = np.array([4.8, 2.1, 5.1, 2.0, 4.0, 1.0, 3.4, 2.7, 5.1, 1.4, 1.6])</span>
+<span class="sd">        &gt;&gt;&gt; for ax,alternative in zip(axes,[&quot;left&quot;,&quot;two&quot;,&quot;right&quot;]):</span>
+<span class="sd">        ...     f_test(A, B, alternative=alternative, plot=True, alpha=.1, ax=ax)</span>
+<span class="sd">        &gt;&gt;&gt; fig.show()</span>
+
+<span class="sd">    .. seealso::</span>
+<span class="sd">        https://en.wikipedia.org/wiki/F-test    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">a_unbiased_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#: ``a``&#39;s unbiased variable. </span>
+    <span class="n">b_unbiased_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#: ``b``&#39;s unbiased variable. </span>
+    <span class="n">a_degrees_of_freedom</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>    <span class="c1">#: ``a``&#39;s Degrees of Freedom.</span>
+    <span class="n">b_degrees_of_freedom</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>    <span class="c1">#: ``b``&#39;s Degrees of Freedom.</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">a_unbiased_var</span> <span class="o">/</span> <span class="n">b_unbiased_var</span> <span class="c1">#: F-score.</span>
+    <span class="n">f_dist</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="n">dfn</span><span class="o">=</span><span class="n">a_degrees_of_freedom</span><span class="p">,</span> <span class="n">dfd</span><span class="o">=</span><span class="n">b_degrees_of_freedom</span><span class="p">)</span> <span class="c1"># F-distribution with given Degrees of Freedoms.</span>
+
+    <span class="k">if</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;less&quot;</span><span class="p">:</span>
+        <span class="n">x_l</span> <span class="o">=</span> <span class="n">f_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">x_r</span> <span class="o">=</span> <span class="n">f_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">p_val</span> <span class="o">=</span> <span class="n">f_dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;greater&quot;</span><span class="p">:</span>
+        <span class="n">x_l</span> <span class="o">=</span> <span class="n">f_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">x_r</span> <span class="o">=</span> <span class="n">f_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">p_val</span> <span class="o">=</span> <span class="n">f_dist</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># Two-side</span>
+        <span class="n">x_l</span> <span class="o">=</span> <span class="n">f_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">x_r</span> <span class="o">=</span> <span class="n">f_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">p_val</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">min</span><span class="p">(</span><span class="n">f_dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">f_dist</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
+
+    <span class="n">test_result</span> <span class="o">=</span> <span class="n">TestResult</span><span class="p">(</span>
+        <span class="n">statistic</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="n">p_val</span><span class="p">,</span> 
+        <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">,</span> <span class="n">accepts</span><span class="o">=</span><span class="p">(</span><span class="n">x_l</span><span class="p">,</span><span class="n">x_r</span><span class="p">),</span> 
+        <span class="n">distribution</span><span class="o">=</span><span class="n">f_dist</span><span class="p">,</span> <span class="n">distname</span><span class="o">=</span><span class="s2">&quot;F&quot;</span><span class="p">,</span> <span class="n">testname</span><span class="o">=</span><span class="s2">&quot;f&quot;</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="n">x_max</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">f_dist</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x_max</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">1e-3</span><span class="p">:</span> <span class="k">break</span>
+            <span class="n">x_max</span><span class="o">+=</span><span class="mi">1</span>
+        <span class="n">test_result</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.001</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span><span class="n">f</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="mi">1000</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">test_result</span></div>
+
+<div class="viewcode-block" id="paired_t_test"><a class="viewcode-back" href="../../teilab.statistics.html#teilab.statistics.paired_t_test">[docs]</a><span class="k">def</span> <span class="nf">paired_t_test</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Number</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Number</span><span class="p">],</span> <span class="n">alpha</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">alternative</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span> <span class="n">plot</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResult</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;T-Tests for Equality of Two averages of related samples.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.</span>
+<span class="sd">        alpha (float)                 : The probability of making the wrong decision when the null hypothesis is true.</span>
+<span class="sd">        alternative (str, optional)   : Defines the alternative hypothesis. Please choose from [ ``&quot;two-sided&quot;``, ``&quot;less&quot;``, ``&quot;greater&quot;`` ]. Defaults to ``&quot;two-sided&quot;``.</span>
+<span class="sd">        plot (bool, optional)         : Whether to plot F-distribution or not. Defaults to ``False``.</span>
+<span class="sd">        ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        TestResult: [description]</span>
+
+<span class="sd">    .. seealso::</span>
+<span class="sd">        https://en.wikipedia.org/wiki/T-test#Dependent_t-test_for_paired_samples</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>                   <span class="c1">#: Sample size.</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span>                     <span class="c1">#: Degrees of Freedom.</span>
+    <span class="n">sd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">)</span>             <span class="c1">#: Sum of Difference.</span>
+    <span class="n">ssd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">a</span><span class="o">-</span><span class="n">b</span><span class="p">))</span> <span class="c1">#: Sum of Squared Difference.</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="p">(</span><span class="n">sd</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span> <span class="p">(</span><span class="n">ssd</span><span class="o">-</span><span class="p">(</span><span class="n">sd</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="o">/</span><span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">n</span><span class="p">)</span> <span class="p">)</span> <span class="c1">#: T-score.</span>
+    <span class="n">t_dist</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">t</span><span class="p">(</span><span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">)</span> <span class="c1">#: T-distribution with given Degrees of Freedom.</span>
+
+    <span class="k">if</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;less&quot;</span><span class="p">:</span>
+        <span class="n">x_l</span> <span class="o">=</span> <span class="n">t_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">x_r</span> <span class="o">=</span> <span class="n">t_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">p_val</span> <span class="o">=</span> <span class="n">t_dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;greater&quot;</span><span class="p">:</span>
+        <span class="n">x_l</span> <span class="o">=</span> <span class="n">t_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">x_r</span> <span class="o">=</span> <span class="n">t_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">p_val</span> <span class="o">=</span> <span class="n">t_dist</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="c1"># Two-side</span>
+        <span class="n">x_l</span> <span class="o">=</span> <span class="n">t_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">x_r</span> <span class="o">=</span> <span class="n">t_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">p_val</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">t_dist</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="p">))</span>
+    
+    <span class="n">test_result</span> <span class="o">=</span> <span class="n">TestResult</span><span class="p">(</span>
+        <span class="n">statistic</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="n">p_val</span><span class="p">,</span> 
+        <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">,</span> <span class="n">accepts</span><span class="o">=</span><span class="p">(</span><span class="n">x_l</span><span class="p">,</span><span class="n">x_r</span><span class="p">),</span> 
+        <span class="n">distribution</span><span class="o">=</span><span class="n">t_dist</span><span class="p">,</span> <span class="n">distname</span><span class="o">=</span><span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="n">testname</span><span class="o">=</span><span class="s2">&quot;paired-t&quot;</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+        <span class="n">x_edge_abs</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">t_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">test_result</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">x_edge_abs</span><span class="p">,</span> <span class="n">x_edge_abs</span><span class="p">,</span> <span class="mi">1000</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">test_result</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, iwasakishuto.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+<style id="style-expand" disabled="true">
+  .wy-nav-content {
+    max-width: 100%!important;
+  }
+</style>
+<script>
+  document.getElementById("style-expand").disabled = true;
+</script>
+
+
+</body>
+</html>
