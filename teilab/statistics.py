@@ -105,7 +105,7 @@ class TestResult():
         return ax
 
 def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
-    """F-Tests for Equality of Two Variances.
+    """F-Tests for Equality of TWO Variances.
 
     If the two populations are normally distributed and if :math:`H_0:\sigma^2_1=\sigma^2_2` is true then under independent sampling :math:`F` approximately follows an F-distribution (:math:`f(x, df_1, df_2)`) with degrees of freedom :math:`df_1=n_1−1` and :math:`df_2=n_2−1`.
 
@@ -151,7 +151,7 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
         ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.
 
     Returns:
-        TestResult: Structure that holds test results.
+        TestResult: Structure that holds F-test results.
 
     .. plot::
         :include-source:
@@ -168,7 +168,7 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
         >>> fig.show()
 
     .. seealso::
-        https://en.wikipedia.org/wiki/F-test    
+        https://en.wikipedia.org/wiki/F-test
     """
     a_unbiased_var = np.var(a, ddof=1) #: ``a``'s unbiased variable. 
     b_unbiased_var = np.var(b, ddof=1) #: ``b``'s unbiased variable. 
@@ -177,6 +177,9 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
     f = a_unbiased_var / b_unbiased_var #: F-score.
     f_dist = stats.f(dfn=a_degrees_of_freedom, dfd=b_degrees_of_freedom) # F-distribution with given Degrees of Freedoms.
 
+    # ppf : Percent point function 
+    # cdf : Cumulative distribution function
+    # sf  : Survival function (1 - cdf )
     if alternative == "less":
         x_l = f_dist.ppf(alpha)
         x_r = f_dist.ppf(1)
@@ -200,11 +203,11 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
         while True:
             if f_dist.pdf(x_max)<1e-3: break
             x_max+=1
-        test_result.plot(x=np.linspace(0.001,max(x_max,f)+1,1000))
+        test_result.plot(x=np.linspace(0.001,max(x_max,f)+1,1000), ax=ax)
     return test_result
 
-def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
-    """T-Tests for Equality of Two averages of related samples.
+def student_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
+    """T-Tests for Equality of averages of TWO INDEPENDENT samples.
 
     Args:
         a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
@@ -214,7 +217,71 @@ def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.
         ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.
 
     Returns:
-        TestResult: [description]
+        TestResult: Structure that holds student's T-test results.
+
+    .. plot::
+        :include-source:
+        :class: popup-img
+
+        >>> import numpy as np
+        >>> from teilab.utils import subplots_create
+        >>> from teilab.statistics import student_t_test
+        >>> fig, axes = subplots_create(ncols=3, figsize=(18,4), style="matplotlib")
+        >>> A = np.array([6.3, 8.1, 9.4, 10.4, 8.6, 10.5, 10.2, 10.5, 10.0, 8.8])
+        >>> B = np.array([4.8, 2.1, 5.1, 2.0, 4.0, 1.0, 3.4, 2.7, 5.1, 1.4, 1.6])
+        >>> for ax,alternative in zip(axes,["left","two","right"]):
+        ...     student_t_test(A, B, alternative=alternative, plot=True, alpha=.1, ax=ax)
+        >>> fig.show()
+
+    .. seealso::
+        https://en.wikipedia.org/wiki/T-test#Independent_two-sample_t-test
+    """
+    n_a = len(a) #: Sample size of ``a``.
+    n_b = len(b) #: Sample size of ``b``.
+    df = (n_a-1)+(n_b-1) #: Degrees of Freedom.
+    sum_a = np.sum(a) # Sum of ``a``.
+    sum_b = np.sum(b) # Sum of ``b``.
+    t = (sum_a/n_a - sum_b/n_b) / np.sqrt( ((np.sum(np.square(a))-np.square(sum_a)/n_a) + (np.sum(np.square(b)) - np.square(sum_b)/n_b))/df * (1/n_a+1/n_b) ) #: T-score.
+    t_dist = stats.t(df=df) #: T-distribution with given Degrees of Freedom.
+
+    # ppf : Percent point function 
+    # cdf : Cumulative distribution function
+    # sf  : Survival function (1 - cdf )
+    if alternative == "less":
+        x_l = t_dist.ppf(alpha)
+        x_r = t_dist.ppf(1)
+        p_val = t_dist.cdf(t)
+    elif alternative == "greater":
+        x_l = t_dist.ppf(0)
+        x_r = t_dist.ppf(1-alpha)
+        p_val = t_dist.sf(t)
+    else: # Two-side
+        x_l = t_dist.ppf(alpha/2)
+        x_r = t_dist.ppf(1-alpha/2)
+        p_val = 2*t_dist.sf(abs(t))
+    
+    test_result = TestResult(
+        statistic=t, pvalue=p_val, 
+        alpha=alpha, alternative=alternative, accepts=(x_l,x_r), 
+        distribution=t_dist, distname="T", testname="student's-t"
+    )
+    if plot:
+        x_edge_abs = max(t_dist.ppf(1e-4), abs(t)+1)
+        test_result.plot(x=np.linspace(-x_edge_abs, x_edge_abs, 1000), ax=ax)
+    return test_result
+
+def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
+    """T-Tests for Equality of averages of TWO RELATED samples.
+
+    Args:
+        a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
+        alpha (float)                 : The probability of making the wrong decision when the null hypothesis is true.
+        alternative (str, optional)   : Defines the alternative hypothesis. Please choose from [ ``"two-sided"``, ``"less"``, ``"greater"`` ]. Defaults to ``"two-sided"``.
+        plot (bool, optional)         : Whether to plot F-distribution or not. Defaults to ``False``.
+        ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.
+
+    Returns:
+        TestResult: Structure that holds paired T-test results.
 
     .. seealso::
         https://en.wikipedia.org/wiki/T-test#Dependent_t-test_for_paired_samples
@@ -226,6 +293,9 @@ def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.
     t = (sd/n) / np.sqrt( (ssd-(sd**2)/n)/((n-1)*n) ) #: T-score.
     t_dist = stats.t(df=df) #: T-distribution with given Degrees of Freedom.
 
+    # ppf : Percent point function 
+    # cdf : Cumulative distribution function
+    # sf  : Survival function (1 - cdf )
     if alternative == "less":
         x_l = t_dist.ppf(alpha)
         x_r = t_dist.ppf(1)
@@ -247,5 +317,5 @@ def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.
 
     if plot:
         x_edge_abs = max(t_dist.ppf(1e-4), abs(t)+1)
-        test_result.plot(x=np.linspace(-x_edge_abs, x_edge_abs, 1000))
+        test_result.plot(x=np.linspace(-x_edge_abs, x_edge_abs, 1000), ax=ax)
     return test_result
