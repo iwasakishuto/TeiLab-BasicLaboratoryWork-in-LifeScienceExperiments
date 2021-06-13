@@ -234,7 +234,18 @@ div.sidebarlogo ul.social a.sc-twitter {
   color: white;
   background-color: #4da7de;
 }
-
+/*  .. admonition:: Statistic ( XXX ) */
+div[class^="admonition-statistic"]{
+  background: #ffefa0!important;
+}
+div[class^="admonition-statistic"] .admonition-title{
+  background: #f0a500;
+}
+div[class^="admonition-statistic"] .admonition-title:before {
+  font-family: 'FontAwesome';
+  content: "\f1fe";
+  color: #1f441e;
+}
 /* <-- These two are inverted */
 .fa-home:before, .icon-home:before {
   content: "";

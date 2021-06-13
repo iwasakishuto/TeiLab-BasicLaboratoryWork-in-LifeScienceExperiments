@@ -1,5 +1,10 @@
 #coding: utf-8
-"""
+"""This submodule contains various functions and classes that are useful for statistical testing.
+
+##############################
+Statistical hypothesis testing
+##############################
+
 **Statistical hypothesis testing** is required to determine if expression levels (``gProcessedSignal`` s) have changed between samples with siRNA and those without siRNA.
 
     A statistical hypothesis test is a method of statistical inference. An **alternative hypothesis** is proposed for the probability distribution of the data. The comparison of the two models is deemed statistically significant if, according to a threshold probability—the significance level ( :math:`\\alpha` ) — the data would be unlikely to occur if the **null hypothesis** were true. The **pre-chosen** level of significance is the maximal allowed "false positive rate". One wants to control the risk of incorrectly rejecting a true **null hypothesis**.
@@ -34,6 +39,52 @@ Follow the chart below to select the test.
 
 .. graphviz:: _graphviz/graphviz_ChoosingStatisticalTest.dot
       :class: popup-img
+
+*************
+Distributions
+*************
+
+f-distribution
+==============
+
+The probability density function for `f` is:
+
+.. math::
+
+    f(x, df_1, df_2) = \\frac{df_2^{df_2/2} df_1^{df_1/2} x^{df_1 / 2-1}}{(df_2+df_1 x)^{(df_1+df_2)/2}B(df_1/2, df_2/2)}
+
+for :math:`x > 0`.
+
+.. code-block:: python
+
+        >>> import numpy as np
+        >>> import matplotlib.pyplot as plt
+        >>> from scipy import stats
+        >>> from scipy.special import beta
+        >>> def f_pdf(x,dfn,dfd):
+        ...     return (dfd**(dfd/2) * dfn**(dfn/2) * x**(dfn/2-1)) / ((dfd+dfn*x)**((dfn+dfd)/2) * beta(dfn/2, dfd/2))
+        >>> dfns = [2,5,12]; dfds = [2,9,12]
+        >>> x = np.linspace(0.001, 5, 1000)
+        >>> fig, axes = plt.subplots(nrows=len(dfns), ncols=len(dfds), sharex=True, sharey="row", figsize=(5*len(dfns), 5*len(dfds)))
+        >>> for axes_row, dfn in zip(axes, dfns):
+        ...     for ax, dfd in zip(axes_row, dfds):
+        ...         ax.plot(x, f_dist.pdf(x, dfn=dfn, dfd=dfd), color="red", alpha=0.5, label="scipy")
+        ...         ax.plot(x, f_pdf(x, dfn=dfn,dfd=dfd), color="blue", alpha=0.5, label="myfunc")
+        ...         ax.set_title(f"f-distribution (dfn={dfn}, dfd={dfd})", fontsize=14)
+        ...         ax.legend()
+        >>> fig.show()
+
++---------------------------------------------------+
+|                      Results                      |
++===================================================+
+| .. image:: _images/statistics.distributions.f.jpg |
+|    :class: popup-img                              |
++---------------------------------------------------+
+
+t-distribution
+==============
+
+
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -78,6 +129,10 @@ class TestResult():
     def __repr__(self):
         return f"{self.testname.capitalize()}_Result(statistic={self.statistic}, pvalue={self.pvalue})"
 
+    def __iter__(self):
+        for val in [self.statistic, self.pvalue]:
+            yield val
+
     def plot(self, x:Optional[NDArray[Any, Number]]=None, ax:Optional[Axes]=None) -> Axes:
         """Plot the test result.
 
@@ -109,39 +164,28 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
 
     If the two populations are normally distributed and if :math:`H_0:\sigma^2_1=\sigma^2_2` is true then under independent sampling :math:`F` approximately follows an F-distribution (:math:`f(x, df_1, df_2)`) with degrees of freedom :math:`df_1=n_1−1` and :math:`df_2=n_2−1`.
 
-    The probability density function for `f` is:
+
+    .. admonition:: Statistic ( :math:`F` )
+        
+        .. container:: toggle, toggle-hidden
     
-    .. math::
+            Let
 
-        f(x, df_1, df_2) = \\frac{df_2^{df_2/2} df_1^{df_1/2} x^{df_1 / 2-1}}{(df_2+df_1 x)^{(df_1+df_2)/2}B(df_1/2, df_2/2)}
+            .. math::
 
-    for :math:`x > 0`.
+                \overline{A}=\\frac{1}{n}\sum_{i=1}^{n}A_{i},\quad \overline{B}=\\frac {1}{m}\sum _{i=1}^{m}B_{i}
 
-    .. code-block:: python
+            be the sample means. Let
 
-        >>> import numpy as np
-        >>> import matplotlib.pyplot as plt
-        >>> from scipy import stats
-        >>> from scipy.special import beta
-        >>> def f_pdf(x,dfn,dfd):
-        ...     return (dfd**(dfd/2) * dfn**(dfn/2) * x**(dfn/2-1)) / ((dfd+dfn*x)**((dfn+dfd)/2) * beta(dfn/2, dfd/2))
-        >>> dfns = [2,5,12]; dfds = [2,9,12]
-        >>> x = np.linspace(0.001, 5, 1000)
-        >>> fig, axes = plt.subplots(nrows=len(dfns), ncols=len(dfds), sharex=True, sharey="row", figsize=(5*len(dfns), 5*len(dfds)))
-        >>> for axes_row, dfn in zip(axes, dfns):
-        ...     for ax, dfd in zip(axes_row, dfds):
-        ...         ax.plot(x, f_dist.pdf(x, dfn=dfn, dfd=dfd), color="red", alpha=0.5, label="scipy")
-        ...         ax.plot(x, f_pdf(x, dfn=dfn,dfd=dfd), color="blue", alpha=0.5, label="myfunc")
-        ...         ax.set_title(f"f-distribution (dfn={dfn}, dfd={dfd})", fontsize=14)
-        ...         ax.legend()
-        >>> fig.show()
+            .. math::
 
-    +---------------------------------------------------+
-    |                      Results                      |
-    +===================================================+
-    | .. image:: _images/statistics.f-distributions.jpg |
-    |    :class: popup-img                              |
-    +---------------------------------------------------+
+                S_{A}^{2}={\\frac {1}{n-1}}\sum _{i=1}^{n}\left(A_{i}-{\overline {A}}\\right)^{2},\quad S_{B}^{2}={\\frac {1}{m-1}}\sum _{i=1}^{m}\left(B_{i}-{\overline {B}}\\right)^{2}
+
+            be the sample variances. Then the test statistic
+
+            .. math::
+
+                F={\\frac  {S_{A}^{2}}{S_{B}^{2}}}
 
     Args:
         a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
