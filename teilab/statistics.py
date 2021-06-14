@@ -1,5 +1,5 @@
 #coding: utf-8
-"""This submodule contains various functions and classes that are useful for statistical testing.
+r"""This submodule contains various functions and classes that are useful for statistical testing.
 
 ############
 Instructions
@@ -11,7 +11,7 @@ Statistical hypothesis testing
 
 **Statistical hypothesis testing** is required to determine if expression levels (``gProcessedSignal`` s) have changed between samples with siRNA and those without siRNA.
 
-    A statistical hypothesis test is a method of statistical inference. An **alternative hypothesis** is proposed for the probability distribution of the data. The comparison of the two models is deemed statistically significant if, according to a threshold probability—the significance level ( :math:`\\alpha` ) — the data would be unlikely to occur if the **null hypothesis** were true. The **pre-chosen** level of significance is the maximal allowed "false positive rate". One wants to control the risk of incorrectly rejecting a true **null hypothesis**.
+    A statistical hypothesis test is a method of statistical inference. An **alternative hypothesis** is proposed for the probability distribution of the data. The comparison of the two models is deemed statistically significant if, according to a threshold probability—the significance level ( :math:`\alpha` ) — the data would be unlikely to occur if the **null hypothesis** were true. The **pre-chosen** level of significance is the maximal allowed "false positive rate". One wants to control the risk of incorrectly rejecting a true **null hypothesis**.
 
     The process of distinguishing between the **null hypothesis** and the **alternative hypothesis** is aided by considering two conceptual types of errors.
 
@@ -32,11 +32,11 @@ In this submodules, you can test each **null (alternative) hypothesis** by chang
 +--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
 | Terminology  | ``alternative`` | Alternative Hypothesis                   | Rejection Region                                                                |
 +==============+=================+==========================================+=================================================================================+
-| right-tailed | ``"greater"``   |:math:`H_a:\sigma^2_1   >  \sigma^2_2`    | :math:`\mathbf{F}\geq F_{\\alpha}`                                               |
+| right-tailed | ``"greater"``   |:math:`H_a:\sigma^2_1   >  \sigma^2_2`    | :math:`\mathbf{F}\geq F_{\alpha}`                                               |
 +--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
-| left-tailed  | ``"less"``      |:math:`H_a:\sigma^2_1   <  \sigma^2_2`    | :math:`\mathbf{F}\leq F_{1−\\alpha}`                                             |
+| left-tailed  | ``"less"``      |:math:`H_a:\sigma^2_1   <  \sigma^2_2`    | :math:`\mathbf{F}\leq F_{1−\alpha}`                                             |
 +--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
-| two-tailed   | ``"two-sided"`` |:math:`H_a:\sigma^2_1 \\neq \sigma^2_2`    | :math:`\mathbf{F}\leq F_{1−\\alpha∕2}` or :math:`\mathbf{F}\geq F_{\\alpha∕2}`    |
+| two-tailed   | ``"two-sided"`` |:math:`H_a:\sigma^2_1 \neq \sigma^2_2`    | :math:`\mathbf{F}\leq F_{1−\alpha∕2}` or :math:`\mathbf{F}\geq F_{\alpha∕2}`    |
 +--------------+-----------------+------------------------------------------+---------------------------------------------------------------------------------+
 
 Follow the chart below to select the test.
@@ -97,7 +97,7 @@ f-distribution
 The probability density function for `f` is:
 
 .. math::
-    f(x, df_1, df_2) = \\frac{df_2^{df_2/2} df_1^{df_1/2} x^{df_1 / 2-1}}{(df_2+df_1 x)^{(df_1+df_2)/2}B(df_1/2, df_2/2)}
+    f(x, df_1, df_2) = \frac{df_2^{df_2/2} df_1^{df_1/2} x^{df_1 / 2-1}}{(df_2+df_1 x)^{(df_1+df_2)/2}B(df_1/2, df_2/2)}
 
 for :math:`x > 0`.
 
@@ -135,9 +135,9 @@ t-distribution
 The probability density function for `t` is:
 
 .. math::
-    f(x, \\nu) = \\frac{\Gamma((\\nu+1)/2)}{\sqrt{\pi \\nu} \Gamma(\\nu/2)}(1+x^2/\\nu)^{-(\\nu+1)/2}
+    f(x, \nu) = \frac{\Gamma((\nu+1)/2)}{\sqrt{\pi \nu} \Gamma(\nu/2)}(1+x^2/\nu)^{-(\nu+1)/2}
 
-where :math:`x` is a real number and the degrees of freedom parameter :math:`\\nu` satisfies :math:`\\nu > 0`.
+where :math:`x` is a real number and the degrees of freedom parameter :math:`\nu` satisfies :math:`\nu > 0`.
 
 .. code-block:: python
 
@@ -173,7 +173,7 @@ sample means
 Let
 
 .. math::
-    \overline{X}=\\frac{1}{n_X}\sum_{i=1}^{n_X}X_{i}
+    \overline{X}=\frac{1}{n_X}\sum_{i=1}^{n_X}X_{i}
 
 be the sample means. 
 
@@ -183,7 +183,7 @@ sample variances
 Let
 
 .. math::
-    S_X^2&={\\frac{1}{n_X-1}}\sum_{i=1}^{n_X}\left(X_{i}-{\overline{X}}\\right)^{2}\\\\&={\\frac{1}{n_X-1}}\left(\sum_{i=1}^{n_X}X_i^2-n_X\overline{X}^2\\right)
+    S_X^2&={\frac{1}{n_X-1}}\sum_{i=1}^{n_X}\left(X_{i}-{\overline{X}}\right)^{2}\\&={\frac{1}{n_X-1}}\left(\sum_{i=1}^{n_X}X_i^2-n_X\overline{X}^2\right)
 
 be the sample variances.
 
@@ -201,6 +201,7 @@ from matplotlib.axes import Axes
 from nptyping import NDArray
 
 from .utils.generic_utils import dict2str
+from .utils.math_utils import assign_rank, tiecorrect
 from .utils.plot_utils import subplots_create
 from .plot.matplotlib import update_layout
 
@@ -265,7 +266,7 @@ class TestResult():
         return ax
 
 def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
-    """F-Tests for Equality of TWO Variances.
+    r"""F-test for Equality of TWO Variances.
 
     If the two populations are normally distributed and if :math:`H_0:\sigma^2_1=\sigma^2_2` is true then under independent sampling :math:`F` approximately follows an F-distribution (:math:`f(x, df_1, df_2)`) with degrees of freedom :math:`df_1=n_1−1` and :math:`df_2=n_2−1`.
 
@@ -274,7 +275,7 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
         .. container:: toggle, toggle-hidden
 
             .. math::
-                F={\\frac  {S_{A}^{2}}{S_{B}^{2}}}
+                F={\frac  {S_{A}^{2}}{S_{B}^{2}}}
 
     Args:
         a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
@@ -295,8 +296,8 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
         >>> from teilab.statistics import f_test
         >>> fig, axes = subplots_create(ncols=3, figsize=(18,4), style="matplotlib")
         >>> A = np.array([6.3, 8.1, 9.4, 10.4, 8.6, 10.5, 10.2, 10.5, 10.0, 8.8])
-        >>> B = np.array([4.8, 2.1, 5.1, 2.0, 4.0, 1.0, 3.4, 2.7, 5.1, 1.4, 1.6])
-        >>> for ax,alternative in zip(axes,["left","two","right"]):
+        >>> B = np.array([4.8, 2.1, 5.1,  2.0, 4.0,  1.0,  3.4,  2.7,  5.1, 1.4, 1.6])
+        >>> for ax,alternative in zip(axes,["less","two-sided","greater"]):
         ...     f_test(A, B, alternative=alternative, plot=True, alpha=.1, ax=ax)
         >>> fig.show()
 
@@ -340,19 +341,19 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
     return test_result
 
 def student_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
-    """T-Tests for Equality of averages of TWO INDEPENDENT samples. (SIMILAR VARIANCES)
+    r"""T-test for Equality of averages of TWO INDEPENDENT samples. (SIMILAR VARIANCES)
 
     .. admonition:: Statistic ( :math:`T` )
         
         .. container:: toggle, toggle-hidden
     
             .. math::
-                T={\\frac{\overline{A}-{\overline{B}}}{s_p\cdot {\sqrt {\\frac{1}{n_A}+\\frac{1}{n_B}}}}}
+                T={\frac{\overline{A}-{\overline{B}}}{s_p\cdot {\sqrt {\frac{1}{n_A}+\frac{1}{n_B}}}}}
 
             where
 
             .. math::
-                s_p=\sqrt{\\frac {\left(n_A-1\\right)s_A^2+\left(n_B-1\\right)s_B^2}{n_A+n_B-2}}
+                s_p=\sqrt{\frac {\left(n_A-1\right)s_A^2+\left(n_B-1\right)s_B^2}{n_A+n_B-2}}
 
     Args:
         a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
@@ -373,13 +374,15 @@ def student_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0
         >>> from teilab.statistics import student_t_test
         >>> fig, axes = subplots_create(ncols=3, figsize=(18,4), style="matplotlib")
         >>> A = np.array([6.3, 8.1, 9.4, 10.4, 8.6, 10.5, 10.2, 10.5, 10.0, 8.8])
-        >>> B = np.array([4.8, 2.1, 5.1, 2.0, 4.0, 1.0, 3.4, 2.7, 5.1, 1.4, 1.6])
-        >>> for ax,alternative in zip(axes,["left","two","right"]):
+        >>> B = np.array([4.8, 2.1, 5.1,  2.0, 4.0,  1.0,  3.4,  2.7,  5.1, 1.4, 1.6])
+        >>> for ax,alternative in zip(axes,["less","two-sided","greater"]):
         ...     student_t_test(A, B, alternative=alternative, plot=True, alpha=.1, ax=ax)
         >>> fig.show()
 
     .. seealso::
-        https://en.wikipedia.org/wiki/T-test#Independent_two-sample_t-test
+
+        - https://en.wikipedia.org/wiki/T-test#Independent_two-sample_t-test
+        - `scipy.stats.ttest_ind(A, B, equal_var=True) <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html>`_
     """
     n_a = len(a) #: Sample size of ``a``.
     n_b = len(b) #: Sample size of ``b``.
@@ -415,8 +418,95 @@ def student_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0
         test_result.plot(x=np.linspace(-x_edge_abs, x_edge_abs, 1000), ax=ax)
     return test_result
 
+def welch_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
+    r"""T-test for Equality of averages of **TWO INDEPENDENT** samples. (**DIFFERENT VARIANCES**)
+
+    .. admonition:: Statistic ( :math:`T` )
+        
+        .. container:: toggle, toggle-hidden
+    
+            .. math::
+                T=\frac{\Delta\overline {X}}{s_{\Delta\overline{X}}}=\frac{\overline{X}_1-\overline{X}_2}{\sqrt{{s^2_{\overline{X}_1}}+s^2_{\overline{X}_{2}}}}
+
+            where
+
+            .. math::
+                s_{{\overline{X}}_{i}}={s_i\over{\sqrt{N_i}}}
+
+    Args:
+        a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
+        alpha (float)                 : The probability of making the wrong decision when the null hypothesis is true.
+        alternative (str, optional)   : Defines the alternative hypothesis. Please choose from [ ``"two-sided"``, ``"less"``, ``"greater"`` ]. Defaults to ``"two-sided"``.
+        plot (bool, optional)         : Whether to plot F-distribution or not. Defaults to ``False``.
+        ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.
+
+    Returns:
+        TestResult: Structure that holds welch's T-test results.
+
+    .. plot::
+        :include-source:
+        :class: popup-img
+
+        >>> import numpy as np
+        >>> from teilab.utils import subplots_create
+        >>> from teilab.statistics import welch_t_test
+        >>> fig, axes = subplots_create(ncols=3, figsize=(18,4), style="matplotlib")
+        >>> A = np.array([6.3, 8.1, 9.4, 10.4, 8.6, 10.5, 10.2, 10.5, 10.0, 8.8])
+        >>> B = np.array([4.8, 2.1, 5.1,  2.0, 4.0,  1.0,  3.4,  2.7,  5.1, 1.4, 1.6])
+        >>> for ax,alternative in zip(axes,["less","two-sided","greater"]):
+        ...     welch_t_test(A, B, alternative=alternative, plot=True, alpha=.1, ax=ax)
+        >>> fig.show()
+
+    .. seealso::
+
+        - https://en.wikipedia.org/wiki/T-test#Independent_two-sample_t-test
+        - https://en.wikipedia.org/wiki/Welch%27s_t-test
+        - `scipy.stats.ttest_ind(A, B, equal_var=False) <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html>`_
+    """
+    vna = np.var(a, ddof=1)/len(a) # ``a``'s unbiased variable. devided by len(a)
+    vnb = np.var(b, ddof=1)/len(b) # ``b``'s unbiased variable. devided by len(b)
+    df = (vna+vnb)**2 / (vna**2/(len(a)-1) + vnb**2/(len(b)-1)) #: Degrees of Freedom.
+    t = (np.mean(a)-np.mean(b))/np.sqrt(vna+vnb) #: T-score.
+    t_dist = stats.t(df=df) #: T-distribution with given Degrees of Freedom.
+    
+    # ppf : Percent point function 
+    # cdf : Cumulative distribution function
+    # sf  : Survival function (1 - cdf )
+    if alternative == "less":
+        x_l = t_dist.ppf(alpha)
+        x_r = t_dist.ppf(1)
+        p_val = t_dist.cdf(t)
+    elif alternative == "greater":
+        x_l = t_dist.ppf(0)
+        x_r = t_dist.ppf(1-alpha)
+        p_val = t_dist.sf(t)
+    else: # Two-side
+        x_l = t_dist.ppf(alpha/2)
+        x_r = t_dist.ppf(1-alpha/2)
+        p_val = 2*t_dist.sf(abs(t))
+    
+    test_result = TestResult(
+        statistic=t, pvalue=p_val, 
+        alpha=alpha, alternative=alternative, accepts=(x_l,x_r), 
+        distribution=t_dist, distname="T", testname="welch-t"
+    )
+
+    if plot:
+        x_edge_abs = max(t_dist.ppf(1e-4), abs(t)+1)
+        test_result.plot(x=np.linspace(-x_edge_abs, x_edge_abs, 1000), ax=ax)
+    return test_result
+
 def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
-    """T-Tests for Equality of averages of TWO RELATED samples.
+    r"""T-test for Equality of averages of TWO RELATED samples.
+
+    .. admonition:: Statistic ( :math:`T` )
+        
+        .. container:: toggle, toggle-hidden
+
+            .. math::
+                T=\frac{\overline{D}}{S_D/\sqrt{N}}
+
+            where :math:`D` is the sample differences ( :math:`D=A-B` ), :math:`N` is the sample length ( :math:`N=\mathrm{len}(A)=\mathrm{len}(B)`)
 
     Args:
         a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
@@ -428,15 +518,33 @@ def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.
     Returns:
         TestResult: Structure that holds paired T-test results.
 
+    Raises:
+        TypeError: When the arrays ``a`` and ``b`` have the different shapes.
+
+    .. plot::
+        :include-source:
+        :class: popup-img
+
+        >>> import numpy as np
+        >>> from teilab.utils import subplots_create
+        >>> from teilab.statistics import paired_t_test
+        >>> fig, axes = subplots_create(ncols=3, figsize=(18,4), style="matplotlib")
+        >>> A = np.array([0.7, -1.6, -0.2, -1.2, -0.1, 3.4, 3.7, 0.8, 0.0, 2.0])
+        >>> B = np.array([1.9,  0.8,  1.1,  0.1, -0.1, 4.4, 5.5, 1.6, 4.6, 3.4])
+        >>> for ax,alternative in zip(axes,["less","two-sided","greater"]):
+        ...     paired_t_test(A, B, alternative=alternative, plot=True, alpha=.1, ax=ax)
+        >>> fig.show()
+
     .. seealso::
-        https://en.wikipedia.org/wiki/T-test#Dependent_t-test_for_paired_samples
+
+        - https://en.wikipedia.org/wiki/T-test#Dependent_t-test_for_paired_samples
+        - `scipy.stats.ttest_ind(A, B) <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_rel.html>`_
     """
-    n = len(a)                   #: Sample size.
-    df = n-1                     #: Degrees of Freedom.
-    sd = np.sum(a-b)             #: Sum of Difference.
-    ssd = np.sum(np.square(a-b)) #: Sum of Squared Difference.
-    t = (sd/n) / np.sqrt( (ssd-(sd**2)/n)/((n-1)*n) ) #: T-score.
-    t_dist = stats.t(df=df) #: T-distribution with given Degrees of Freedom.
+    n = len(a) #: Sample size.
+    if n!=len(b):
+        raise TypeError(f"The arrays (a,b) must have the same shape, but got {n}!={len(b)}")
+    t = np.mean(a-b)/np.sqrt(np.var(a-b, ddof=1)/n) #: T-score.
+    t_dist = stats.t(df=n-1) #: T-distribution with given Degrees of Freedom.
 
     # ppf : Percent point function 
     # cdf : Cumulative distribution function
@@ -464,3 +572,90 @@ def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.
         x_edge_abs = max(t_dist.ppf(1e-4), abs(t)+1)
         test_result.plot(x=np.linspace(-x_edge_abs, x_edge_abs, 1000), ax=ax)
     return test_result
+
+def mann_whitney_u_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
+    """NON-PARAMETRIC-test for Equality of averages of TWO INDEPENDENT samples.
+
+    .. admonition:: Statistic ( :math:`T` )
+        
+        .. container:: toggle, toggle-hidden
+    
+            .. math::
+                XXX
+
+    Args:
+        a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
+        alpha (float)                 : The probability of making the wrong decision when the null hypothesis is true.
+        alternative (str, optional)   : Defines the alternative hypothesis. Please choose from [ ``"two-sided"``, ``"less"``, ``"greater"`` ]. Defaults to ``"two-sided"``.
+        plot (bool, optional)         : Whether to plot F-distribution or not. Defaults to ``False``.
+        ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.
+
+    Returns:
+        TestResult: Structure that holds Mann-Whitney's U-tesst results.
+
+    .. seealso::
+
+        - https://en.wikipedia.org/wiki/Mann-Whitney_U_test
+        - :fa:`home` `On a Test of Whether one of Two Random Variables is Stochastically Larger than the Other <https://www.jstor.org/stable/2236101>`_
+        - `scipy.stats.mannwhitneyu(A, B) <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html>`_
+    """
+    n_a = len(a)
+    n_b = len(b)
+    ranking = assign_rank(np.concatenate(a=(a,b)))
+    rank_a = ranking[0:n_a] #: get the ``a``'s ranks
+    u1 = n_a*n_b + (n_a*(n_a+1))/2.0 - np.sum(rank_a, axis=0) #: calculate ``U`` for ``a``
+    u2 = n_a*n_b - u1 #: remainder is ``U`` for ``b``
+    T = tiecorrect(ranking)
+    if T == 0:
+        raise ValueError('All numbers are identical in mannwhitneyu')
+    sd = np.sqrt(T*n_a*n_b*(n_a+n_b+1) / 12.0)
+
+    meanrank = n_a*n_b/2.0 + 0.5*use_continuity
+    if alternative == 'two-sided':
+        bigu = max(u1, u2)
+    elif alternative == 'less':
+        bigu = u1
+    elif alternative == 'greater':
+        bigu = u2
+
+    z = (bigu - meanrank) / sd
+    if alternative == 'two-sided':
+        p = 2 * stats.norm.sf(abs(z))
+    else:
+        p = stats.norm.sf(z)
+
+    u = u2
+    return (u,p)
+
+def wilcoxon_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
+    """NON-PARAMETRIC-test for Equality of averages of TWO PAIRED samples.
+
+    .. admonition:: Statistic ( :math:`T` )
+        
+        .. container:: toggle, toggle-hidden
+    
+            .. math::
+                XXX
+
+    Args:
+        a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
+        alpha (float)                 : The probability of making the wrong decision when the null hypothesis is true.
+        alternative (str, optional)   : Defines the alternative hypothesis. Please choose from [ ``"two-sided"``, ``"less"``, ``"greater"`` ]. Defaults to ``"two-sided"``.
+        plot (bool, optional)         : Whether to plot F-distribution or not. Defaults to ``False``.
+        ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.
+
+    Returns:
+        TestResult: Structure that holds wilcoxon-test results.
+
+    .. seealso::
+
+        - https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kruskal.html#scipy.stats.kruskal
+        - https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html#scipy.stats.mannwhitneyu
+        - `scipy.stats.wilcoxon(A, B) <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html>`_
+    """
+
+# def anova():
+
+# def friedman_test():
+
+# def kruskal_wallis_test():
