@@ -191,6 +191,8 @@ be the sample variances.
 Python Objects
 ##############
 """
+import sys
+import warnings
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
@@ -200,6 +202,7 @@ from numbers import Number
 from matplotlib.axes import Axes
 from nptyping import NDArray
 
+from .utils._warnings import InsufficientUnderstandingWarning, TeiLabImprementationWarning, _pack_warning_args
 from .utils.generic_utils import dict2str
 from .utils.math_utils import assign_rank, tiecorrect
 from .utils.plot_utils import subplots_create
@@ -573,22 +576,31 @@ def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.
         test_result.plot(x=np.linspace(-x_edge_abs, x_edge_abs, 1000), ax=ax)
     return test_result
 
-def mann_whitney_u_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
-    """NON-PARAMETRIC-test for Equality of averages of TWO INDEPENDENT samples.
+def mann_whitney_u_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", use_continuity:bool=True, plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
+    r"""NON-PARAMETRIC-test for Equality of averages of TWO INDEPENDENT samples.
 
     .. admonition:: Statistic ( :math:`T` )
         
         .. container:: toggle, toggle-hidden
+
+            Let :math:`A_{1},\ldots, A_{n}` be an i.i.d. sample from :math:`A`, and :math:`B_{1},\ldots ,B_{m}` be an i.i.d. sample from :math:`B`, and both samples independent of each other. The corresponding Mann-Whitney :math:`U` statistic is defined as:
     
             .. math::
-                XXX
+                U=\sum_{i=1}^{n}\sum_{j=1}^{m}S(A_{i},B_{j})
+            
+            with
+
+            .. math::
+                S(A,B)={\begin{cases}1,&{\text{if }}B<A,\\{\tfrac {1}{2}},&{\text{if }}B=A,\\0,&{\text{if }}B>A.\end{cases}}
+
 
     Args:
-        a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
-        alpha (float)                 : The probability of making the wrong decision when the null hypothesis is true.
-        alternative (str, optional)   : Defines the alternative hypothesis. Please choose from [ ``"two-sided"``, ``"less"``, ``"greater"`` ]. Defaults to ``"two-sided"``.
-        plot (bool, optional)         : Whether to plot F-distribution or not. Defaults to ``False``.
-        ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.
+        a,b (NDArray[Any, Number])      : (Observed) Samples. The arrays must have the same shape.
+        alpha (float)                   : The probability of making the wrong decision when the null hypothesis is true.
+        alternative (str, optional)     : Defines the alternative hypothesis. Please choose from [ ``"two-sided"``, ``"less"``, ``"greater"`` ]. Defaults to ``"two-sided"``.
+        use_continuity (bool, optional) : Whether a continuity correction ( ``1/2.`` ) should be taken into account. Default is ``True`` .
+        plot (bool, optional)           : Whether to plot F-distribution or not. Defaults to ``False``.
+        ax (Optional[Axes], optional)   : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.
 
     Returns:
         TestResult: Structure that holds Mann-Whitney's U-tesst results.
@@ -601,6 +613,7 @@ def mann_whitney_u_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:fl
     """
     n_a = len(a)
     n_b = len(b)
+    # Assign numeric ranks to all the observations (put the observations from both groups to one set), beginning with 1 for the samllest value.
     ranking = assign_rank(np.concatenate(a=(a,b)))
     rank_a = ranking[0:n_a] #: get the ``a``'s ranks
     u1 = n_a*n_b + (n_a*(n_a+1))/2.0 - np.sum(rank_a, axis=0) #: calculate ``U`` for ``a``
@@ -653,6 +666,7 @@ def wilcoxon_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.
         - https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html#scipy.stats.mannwhitneyu
         - `scipy.stats.wilcoxon(A, B) <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html>`_
     """
+    # warnings.warn(_pack_warning_args("message", __file__, sys._getframe().f_code.co_name), category=InsufficientUnderstandingWarning)
 
 # def anova():
 
