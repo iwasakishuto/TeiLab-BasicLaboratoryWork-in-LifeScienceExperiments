@@ -1,9 +1,13 @@
 #coding: utf-8
 """This submodule contains various functions and classes that are useful for statistical testing.
 
-##############################
+############
+Instructions
+############
+
+******************************
 Statistical hypothesis testing
-##############################
+******************************
 
 **Statistical hypothesis testing** is required to determine if expression levels (``gProcessedSignal`` s) have changed between samples with siRNA and those without siRNA.
 
@@ -40,9 +44,8 @@ Follow the chart below to select the test.
 .. graphviz:: _graphviz/graphviz_ChoosingStatisticalTest.dot
       :class: popup-img
 
-*************
 Distributions
-*************
+=============
 
 - :ref:`gamma-distribution <target to gamma-distribution section>`
 - :ref:`f-distribution <target to f-distribution section>`
@@ -50,8 +53,8 @@ Distributions
 
 .. _target to gamma-distribution section:
 
-:math:`\Gamma`-distribution
-===========================
+gamma-distribution
+------------------
 
 The gamma function is defined as
 
@@ -89,7 +92,7 @@ The gamma function is often referred to as the generalized factorial since :math
 .. _target to f-distribution section:
 
 f-distribution
-==============
+--------------
 
 The probability density function for `f` is:
 
@@ -127,7 +130,7 @@ for :math:`x > 0`.
 .. _target to t-distribution section:
 
 t-distribution
-==============
+--------------
 
 The probability density function for `t` is:
 
@@ -160,6 +163,33 @@ where :math:`x` is a real number and the degrees of freedom parameter :math:`\\n
 | .. image:: _images/statistics.distributions.t.jpg |
 |    :class: popup-img                              |
 +---------------------------------------------------+
+
+Notation
+========
+
+sample means
+------------
+
+Let
+
+.. math::
+    \overline{X}=\\frac{1}{n_X}\sum_{i=1}^{n_X}X_{i}
+
+be the sample means. 
+
+sample variances
+----------------
+
+Let
+
+.. math::
+    S_X^2&={\\frac{1}{n_X-1}}\sum_{i=1}^{n_X}\left(X_{i}-{\overline{X}}\\right)^{2}\\\\&={\\frac{1}{n_X-1}}\left(\sum_{i=1}^{n_X}X_i^2-n_X\overline{X}^2\\right)
+
+be the sample variances.
+
+##############
+Python Objects
+##############
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -239,22 +269,9 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
 
     If the two populations are normally distributed and if :math:`H_0:\sigma^2_1=\sigma^2_2` is true then under independent sampling :math:`F` approximately follows an F-distribution (:math:`f(x, df_1, df_2)`) with degrees of freedom :math:`df_1=n_1−1` and :math:`df_2=n_2−1`.
 
-
     .. admonition:: Statistic ( :math:`F` )
-        
+
         .. container:: toggle, toggle-hidden
-    
-            Let
-
-            .. math::
-                \overline{A}=\\frac{1}{n}\sum_{i=1}^{n}A_{i},\quad \overline{B}=\\frac {1}{m}\sum _{i=1}^{m}B_{i}
-
-            be the sample means. Let
-
-            .. math::
-                S_{A}^{2}={\\frac {1}{n-1}}\sum _{i=1}^{n}\left(A_{i}-{\overline {A}}\\right)^{2},\quad S_{B}^{2}={\\frac {1}{m-1}}\sum _{i=1}^{m}\left(B_{i}-{\overline {B}}\\right)^{2}
-
-            be the sample variances. Then the test statistic
 
             .. math::
                 F={\\frac  {S_{A}^{2}}{S_{B}^{2}}}
@@ -323,7 +340,19 @@ def f_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alt
     return test_result
 
 def student_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
-    """T-Tests for Equality of averages of TWO INDEPENDENT samples.
+    """T-Tests for Equality of averages of TWO INDEPENDENT samples. (SIMILAR VARIANCES)
+
+    .. admonition:: Statistic ( :math:`T` )
+        
+        .. container:: toggle, toggle-hidden
+    
+            .. math::
+                T={\\frac{\overline{A}-{\overline{B}}}{s_p\cdot {\sqrt {\\frac{1}{n_A}+\\frac{1}{n_B}}}}}
+
+            where
+
+            .. math::
+                s_p=\sqrt{\\frac {\left(n_A-1\\right)s_A^2+\left(n_B-1\\right)s_B^2}{n_A+n_B-2}}
 
     Args:
         a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.
@@ -357,7 +386,7 @@ def student_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0
     df = (n_a-1)+(n_b-1) #: Degrees of Freedom.
     sum_a = np.sum(a) # Sum of ``a``.
     sum_b = np.sum(b) # Sum of ``b``.
-    t = (sum_a/n_a - sum_b/n_b) / np.sqrt( ((np.sum(np.square(a))-np.square(sum_a)/n_a) + (np.sum(np.square(b)) - np.square(sum_b)/n_b))/df * (1/n_a+1/n_b) ) #: T-score.
+    t = (sum_a/n_a - sum_b/n_b) / np.sqrt( ((np.sum(np.square(a))-np.square(sum_a)/n_a) + (np.sum(np.square(b))-np.square(sum_b)/n_b))/df * (1/n_a+1/n_b) ) #: T-score.
     t_dist = stats.t(df=df) #: T-distribution with given Degrees of Freedom.
 
     # ppf : Percent point function 

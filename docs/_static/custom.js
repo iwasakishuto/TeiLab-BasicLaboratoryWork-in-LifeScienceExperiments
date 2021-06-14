@@ -87,3 +87,20 @@ const changeStyle = function(e){
   return false;
 }
 // --- [Utility Functions (Button)]  --->
+
+const instructions2details = function(){
+  // [Before]
+  // <div class="section" id="instructions">
+  //   <h2>Instructions</h2>
+  // </div>
+  // 
+  // [After]
+  // <details class="section" id="instructions">
+  //   <summary><h2>Instructions</h2></summary>
+  // </details>
+  $('div.section#instructions').replaceWith(function(){
+    $(this).replaceWith('<details class="section" id="instructions" open>'+$(this).html()+"</details>")
+  });
+  $('details.section#instructions h2').wrap($('<summary></summary>'))
+}
+addOnLoad(instructions2details);

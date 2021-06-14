@@ -246,6 +246,49 @@ div[class^="admonition-statistic"] .admonition-title:before {
   content: "\f1fe";
   color: #1f441e;
 }
+div[class^="admonition-statistic"] .toggle.docutils.container {
+  overflow-x: scroll
+}
+/* details class="section" id="" */
+details.section#instructions{
+  background-color: #f5e3e3;
+  padding: 5px;
+  border-radius: 10px;
+  border: 1px solid pink;
+}
+details.section#instructions summary {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  transition: 0.2s;
+}
+details.section#instructions summary::-webkit-details-marker {
+  display: none;
+}
+details.section#instructions summary::before {
+  font-family: FontAwesome; 
+  content: "\f107";
+  float: right;
+  padding-right: 15px;
+  font-size: 34px;
+}
+details.section#instructions[open] summary::before {
+  content: "\f106";      
+}
+details.section#instructions[open] div {
+  animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* <-- These two are inverted */
 .fa-home:before, .icon-home:before {
   content: "";
