@@ -226,6 +226,10 @@ div.sidebarlogo ul.social a.sc-wikipedia-w, ul.social a.sc-wikipedia-w-alt {
   background-color: white;
   color: black;
 }
+div.sidebarlogo ul.social a.sc-file-pdf-o, ul.social a.sc-file-pdf-o {
+  background-color: #a52416;
+  color: white;
+}
 div.sidebarlogo ul.social a.sc-github, ul.social a.sc-github-alt {
   background-color: #111010;
   color: white;
