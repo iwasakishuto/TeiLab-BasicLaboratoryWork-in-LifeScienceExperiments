@@ -1,0 +1,7 @@
+teilab.utils.math\_utils module
+===============================
+
+.. automodule:: teilab.utils.math_utils
+   :members:
+   :undoc-members:
+   :show-inheritance:

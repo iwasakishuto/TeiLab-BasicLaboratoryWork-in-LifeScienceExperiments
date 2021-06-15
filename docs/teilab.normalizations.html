@@ -8,7 +8,7 @@
   <meta property="og:title" content="teilab.normalizations module" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="teilab.normalizations.html" />
-  <meta property="og:description" content="Differential gene expression can be an outcome of true biological variability or experimental artifacts. Normalization techniques have been used to minimize the effect of experimental artifacts on ..." />
+  <meta property="og:description" content="This submodule contains various functions and classes that are useful for normalization. Instructions: Differential gene expression can be an outcome of true biological variability or experimental ..." />
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+  <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   <link rel="stylesheet" href="_static/popup.css" type="text/css" />
 
@@ -46,6 +47,8 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
         <script src="_static/custom.js"></script>
         <script src="_static/particles.min.js"></script>
         <script src="_static/popup.js"></script>
@@ -138,7 +141,8 @@
 <li class="toctree-l2 current"><a class="reference internal" href="teilab.html#submodules">Submodules</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="teilab.datasets.html">teilab.datasets module</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">teilab.normalizations module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#robust-multichip-analysis-rma">Robust Multichip Analysis (RMA)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#instructions">Instructions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python-objects">Python Objects</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="teilab.question.html">teilab.question module</a></li>
@@ -223,9 +227,12 @@
             
   <div class="section" id="module-teilab.normalizations">
 <span id="teilab-normalizations-module"></span><h1>teilab.normalizations module<a class="headerlink" href="#module-teilab.normalizations" title="Permalink to this headline">¶</a></h1>
+<p>This submodule contains various functions and classes that are useful for normalization.</p>
+<div class="section" id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
 <p>Differential gene expression can be an outcome of true biological variability or experimental artifacts. Normalization techniques have been used to minimize the effect of experimental artifacts on differential gene expression analysis.</p>
 <div class="section" id="robust-multichip-analysis-rma">
-<h2>Robust Multichip Analysis (RMA)<a class="headerlink" href="#robust-multichip-analysis-rma" title="Permalink to this headline">¶</a></h2>
+<h3>Robust Multichip Analysis (RMA)<a class="headerlink" href="#robust-multichip-analysis-rma" title="Permalink to this headline">¶</a></h3>
 <p>In microarray analysis, many algorithms have been proposed, but the most widely used one (<strong>de facto standard</strong>) is <em class="fa fa-file-pdf-o"></em> <a class="reference external" href="https://academic.oup.com/biostatistics/article/4/2/249/245074">Robust Multichip Analysis (RMA)</a> , where the signal value of each spot ( <code class="docutils literal notranslate"><span class="pre">RawData</span></code> ) is processed and normalized according to the following flow. ( <a class="reference internal" href="#target-to-background-subtraction-section"><span class="std std-ref">1) Background Subtraction</span></a>, <a class="reference internal" href="#target-to-normalization-between-samples-section"><span class="std std-ref">2) Normalization Between Samples</span></a> and <a class="reference internal" href="#target-to-summarization-section"><span class="std std-ref">3) Summarization</span></a> )</p>
 <div class="graphviz"><img src="_images/graphviz-7d9910d4a36548f0df6bfc64bf2016bd419a5dbf.png" alt="digraph RAMPreprocessingGraph {
     graph [
@@ -570,7 +577,7 @@
     };
 }" class="graphviz popup-img" /></div>
 <div class="section" id="background-subtraction">
-<span id="target-to-background-subtraction-section"></span><h3>1. Background Subtraction<a class="headerlink" href="#background-subtraction" title="Permalink to this headline">¶</a></h3>
+<span id="target-to-background-subtraction-section"></span><h4>1. Background Subtraction<a class="headerlink" href="#background-subtraction" title="Permalink to this headline">¶</a></h4>
 <p>In Background Subtraction, we assume that the observed signal intensity is a combnation of the actual signal intensity and the background signal intensity (derived from Non-specific Hybridization), and aim to eliminate the influence of the latter one.</p>
 <p>In the general method, we make assumptions such as</p>
 <ul class="simple">
@@ -580,7 +587,7 @@
 <p>Then, by optimizing the parameters to best represent the phenomenon, the background intensity distribution is calculated and subtracted.</p>
 </div>
 <div class="section" id="normalization-between-samples">
-<span id="target-to-normalization-between-samples-section"></span><h3>2. Normalization Between Samples<a class="headerlink" href="#normalization-between-samples" title="Permalink to this headline">¶</a></h3>
+<span id="target-to-normalization-between-samples-section"></span><h4>2. Normalization Between Samples<a class="headerlink" href="#normalization-between-samples" title="Permalink to this headline">¶</a></h4>
 <p>Here, we perform normalization <strong>“between”</strong> samples. What can be said from the results of a <strong>“single sample”</strong> microarray experiment are very limited, and we should compare with other (treatment sample, control group, etc.) experimental results. Howevet, bias due to experimental operation and equipment characteristics is inevitable, and if you just compare them as they are, you will misinterpret them.</p>
 <p>For example, if you want to characterize the changes in global gene expression in the livers of H1/siRNAinsulin-CMV/hIDE transgenic (Tg) mice in response to the reduced bioavailability of insulin <a class="footnote-reference brackets" href="#ref1" id="id2">1</a>, and the expression level of each RNA in Tg mice was generally lower than that of non-Tg mice, <strong>you may mistakenly conclude that almost all of the RNAs were down-regulated respectively by reduced bioavailability of insulin.</strong></p>
 <dl class="footnote brackets">
@@ -598,7 +605,7 @@
 </ol>
 </div>
 <div class="section" id="percentile">
-<span id="target-to-percentile-section"></span><h4>1. Percentile<a class="headerlink" href="#percentile" title="Permalink to this headline">¶</a></h4>
+<span id="target-to-percentile-section"></span><h5>1. Percentile<a class="headerlink" href="#percentile" title="Permalink to this headline">¶</a></h5>
 <p>This method is a constant adjustoment and the most straightforward.</p>
 <ol class="arabic simple">
 <li><p>Calculate the x%tile for each distribution.</p></li>
@@ -622,7 +629,7 @@
 <p>Defined as <a class="reference internal" href="#teilab.normalizations.percentile" title="teilab.normalizations.percentile"><code class="xref py py-func docutils literal notranslate"><span class="pre">percentile</span></code></a> in this package.</p>
 </div>
 <div class="section" id="quantile">
-<span id="target-to-quantile-section"></span><h4>2. Quantile<a class="headerlink" href="#quantile" title="Permalink to this headline">¶</a></h4>
+<span id="target-to-quantile-section"></span><h5>2. Quantile<a class="headerlink" href="#quantile" title="Permalink to this headline">¶</a></h5>
 <p>Quantile Normalization is a technique for making all distributions identical in statistical properties. It was introduced as <strong>“quantile standardization”</strong> (in <em class="fa fa-file-pdf-o"></em> <a class="reference external" href="https://doi.org/10.1198%2F016214501753381814">Analysis of Data from Viral DNA Microchips</a> ) and then renamed as <strong>“quantile normalization”</strong> (in <em class="fa fa-file-pdf-o"></em> <a class="reference external" href="https://doi.org/10.1093%2Fbioinformatics%2F19.2.185">A comparison of normalization methods for high density oligonucleotide array data based on variance and bias</a> )</p>
 <p>To quantile normalize the all distributions,</p>
 <ol class="arabic simple">
@@ -652,8 +659,13 @@
 </div>
 </div>
 <div class="section" id="summarization">
-<span id="target-to-summarization-section"></span><h3>3. Summarization<a class="headerlink" href="#summarization" title="Permalink to this headline">¶</a></h3>
+<span id="target-to-summarization-section"></span><h4>3. Summarization<a class="headerlink" href="#summarization" title="Permalink to this headline">¶</a></h4>
 <p><a class="reference external" href="https://github.com/scipy/scipy/blob/v1.6.3/scipy/signal/signaltools.py#L3384-L3467">https://github.com/scipy/scipy/blob/v1.6.3/scipy/signal/signaltools.py#L3384-L3467</a></p>
+</div>
+</div>
+</div>
+<div class="section" id="python-objects">
+<h2>Python Objects<a class="headerlink" href="#python-objects" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="teilab.normalizations.percentile">
 <span class="sig-prename descclassname"><span class="pre">teilab.normalizations.</span></span><span class="sig-name descname"><span class="pre">percentile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._object.Object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">percent</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">numbers.Number</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">75</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._object.Object</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/normalizations.html#percentile"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.normalizations.percentile" title="Permalink to this definition">¶</a></dt>
@@ -835,7 +847,6 @@
 </div>
 </dd></dl>
 
-</div>
 </div>
 </div>
 

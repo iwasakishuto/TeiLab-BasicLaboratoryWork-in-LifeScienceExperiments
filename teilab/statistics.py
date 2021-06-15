@@ -579,20 +579,60 @@ def paired_t_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.
 def mann_whitney_u_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", use_continuity:bool=True, plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
     r"""NON-PARAMETRIC-test for Equality of averages of TWO INDEPENDENT samples.
 
-    .. admonition:: Statistic ( :math:`T` )
+    Mann–Whitney U test is used as significance
+
+
+    .. admonition:: Statistic ( :math:`U` )
         
         .. container:: toggle, toggle-hidden
 
             Let :math:`A_{1},\ldots, A_{n}` be an i.i.d. sample from :math:`A`, and :math:`B_{1},\ldots ,B_{m}` be an i.i.d. sample from :math:`B`, and both samples independent of each other. The corresponding Mann-Whitney :math:`U` statistic is defined as:
     
             .. math::
-                U=\sum_{i=1}^{n}\sum_{j=1}^{m}S(A_{i},B_{j})
+                U=\sum_{i=1}^{n_A}\sum_{j=1}^{n_B}S(A_{i},B_{j})
             
             with
 
             .. math::
                 S(A,B)={\begin{cases}1,&{\text{if }}B<A,\\{\tfrac {1}{2}},&{\text{if }}B=A,\\0,&{\text{if }}B>A.\end{cases}}
 
+            In direct method, for each observation in sample ``a``, the sum of the number of observations in sample ``b`` for which a smaller value was obtained is the :math:`U_A` .
+
+            In other method, :math:`U_A` is given by:
+
+            .. math::
+                U_A=R_A-\frac{n_A(n_A+1)}{2}
+
+            where :math:`n_A` is the sample size for sample ``a``, and :math:`R_A` is the sum of the ranks in sample ``a`` because :math:`\frac{n_A(n_A+1)}{2}` is the sum of all the ranks of ``a`` within sample ``a``.
+
+            Knowing that :math:`R_A+R_B=N(N+1)/2` and :math:`N=n_A+n_B`, we find that the sum is
+
+            .. math::
+                U_A + U_B 
+                &= \left(R_A - \frac{n_A(n_A+1)}{2}\right) + \left(R_B - \frac{n_B(n_B+1)}{2}\right) \\ 
+                &= \underbrace{\left(R_A + R_B\right)}_{(N)(N+1)/2} - \frac{1}{2}\left(n_A(n_A+1) + n_B(n_B+1)\right)\\
+                &= n_An_B.
+
+            For large ( :math:`>20` ) samples, :math:`U` is approximately normally distributed. In this case, the standardized value
+
+            .. math::
+                z={\frac {U-m_{U}}{\sigma _{U}}}
+
+            where :math:`m_U` and :math:`\sigma_U` are the mean and standard deviation of :math:`U`, is approximately a standard normal deviate whose significance can be checked in tables of the normal distribution. :math:`m_U` and :math:`\sigma_U` are given by
+
+            .. math::
+                m_U={\frac {n_An_B}{2}},\ \text{and} \\
+                \sigma _{U}={\sqrt {\frac{n_An_B(n_A+n_B+1)}{12}}}.
+
+            The formula for the standard deviation is more complicated in the presence of tied ranks. If there are ties in ranks, :math:`\sigma` should be corrected as follows:
+
+            .. math::
+                \sigma _{\text{corr}}={\sqrt {\frac{n_An_B}{12}\left((N+1)-\sum_{i=1}^k\frac{t_i^3-t_i}{N(N-1)}\right)}}
+
+            where :math:`N=n_A+n_B, t_i` is the number of subjects sharing rank :math:`i`, and :math:`k` is the number of (distinct) ranks.
+
+    .. warning::
+        How to calculate the statistic value is different from `scipy <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html>`_.
 
     Args:
         a,b (NDArray[Any, Number])      : (Observed) Samples. The arrays must have the same shape.
@@ -614,31 +654,50 @@ def mann_whitney_u_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:fl
     n_a = len(a)
     n_b = len(b)
     # Assign numeric ranks to all the observations (put the observations from both groups to one set), beginning with 1 for the samllest value.
-    ranking = assign_rank(np.concatenate(a=(a,b)))
-    rank_a = ranking[0:n_a] #: get the ``a``'s ranks
-    u1 = n_a*n_b + (n_a*(n_a+1))/2.0 - np.sum(rank_a, axis=0) #: calculate ``U`` for ``a``
-    u2 = n_a*n_b - u1 #: remainder is ``U`` for ``b``
+    ranking = assign_rank(np.concatenate((a,b)))
+    # Calculate Ua (for ``a``) and Ub (for ``b``)
+    Ua = np.sum(ranking[0:n_a]) - (n_a*(n_a+1))/2.0
+    Ub = n_a*n_b - Ua #: ∵) Ua+Ub = n_a*n_b, so remainder is ``Ub``
     T = tiecorrect(ranking)
     if T == 0:
         raise ValueError('All numbers are identical in mannwhitneyu')
-    sd = np.sqrt(T*n_a*n_b*(n_a+n_b+1) / 12.0)
+    mean_rank = n_a*n_b/2.0 + 0.5*use_continuity    #: mean of ``U``
+    sd_rank = np.sqrt(T*n_a*n_b*(n_a+n_b+1) / 12.0) #: standard deviation of ``U``
+    norm_dist = stats.norm(loc=0, scale=1)
 
-    meanrank = n_a*n_b/2.0 + 0.5*use_continuity
-    if alternative == 'two-sided':
-        bigu = max(u1, u2)
-    elif alternative == 'less':
-        bigu = u1
-    elif alternative == 'greater':
-        bigu = u2
-
-    z = (bigu - meanrank) / sd
-    if alternative == 'two-sided':
-        p = 2 * stats.norm.sf(abs(z))
-    else:
-        p = stats.norm.sf(z)
-
-    u = u2
-    return (u,p)
+    if alternative == "less":
+        u = Ub
+        z = (u-mean_rank) / sd_rank
+        x_l = norm_dist.ppf(alpha)
+        x_r = norm_dist.ppf(1)
+        p_val = norm_dist.sf(z)
+    elif alternative == "greater":
+        u = Ua
+        z = (u-mean_rank) / sd_rank
+        x_l = norm_dist.ppf(0)
+        x_r = norm_dist.ppf(1-alpha)
+        p_val = norm_dist.sf(z)
+    else: # Two-side
+        u = min(Ua,Ub)
+        z = (u-mean_rank) / sd_rank
+        x_l = norm_dist.ppf(alpha/2)
+        x_r = norm_dist.ppf(1-alpha/2)
+        p_val = 2*norm_dist.sf(abs(z))
+    
+    test_result = TestResult(
+        statistic=u, pvalue=p_val, 
+        alpha=alpha, alternative=alternative, accepts=(x_l,x_r), 
+        distribution=None, distname="Normal Distribution (approximation)", testname="Mann-Whitney's-u"
+    )
+    if plot:
+        test_result_for_plot = TestResult(
+            statistic=z, pvalue=p_val, 
+            alpha=alpha, alternative=alternative, accepts=(x_l,x_r), 
+            distribution=norm_dist, distname="Normal", testname="Mann-Whitney's-u"
+        )
+        x_edge_abs = max(norm_dist.ppf(1e-4), abs(z)+1)
+        test_result_for_plot.plot(x=np.linspace(-x_edge_abs, x_edge_abs, 1000), ax=ax)
+    return test_result
 
 def wilcoxon_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.05, alternative:str="two-sided", plot:bool=False, ax:Optional[Axes]=None) -> TestResult:
     """NON-PARAMETRIC-test for Equality of averages of TWO PAIRED samples.
@@ -666,10 +725,14 @@ def wilcoxon_test(a:NDArray[Any, Number], b:NDArray[Any, Number], alpha:float=0.
         - https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html#scipy.stats.mannwhitneyu
         - `scipy.stats.wilcoxon(A, B) <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html>`_
     """
+    raise NotImplementedError("I'm sorry... Not Impremented.")
     # warnings.warn(_pack_warning_args("message", __file__, sys._getframe().f_code.co_name), category=InsufficientUnderstandingWarning)
 
-# def anova():
+def anova() -> TestResult:
+    raise NotImplementedError("I'm sorry... Not Impremented.")
 
-# def friedman_test():
+def friedman_test() -> TestResult:
+    raise NotImplementedError("I'm sorry... Not Impremented.")
 
-# def kruskal_wallis_test():
+def kruskal_wallis_test() -> TestResult:
+    raise NotImplementedError("I'm sorry... Not Impremented.")
