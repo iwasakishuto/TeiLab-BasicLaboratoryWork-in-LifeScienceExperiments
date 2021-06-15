@@ -1,0 +1,123 @@
+digraph RAMPreprocessingGraph {
+    graph [
+        charset   = "UTF-8";
+        label     = "Statistical Hypothesis Testing",
+        labelloc  = "t",
+        labeljust = "c",
+        bgcolor   = "#1f441e",
+        fontcolor = "white",
+        fontsize  = 18,
+        style     = "filled",
+        rankdir   = TB,
+        margin    = 0.2,
+        ranksep   = 1.0,
+        nodesep   = 0.9,
+        layout    = "dot",
+        compound = true,
+    ];
+
+    node [
+        shape     = diamond,
+        style     = "solid,filled",
+        fontsize  = 16,
+        fontcolor = 6,
+        fontname  = "fantasy",
+        color     = "#cee6b4",
+        fillcolor = "#9ecca4",
+        fixedsize = false,
+        margin    = "0.05",
+    ];
+    
+    distribution          [label="Distribution"];
+    numSamples1           [label="Number of Samples"];
+    numSamples2           [label="Number of Samples"];
+    sampleRelationships11 [label="Relationship of Samples"];
+    sampleRelationships21 [label="Relationship of Samples"];
+    sampleRelationships22 [label="Relationship of Samples"];
+
+    node [
+        shape     = rect,
+        style     = "solid,filled",
+        fontsize  = 20,
+        fontcolor = 6,
+        fontname  = "times",
+        color     = "#cee6b4",
+        fillcolor = "#fff5b7",
+        fixedsize = false,
+        margin    = "0",
+    ];
+
+    f_test              [label = <<table border="0" cellspacing="10" bgcolor="white"><tr><td></td><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="70"  fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">f_test</font></td><td></td></tr><tr><td colspan="3" port="location"><font face="times">F-test</font></td></tr></table>>]
+    paired_t_test       [label = <<table border="0" cellspacing="10" bgcolor="white"><tr><td></td><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="130" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">paired_t_test</font></td><td></td></tr><tr><td colspan="3" port="location"><font face="times">Paired t-test</font></td></tr></table>>]
+    student_t_test      [label = <<table border="0" cellspacing="10" bgcolor="white"><tr><td></td><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="140" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">student_t_test</font></td><td></td></tr><tr><td colspan="3" port="location"><font face="times">Student's t-test</font></td></tr></table>>]
+    welch_t_test        [label = <<table border="0" cellspacing="10" bgcolor="white"><tr><td></td><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="120" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">welch_t_test</font></td><td></td></tr><tr><td colspan="3" port="location"><font face="times">Welch's t-test</font></td></tr></table>>]
+    anova               [label = <<table border="0" cellspacing="10" bgcolor="white"><tr><td></td><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="60"  fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">anova</font></td><td></td></tr><tr><td colspan="3" port="location"><font face="times">ANOVA</font></td></tr></table>>]
+    wilcoxon_test       [label = <<table border="0" cellspacing="10" bgcolor="white"><tr><td></td><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="130" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">wilcoxon_test</font></td><td></td></tr><tr><td colspan="3" port="location"><font face="times">Wilcoxon signed-rank test</font></td></tr></table>>]
+    u_test              [label = <<table border="0" cellspacing="10" bgcolor="white"><tr><td></td><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="190"  fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">mann_whitney_u_test</font></td><td></td></tr><tr><td colspan="3" port="location"><font face="times">Mann-Whitney U test</font></td></tr></table>>]
+    friedman_test       [label = <<table border="0" cellspacing="10" bgcolor="white"><tr><td></td><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="130" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">friedman_test</font></td><td></td></tr><tr><td colspan="3" port="location"><font face="times">Friedman test</font></td></tr></table>>]
+    kruskal_wallis_test [label = <<table border="0" cellspacing="10" bgcolor="white"><tr><td></td><td port="varname" align="left" border="1" color="#e1e4e5" bgcolor="white" width="190" fixedsize="true"><font point-size="16" face="monaco" color="#e74c3c">kruskal_wallis_test</font></td><td></td></tr><tr><td colspan="3" port="location"><font face="times">Kruskal-wallis test</font></td></tr></table>>]       
+   
+    edge [
+        style         = solid,
+        fontsize      = 14,
+        fontname      = "times",
+        fontcolor     = white,
+        color         = white,
+        labelfloat    = false,
+        arrowhead     = vee,
+        headport      = n,
+        arrowsize     = 1.5,
+    ];
+
+    subgraph cluster_1 {
+        label     = "Parametric Test";
+        labelloc  = "t";
+        labeljust = "c";
+        fillcolor = "#89898989";
+        fontcolor = "#ffd56b";
+        margin    = 20;
+        distribution -> numSamples1 [label="Under\n(Normal) Distribution" color="#f4c7ab" fontcolor="#f4c7ab"];
+        numSamples1 -> sampleRelationships11 [label="2" tailport=sw color="#f4c7ab" fontcolor="#f4c7ab"];
+
+        subgraph cluster_11{
+            label     = "Two-Sample Test";
+            sampleRelationships11 -> paired_t_test [label="Paired"      tailport=sw color="#f4c7ab" fontcolor="#f4c7ab"];
+            sampleRelationships11 -> welch_t_test  [label="Independent" tailport=se color="#deedf0" fontcolor="#deedf0"style="dashed"];
+            sampleRelationships11 -> f_test        [label="Independent" tailport=se color="#deedf0" fontcolor="#deedf0"];
+            f_test -> student_t_test [label="P > &#945;" color="#f4c7ab" fontcolor="#f4c7ab"];
+            f_test -> welch_t_test   [label="P < &#945;" color="#deedf0" fontcolor="#deedf0"];
+        }
+        subgraph cluster_12{
+            label = "Multiple-Sample Test"
+            numSamples1 -> anova [label=">2" tailport=se color="#deedf0" fontcolor="#deedf0"];
+        }
+    };
+
+    subgraph cluster_2 {
+        label     = "Parametric Test";
+        labelloc  = "t";
+        labeljust = "c";
+        fillcolor = "#89898989";
+        fontcolor = "#ffd56b";
+        margin    = 20;
+        distribution -> numSamples2 [label="Distribution-free" color="#deedf0" fontcolor="#deedf0"];
+        numSamples2 -> sampleRelationships21 [label="2"  tailport=sw color="#f4c7ab" fontcolor="#f4c7ab"];
+        numSamples2 -> sampleRelationships22 [label=">2" tailport=se color="#deedf0" fontcolor="#deedf0"];
+
+        subgraph cluster_21{
+            label     = "Two-Sample Test";
+            sampleRelationships21 -> wilcoxon_test [label="Paired"      tailport=sw color="#f4c7ab" fontcolor="#f4c7ab"];
+            sampleRelationships21 -> u_test        [label="Independent" tailport=se color="#deedf0" fontcolor="#deedf0"];
+        }
+        subgraph cluster_22{
+            label = "Multiple-Sample Test"
+            sampleRelationships22 -> friedman_test       [label="Paired"      tailport=sw color="#f4c7ab" fontcolor="#f4c7ab"];
+            sampleRelationships22 -> kruskal_wallis_test [label="Independent" tailport=se color="#deedf0" fontcolor="#deedf0"];
+        }
+    };
+    {rank=same; distribution;}
+    {rank=same; numSamples1; numSamples2;}
+    {rank=same; sampleRelationships11; sampleRelationships21; sampleRelationships22;}
+    {rank=same; f_test;}
+    {rank=same; paired_t_test; student_t_test; welch_t_test; anova; wilcoxon_test; u_test; friedman_test; kruskal_wallis_test}
+}

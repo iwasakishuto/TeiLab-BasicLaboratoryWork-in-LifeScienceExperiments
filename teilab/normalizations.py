@@ -1,21 +1,25 @@
 #coding: utf-8
-"""
+"""This submodule contains various functions and classes that are useful for normalization.
+
+############
+Instructions
+############
+
 Differential gene expression can be an outcome of true biological variability or experimental artifacts. Normalization techniques have been used to minimize the effect of experimental artifacts on differential gene expression analysis.
 
-###############################
+*******************************
 Robust Multichip Analysis (RMA)
-###############################
+*******************************
 
 In microarray analysis, many algorithms have been proposed, but the most widely used one (**de facto standard**) is :fa:`file-pdf-o` `Robust Multichip Analysis (RMA) <https://academic.oup.com/biostatistics/article/4/2/249/245074>`_ , where the signal value of each spot ( ``RawData`` ) is processed and normalized according to the following flow. ( :ref:`1) Background Subtraction <target to background subtraction section>`, :ref:`2) Normalization Between Samples <target to normalization between samples section>` and :ref:`3) Summarization <target to summarization section>` )
 
-.. graphviz:: _graphviz/RobustMultichipAnalysis.dot
+.. graphviz:: _graphviz/graphviz_RobustMultichipAnalysis.dot
       :class: popup-img
 
 .. _target to background subtraction section:
 
-*************************
 1. Background Subtraction
-*************************
+=========================
 
 In Background Subtraction, we assume that the observed signal intensity is a combnation of the actual signal intensity and the background signal intensity (derived from Non-specific Hybridization), and aim to eliminate the influence of the latter one.
 
@@ -28,9 +32,8 @@ Then, by optimizing the parameters to best represent the phenomenon, the backgro
 
 .. _target to normalization between samples section:
 
-********************************
 2. Normalization Between Samples
-********************************
+================================
 
 Here, we perform normalization **"between"** samples. What can be said from the results of a **"single sample"** microarray experiment are very limited, and we should compare with other (treatment sample, control group, etc.) experimental results. Howevet, bias due to experimental operation and equipment characteristics is inevitable, and if you just compare them as they are, you will misinterpret them.
 
@@ -50,7 +53,7 @@ We will introduce two majour methods.
 .. _target to percentile section:
 
 1. Percentile
-=============
+-------------
 
 This method is a constant adjustoment and the most straightforward.
 
@@ -70,7 +73,7 @@ Defined as :func:`percentile <teilab.normalizations.percentile>` in this package
 .. _target to quantile section:
 
 2. Quantile
-===========
+-----------
 
 Quantile Normalization is a technique for making all distributions identical in statistical properties. It was introduced as **"quantile standardization"** (in :fa:`file-pdf-o` `Analysis of Data from Viral DNA Microchips <https://doi.org/10.1198%2F016214501753381814>`_ ) and then renamed as **"quantile normalization"** (in :fa:`file-pdf-o` `A comparison of normalization methods for high density oligonucleotide array data based on variance and bias <https://doi.org/10.1093%2Fbioinformatics%2F19.2.185>`_ )
 
@@ -95,12 +98,14 @@ Defined as :func:`quantile <teilab.normalizations.quantile>` in this package.
 
 .. _target to summarization section:
 
-****************
 3. Summarization
-****************
+================
 
 https://github.com/scipy/scipy/blob/v1.6.3/scipy/signal/signaltools.py#L3384-L3467
 
+##############
+Python Objects
+##############
 """
 import numpy as np
 from scipy.stats.mstats import gmean

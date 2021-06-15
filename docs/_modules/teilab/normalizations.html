@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/togglebutton.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/popup.css" type="text/css" />
 
@@ -41,6 +42,8 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
         <script src="../../_static/custom.js"></script>
         <script src="../../_static/particles.min.js"></script>
         <script src="../../_static/popup.js"></script>
@@ -197,23 +200,27 @@
             
   <h1>Source code for teilab.normalizations</h1><div class="highlight"><pre>
 <span></span><span class="c1">#coding: utf-8</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;This submodule contains various functions and classes that are useful for normalization.</span>
+
+<span class="sd">############</span>
+<span class="sd">Instructions</span>
+<span class="sd">############</span>
+
 <span class="sd">Differential gene expression can be an outcome of true biological variability or experimental artifacts. Normalization techniques have been used to minimize the effect of experimental artifacts on differential gene expression analysis.</span>
 
-<span class="sd">###############################</span>
+<span class="sd">*******************************</span>
 <span class="sd">Robust Multichip Analysis (RMA)</span>
-<span class="sd">###############################</span>
+<span class="sd">*******************************</span>
 
 <span class="sd">In microarray analysis, many algorithms have been proposed, but the most widely used one (**de facto standard**) is :fa:`file-pdf-o` `Robust Multichip Analysis (RMA) &lt;https://academic.oup.com/biostatistics/article/4/2/249/245074&gt;`_ , where the signal value of each spot ( ``RawData`` ) is processed and normalized according to the following flow. ( :ref:`1) Background Subtraction &lt;target to background subtraction section&gt;`, :ref:`2) Normalization Between Samples &lt;target to normalization between samples section&gt;` and :ref:`3) Summarization &lt;target to summarization section&gt;` )</span>
 
-<span class="sd">.. graphviz:: _graphviz/RobustMultichipAnalysis.dot</span>
+<span class="sd">.. graphviz:: _graphviz/graphviz_RobustMultichipAnalysis.dot</span>
 <span class="sd">      :class: popup-img</span>
 
 <span class="sd">.. _target to background subtraction section:</span>
 
-<span class="sd">*************************</span>
 <span class="sd">1. Background Subtraction</span>
-<span class="sd">*************************</span>
+<span class="sd">=========================</span>
 
 <span class="sd">In Background Subtraction, we assume that the observed signal intensity is a combnation of the actual signal intensity and the background signal intensity (derived from Non-specific Hybridization), and aim to eliminate the influence of the latter one.</span>
 
@@ -226,9 +233,8 @@
 
 <span class="sd">.. _target to normalization between samples section:</span>
 
-<span class="sd">********************************</span>
 <span class="sd">2. Normalization Between Samples</span>
-<span class="sd">********************************</span>
+<span class="sd">================================</span>
 
 <span class="sd">Here, we perform normalization **&quot;between&quot;** samples. What can be said from the results of a **&quot;single sample&quot;** microarray experiment are very limited, and we should compare with other (treatment sample, control group, etc.) experimental results. Howevet, bias due to experimental operation and equipment characteristics is inevitable, and if you just compare them as they are, you will misinterpret them.</span>
 
@@ -248,7 +254,7 @@
 <span class="sd">.. _target to percentile section:</span>
 
 <span class="sd">1. Percentile</span>
-<span class="sd">=============</span>
+<span class="sd">-------------</span>
 
 <span class="sd">This method is a constant adjustoment and the most straightforward.</span>
 
@@ -268,7 +274,7 @@
 <span class="sd">.. _target to quantile section:</span>
 
 <span class="sd">2. Quantile</span>
-<span class="sd">===========</span>
+<span class="sd">-----------</span>
 
 <span class="sd">Quantile Normalization is a technique for making all distributions identical in statistical properties. It was introduced as **&quot;quantile standardization&quot;** (in :fa:`file-pdf-o` `Analysis of Data from Viral DNA Microchips &lt;https://doi.org/10.1198%2F016214501753381814&gt;`_ ) and then renamed as **&quot;quantile normalization&quot;** (in :fa:`file-pdf-o` `A comparison of normalization methods for high density oligonucleotide array data based on variance and bias &lt;https://doi.org/10.1093%2Fbioinformatics%2F19.2.185&gt;`_ )</span>
 
@@ -293,12 +299,14 @@
 
 <span class="sd">.. _target to summarization section:</span>
 
-<span class="sd">****************</span>
 <span class="sd">3. Summarization</span>
-<span class="sd">****************</span>
+<span class="sd">================</span>
 
 <span class="sd">https://github.com/scipy/scipy/blob/v1.6.3/scipy/signal/signaltools.py#L3384-L3467</span>
 
+<span class="sd">##############</span>
+<span class="sd">Python Objects</span>
+<span class="sd">##############</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.stats.mstats</span> <span class="kn">import</span> <span class="n">gmean</span>
