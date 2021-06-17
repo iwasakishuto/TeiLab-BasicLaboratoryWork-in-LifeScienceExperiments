@@ -3,8 +3,10 @@ import os
 import sys
 import time
 import datetime
-from typing import Tuple,Callable,Optional,Dict,Any
+from typing import Tuple,Callable,Optional,Dict,Any,List
 from numbers import Number
+
+from ._exceptions import KeyError
 
 def now_str(tz:Optional[datetime.timezone]=None, fmt:str="%Y-%m-%d@%H.%M.%S") -> str:
     """Returns new datetime string representing current time local to tz under the control of an explicit format string.
@@ -146,3 +148,27 @@ def dict2str(d:Dict[Any,Any], item_separator:str=", ", key_separator:str="=") ->
         'key1=val🤔key2=1'
     """
     return str(item_separator).join([f"{k}{key_separator}{v}" for k,v in d.items()])
+
+def check_supported(lst:List[Any], **kwargs):
+    """Check whether all ``kwargs.values()`` in the ``lst``.
+
+    Args:
+        lst (List[Any]) : candidates for each value in ``kwargs.values()``.
+        kwargs          : ``key`` is the varname that is easy to understand when an error occurs
+
+    Examples:
+        >>> from teilab.utils import check_supported
+        >>> check_supported(lst=range(3), val=1)
+        >>> check_supported(lst=range(3), val=100)
+        KeyError: Please choose the argment 'val' from ['0', '1', '2'], but you chose '100'
+        >>> check_supported(lst=range(3), val1=1, val2=2)
+        >>> check_supported(lst=range(3), val1=1, val2=100)
+        KeyError: Please choose the argment 'val2' from ['0', '1', '2'], but you chose '100'
+
+    Raise:
+        KeyError: If ``kwargs.values()`` not in the ``lst``
+    """
+    for k,v in kwargs.items():
+        if v not in lst:
+            lst = ', '.join([f"'{e}'" for e in lst])
+            raise KeyError(f"Please choose the argment '{k}' from [{lst}], but you chose '{v}'")

@@ -10,7 +10,7 @@ def test_decide_extension():
     assert decide_extension(content_encoding="image/png") == '.png'
     assert decide_extension(content_type="application/pdf") == '.pdf'
     assert decide_extension(content_encoding="image/webp", content_type="application/pdf") == '.webp'
-    assert decide_extension(filename="hoge.zip") == '.zip'
+    assert decide_extension(basename="hoge.zip") == '.zip'
 
 def test_unzip():
     from teilab.utils import unzip

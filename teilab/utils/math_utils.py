@@ -47,7 +47,7 @@ def assign_rank(arr:NDArray[Any,Number], method:str="average") -> NDArray[Any,fl
         array([1, 2, 4, 3])
 
     .. seealso::
-        - https://en.wikipedia.org/wiki/Ranking
+        - :fa:`wikipedia-w` `Ranking <https://en.wikipedia.org/wiki/Ranking>`_
         - `scipy.stats.rankdata(a, method='average') <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rankdata.html>`_
     """
     sorter = np.argsort(arr, kind="mergesort" if method=="ordinal" else "quicksort") #: arr[sorter[i]] is i-th ranked values.

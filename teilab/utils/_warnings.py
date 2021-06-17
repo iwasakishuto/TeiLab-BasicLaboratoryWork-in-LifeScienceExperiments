@@ -42,8 +42,11 @@ class InsufficientUnderstandingWarning(Warning):
             message, filename, co_name = args[:3]
         self.message = message
         if os.path.exists(filename):
-            filename = os.path.relpath(path=os.path.abspath(filename), start=REPO_DIR).replace("/", ".").replace(".py", f".html#{co_name}")
-        self.url = f"{__documentation__}/{filename}"
+            filename = os.path.relpath(path=os.path.abspath(filename), start=REPO_DIR).replace("/", ".")
+        filename,_ = os.path.splitext(filename)
+        if len(co_name)>0:
+            co_name = f"#{filename}.{co_name}"
+        self.url = f"{__documentation__}/{filename}.html{co_name}"
 
     def __str__(self):
         return f"""
