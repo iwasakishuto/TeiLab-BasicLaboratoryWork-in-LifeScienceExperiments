@@ -373,6 +373,35 @@
 </div>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="teilab.utils.generic_utils.check_supported">
+<span class="sig-prename descclassname"><span class="pre">teilab.utils.generic_utils.</span></span><span class="sig-name descname"><span class="pre">check_supported</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lst</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/teilab/utils/generic_utils.html#check_supported"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.utils.generic_utils.check_supported" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether all <code class="docutils literal notranslate"><span class="pre">kwargs.values()</span></code> in the <code class="docutils literal notranslate"><span class="pre">lst</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lst</strong> (<em>List</em><em>[</em><em>Any</em><em>]</em>) – candidates for each value in <code class="docutils literal notranslate"><span class="pre">kwargs.values()</span></code>.</p></li>
+<li><p><strong>kwargs</strong> – <code class="docutils literal notranslate"><span class="pre">key</span></code> is the varname that is easy to understand when an error occurs</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">check_supported</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">val</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">val</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">KeyError: Please choose the argment &#39;val&#39; from [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;], but you chose &#39;100&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">val1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">val2</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">val1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">val2</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">KeyError: Please choose the argment &#39;val2&#39; from [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;], but you chose &#39;100&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>KeyError</strong> – If <code class="docutils literal notranslate"><span class="pre">kwargs.values()</span></code> not in the <code class="docutils literal notranslate"><span class="pre">lst</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 
 

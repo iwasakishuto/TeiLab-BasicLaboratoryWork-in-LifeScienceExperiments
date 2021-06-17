@@ -208,8 +208,10 @@
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span><span class="n">Callable</span><span class="p">,</span><span class="n">Optional</span><span class="p">,</span><span class="n">Dict</span><span class="p">,</span><span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span><span class="n">Callable</span><span class="p">,</span><span class="n">Optional</span><span class="p">,</span><span class="n">Dict</span><span class="p">,</span><span class="n">Any</span><span class="p">,</span><span class="n">List</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+
+<span class="kn">from</span> <span class="nn">._exceptions</span> <span class="kn">import</span> <span class="ne">KeyError</span>
 
 <div class="viewcode-block" id="now_str"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.now_str">[docs]</a><span class="k">def</span> <span class="nf">now_str</span><span class="p">(</span><span class="n">tz</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">@%H.%M.%S&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns new datetime string representing current time local to tz under the control of an explicit format string.</span>
@@ -351,6 +353,30 @@
 <span class="sd">        &#39;key1=val🤔key2=1&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">item_separator</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}{</span><span class="n">key_separator</span><span class="si">}{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span></div>
+
+<div class="viewcode-block" id="check_supported"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.check_supported">[docs]</a><span class="k">def</span> <span class="nf">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Check whether all ``kwargs.values()`` in the ``lst``.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lst (List[Any]) : candidates for each value in ``kwargs.values()``.</span>
+<span class="sd">        kwargs          : ``key`` is the varname that is easy to understand when an error occurs</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import check_supported</span>
+<span class="sd">        &gt;&gt;&gt; check_supported(lst=range(3), val=1)</span>
+<span class="sd">        &gt;&gt;&gt; check_supported(lst=range(3), val=100)</span>
+<span class="sd">        KeyError: Please choose the argment &#39;val&#39; from [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;], but you chose &#39;100&#39;</span>
+<span class="sd">        &gt;&gt;&gt; check_supported(lst=range(3), val1=1, val2=2)</span>
+<span class="sd">        &gt;&gt;&gt; check_supported(lst=range(3), val1=1, val2=100)</span>
+<span class="sd">        KeyError: Please choose the argment &#39;val2&#39; from [&#39;0&#39;, &#39;1&#39;, &#39;2&#39;], but you chose &#39;100&#39;</span>
+
+<span class="sd">    Raise:</span>
+<span class="sd">        KeyError: If ``kwargs.values()`` not in the ``lst``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
+            <span class="n">lst</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">])</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Please choose the argment &#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&#39; from [</span><span class="si">{</span><span class="n">lst</span><span class="si">}</span><span class="s2">], but you chose &#39;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

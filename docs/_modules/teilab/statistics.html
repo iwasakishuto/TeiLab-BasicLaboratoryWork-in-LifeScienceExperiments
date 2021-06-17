@@ -228,7 +228,7 @@
 <span class="sd">    .. [#ref1] :fa:`home` `Mathematical Statistics and Data Analysis (3rd ed.) &lt;https://www.amazon.com/Mathematical-Statistics-Analysis-Available-Enhanced/dp/0534399428&gt;`_</span>
 
 <span class="sd">    .. seealso::</span>
-<span class="sd">        https://en.wikipedia.org/wiki/Statistical_hypothesis_testing</span>
+<span class="sd">        :fa:`wikipedia-w` `Statistical_hypothesis_testing &lt;https://en.wikipedia.org/wiki/Statistical_hypothesis_testing&gt;`_</span>
 
 <span class="sd">Various alternative hypotheses can be handled by changing the value of A</span>
 
@@ -408,10 +408,13 @@
 <span class="kn">from</span> <span class="nn">nptyping</span> <span class="kn">import</span> <span class="n">NDArray</span>
 
 <span class="kn">from</span> <span class="nn">.utils._warnings</span> <span class="kn">import</span> <span class="n">InsufficientUnderstandingWarning</span><span class="p">,</span> <span class="n">TeiLabImprementationWarning</span><span class="p">,</span> <span class="n">_pack_warning_args</span>
-<span class="kn">from</span> <span class="nn">.utils.generic_utils</span> <span class="kn">import</span> <span class="n">dict2str</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">_wilcoxon_data</span>
+<span class="kn">from</span> <span class="nn">.utils.generic_utils</span> <span class="kn">import</span> <span class="n">dict2str</span><span class="p">,</span> <span class="n">check_supported</span>
 <span class="kn">from</span> <span class="nn">.utils.math_utils</span> <span class="kn">import</span> <span class="n">assign_rank</span><span class="p">,</span> <span class="n">tiecorrect</span>
 <span class="kn">from</span> <span class="nn">.utils.plot_utils</span> <span class="kn">import</span> <span class="n">subplots_create</span>
 <span class="kn">from</span> <span class="nn">.plot.matplotlib</span> <span class="kn">import</span> <span class="n">update_layout</span>
+
+<span class="n">SUPPORTED_ALTERNATIVES</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span> <span class="s2">&quot;less&quot;</span><span class="p">,</span> <span class="s2">&quot;greater&quot;</span><span class="p">]</span>
 
 <div class="viewcode-block" id="TestResult"><a class="viewcode-back" href="../../teilab.statistics.html#teilab.statistics.TestResult">[docs]</a><span class="k">class</span> <span class="nc">TestResult</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Structure that holds test results.</span>
@@ -495,6 +498,9 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        TestResult: Structure that holds F-test results.</span>
 
+<span class="sd">    Raises:</span>
+<span class="sd">        KeyError: When ``alternative`` is not selected from [ ``&quot;two-sided&quot;``, ``&quot;less&quot;``, ``&quot;greater&quot;`` ].</span>
+
 <span class="sd">    .. plot::</span>
 <span class="sd">        :include-source:</span>
 <span class="sd">        :class: popup-img</span>
@@ -510,8 +516,9 @@
 <span class="sd">        &gt;&gt;&gt; fig.show()</span>
 
 <span class="sd">    .. seealso::</span>
-<span class="sd">        https://en.wikipedia.org/wiki/F-test</span>
+<span class="sd">        :fa:`wikipedia-w` `F-test &lt;https://en.wikipedia.org/wiki/F-test&gt;`_</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="n">SUPPORTED_ALTERNATIVES</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">)</span>
     <span class="n">a_unbiased_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#: ``a``&#39;s unbiased variable. </span>
     <span class="n">b_unbiased_var</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#: ``b``&#39;s unbiased variable. </span>
     <span class="n">a_degrees_of_freedom</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>    <span class="c1">#: ``a``&#39;s Degrees of Freedom.</span>
@@ -573,6 +580,9 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        TestResult: Structure that holds student&#39;s T-test results.</span>
 
+<span class="sd">    Raises:</span>
+<span class="sd">        KeyError: When ``alternative`` is not selected from [ ``&quot;two-sided&quot;``, ``&quot;less&quot;``, ``&quot;greater&quot;`` ].</span>
+
 <span class="sd">    .. plot::</span>
 <span class="sd">        :include-source:</span>
 <span class="sd">        :class: popup-img</span>
@@ -589,9 +599,10 @@
 
 <span class="sd">    .. seealso::</span>
 
-<span class="sd">        - https://en.wikipedia.org/wiki/T-test#Independent_two-sample_t-test</span>
+<span class="sd">        - :fa:`wikipedia-w` `T-test &lt;https://en.wikipedia.org/wiki/T-test#Independent_two-sample_t-test&gt;`_</span>
 <span class="sd">        - `scipy.stats.ttest_ind(A, B, equal_var=True) &lt;https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html&gt;`_</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="n">SUPPORTED_ALTERNATIVES</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">)</span>
     <span class="n">n_a</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1">#: Sample size of ``a``.</span>
     <span class="n">n_b</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="c1">#: Sample size of ``b``.</span>
     <span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_a</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">n_b</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#: Degrees of Freedom.</span>
@@ -651,6 +662,9 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        TestResult: Structure that holds welch&#39;s T-test results.</span>
 
+<span class="sd">    Raises:</span>
+<span class="sd">        KeyError: When ``alternative`` is not selected from [ ``&quot;two-sided&quot;``, ``&quot;less&quot;``, ``&quot;greater&quot;`` ].</span>
+
 <span class="sd">    .. plot::</span>
 <span class="sd">        :include-source:</span>
 <span class="sd">        :class: popup-img</span>
@@ -667,10 +681,11 @@
 
 <span class="sd">    .. seealso::</span>
 
-<span class="sd">        - https://en.wikipedia.org/wiki/T-test#Independent_two-sample_t-test</span>
-<span class="sd">        - https://en.wikipedia.org/wiki/Welch%27s_t-test</span>
+<span class="sd">        - :fa:`wikipedia-w` `T-test &lt;https://en.wikipedia.org/wiki/T-test#Independent_two-sample_t-test&gt;`_</span>
+<span class="sd">        - :fa:`wikipedia-w` `Welch&#39;s_t-test &lt;https://en.wikipedia.org/wiki/Welch%27s_t-test&gt;`_</span>
 <span class="sd">        - `scipy.stats.ttest_ind(A, B, equal_var=False) &lt;https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_ind.html&gt;`_</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="n">SUPPORTED_ALTERNATIVES</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">)</span>
     <span class="n">vna</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1"># ``a``&#39;s unbiased variable. devided by len(a)</span>
     <span class="n">vnb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="c1"># ``b``&#39;s unbiased variable. devided by len(b)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="p">(</span><span class="n">vna</span><span class="o">+</span><span class="n">vnb</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">vna</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">vnb</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="c1">#: Degrees of Freedom.</span>
@@ -728,6 +743,7 @@
 
 <span class="sd">    Raises:</span>
 <span class="sd">        TypeError: When the arrays ``a`` and ``b`` have the different shapes.</span>
+<span class="sd">        KeyError: When ``alternative`` is not selected from [ ``&quot;two-sided&quot;``, ``&quot;less&quot;``, ``&quot;greater&quot;`` ].</span>
 
 <span class="sd">    .. plot::</span>
 <span class="sd">        :include-source:</span>
@@ -745,9 +761,10 @@
 
 <span class="sd">    .. seealso::</span>
 
-<span class="sd">        - https://en.wikipedia.org/wiki/T-test#Dependent_t-test_for_paired_samples</span>
+<span class="sd">        - :fa:`wikipedia-w` `T-test &lt;https://en.wikipedia.org/wiki/T-test#Dependent_t-test_for_paired_samples&gt;`_</span>
 <span class="sd">        - `scipy.stats.ttest_ind(A, B) &lt;https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.ttest_rel.html&gt;`_</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="n">SUPPORTED_ALTERNATIVES</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">)</span>
     <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="c1">#: Sample size.</span>
     <span class="k">if</span> <span class="n">n</span><span class="o">!=</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The arrays (a,b) must have the same shape, but got </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">!=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -850,12 +867,31 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        TestResult: Structure that holds Mann-Whitney&#39;s U-tesst results.</span>
 
+<span class="sd">    Raises:</span>
+<span class="sd">        KeyError: When ``alternative`` is not selected from [ ``&quot;two-sided&quot;``, ``&quot;less&quot;``, ``&quot;greater&quot;`` ].</span>
+<span class="sd">        ValueError: When all numbers are identical in mannwhitneyu.</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+<span class="sd">        :class: popup-img</span>
+
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import subplots_create</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.statistics import mann_whitney_u_test</span>
+<span class="sd">        &gt;&gt;&gt; fig, axes = subplots_create(ncols=3, figsize=(18,4), style=&quot;matplotlib&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; A = np.array([1.83, 1.50, 1.62, 2.48, 1.68, 1.88, 1.55, 3.06, 1.30, 2.01, 3.11])</span>
+<span class="sd">        &gt;&gt;&gt; B = np.array([0.88, 0.65, 0.60, 1.05, 1.06, 1.29, 1.06, 2.14, 1.29])</span>
+<span class="sd">        &gt;&gt;&gt; for ax,alternative in zip(axes,[&quot;less&quot;,&quot;two-sided&quot;,&quot;greater&quot;]):</span>
+<span class="sd">        ...     mann_whitney_u_test(A, B, alternative=alternative, plot=True, alpha=.1, ax=ax)</span>
+<span class="sd">        &gt;&gt;&gt; fig.show()</span>
+
 <span class="sd">    .. seealso::</span>
 
-<span class="sd">        - https://en.wikipedia.org/wiki/Mann-Whitney_U_test</span>
+<span class="sd">        - :fa:`wikipedia-w` `Mann-Whitney_U_test &lt;https://en.wikipedia.org/wiki/Mann-Whitney_U_test&gt;`_</span>
 <span class="sd">        - :fa:`home` `On a Test of Whether one of Two Random Variables is Stochastically Larger than the Other &lt;https://www.jstor.org/stable/2236101&gt;`_</span>
 <span class="sd">        - `scipy.stats.mannwhitneyu(A, B) &lt;https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html&gt;`_</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="n">SUPPORTED_ALTERNATIVES</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">)</span>
     <span class="n">n_a</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
     <span class="n">n_b</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
     <span class="c1"># Assign numeric ranks to all the observations (put the observations from both groups to one set), beginning with 1 for the samllest value.</span>
@@ -867,32 +903,31 @@
     <span class="k">if</span> <span class="n">T</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;All numbers are identical in mannwhitneyu&#39;</span><span class="p">)</span>
     <span class="n">mean_rank</span> <span class="o">=</span> <span class="n">n_a</span><span class="o">*</span><span class="n">n_b</span><span class="o">/</span><span class="mf">2.0</span> <span class="o">+</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">use_continuity</span>    <span class="c1">#: mean of ``U``</span>
-    <span class="n">sd_rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="n">n_a</span><span class="o">*</span><span class="n">n_b</span><span class="o">*</span><span class="p">(</span><span class="n">n_a</span><span class="o">+</span><span class="n">n_b</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">12.0</span><span class="p">)</span> <span class="c1">#: standard deviation of ``U``</span>
+    <span class="n">sd_rank</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="n">n_a</span><span class="o">*</span><span class="n">n_b</span><span class="o">*</span><span class="p">(</span><span class="n">n_a</span><span class="o">+</span><span class="n">n_b</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">12.0</span><span class="p">)</span> <span class="c1">#: corrected standard deviation of ``U``</span>
     <span class="n">norm_dist</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;less&quot;</span><span class="p">:</span>
-        <span class="n">u</span> <span class="o">=</span> <span class="n">Ub</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="o">-</span><span class="n">mean_rank</span><span class="p">)</span> <span class="o">/</span> <span class="n">sd_rank</span>
-        <span class="n">x_l</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
-        <span class="n">x_r</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-        <span class="n">p_val</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;greater&quot;</span><span class="p">:</span>
-        <span class="n">u</span> <span class="o">=</span> <span class="n">Ua</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="o">-</span><span class="n">mean_rank</span><span class="p">)</span> <span class="o">/</span> <span class="n">sd_rank</span>
-        <span class="n">x_l</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">x_r</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span>
-        <span class="n">p_val</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span> <span class="c1"># Two-side</span>
+    <span class="k">if</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;two-sided&quot;</span><span class="p">:</span>
         <span class="n">u</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">Ua</span><span class="p">,</span><span class="n">Ub</span><span class="p">)</span>
         <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="o">-</span><span class="n">mean_rank</span><span class="p">)</span> <span class="o">/</span> <span class="n">sd_rank</span>
         <span class="n">x_l</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">x_r</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">p_val</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">norm_dist</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="n">Ua</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="o">-</span><span class="n">mean_rank</span><span class="p">)</span> <span class="o">/</span> <span class="n">sd_rank</span>
+        <span class="k">if</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;less&quot;</span><span class="p">:</span>
+            <span class="n">x_l</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+            <span class="n">x_r</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">p_val</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span> <span class="c1"># alternative == &quot;greater&quot;:</span>
+            <span class="n">x_l</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">x_r</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span>
+            <span class="n">p_val</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
     
     <span class="n">test_result</span> <span class="o">=</span> <span class="n">TestResult</span><span class="p">(</span>
         <span class="n">statistic</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="n">p_val</span><span class="p">,</span> 
         <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">,</span> <span class="n">accepts</span><span class="o">=</span><span class="p">(</span><span class="n">x_l</span><span class="p">,</span><span class="n">x_r</span><span class="p">),</span> 
-        <span class="n">distribution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distname</span><span class="o">=</span><span class="s2">&quot;Normal Distribution (approximation)&quot;</span><span class="p">,</span> <span class="n">testname</span><span class="o">=</span><span class="s2">&quot;Mann-Whitney&#39;s-u&quot;</span>
+        <span class="n">distribution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distname</span><span class="o">=</span><span class="s2">&quot;(approx.) Normal Distribution&quot;</span><span class="p">,</span> <span class="n">testname</span><span class="o">=</span><span class="s2">&quot;Mann-Whitney&#39;s-u&quot;</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
         <span class="n">test_result_for_plot</span> <span class="o">=</span> <span class="n">TestResult</span><span class="p">(</span>
@@ -904,34 +939,164 @@
         <span class="n">test_result_for_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">x_edge_abs</span><span class="p">,</span> <span class="n">x_edge_abs</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">test_result</span></div>
 
-<div class="viewcode-block" id="wilcoxon_test"><a class="viewcode-back" href="../../teilab.statistics.html#teilab.statistics.wilcoxon_test">[docs]</a><span class="k">def</span> <span class="nf">wilcoxon_test</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Number</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Number</span><span class="p">],</span> <span class="n">alpha</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">alternative</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span> <span class="n">plot</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResult</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;NON-PARAMETRIC-test for Equality of averages of TWO PAIRED samples.</span>
+<div class="viewcode-block" id="wilcoxon_test"><a class="viewcode-back" href="../../teilab.statistics.html#teilab.statistics.wilcoxon_test">[docs]</a><span class="k">def</span> <span class="nf">wilcoxon_test</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Number</span><span class="p">],</span> <span class="n">b</span><span class="p">:</span><span class="n">NDArray</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Number</span><span class="p">],</span> <span class="n">alpha</span><span class="p">:</span><span class="nb">float</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">alternative</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;two-sided&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">plot</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">ax</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Axes</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TestResult</span><span class="p">:</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;NON-PARAMETRIC-test for Equality of representative values (medians) of TWO PAIRED samples.</span>
 
-<span class="sd">    .. admonition:: Statistic ( :math:`T` )</span>
+<span class="sd">    This function is about the Wilcoxon **signed-rank** test which tests whether the distribution of the differences ``a - b`` is symmetric about zero. It is a non-parametric version of the :func:`paired_t_test &lt;teilab.statistics.paired_t_test&gt;`.</span>
+
+<span class="sd">    NOTE:</span>
+<span class="sd">        Wilcoxon **signed-rank** test is different from Wilcoxon **rank sum** test which is equivalent to the :func:`student_t_test &lt;teilab.statistics.student_t_test&gt;` or :func:`welch_t_test &lt;teilab.statistics.welch_t_test&gt;` in the parametric test.</span>
+<span class="sd">    </span>
+<span class="sd">    .. admonition:: Statistic ( :math:`W` )</span>
 <span class="sd">        </span>
 <span class="sd">        .. container:: toggle, toggle-hidden</span>
 <span class="sd">    </span>
+<span class="sd">            Let :math:`N` be the sample size, i.e., the number of pairs (:math:`A=a_i,\ldots,a_N, B=b_i,\ldots,b_N`).</span>
+
+<span class="sd">            1. Exclude pairs with :math:`|a_i-b_i|=0`. Let :math:`N_r` be the reduced sample size.</span>
+<span class="sd">            2. Order the remaining :math:`N_r` pairs acoording to the absolute difference (:math:`|a_i-b_i|`).</span>
+<span class="sd">            3. Rank the pairs. Ties receive a rank equal to the average og the ranks they span (:func:`assign_rank(a-b, method=&quot;average&quot;) &lt;teilab.utils.math_utils.assign_rank&gt;`). Let :math:`R_i` denote the rank.</span>
+<span class="sd">            4. Calculate the test statistic :math:`W` (the sum of the signed ranks)</span>
+
 <span class="sd">            .. math::</span>
-<span class="sd">                XXX</span>
+<span class="sd">                W_{+}&amp;=\sum_{i=1}^{N_r}\left[\operatorname{sgn}(a_i-b_i)\cdot R_{i}\right],\\</span>
+<span class="sd">                W_{-}&amp;=\sum_{i=1}^{N_r}\left[-\operatorname{sgn}(a_i-b_i)\cdot R_{i}\right].</span>
+
+<span class="sd">            5. From the above, use :math:`W` that matches the alternative hypothesis.</span>
+
+<span class="sd">            .. math::</span>
+<span class="sd">                W=\begin{cases}</span>
+<span class="sd">                \mathrm{min}\left(W_{+},W_{-}\right),&amp;\text{if alternative hypothesis is &quot;two-tailed&quot;},\\</span>
+<span class="sd">                W_{+},&amp;\text{otherwise.}</span>
+<span class="sd">                \end{cases}</span>
+<span class="sd">            </span>
+<span class="sd">            6. As :math:`N_r` increases, the sampling distribution of :math:`W` converges to a normal distribution. Thus, </span>
+<span class="sd">                </span>
+<span class="sd">                1. For :math:`N_r\geq25`, a z-score can be calculated as </span>
+<span class="sd">                </span>
+<span class="sd">                .. math::</span>
+<span class="sd">                    Z = \frac{\left|W-\frac{N_r(N_r+1)}{4}\right|}{\sqrt{\frac{N_r(N_r+1)(2N_r+1)}{24}}}</span>
+<span class="sd">                </span>
+<span class="sd">                2. For :math:`N_r&lt;25` the exact distribution needs to be used.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        a,b (NDArray[Any, Number])    : (Observed) Samples. The arrays must have the same shape.</span>
 <span class="sd">        alpha (float)                 : The probability of making the wrong decision when the null hypothesis is true.</span>
 <span class="sd">        alternative (str, optional)   : Defines the alternative hypothesis. Please choose from [ ``&quot;two-sided&quot;``, ``&quot;less&quot;``, ``&quot;greater&quot;`` ]. Defaults to ``&quot;two-sided&quot;``.</span>
+<span class="sd">        mode (str, optional)          : Method to calculate the p-value. Please choose from [ ``&quot;auto&quot;``, ``&quot;exact&quot;``, ``&quot;approx&quot;`` ]. Default is &quot;auto&quot;.</span>
 <span class="sd">        plot (bool, optional)         : Whether to plot F-distribution or not. Defaults to ``False``.</span>
 <span class="sd">        ax (Optional[Axes], optional) : An instance of ``Axes``. The distribution is drawn here when ``plot`` is ``True`` . Defaults to ``None``.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        TestResult: Structure that holds wilcoxon-test results.</span>
 
+<span class="sd">    Raises:</span>
+<span class="sd">        TypeError: When the arrays ``a`` and ``b`` have the different shapes.</span>
+<span class="sd">        KeyError: When ``alternative`` is not selected from [ ``&quot;two-sided&quot;``, ``&quot;less&quot;``, ``&quot;greater&quot;`` ].</span>
+<span class="sd">        ValueError: When all pairs are identical, or try to calculate ``&quot;exact&quot;`` p-value with the sample size larger than ``25``.</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+<span class="sd">        :class: popup-img</span>
+
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.utils import subplots_create</span>
+<span class="sd">        &gt;&gt;&gt; from teilab.statistics import wilcoxon_test</span>
+<span class="sd">        &gt;&gt;&gt; fig, axes = subplots_create(ncols=3, figsize=(18,4), style=&quot;matplotlib&quot;)</span>
+<span class="sd">        &gt;&gt;&gt; rnd = np.random.RandomState(0)</span>
+<span class="sd">        &gt;&gt;&gt; A,B = rnd.random_sample(size=(2,30))</span>
+<span class="sd">        &gt;&gt;&gt; for ax,alternative in zip(axes,[&quot;less&quot;,&quot;two-sided&quot;,&quot;greater&quot;]):</span>
+<span class="sd">        ...     wilcoxon_test(A, B, alternative=alternative, plot=True, alpha=.1, ax=ax)</span>
+<span class="sd">        &gt;&gt;&gt; fig.show()</span>
+
 <span class="sd">    .. seealso::</span>
 
 <span class="sd">        - https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kruskal.html#scipy.stats.kruskal</span>
 <span class="sd">        - https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.mannwhitneyu.html#scipy.stats.mannwhitneyu</span>
-<span class="sd">        - `scipy.stats.wilcoxon(A, B) &lt;https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html&gt;`_</span>
+<span class="sd">        - `scipy.stats.wilcoxon(A, B, correction=False, alternative=&quot;two-sided&quot;) &lt;https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html&gt;`_</span>
+<span class="sd">        - :fa:`wikipedia-w` `Wilcoxon_signed-rank_test &lt;https://en.wikipedia.org/wiki/Wilcoxon_signed-rank_test&gt;`_</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;I&#39;m sorry... Not Impremented.&quot;</span><span class="p">)</span></div>
-    <span class="c1"># warnings.warn(_pack_warning_args(&quot;message&quot;, __file__, sys._getframe().f_code.co_name), category=InsufficientUnderstandingWarning)</span>
+    <span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="n">SUPPORTED_ALTERNATIVES</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">)</span>
+    <span class="n">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span><span class="s2">&quot;exact&quot;</span><span class="p">,</span><span class="s2">&quot;approx&quot;</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span><span class="o">!=</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The arrays (a,b) must have the same shape, but got </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">!=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Determine how to calculate the p-value from the difference and the samle size.</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">a</span><span class="o">-</span><span class="n">b</span>
+    <span class="k">if</span> <span class="n">mode</span><span class="o">==</span><span class="s2">&quot;auto&quot;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">:</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;exact&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;approx&quot;</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">diff</span><span class="o">==</span><span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">mode</span><span class="o">==</span><span class="s2">&quot;exact&quot;</span><span class="p">:</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="s2">&quot;approx&quot;</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">_pack_warning_args</span><span class="p">(</span><span class="s2">&quot;Exact p-value calculation does not work if there are ties. Switching to normal approximation.&quot;</span><span class="p">,</span> <span class="vm">__file__</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">),</span> <span class="n">category</span><span class="o">=</span><span class="n">InsufficientUnderstandingWarning</span><span class="p">)</span>
+    <span class="c1"># Leave only pairs with differences.</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">diff</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">diff</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">count</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All pairs are identical.&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">count</span><span class="o">&lt;</span><span class="mi">10</span> <span class="ow">and</span> <span class="n">mode</span><span class="o">==</span><span class="s2">&quot;approx&quot;</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">_pack_warning_args</span><span class="p">(</span><span class="s2">&quot;Sample size too samll for normal approximation&quot;</span><span class="p">,</span> <span class="vm">__file__</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">_getframe</span><span class="p">()</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_name</span><span class="p">),</span> <span class="n">category</span><span class="o">=</span><span class="n">InsufficientUnderstandingWarning</span><span class="p">)</span>
+    <span class="c1"># Assign Ranking and calculate T-score.</span>
+    <span class="n">ranking</span> <span class="o">=</span> <span class="n">assign_rank</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">diff</span><span class="p">))</span>
+    <span class="n">w_plus</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">diff</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="n">ranking</span><span class="p">)</span>
+    <span class="n">w_minus</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">diff</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="n">ranking</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;two-sided&quot;</span><span class="p">:</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">w_plus</span><span class="p">,</span> <span class="n">w_minus</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="n">w_plus</span>
+    <span class="c1"># Calculate p-value.</span>
+    <span class="k">if</span> <span class="n">mode</span><span class="o">==</span><span class="s2">&quot;approx&quot;</span><span class="p">:</span>
+        <span class="n">norm_dist</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="p">(</span><span class="n">W</span><span class="o">-</span><span class="n">count</span><span class="o">*</span><span class="p">(</span><span class="n">count</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span><span class="o">*</span><span class="mf">0.25</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">count</span><span class="o">*</span><span class="p">(</span><span class="n">count</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mf">2.</span><span class="o">*</span><span class="n">count</span><span class="o">+</span><span class="mf">1.</span><span class="p">)</span><span class="o">/</span><span class="mi">24</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;two-sided&quot;</span><span class="p">:</span>
+            <span class="n">x_l</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">x_r</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+            <span class="n">p_val</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">norm_dist</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;less&quot;</span><span class="p">:</span>
+            <span class="n">x_l</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+            <span class="n">x_r</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">p_val</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x_l</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">x_r</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">alpha</span><span class="p">)</span>
+            <span class="n">p_val</span> <span class="o">=</span> <span class="n">norm_dist</span><span class="o">.</span><span class="n">sf</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">plot</span><span class="p">:</span>
+            <span class="n">test_result_for_plot</span> <span class="o">=</span> <span class="n">TestResult</span><span class="p">(</span>
+                <span class="n">statistic</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="n">p_val</span><span class="p">,</span> 
+                <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">,</span> <span class="n">accepts</span><span class="o">=</span><span class="p">(</span><span class="n">x_l</span><span class="p">,</span><span class="n">x_r</span><span class="p">),</span> 
+                <span class="n">distribution</span><span class="o">=</span><span class="n">norm_dist</span><span class="p">,</span> <span class="n">distname</span><span class="o">=</span><span class="s2">&quot;(approx.) Normal&quot;</span><span class="p">,</span> <span class="n">testname</span><span class="o">=</span><span class="s2">&quot;Wilcoxon signed-rank&quot;</span>
+            <span class="p">)</span>
+            <span class="n">x_edge_abs</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">norm_dist</span><span class="o">.</span><span class="n">ppf</span><span class="p">(</span><span class="mf">1e-4</span><span class="p">),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">test_result_for_plot</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">x_edge_abs</span><span class="p">,</span> <span class="n">x_edge_abs</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="n">_wilcoxon_data</span><span class="o">.</span><span class="n">COUNTS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cnt</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The exact distribution of the Wilcoxon test static is not implemented for n=</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">cnt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cnt</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="c1"># note: w_plus is int (ties not allowed), need int for slices below</span>
+        <span class="n">w_plus</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">w_plus</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;two-sided&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">w_plus</span> <span class="o">==</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cnt</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="c1"># w_plus is the center of the distribution.</span>
+                <span class="n">prob</span> <span class="o">=</span> <span class="mf">1.0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">p_less</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cnt</span><span class="p">[:</span><span class="n">w_plus</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="n">count</span>
+                <span class="n">p_greater</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cnt</span><span class="p">[</span><span class="n">w_plus</span><span class="p">:])</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="n">count</span>
+                <span class="n">p_val</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="nb">min</span><span class="p">(</span><span class="n">p_greater</span><span class="p">,</span> <span class="n">p_less</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">alternative</span> <span class="o">==</span> <span class="s2">&quot;greater&quot;</span><span class="p">:</span>
+            <span class="n">p_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cnt</span><span class="p">[</span><span class="n">w_plus</span><span class="p">:])</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="n">count</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">cnt</span><span class="p">[:</span><span class="n">w_plus</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="n">count</span>
+        <span class="c1"># if plot:</span>
+        <span class="c1">#     warnings.warn()</span>
+    <span class="n">test_result</span> <span class="o">=</span> <span class="n">TestResult</span><span class="p">(</span>
+        <span class="n">statistic</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">pvalue</span><span class="o">=</span><span class="n">p_val</span><span class="p">,</span> 
+        <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">,</span> <span class="n">alternative</span><span class="o">=</span><span class="n">alternative</span><span class="p">,</span> <span class="n">accepts</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> 
+        <span class="n">distribution</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">distname</span><span class="o">=</span><span class="s2">&quot;(approx.) Normal&quot;</span><span class="p">,</span> <span class="n">testname</span><span class="o">=</span><span class="s2">&quot;Wilcoxon signed-rank&quot;</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">test_result</span></div>
 
 <div class="viewcode-block" id="anova"><a class="viewcode-back" href="../../teilab.statistics.html#teilab.statistics.anova">[docs]</a><span class="k">def</span> <span class="nf">anova</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">TestResult</span><span class="p">:</span>
     <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;I&#39;m sorry... Not Impremented.&quot;</span><span class="p">)</span></div>
