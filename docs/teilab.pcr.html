@@ -1,0 +1,473 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta property="og:title" content="teilab.pcr module" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="teilab.pcr.html" />
+  <meta property="og:description" content="A real-time polymerase chain reaction (real-time PCR) is a laboratory technique of molecular biology based on the polymerase chain reaction (PCR). It monitors the amplification of a targeted DNA mo..." />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>teilab.pcr module &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+  <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/popup.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"jax": ["input/TeX", "output/HTML-CSS"], "displayAlign": "left"}</script>
+        <script src="_static/custom.js"></script>
+        <script src="_static/particles.min.js"></script>
+        <script src="_static/popup.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="teilab.question module" href="teilab.question.html" />
+    <link rel="prev" title="teilab.normalizations module" href="teilab.normalizations.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> UiTei-Lab's Course Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+  <ul class="utility-btns">
+    <li><a class="btn btn-icon btn-start" href="#" onclick="changeParticles(this);">Start Particles</a></li>
+    <li><a class="btn btn-icon btn-expand" href="#" onclick="changeStyle(this);">Expand</a></li>
+  </ul>
+  <div class="sidebarlogo">
+    <h4>Lab's information</h4>
+    <ul class="social">
+      
+      <li><a class="sc-book" href="http://ui-tei.rnai.jp/">
+        <i class="fa fa-book" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php?id=2021">
+        <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-file-pdf-o" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2367719/">
+        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+    <h4>Author's Social link</h4>
+    <ul class="social">
+      
+      <li><a class="sc-twitter" href="https://twitter.com/cabernet_rock">
+        <i class="fa fa-twitter" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-github" href="https://github.com/iwasakishuto">
+        <i class="fa fa-github" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+  </div>
+  
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="teilab.html">teilab package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="teilab.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="teilab.datasets.html">teilab.datasets module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.enrichment.html">teilab.enrichment module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.normalizations.html">teilab.normalizations module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">teilab.pcr module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#instructions">Instructions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python-objects">Python Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.question.html">teilab.question module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.seedmatch.html">teilab.seedmatch module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.statistics.html">teilab.statistics module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#module-teilab">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UiTei-Lab's Course Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<canvas class="particle-background"></canvas>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="teilab.html">teilab package</a> &raquo;</li>
+        
+      <li>teilab.pcr module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/teilab.pcr.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-teilab.pcr">
+<span id="teilab-pcr-module"></span><h1>teilab.pcr module<a class="headerlink" href="#module-teilab.pcr" title="Permalink to this headline">¶</a></h1>
+<p>A <strong>real-time polymerase chain reaction (real-time PCR)</strong> is a laboratory technique of molecular biology based on the <strong>polymerase chain reaction (PCR)</strong>. It monitors the amplification of a targeted DNA molecule <strong>during</strong> the PCR (i.e., in real time), <strong>not at its end</strong>, as in conventional PCR. Real-time PCR can be used quantitatively (quantitative real-time PCR) and semi-quantitatively (i.e., above/below a certain amount of DNA molecules) (semi-quantitative real-time PCR).</p>
+<div class="section" id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
+<p>There are two basic quantification methods in real-time PCR, <a class="reference internal" href="#target-to-absolute-quantification-section"><span class="std std-ref">“Absolute Quantification”</span></a> and <a class="reference internal" href="#target-to-relative-quantification-section"><span class="std std-ref">“Relative Quantification”</span></a> , but the underlying ideas are the same. As the template DNA increases <span class="math notranslate nohighlight">\(2 (1 + e (\text{amplification efficiency}))\)</span> times in one cycle of PCR, you can calculate the initial amount of DNA by detecting how many cycles of PCR were performed to reach a certain amount of DNA.</p>
+<div class="section" id="absolute-quantification">
+<span id="target-to-absolute-quantification-section"></span><h3>Absolute Quantification<a class="headerlink" href="#absolute-quantification" title="Permalink to this headline">¶</a></h3>
+<p>The standard curve method for <strong>absolute quantification</strong> is similar to that for <strong>relative quantification</strong>, except the absolute quantities of the standards must first be known by some independent means.</p>
+<p>Create several dilution series from a known concentration target template and create an <strong>accurate</strong> calibration curve that associates each target concentration with the <span class="math notranslate nohighlight">\(Ct\)</span> value.</p>
+<p>From this calibration curve, we can determine the actual copy number of the target DNAs using <span class="math notranslate nohighlight">\(Ct\)</span> value.</p>
+</div>
+<div class="section" id="relative-quantification">
+<span id="target-to-relative-quantification-section"></span><h3>Relative Quantification<a class="headerlink" href="#relative-quantification" title="Permalink to this headline">¶</a></h3>
+<p>A method to focus on the <strong>relative ratio</strong> of a calibrator (control) sample and the gene of interest (GOI). The following various calibration algorithms have been proposed.</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#target-to-delta-ct-method"><span class="std std-ref">ΔCt method</span></a></p></li>
+<li><p><a class="reference internal" href="#target-to-delta-delta-ct-method"><span class="std std-ref">ΔΔCt method</span></a></p></li>
+<li><p><a class="reference internal" href="#target-to-calibration-curve-method"><span class="std std-ref">Calibration curve method</span></a></p></li>
+</ol>
+<div class="section" id="ct-method">
+<span id="target-to-delta-ct-method"></span><h4>1. ΔCt method<a class="headerlink" href="#ct-method" title="Permalink to this headline">¶</a></h4>
+<div class="math notranslate nohighlight">
+\[\text{Expression Ratio} = 2^{-\Delta Ct_{GOI}}\quad\left(GOI: Gene of Interest.\right)\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}
+    \Delta Ct_{GOI}&amp;=Ct_{GOI}^{sample}-Ct_{GOI}^{cont.},\\
+    ratio &amp;= \left(\displaystyle\frac{[DNA]_0^{sample}}{[DNA]_0^{cont.}}\right)^{\displaystyle\frac{1}{\log_2(1+e)}}.
+\end{cases}\end{split}\]</div>
+</div>
+<div class="section" id="target-to-delta-delta-ct-method">
+<span id="id1"></span><h4>2. ΔΔCt method<a class="headerlink" href="#target-to-delta-delta-ct-method" title="Permalink to this headline">¶</a></h4>
+<div class="math notranslate nohighlight">
+\[\text{Expression Ratio} = 2^{-\Delta\Delta Ct_{GOI}}.\]</div>
+<p>It is necessary that the amplification efficiencies of REF (Reference Gene) and GOI (Gene of Interest) are the same, but this assumption is generally not met.</p>
+<div class="math notranslate nohighlight">
+\[\Delta\Delta Ct = \Delta Ct_{GOI} - \Delta Ct_{REF}.\]</div>
+</div>
+<div class="section" id="calibration-curve-method">
+<span id="target-to-calibration-curve-method"></span><h4>3. Calibration curve method<a class="headerlink" href="#calibration-curve-method" title="Permalink to this headline">¶</a></h4>
+<div class="math notranslate nohighlight">
+\[\text{Expression Ratio} = \left(E_{GOI}^{-\Delta Ct_{GOI}}\right) / \left(E_{REF}^{-\Delta Ct_{REF}}\right)\]</div>
+<p>A calibration curve is drawn to determine the amplification efficiency of <strong>both REF and GOI</strong>, and this is used to standardize the difference in <span class="math notranslate nohighlight">\(Ct\)</span> of GOI contained in the target sample and the control sample with respect to REF. The amount of REF contained in the sample must be equal for all samples.</p>
+<div class="math notranslate nohighlight">
+\[E =  10^{[-1/\text{slope}]}\left(=1+e\right)\quad(\text{efficiency from calibration curve.})\]</div>
+<p>Let Amount (concentration) of initial template DNA be <span class="math notranslate nohighlight">\([DNA]_0\)</span>, amplification efficiency be <span class="math notranslate nohighlight">\(e\)</span>, and Number of PCR cycles be <span class="math notranslate nohighlight">\(C\)</span>.</p>
+<p>The relationship between the amount of DNA (<span class="math notranslate nohighlight">\([DNA]\)</span>) in the PCR product amplified by PCR and the number of cycles (<span class="math notranslate nohighlight">\(C\)</span>) is shown below:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}[DNA] &amp;= [DNA]_0\left(1 + e\right)^C\\ C &amp;= \frac{\log[DNA]-\log[DNA]_0}{\log(1+e)}\end{split}\]</div>
+<p>Therefore, let the number of cycles <span class="math notranslate nohighlight">\(C\)</span> that reaches the <strong>threshold value</strong> be <span class="math notranslate nohighlight">\(Ct\)</span>, and the DNA concentration at that time is <span class="math notranslate nohighlight">\([DNA]_t\)</span>, the logarithm initial concentration is proportional to <span class="math notranslate nohighlight">\(Ct\)</span> when the primers (<span class="math notranslate nohighlight">\(\fallingdotseq e\)</span>) are the same, so this relationship can be represented by a calibration curve (<strong>linear line</strong>), and its slope (<span class="math notranslate nohighlight">\(\text{slope}\)</span>) is shown below:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\text{slope}
+&amp;= \frac{Ct^1-Ct^2}{\log[DNA]_0^1 - \log[DNA]_0^2}\\
+&amp;= \frac{\left(\log[DNA]_0^2 - \log[DNA]_0^1\right) / \log(1+e)}{\log[DNA]_0^1 - \log[DNA]_0^2} \\
+&amp;= \frac{-1}{\log\left(1+e\right)}\\
+\therefore e &amp;= 10^{\frac{-1}{\text{slope}}} - 1\end{split}\]</div>
+<p>Here, let <span class="math notranslate nohighlight">\(E = 10^{\frac{-1}{slope}} = 1+e\)</span>, it can be written as follows</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}E_{GOI}^{-\Delta Ct_{GOI}}
+&amp;= \left(1 + e_{GOI}\right)^{\displaystyle\frac{\log[DNA]_{0,GOI}^{sample}-\log[DNA]_{0,GOI}^{cont.}}{\log\left(1+e_{GOI}\right)}}\\
+&amp;= \frac{[DNA]_{0,GOI}^{sample}}{[DNA]_{0,GOI}^{cont.}}\end{split}\]</div>
+<p>so, the expression level of the calibrator (control) sample and the target sample can be compared in a <strong>primer-independent manner</strong>.</p>
+<p>Therefore, by comparing this value with REF (ex. Housekeeping gene), it is possible to correctly compare the amount of DNA between different samples.</p>
+</div>
+</div>
+</div>
+<div class="section" id="python-objects">
+<h2>Python Objects<a class="headerlink" href="#python-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="teilab.pcr.calibration_curve_plot">
+<span class="sig-prename descclassname"><span class="pre">teilab.pcr.</span></span><span class="sig-name descname"><span class="pre">calibration_curve_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">qualities</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'#c94663'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ecolor</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'black'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">matplotlib.axes._axes.Axes</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">matplotlib.axes._axes.Axes</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/pcr.html#calibration_curve_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.pcr.calibration_curve_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a calibration curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qualities</strong> (<em>NDArray</em><em>[</em><em>Any</em><em>,</em><em>float</em><em>]</em>) – Concentration of dilution series. shape=(n_qualities)</p></li>
+<li><p><strong>cts</strong> (<em>NDArray</em><em>[</em><em>(</em><em>Any</em><em>,</em><em>Any</em><em>)</em><em>,</em><em>float</em><em>]</em>) – Ct values for calibration. shape=(n_qualities, n_trials_calibrations)</p></li>
+<li><p><strong>target</strong> (<em>str</em><em>, </em><em>optional</em>) – The calibration target. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;Calibration</span> <span class="pre">curve&quot;</span></code>.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) – The color of plot. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;#c94663&quot;</span></code>.</p></li>
+<li><p><strong>ecolor</strong> (<em>str</em><em>, </em><em>optional</em>) – The color of Error Bar. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;#c94663&quot;</span></code>.</p></li>
+<li><p><strong>ax</strong> (<em>Optional</em><em>[</em><em>Axes</em><em>]</em><em>, </em><em>optional</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">Axes</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An instance of <code class="docutils literal notranslate"><span class="pre">Axes</span></code> with calibration curve, and amplification efficiency.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[Axes,float]</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – <code class="docutils literal notranslate"><span class="pre">cts.shape[0]</span></code> is not the same as <code class="docutils literal notranslate"><span class="pre">len(qualities)</span></code>.</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.pcr</span> <span class="kn">import</span> <span class="n">calibration_curve_plot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.utils</span> <span class="kn">import</span> <span class="n">subplots_create</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qualities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calibrations</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="p">[[</span><span class="mf">21.9904747</span><span class="p">,</span>  <span class="mf">21.94359016</span><span class="p">],</span> <span class="p">[</span><span class="mf">23.2647419</span><span class="p">,</span>  <span class="mf">23.24508476</span><span class="p">],</span> <span class="p">[</span><span class="mf">27.37600517</span><span class="p">,</span> <span class="mf">27.46136856</span><span class="p">]],</span>
+<span class="gp">... </span>    <span class="p">[[</span><span class="mf">26.68031502</span><span class="p">,</span> <span class="mf">26.75434494</span><span class="p">],</span> <span class="p">[</span><span class="mf">28.25722122</span><span class="p">,</span> <span class="mf">28.239748</span>  <span class="p">],</span> <span class="p">[</span><span class="mf">31.77442169</span><span class="p">,</span> <span class="mf">32.42930222</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span>   <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Gapdh&quot;</span><span class="p">,</span> <span class="s2">&quot;VIM&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">subplots_create</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;matplotlib&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">ax</span><span class="p">,</span><span class="n">cts</span><span class="p">,</span><span class="n">target</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">calibrations</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">_</span> <span class="o">=</span> <span class="n">calibration_curve_plot</span><span class="p">(</span><span class="n">qualities</span><span class="p">,</span> <span class="n">cts</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="_images/teilab-pcr-1.png" class="plot-directive popup-img" src="_images/teilab-pcr-1.png" />
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="teilab.pcr.expression_ratio_plot">
+<span class="sig-prename descclassname"><span class="pre">teilab.pcr.</span></span><span class="sig-name descname"><span class="pre">expression_ratio_plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">GOI_Cts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">REF_Cts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._number.Float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e_GOI</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">e_REF</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_GOI</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_REF</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">'#c94663'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">matplotlib.axes._axes.Axes</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">matplotlib.axes._axes.Axes</span><a class="reference internal" href="_modules/teilab/pcr.html#expression_ratio_plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.pcr.expression_ratio_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot to compare Expression Ratios.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>GOI_Cts</strong> (<em>NDArray</em><em>[</em><em>(</em><em>Any</em><em>,</em><em>Any</em><em>)</em><em>,</em><em>float</em><em>]</em>) – Threshold Cycles of GOI or REF. shape=(n_samples, n_trials_Cts)</p></li>
+<li><p><strong>REF_Cts</strong> (<em>NDArray</em><em>[</em><em>(</em><em>Any</em><em>,</em><em>Any</em><em>)</em><em>,</em><em>float</em><em>]</em>) – Threshold Cycles of GOI or REF. shape=(n_samples, n_trials_Cts)</p></li>
+<li><p><strong>e_GOI</strong> (<em>float</em>) – Efficiency of GOI or REF primer.</p></li>
+<li><p><strong>e_REF</strong> (<em>float</em>) – Efficiency of GOI or REF primer.</p></li>
+<li><p><strong>labels</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – [description]</p></li>
+<li><p><strong>name_GOI</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of GOI or REF. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p></li>
+<li><p><strong>name_REF</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of GOI or REF. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p></li>
+<li><p><strong>color</strong> (<em>str</em><em>, </em><em>optional</em>) – The color of plot. Defaults to <code class="docutils literal notranslate"><span class="pre">&quot;#c94663&quot;</span></code>.</p></li>
+<li><p><strong>ax</strong> (<em>Optional</em><em>[</em><em>Axes</em><em>]</em><em>, </em><em>optional</em>) – An instance of <code class="docutils literal notranslate"><span class="pre">Axes</span></code>. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An instance of <code class="docutils literal notranslate"><span class="pre">Axes</span></code> with expression ratio plots.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Axes</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">matplotlib.gridspec</span> <span class="kn">import</span> <span class="n">GridSpec</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">teilab.pcr</span> <span class="kn">import</span> <span class="n">expression_ratio_plot</span><span class="p">,</span> <span class="n">calibration_curve_plot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gs</span> <span class="o">=</span> <span class="n">GridSpec</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">targets</span>   <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Gapdh&quot;</span><span class="p">,</span> <span class="s2">&quot;VIM&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qualities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">calibration_cts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span>
+<span class="gp">... </span>  <span class="p">[[</span><span class="mf">21.9904747</span><span class="p">,</span>  <span class="mf">21.94359016</span><span class="p">],</span> <span class="p">[</span><span class="mf">23.2647419</span><span class="p">,</span>  <span class="mf">23.24508476</span><span class="p">],</span> <span class="p">[</span><span class="mf">27.37600517</span><span class="p">,</span> <span class="mf">27.46136856</span><span class="p">]],</span>
+<span class="gp">... </span>  <span class="p">[[</span><span class="mf">26.68031502</span><span class="p">,</span> <span class="mf">26.75434494</span><span class="p">],</span> <span class="p">[</span><span class="mf">28.25722122</span><span class="p">,</span> <span class="mf">28.239748</span>  <span class="p">],</span> <span class="p">[</span><span class="mf">31.77442169</span><span class="p">,</span> <span class="mf">32.42930222</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_targets</span><span class="p">,</span><span class="n">n_qualities</span><span class="p">,</span><span class="n">n_trials_calibrations</span> <span class="o">=</span> <span class="n">calibration_cts</span><span class="o">.</span><span class="n">shape</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;[Calibration]&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n_targets</span><span class="si">}</span><span class="s2">_targets: </span><span class="si">{</span><span class="n">targets</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n_qualities</span><span class="si">}</span><span class="s2">_targets: </span><span class="si">{</span><span class="n">qualities</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="sa">f</span><span class="s2">&quot;n_trials : </span><span class="si">{</span><span class="n">n_trials_calibrations</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">efficiencies</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">cts</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">calibration_cts</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">ax</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="n">calibration_curve_plot</span><span class="p">(</span><span class="n">qualities</span><span class="p">,</span> <span class="n">cts</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span> <span class="n">target</span><span class="o">=</span><span class="n">targets</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="gp">... </span>    <span class="n">efficiencies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;mock(1)&quot;</span><span class="p">,</span> <span class="s2">&quot;mock(5)&quot;</span><span class="p">,</span> <span class="s2">&quot;unmodified&quot;</span><span class="p">,</span> <span class="s2">&quot;2OMe3&quot;</span><span class="p">,</span> <span class="s2">&quot;2OMe5&quot;</span><span class="p">,</span> <span class="s2">&quot;2OMe7&quot;</span><span class="p">,</span> <span class="s2">&quot;LNA3&quot;</span><span class="p">,</span> <span class="s2">&quot;LNA7&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Cts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="p">[[</span><span class="mf">23.2647419</span><span class="p">,</span> <span class="mf">23.24508476</span><span class="p">],</span> <span class="p">[</span><span class="mf">20.76102257</span><span class="p">,</span> <span class="mf">20.77914238</span><span class="p">],</span> <span class="p">[</span><span class="mf">19.40455055</span><span class="p">,</span> <span class="mf">19.52949905</span><span class="p">],</span> <span class="p">[</span><span class="mf">19.70094872</span><span class="p">,</span> <span class="mf">19.60042572</span><span class="p">],</span> <span class="p">[</span><span class="mf">19.41954041</span><span class="p">,</span> <span class="mf">19.13051605</span><span class="p">],</span> <span class="p">[</span><span class="mf">24.17935753</span><span class="p">,</span> <span class="mf">21.98130798</span><span class="p">],</span> <span class="p">[</span><span class="mf">20.01245308</span><span class="p">,</span> <span class="mf">20.02809715</span><span class="p">],</span> <span class="p">[</span><span class="mf">21.2081356</span><span class="p">,</span> <span class="mf">20.1692791</span><span class="p">]],</span>
+<span class="gp">... </span>    <span class="p">[[</span><span class="mf">28.25722122</span><span class="p">,</span> <span class="mf">28.239748</span><span class="p">],</span> <span class="p">[</span><span class="mf">25.16436958</span><span class="p">,</span> <span class="mf">25.28390503</span><span class="p">],</span> <span class="p">[</span><span class="mf">24.71133995</span><span class="p">,</span> <span class="mf">24.70510483</span><span class="p">],</span> <span class="p">[</span><span class="mf">25.37249184</span><span class="p">,</span> <span class="mf">25.47054863</span><span class="p">],</span> <span class="p">[</span><span class="mf">24.72605515</span><span class="p">,</span> <span class="mf">24.43961525</span><span class="p">],</span> <span class="p">[</span><span class="mf">27.91354942</span><span class="p">,</span> <span class="mf">27.93320656</span><span class="p">],</span> <span class="p">[</span><span class="mf">26.08522797</span><span class="p">,</span> <span class="mf">26.0483017</span><span class="p">],</span> <span class="p">[</span><span class="mf">24.96000481</span><span class="p">,</span> <span class="mf">25.04871941</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span><span class="n">n_samples</span><span class="p">,</span><span class="n">n_trials_Cts</span> <span class="o">=</span> <span class="n">Cts</span><span class="o">.</span><span class="n">shape</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="s2">&quot;[Normalized Expression Ratio]&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">n_samples</span><span class="si">}</span><span class="s2">_samples: </span><span class="si">{</span><span class="n">samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="sa">f</span><span class="s2">&quot;n_trials : </span><span class="si">{</span><span class="n">n_trials_Cts</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax</span> <span class="o">=</span> <span class="n">expression_ratio_plot</span><span class="p">(</span><span class="n">GOI_Cts</span><span class="o">=</span><span class="n">Cts</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">REF_Cts</span><span class="o">=</span><span class="n">Cts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">e_GOI</span><span class="o">=</span><span class="n">efficiencies</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">e_REF</span><span class="o">=</span><span class="n">efficiencies</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name_GOI</span><span class="o">=</span><span class="s2">&quot;VIM&quot;</span><span class="p">,</span> <span class="n">name_REF</span><span class="o">=</span><span class="s2">&quot;Gapdh&quot;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[:,:</span><span class="mi">3</span><span class="p">]))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="figure align-default">
+<img alt="_images/teilab-pcr-2.png" class="plot-directive popup-img" src="_images/teilab-pcr-2.png" />
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="teilab.question.html" class="btn btn-neutral float-right" title="teilab.question module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="teilab.normalizations.html" class="btn btn-neutral float-left" title="teilab.normalizations module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, iwasakishuto.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+<style id="style-expand" disabled="true">
+  .wy-nav-content {
+    max-width: 100%!important;
+  }
+</style>
+<script>
+  document.getElementById("style-expand").disabled = true;
+</script>
+
+
+</body>
+</html>

@@ -28,14 +28,14 @@ Relative Quantification
 
 A method to focus on the **relative ratio** of a calibrator (control) sample and the gene of interest (GOI). The following various calibration algorithms have been proposed.
 
-1. :ref:`ΔCt法 <target to delta Ct method>`
-2. :ref:`ΔΔCt法 <target to delta delta Ct method>`
+1. :ref:`ΔCt method <target to delta Ct method>`
+2. :ref:`ΔΔCt method <target to delta delta Ct method>`
 3. :ref:`Calibration curve method <target to Calibration curve method>`
 
 .. _target to delta Ct method:
 
-1. ΔCt法
-========
+1. ΔCt method
+==============
 
 .. math::
     \text{Expression Ratio} = 2^{-\Delta Ct_{GOI}}\quad\left(GOI: Gene of Interest.\right)
@@ -48,8 +48,8 @@ A method to focus on the **relative ratio** of a calibrator (control) sample and
 
 .. _target to delta delta Ct method:
 
-2. ΔΔCt法
-=========
+2. ΔΔCt method
+===============
 
 .. math::
     \text{Expression Ratio} = 2^{-\Delta\Delta Ct_{GOI}}.
