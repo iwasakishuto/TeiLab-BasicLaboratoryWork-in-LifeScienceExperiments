@@ -97,3 +97,24 @@ def tiecorrect(ranks:NDArray[Any,Number]) -> float:
     cnt  = np.diff(idx).astype(np.float64)
     size = np.float64(arr.size)
     return 1.0 if size<2 else 1.0-(cnt**3-cnt).sum() / (size**3-size)
+
+def optimize_linear(X:NDArray[Any,Number], Y:NDArray[Any,Number]) -> Tuple[float,float,callable]:
+    r"""Optimize linear function using least-squares method.
+
+    .. math::
+        \begin{cases}
+            a&=\frac{\displaystyle n\sum x_iy_i-\sum x_i\sum y_i}{\displaystyle n\sum x^2_i-\left( \sum x_i \right)^2}\\
+            b&=\frac{\displaystyle \sum x^2_i\sum y_i-\sum x_iy_i\sum x_i}{\displaystyle n\sum x^2_i-\left( \sum x_i \right)^2}
+        \end{cases}
+
+    Args:
+        X (NDArray[Any,Number]): explanatory variables.
+        Y (NDArray[Any,Number]): objective variables.
+
+    Returns:
+        Tuple[float,float,callable]: Optimal linear functions and their components.
+    """
+    n = len(X)
+    a = (n*np.sum(X*Y)-np.sum(X)*np.sum(Y) ) / ( n*np.sum(X*X)-np.square(np.sum(X)) )
+    b = (np.sum(X*X)*np.sum(Y)-np.sum(X*Y)*np.sum(X) ) / ( n*np.sum(X*X)-np.square(np.sum(X)))
+    return (a,b,np.vectorize(lambda x:a*x+b))
