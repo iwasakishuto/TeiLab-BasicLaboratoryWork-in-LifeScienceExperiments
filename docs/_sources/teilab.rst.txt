@@ -17,7 +17,9 @@ Submodules
    :maxdepth: 4
 
    teilab.datasets
+   teilab.enrichment
    teilab.normalizations
+   teilab.pcr
    teilab.question
    teilab.seedmatch
    teilab.statistics

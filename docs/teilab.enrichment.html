@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta property="og:title" content="teilab.enrichment module" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="teilab.enrichment.html" />
+  <meta property="og:description" content="Gene set enrichment analysis (GSEA)(or functional enrichment analysis) is a method to determine whether an a priori defined set of genes or proteins (i.e. classes of genes or proteins that are over..." />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>teilab.enrichment module &mdash; UiTei-Lab&#39;s Course Documentation  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="_static/plot_directive.css" type="text/css" />
+  <link rel="stylesheet" href="_static/togglebutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/popup.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/togglebutton.js"></script>
+        <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"jax": ["input/TeX", "output/HTML-CSS"], "displayAlign": "left"}</script>
+        <script src="_static/custom.js"></script>
+        <script src="_static/particles.min.js"></script>
+        <script src="_static/popup.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="teilab.normalizations module" href="teilab.normalizations.html" />
+    <link rel="prev" title="teilab.datasets module" href="teilab.datasets.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> UiTei-Lab's Course Documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+  <ul class="utility-btns">
+    <li><a class="btn btn-icon btn-start" href="#" onclick="changeParticles(this);">Start Particles</a></li>
+    <li><a class="btn btn-icon btn-expand" href="#" onclick="changeStyle(this);">Expand</a></li>
+  </ul>
+  <div class="sidebarlogo">
+    <h4>Lab's information</h4>
+    <ul class="social">
+      
+      <li><a class="sc-book" href="http://ui-tei.rnai.jp/">
+        <i class="fa fa-book" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-wikipedia-w" href="http://ui-tei.rnai.jp/microarray/doku.php?id=2021">
+        <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-file-pdf-o" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2367719/">
+        <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+    <h4>Author's Social link</h4>
+    <ul class="social">
+      
+      <li><a class="sc-twitter" href="https://twitter.com/cabernet_rock">
+        <i class="fa fa-twitter" aria-hidden="true"></i>
+      </a></li>
+      
+      <li><a class="sc-github" href="https://github.com/iwasakishuto">
+        <i class="fa fa-github" aria-hidden="true"></i>
+      </a></li>
+      
+    </ul>
+  </div>
+  
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="teilab.html">teilab package</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#subpackages">Subpackages</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="teilab.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="teilab.datasets.html">teilab.datasets module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">teilab.enrichment module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#instructions">Instructions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python-objects">Python Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.normalizations.html">teilab.normalizations module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.pcr.html">teilab.pcr module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.question.html">teilab.question module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.seedmatch.html">teilab.seedmatch module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="teilab.statistics.html">teilab.statistics module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="teilab.html#module-teilab">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">UiTei-Lab's Course Documentation</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+<canvas class="particle-background"></canvas>
+
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="teilab.html">teilab package</a> &raquo;</li>
+        
+      <li>teilab.enrichment module</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/teilab.enrichment.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-teilab.enrichment">
+<span id="teilab-enrichment-module"></span><h1>teilab.enrichment module<a class="headerlink" href="#module-teilab.enrichment" title="Permalink to this headline">¶</a></h1>
+<p><strong>Gene set enrichment analysis (GSEA)</strong> (or <strong>functional enrichment analysis</strong>) is a method to determine whether an a priori defined set of genes or proteins (i.e. classes of genes or proteins that are over-represented in a large set of genes or proteins) show statistically significant differences, and may have an association with disease phenotypes.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Enrichment Analysis is a method that <strong>relies on a database</strong> created based on the information published in a paper. Therefore, it is a technique for giving an interpretation to the experimental results rather than making a new discovery. Also, it is necessary to make a strong assumption that <strong>“all past treatises are correct”</strong>, so be careful about that.</p>
+</div>
+<div class="section" id="instructions">
+<h2>Instructions<a class="headerlink" href="#instructions" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>Gene set enrichment analysis uses a priori gene sets that have been grouped together by their involvement in the same biological pathway, or by proximal location on a chromosome. A database of these predefined sets can be found at the Molecular signatures database (<a class="reference external" href="https://www.gsea-msigdb.org/gsea/msigdb/">MSigDB</a>). In GSEA, DNA microarrays, or now RNA-Seq, are still performed and compared between two cell categories, but instead of focusing on individual genes in a long list, the focus is put on a gene set. Researchers analyze whether the majority of genes in the set fall in the extremes of this list: the top and bottom of the list correspond to the largest differences in expression between the two cell types. If the gene set falls at either the top (over-expressed) or bottom (under-expressed), it is thought to be related to the phenotypic differences.</p>
+<p>In the method that is typically referred to as standard GSEA, there are three steps involved in the analytical process. The general steps are summarized below:</p>
+<ol class="arabic simple">
+<li><p>Calculate the enrichment score (ES) that represents the amount to which the genes in the set are over-represented at either the top or bottom of the list. This score is a Kolmogorov–Smirnov-like statistic.</p></li>
+<li><dl class="simple">
+<dt>Estimate the statistical significance of the ES. This calculation is done by a phenotypic-based permutation test in order to produce a null distribution for the ES. The P value is determined by comparison to the null distribution.</dt><dd><ul class="simple">
+<li><p>Calculating significance this way tests for the dependence of the gene set on the diagnostic/phenotypic labels.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Adjust for multiple hypothesis testing for when a large number of gene sets are being analyzed at one time. The enrichment scores for each set are normalized and a false discovery rate is calculated.</p></li>
+</ol>
+</div></blockquote>
+<div class="section" id="gene-ontology-go-enrichment-analysis">
+<h3>Gene Ontology (GO) Enrichment Analysis<a class="headerlink" href="#gene-ontology-go-enrichment-analysis" title="Permalink to this headline">¶</a></h3>
+<p>Most genes have a keyword (GO term) called <strong>Gene Ontology (GO)</strong>. The GO term focuses on the biological process of the gene, the cellular components, and the molecular function. By performing GO enrichment analysis after identifying differentially expressed genes (DEGs), it will lead to elucidation of molecular functions and cell localization peculiar to DEGs.</p>
+</div>
+<div class="section" id="pathway-analysis">
+<h3>Pathway Analysis<a class="headerlink" href="#pathway-analysis" title="Permalink to this headline">¶</a></h3>
+<p>A pathway is a biological process or pathway that is composed of the interaction of multiple ecological molecules and controls the biological phenomena necessary to maintain ecological activity. It contains not only metabolic pathways but also information such as signal transduction systems, protein-protein interactions, and gene regulatory relationships (including enzymatic reactions, transcription, phosphorylation, and binding).</p>
+<p>By performing <strong>Pathway Analysis</strong> after identifying DEGs, it will lead to elucidation of pathways peculiar to DEGs.</p>
+<div class="section" id="over-representation-analysis-approaches">
+<span id="target-to-over-representation-analysis-approaches"></span><h4>Over-Representation Analysis Approaches<a class="headerlink" href="#over-representation-analysis-approaches" title="Permalink to this headline">¶</a></h4>
+<p>Identify the DEGs using FDR etc. and, classify into a following <span class="math notranslate nohighlight">\(2\times2\)</span> matrix. Then, test them using  geometric distribution, or chi-square.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"></th>
+<th class="head" colspan="2"><p>Pathway</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p>target</p></td>
+<td><p>others</p></td>
+</tr>
+<tr class="row-odd"><td><p>DEFs</p></td>
+<td><p>a</p></td>
+<td><p>b</p></td>
+</tr>
+<tr class="row-even"><td><p>others</p></td>
+<td><p>c</p></td>
+<td><p>d</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>Treats each gene independently.</p></li>
+<li><p>Treats each pathway independently</p></li>
+<li><p>Treats all genes equally regardless of the expression level.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="functional-class-scoring-approaches">
+<span id="target-to-functional-class-scoring-approaches"></span><h4>Functional Class Scoring Approaches<a class="headerlink" href="#functional-class-scoring-approaches" title="Permalink to this headline">¶</a></h4>
+<p>Create a <span class="math notranslate nohighlight">\(2\times2\)</span> matrix as in <a class="reference internal" href="#target-to-over-representation-analysis-approaches"><span class="std std-ref">Over-Representation Analysis Approaches</span></a>, but add a ranking of the statistics (p-value, fold-change, etc.) obtained as a result of the expression level comparison to weight each gene.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<ul class="simple">
+<li><p>Treats each pathway independently</p></li>
+<li><p>Statistics are ranked, not used as they are.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="pathway-topology-based-approaches">
+<span id="target-to-pathway-topology-based-approaches"></span><h4>Pathway Topology Based Approaches<a class="headerlink" href="#pathway-topology-based-approaches" title="Permalink to this headline">¶</a></h4>
+<p>This approach <strong>directly</strong> uses the topology of the pathway and the statistics obtained from each gene in <a class="reference internal" href="#target-to-functional-class-scoring-approaches"><span class="std std-ref">Functional Class Scoring Approaches</span></a></p>
+</div>
+<div class="section" id="impact-factor-analytic-approaches">
+<span id="target-to-impact-factor-analytic-approaches"></span><h4>Impact Factor Analytic Approaches<a class="headerlink" href="#impact-factor-analytic-approaches" title="Permalink to this headline">¶</a></h4>
+<p>Integrate the following information into <a class="reference internal" href="#target-to-pathway-topology-based-approaches"><span class="std std-ref">Pathway Topology Based Approachess</span></a></p>
+<ul class="simple">
+<li><p>the structure of the entire pathway</p></li>
+<li><p>important regulators</p></li>
+<li><p>gene expression level</p></li>
+<li><p>gene localization</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="python-objects">
+<h2>Python Objects<a class="headerlink" href="#python-objects" title="Permalink to this headline">¶</a></h2>
+<p>Several tools have been developed to do GSEA in python.</p>
+<ul>
+<li><p><cite>GSEApy &lt;https://gseapy.readthedocs.io/en/latest/introduction.html&gt;</cite> : Python implementation for GSEA and wrapper for Enrichr.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">gseapy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gl</span> <span class="o">=</span> <span class="p">[</span>
+<span class="gp">... </span>    <span class="s1">&#39;SCARA3&#39;</span><span class="p">,</span> <span class="s1">&#39;LOC100044683&#39;</span><span class="p">,</span> <span class="s1">&#39;CMBL&#39;</span><span class="p">,</span> <span class="s1">&#39;CLIC6&#39;</span><span class="p">,</span> <span class="s1">&#39;IL13RA1&#39;</span><span class="p">,</span> <span class="s1">&#39;TACSTD2&#39;</span><span class="p">,</span> <span class="s1">&#39;DKKL1&#39;</span><span class="p">,</span> <span class="s1">&#39;CSF1&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s1">&#39;SYNPO2L&#39;</span><span class="p">,</span> <span class="s1">&#39;TINAGL1&#39;</span><span class="p">,</span> <span class="s1">&#39;PTX3&#39;</span><span class="p">,</span> <span class="s1">&#39;BGN&#39;</span><span class="p">,</span> <span class="s1">&#39;HERC1&#39;</span><span class="p">,</span> <span class="s1">&#39;EFNA1&#39;</span><span class="p">,</span> <span class="s1">&#39;CIB2&#39;</span><span class="p">,</span> <span class="s1">&#39;PMP22&#39;</span><span class="p">,</span> <span class="s1">&#39;TMEM173&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gseapy</span><span class="o">.</span><span class="n">enrichr</span><span class="p">(</span><span class="n">gene_list</span><span class="o">=</span><span class="n">gl</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;pathway&#39;</span><span class="p">,</span> <span class="n">gene_sets</span><span class="o">=</span><span class="s1">&#39;KEGG_2016&#39;</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="teilab.normalizations.html" class="btn btn-neutral float-right" title="teilab.normalizations module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="teilab.datasets.html" class="btn btn-neutral float-left" title="teilab.datasets module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, iwasakishuto.
+
+    </p>
+  </div> 
+
+</footer>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+  
+ 
+<style id="style-expand" disabled="true">
+  .wy-nav-content {
+    max-width: 100%!important;
+  }
+</style>
+<script>
+  document.getElementById("style-expand").disabled = true;
+</script>
+
+
+</body>
+</html>

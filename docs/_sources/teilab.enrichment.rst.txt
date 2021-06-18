@@ -1,0 +1,7 @@
+teilab.enrichment module
+========================
+
+.. automodule:: teilab.enrichment
+   :members:
+   :undoc-members:
+   :show-inheritance:
