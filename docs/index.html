@@ -220,6 +220,67 @@
 <h2>Basic Laboratory Work in Life Science Experiments<a class="headerlink" href="#basic-laboratory-work-in-life-science-experiments" title="Permalink to this headline">¶</a></h2>
 <p>In this lecture, we will perform bioinformatics experiments such as <strong>“Sequencing”</strong>, <strong>“Biochemical Reaction Simulation”</strong>, and <strong>“Gene Expression Profiling”</strong> (← Our Lab is in charge of this). This lecture is for students in , department of Bioinformatics and Systems Biology or department of Biophysics and Biochemistry.</p>
 <p>Please refer to <a class="reference external" href="http://ui-tei.rnai.jp/microarray/doku.php">Lecture’s Wiki</a> or <a class="reference external" href="https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/wiki">Repository’s Wiki</a> to check the schedule.</p>
+<div class="section" id="wet-experiment-microarray">
+<h3>Wet Experiment (MicroArray)<a class="headerlink" href="#wet-experiment-microarray" title="Permalink to this headline">¶</a></h3>
+<div class="graphviz"><img src="_images/graphviz-a4189eb5e356ed4dd2a12a6b26c264d0765f50d8.png" alt="digraph WetExperimentOverviewGraph {
+    graph [
+        charset   = &quot;UTF-8&quot;;
+        label     = &quot;Wet Experiment&quot;,
+        labelloc  = &quot;t&quot;,
+        labeljust = &quot;c&quot;,
+        bgcolor   = &quot;#1f441e&quot;,
+        fontcolor = &quot;white&quot;,
+        fontsize  = 26,
+        fontname  = &quot;times&quot;,
+        style     = &quot;filled&quot;,
+        rankdir   = TB,
+        margin    = 0.2,
+        ranksep   = 1.0,
+        nodesep   = 0.9,
+        layout    = &quot;dot&quot;,
+        compound = true,
+    ];
+    
+    node [
+        shape     = note,
+        style     = &quot;solid,filled&quot;,
+        fontsize  = 20,
+        fontcolor = 6,
+        fontname  = &quot;fantasy&quot;,
+        color     = &quot;#5f939a&quot;,
+        fillcolor = &quot;#cdf0ea&quot;,
+        fixedsize = false,
+        margin    = &quot;0.2,0.2&quot;,
+    ];
+
+    tissue_samples          [label=&quot;HeLa cell&quot;]
+    tissue_sample_mock      [fillcolor=&quot;white&quot; label=&quot;HeLa cell\n(mock)&quot;]
+    tissue_sample_siVIM     [fillcolor=&quot;white&quot; label=&quot;HeLa cell\n(+siVIM-270)&quot;]
+    tissue_sample_siVIM_XXX [fillcolor=&quot;white&quot; label=&quot;HeLa cell\n(+siVIM-270-2'OMe)&quot;]
+    mRNA_molecules          [label=&quot;mRNA molecules&quot;]
+    labeled_cDNA_molecules  [label=&quot;Labeled cDNA molecules&quot;]
+    DNA_microarray          [label=&quot;DNA microarray&quot;]
+   
+    edge [
+        style         = solid,
+        fontsize      = 16,
+        fontname      = &quot;times&quot;,
+        fontcolor     = white,
+        color         = white,
+        labelfloat    = false,
+        arrowhead     = vee,
+        headport      = n,
+        arrowsize     = 1.5,
+    ];
+     
+    tissue_samples -&gt; tissue_sample_mock;
+    tissue_samples -&gt; tissue_sample_siVIM_XXX; 
+    tissue_samples -&gt; tissue_sample_siVIM [label=&quot;Transfection&quot;]
+    tissue_sample_siVIM -&gt; mRNA_molecules [label=&quot;Isolate mRNA&quot;]
+    mRNA_molecules -&gt; labeled_cDNA_molecules [label=&quot;Make cDNA by reverse transcription,\nusing fluorescently labeled nucleotides.&quot;]
+    labeled_cDNA_molecules -&gt; DNA_microarray [label=&quot;Apply the cDNA mixture to a microarray,\na micro-scope slide on which copies of single-stranded DNA fragments\nfrom the organism's genes are fixed, a different gene in each spot.\nThe cDNA hybridizes with any complementary DNA on the microarray.&quot;]  
+}" class="graphviz popup-img" /></div>
+</div>
 </div>
 <div class="section" id="package">
 <h2>Package<a class="headerlink" href="#package" title="Permalink to this headline">¶</a></h2>

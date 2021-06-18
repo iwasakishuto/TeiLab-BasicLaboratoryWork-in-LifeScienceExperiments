@@ -1,0 +1,58 @@
+digraph WetExperimentOverviewGraph {
+    graph [
+        charset   = "UTF-8";
+        label     = "Wet Experiment",
+        labelloc  = "t",
+        labeljust = "c",
+        bgcolor   = "#1f441e",
+        fontcolor = "white",
+        fontsize  = 26,
+        fontname  = "times",
+        style     = "filled",
+        rankdir   = TB,
+        margin    = 0.2,
+        ranksep   = 1.0,
+        nodesep   = 0.9,
+        layout    = "dot",
+        compound = true,
+    ];
+    
+    node [
+        shape     = note,
+        style     = "solid,filled",
+        fontsize  = 20,
+        fontcolor = 6,
+        fontname  = "fantasy",
+        color     = "#5f939a",
+        fillcolor = "#cdf0ea",
+        fixedsize = false,
+        margin    = "0.2,0.2",
+    ];
+
+    tissue_samples          [label="HeLa cell"]
+    tissue_sample_mock      [fillcolor="white" label="HeLa cell\n(mock)"]
+    tissue_sample_siVIM     [fillcolor="white" label="HeLa cell\n(+siVIM-270)"]
+    tissue_sample_siVIM_XXX [fillcolor="white" label="HeLa cell\n(+siVIM-270-2'OMe)"]
+    mRNA_molecules          [label="mRNA molecules"]
+    labeled_cDNA_molecules  [label="Labeled cDNA molecules"]
+    DNA_microarray          [label="DNA microarray"]
+   
+    edge [
+        style         = solid,
+        fontsize      = 16,
+        fontname      = "times",
+        fontcolor     = white,
+        color         = white,
+        labelfloat    = false,
+        arrowhead     = vee,
+        headport      = n,
+        arrowsize     = 1.5,
+    ];
+     
+    tissue_samples -> tissue_sample_mock;
+    tissue_samples -> tissue_sample_siVIM_XXX; 
+    tissue_samples -> tissue_sample_siVIM [label="Transfection"]
+    tissue_sample_siVIM -> mRNA_molecules [label="Isolate mRNA"]
+    mRNA_molecules -> labeled_cDNA_molecules [label="Make cDNA by reverse transcription,\nusing fluorescently labeled nucleotides."]
+    labeled_cDNA_molecules -> DNA_microarray [label="Apply the cDNA mixture to a microarray,\na micro-scope slide on which copies of single-stranded DNA fragments\nfrom the organism's genes are fixed, a different gene in each spot.\nThe cDNA hybridizes with any complementary DNA on the microarray."]  
+}

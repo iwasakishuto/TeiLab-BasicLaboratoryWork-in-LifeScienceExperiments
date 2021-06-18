@@ -22,6 +22,12 @@ In this lecture, we will perform bioinformatics experiments such as **"Sequencin
 
 Please refer to `Lecture's Wiki <http://ui-tei.rnai.jp/microarray/doku.php>`__ or `Repository's Wiki <https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/wiki>`__ to check the schedule.
 
+Wet Experiment (MicroArray)
+===========================
+
+.. graphviz:: _graphviz/graphviz_MicroArrayOverview.dot
+      :class: popup-img
+
 *******
 Package
 *******
