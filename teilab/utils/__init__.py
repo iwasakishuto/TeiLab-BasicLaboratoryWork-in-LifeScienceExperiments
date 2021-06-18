@@ -24,6 +24,7 @@ from .generic_utils import check_supported
 
 from .math_utils import assign_rank
 from .math_utils import tiecorrect
+from .math_utils import optimize_linear
 
 from .plot_utils import get_colorList
 from .plot_utils import subplots_create
