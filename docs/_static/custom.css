@@ -331,6 +331,10 @@ dl.py.method code.sig-name.descname {
 dl.py.attribute code.sig-name.descname {
   color: red;
 }
+.rst-content code.xref, .rst-content tt.xref, a .rst-content code, a .rst-content tt {
+  font-weight: 700;
+  color: #558776;
+}
 
 dl.py.class em.property:first-child, dl.py.method em.property:first-child{
   position: relative;
