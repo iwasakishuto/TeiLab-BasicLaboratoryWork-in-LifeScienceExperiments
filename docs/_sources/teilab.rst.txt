@@ -18,6 +18,7 @@ Submodules
 
    teilab.datasets
    teilab.normalizations
+   teilab.pcr
    teilab.question
    teilab.seedmatch
    teilab.statistics

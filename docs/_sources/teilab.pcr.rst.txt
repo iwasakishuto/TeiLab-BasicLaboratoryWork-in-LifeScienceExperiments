@@ -1,0 +1,7 @@
+teilab.pcr module
+=================
+
+.. automodule:: teilab.pcr
+   :members:
+   :undoc-members:
+   :show-inheritance:

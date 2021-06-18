@@ -48,6 +48,8 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/togglebutton.js"></script>
         <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"jax": ["input/TeX", "output/HTML-CSS"], "displayAlign": "left"}</script>
         <script src="_static/custom.js"></script>
         <script src="_static/particles.min.js"></script>
         <script src="_static/popup.js"></script>
@@ -337,6 +339,31 @@
 <li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.tiecorrect.html">scipy.stats.tiecorrect(rankvals)</a></p></li>
 </ul>
 </div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="teilab.utils.math_utils.optimize_linear">
+<span class="sig-prename descclassname"><span class="pre">teilab.utils.math_utils.</span></span><span class="sig-name descname"><span class="pre">optimize_linear</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._object.Object</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">nptyping.types._ndarray.NDArray</span><span class="p"><span class="pre">[</span></span><span class="pre">typing.Any</span><span class="p"><span class="pre">,</span> </span><span class="pre">nptyping.types._object.Object</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">float</span><span class="p"><span class="pre">,</span> </span><span class="pre">callable</span><span class="p"><span class="pre">]</span></span><a class="reference internal" href="_modules/teilab/utils/math_utils.html#optimize_linear"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#teilab.utils.math_utils.optimize_linear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Optimize linear function using least-squares method.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{cases}
+    a&amp;=\frac{\displaystyle n\sum x_iy_i-\sum x_i\sum y_i}{\displaystyle n\sum x^2_i-\left( \sum x_i \right)^2}\\
+    b&amp;=\frac{\displaystyle \sum x^2_i\sum y_i-\sum x_iy_i\sum x_i}{\displaystyle n\sum x^2_i-\left( \sum x_i \right)^2}
+\end{cases}\end{split}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>NDArray</em><em>[</em><em>Any</em><em>,</em><em>Number</em><em>]</em>) – explanatory variables.</p></li>
+<li><p><strong>Y</strong> (<em>NDArray</em><em>[</em><em>Any</em><em>,</em><em>Number</em><em>]</em>) – objective variables.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Optimal linear functions and their components.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuple[float,float,callable]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
