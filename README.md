@@ -11,7 +11,9 @@
 [![程研HP](https://img.shields.io/badge/website-HP-9ecca4)](http://ui-tei.rnai.jp/)
 [![Documentation](https://img.shields.io/badge/Documentation-portfolio-1f441e?style=flat-radius)](https://iwasakishuto.github.io/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/index.html)
 [![twitter badge](https://img.shields.io/badge/twitter-Ask%20Author-1da1f2?style=flat-radius&logo=twitter)](https://www.twitter.com/messages/compose?recipient_id=1042783905697288193&text=2021年度の生命科学基礎実験を受講しているものですが、)
-[![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/notebook/Colaboratory/microarray2021S.ipynb)
+[![Open in Colab](https://img.shields.io/badge/1st%20week-open%20in%20Colab-3d80bc?style=flat-radius&logo=google-colab)](https://colab.research.google.com/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Colaboratory/microarray2021S.ipynb)
+[![Open in Colab](https://img.shields.io/badge/2nd%20week-open%20in%20Colab-3d80bc?style=flat-radius&logo=google-colab)](https://colab.research.google.com/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Colaboratory/microarray2021S-2nd.ipynb)
+
 
 ## 講義基本情報
 
