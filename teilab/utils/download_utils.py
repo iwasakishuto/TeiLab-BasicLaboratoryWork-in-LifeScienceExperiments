@@ -218,8 +218,8 @@ class Downloader:
             )
         except urllib.error.URLError:
             print(f"[URLError] Please check if the URL is correct, given {url}")
-        except Exception as e:
-            print(f"[{e.__class__.__name__}] {e}")
+        except Exception as err:
+            print(f"[{err.__class__.__name__}] {err}")
         return path
 
     @staticmethod
@@ -262,7 +262,6 @@ class Downloader:
         """
         # Get the information of the file you want to download from the header.
         if headers is None:
-            print(f"Get headers from '{url}'")
             with urllib.request.urlopen(url) as web_file:
                 headers = dict(web_file.headers._headers)
         content_encoding: str = headers.get("Content-Encoding")
@@ -403,7 +402,6 @@ def decide_downloader(url: str) -> Downloader:
         'GoogleDriveDownloader'
     """
     url_domain = re.match(pattern=r"^https?:\/\/(.+?)\/", string=url).group(1)
-    print(f"Downloader Type: {url_domain}")
     return {
-        "drive.google.com": GoogleDriveDownloader,
+        # "drive.google.com": GoogleDriveDownloader,
     }.get(url_domain, Downloader)

@@ -208,12 +208,13 @@ The BGSubMethod of ``7`` corresponds to "No Background Subtraction method" (see 
 """
 import os
 from pathlib import Path
-from typing import Any, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 import pandas as pd
 import requests
 from nptyping import NDArray
+from requests import Response
 from tabulate import tabulate
 
 from .utils._config import GAS_WEBAPP_URL
@@ -442,8 +443,8 @@ class TeiLabDataSets:
         """
         # Get the target data URL.
         path = ""
-        ret = requests.post(url=GAS_WEBAPP_URL, data={"password": password})
-        data = ret.json()
+        ret: Response = requests.post(url=GAS_WEBAPP_URL, data={"password": password})
+        data: Dict[str, str] = ret.json()
         dataURL: str = data.get("dataURL", "")
         message: str = data.get("message", "")
         if len(dataURL) == 0:
@@ -451,8 +452,9 @@ class TeiLabDataSets:
         else:
             self.print(f"Try to get data from {dataURL}\n{message}")
             downloader = decide_downloader(url=dataURL)
+            print(f"Data ULR: {dataURL}")
             ret: Tuple[str, str] = downloader.prepare_for_download(
-                url=dataURL, basename=password, dirname=DATA_DIR, path=None, headers=None, verbose=False
+                url=dataURL, basename=password, dirname=DATA_DIR, verbose=False
             )
             path = ret[1]
             if os.path.exists(path):

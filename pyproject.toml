@@ -18,9 +18,9 @@ scipy = "1.4.1"
 nptyping = "^1.4.2"
 tabulate = "^0.8.9"
 gseapy = "^0.10.4"
+Pillow = "^9.1.1"
 
 [tool.poetry.dev-dependencies]
-black = "^21.5b1"
 flake8 = "^3.9.2"
 flake8-mypy = "^17.8.0"
 isort = "^5.8.0"
@@ -38,6 +38,8 @@ joblib = "^1.0.1"
 install-requires = "^0.3.0"
 pip = "^21.1.2"
 sphinx-togglebutton = "^0.2.3"
+ipython = "^8.4.0"
+black = "^22.3.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
