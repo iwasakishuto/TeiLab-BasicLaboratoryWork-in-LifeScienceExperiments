@@ -4,7 +4,7 @@
  * Copyright 2020 Shuto Iwasaki
  * Twitter : https://twitter.com/cabernet_rock
  * Github  : https://github.com/iwasakishuto
- * 
+ *
 */
 
 /* Navigation, Background */
@@ -23,10 +23,12 @@ canvas.particle-background {
 .wy-nav-content {
   min-height: 100vh;
 }
-a, a:visited {
+a,
+a:visited {
   color: #355f7c;
 }
-.wy-side-nav-search .wy-dropdown>a:visited, .wy-side-nav-search>a:visited {
+.wy-side-nav-search .wy-dropdown > a:visited,
+.wy-side-nav-search > a:visited {
   color: #fcfcfc;
 }
 .wy-nav-top a:visited {
@@ -35,19 +37,23 @@ a, a:visited {
 .wy-menu-vertical a:hover {
   background-color: #ddd;
 }
-li.wy-breadcrumbs-aside a{
+li.wy-breadcrumbs-aside a {
   color: teal;
 }
 li.wy-breadcrumbs-aside a:after {
   content: "\f1c9";
-  font-family: 'FontAwesome';
+  font-family: "FontAwesome";
   margin-left: 5px;
 }
 div.section {
   margin-top: 10px;
 }
-div.wy-nav-content h1, div.wy-nav-content h2, div.wy-nav-content h3, 
-div.wy-nav-content h4, div.wy-nav-content h5, div.wy-nav-content h6 {
+div.wy-nav-content h1,
+div.wy-nav-content h2,
+div.wy-nav-content h3,
+div.wy-nav-content h4,
+div.wy-nav-content h5,
+div.wy-nav-content h6 {
   background-color: #f2f2f2;
   border-bottom: 1px solid #ccc;
   font-weight: normal;
@@ -62,31 +68,31 @@ div.wy-nav-content h4, div.wy-nav-content h5, div.wy-nav-content h6 {
 /* <-- Extension for "sphinx_plotly_directive" */
 div.doctest + p a.reference.external:after,
 div.doctest + p a.reference.external:before {
-  font-family: 'FontAwesome';
-  padding: 0 .25em;
+  font-family: "FontAwesome";
+  padding: 0 0.25em;
   color: white;
 }
-div.doctest + p a.reference.external:after{
+div.doctest + p a.reference.external:after {
   content: "\f1c9";
-  padding-left: .5em; 
+  padding-left: 0.5em;
 }
 div.doctest + p a.reference.external:before {
   content: "\f08e";
-  padding-right: .5em;
+  padding-right: 0.5em;
 }
 div.doctest + p a.reference.external {
   color: #fff;
-  background-color: rgb(225,109,60);
+  background-color: rgb(225, 109, 60);
   border: 0;
   border-radius: 5px;
-  border-bottom: 5px solid rgb(212,87,54);
+  border-bottom: 5px solid rgb(212, 87, 54);
   display: inline-block;
-  padding: .5em 2em;
+  padding: 0.5em 2em;
   text-decoration: none;
   cursor: pointer;
   font-family: monaco, monospace;
 }
-div.doctest + p a.reference.external:hover, 
+div.doctest + p a.reference.external:hover,
 div.doctest + p a.reference.external:hover:after,
 div.doctest + p a.reference.external:hover:before {
   color: #ffd43b;
@@ -94,7 +100,7 @@ div.doctest + p a.reference.external:hover:before {
 /* Extension for "sphinx_plotly_directive" --> */
 
 /* <-- Utility Buttons */
-ul.utility-btns{
+ul.utility-btns {
   margin: 10px;
   text-align: center;
   list-style: none;
@@ -103,21 +109,53 @@ ul.utility-btns li {
   margin: 5px;
 }
 .btn-icon:before {
-  font-family: 'FontAwesome';
+  font-family: "FontAwesome";
   padding-right: 5px;
 }
-.btn-stop{ color:white!important; background-color: #f5abc9; }
-.btn-stop:hover, .btn-stop:focus { background-color: #ba135d; }
-.btn-stop:before { content: "\f05e"; }
-.btn-start{ color:white!important; background-color: #77acf1; }
-.btn-start:hover, .btn-start:focus { background-color: #344fa1; }
-.btn-start:before { content: "\f144"; }
-.btn-expand { color:black!important; background-color: #9fe6a0; }
-.btn-expand:hover, .btn-expand:focus { background-color: #4aa96c; }
-.btn-expand:before { content: "\f065"; }
-.btn-shrink { color:black!important; background-color: #ffdf6b; }
-.btn-shrink:hover, .btn-shrink:focus { background-color: #fea82f; }
-.btn-shrink:before { content: "\f066"; }
+.btn-stop {
+  color: white !important;
+  background-color: #f5abc9;
+}
+.btn-stop:hover,
+.btn-stop:focus {
+  background-color: #ba135d;
+}
+.btn-stop:before {
+  content: "\f05e";
+}
+.btn-start {
+  color: white !important;
+  background-color: #77acf1;
+}
+.btn-start:hover,
+.btn-start:focus {
+  background-color: #344fa1;
+}
+.btn-start:before {
+  content: "\f144";
+}
+.btn-expand {
+  color: black !important;
+  background-color: #9fe6a0;
+}
+.btn-expand:hover,
+.btn-expand:focus {
+  background-color: #4aa96c;
+}
+.btn-expand:before {
+  content: "\f065";
+}
+.btn-shrink {
+  color: black !important;
+  background-color: #ffdf6b;
+}
+.btn-shrink:hover,
+.btn-shrink:focus {
+  background-color: #fea82f;
+}
+.btn-shrink:before {
+  content: "\f066";
+}
 /* Utility Buttons --> */
 
 /* Page Contents */
@@ -135,19 +173,26 @@ dl.field-list em {
   color: red;
   padding: 1px 2px;
 }
-th, dl.field-list dt, dl.field-list dd {
+th,
+dl.field-list dt,
+dl.field-list dd {
   padding: 5px;
   margin: 0;
 }
-th, dl.field-list > dt {
+th,
+dl.field-list > dt {
   background-color: #9ecca4;
   color: #1f441e;
   text-align: left;
 }
-div.body p, div.body dd, div.body li, div.body blockquote {
-  text-align: left!important;
+div.body p,
+div.body dd,
+div.body li,
+div.body blockquote {
+  text-align: left !important;
 }
-.wy-side-nav-search, .wy-nav-top {
+.wy-side-nav-search,
+.wy-nav-top {
   background: #1f441e;
 }
 
@@ -157,7 +202,7 @@ div.body p, div.body dd, div.body li, div.body blockquote {
 } */
 
 /* 9b3675 */
-.rst-content div[class^=highlight] pre {
+.rst-content div[class^="highlight"] pre {
   padding: 5px;
 }
 div.viewcode-block:target {
@@ -174,12 +219,12 @@ div.viewcode-block:target {
   margin-bottom: 0;
 }
 .toctree-wrapper ul {
-  margin: 0!important;
+  margin: 0 !important;
 }
 .rst-content .section ul li li li li {
   list-style-type: circle;
 }
-.rst-content .section ul li li li li li{
+.rst-content .section ul li li li li li {
   list-style-type: disc;
 }
 
@@ -218,19 +263,28 @@ div.sidebarlogo ul.social a:hover {
   -o-transform: scale(1.5, 1.5);
   -ms-transform: scale(1.5, 1.5);
 }
-div.sidebarlogo ul.social a.sc-book, ul.social a.sc-book-alt {
+div.sidebarlogo ul.social a.sc-book,
+ul.social a.sc-book-alt {
   background-color: lemonchiffon;
   color: crimson;
 }
-div.sidebarlogo ul.social a.sc-wikipedia-w, ul.social a.sc-wikipedia-w-alt {
+div.sidebarlogo ul.social a.sc-wikipedia-w,
+ul.social a.sc-wikipedia-w-alt {
   background-color: white;
   color: black;
 }
-div.sidebarlogo ul.social a.sc-file-pdf-o, ul.social a.sc-file-pdf-o {
+div.sidebarlogo ul.social a.sc-file-pdf-o,
+ul.social a.sc-file-pdf-o {
   background-color: #a52416;
   color: white;
 }
-div.sidebarlogo ul.social a.sc-github, ul.social a.sc-github-alt {
+div.sidebarlogo ul.social a.sc-slideshare,
+ul.social a.sc-slideshare {
+  background-color: #3980ae;
+  color: white;
+}
+div.sidebarlogo ul.social a.sc-github,
+ul.social a.sc-github-alt {
   background-color: #111010;
   color: white;
 }
@@ -239,22 +293,22 @@ div.sidebarlogo ul.social a.sc-twitter {
   background-color: #4da7de;
 }
 /*  .. admonition:: Statistic ( XXX ) */
-div[class^="admonition-statistic"]{
-  background: #ffefa0!important;
+div[class^="admonition-statistic"] {
+  background: #ffefa0 !important;
 }
-div[class^="admonition-statistic"] .admonition-title{
+div[class^="admonition-statistic"] .admonition-title {
   background: #f0a500;
 }
 div[class^="admonition-statistic"] .admonition-title:before {
-  font-family: 'FontAwesome';
+  font-family: "FontAwesome";
   content: "\f1fe";
   color: #1f441e;
 }
 div[class^="admonition-statistic"] .toggle.docutils.container {
-  overflow-x: scroll
+  overflow-x: scroll;
 }
 /* details class="section" id="" */
-details.section#instructions{
+details.section#instructions {
   background-color: #f5e3e3;
   padding: 5px;
   border-radius: 10px;
@@ -270,14 +324,14 @@ details.section#instructions summary::-webkit-details-marker {
   display: none;
 }
 details.section#instructions summary::before {
-  font-family: FontAwesome; 
+  font-family: FontAwesome;
   content: "\f107";
   float: right;
   padding-right: 15px;
   font-size: 34px;
 }
 details.section#instructions[open] summary::before {
-  content: "\f106";      
+  content: "\f106";
 }
 details.section#instructions[open] div {
   animation: fadeIn 0.5s ease;
@@ -294,10 +348,12 @@ details.section#instructions[open] div {
 }
 
 /* <-- These two are inverted */
-.fa-home:before, .icon-home:before {
+.fa-home:before,
+.icon-home:before {
   content: "";
 }
-.fa-book:before, .icon-book:before {
+.fa-book:before,
+.icon-book:before {
   content: "";
 }
 /* These are inverted --> */
@@ -317,7 +373,7 @@ dl.py.function > dt {
   background-color: #f7c2c2;
 }
 div.related {
-  background-color: #722F38;
+  background-color: #722f38;
 }
 dl.py.function code.sig-name.descname {
   color: #008000;
@@ -326,70 +382,79 @@ dl.py.class code.sig-name.descname {
   color: #ffd56b;
 }
 dl.py.method code.sig-name.descname {
-  color: #0000FF;
+  color: #0000ff;
 }
 dl.py.attribute code.sig-name.descname {
   color: red;
 }
-.rst-content code.xref, .rst-content tt.xref, a .rst-content code, a .rst-content tt {
+.rst-content code.xref,
+.rst-content tt.xref,
+a .rst-content code,
+a .rst-content tt {
   font-weight: 700;
   color: #558776;
 }
 
-dl.py.class em.property:first-child, dl.py.method em.property:first-child{
+dl.py.class em.property:first-child,
+dl.py.method em.property:first-child {
   position: relative;
   color: red;
-  padding: 0 4px!important;
+  padding: 0 4px !important;
   margin-right: 4px;
 }
-dl.py.class em.property:first-child:before, dl.py.method em.property:first-child:before,
-dl.py.class em.property:first-child:after, dl.py.method em.property:first-child:after {
+dl.py.class em.property:first-child:before,
+dl.py.method em.property:first-child:before,
+dl.py.class em.property:first-child:after,
+dl.py.method em.property:first-child:after {
   position: absolute;
   top: 0;
-  content: '';
+  content: "";
   width: 8px;
   height: 100%;
   display: inline-block;
   border-top: solid 1px red;
   border-bottom: solid 1px red;
 }
-dl.py.class em.property:first-child:before, dl.py.method em.property:first-child:before{
+dl.py.class em.property:first-child:before,
+dl.py.method em.property:first-child:before {
   border-left: solid 1px red;
   left: 0;
 }
-dl.py.class em.property:first-child:after, dl.py.method em.property:first-child:after{
+dl.py.class em.property:first-child:after,
+dl.py.method em.property:first-child:after {
   border-right: solid 1px red;
-  right: 0; 
+  right: 0;
 }
 
-th, dl.field-list dt, dl.field-list dd {
+th,
+dl.field-list dt,
+dl.field-list dd {
   padding: 5px;
 }
-
 
 div.toctree-wrapper.compound {
   background-color: #343131;
   padding: 10px;
   border-radius: 10px;
-  color: white!important;
+  color: white !important;
 }
-div.toctree-wrapper.compound span:before{
+div.toctree-wrapper.compound span:before {
   content: "";
-  font-family: 'FontAwesome';
+  font-family: "FontAwesome";
   margin-right: 0;
 }
 div.toctree-wrapper.compound span.package-name {
-  color:#ffd43b;
+  color: #ffd43b;
 }
-div.toctree-wrapper.compound span.package-name:before{
+div.toctree-wrapper.compound span.package-name:before {
   content: "\f115";
-  color:#ffd43b;
+  color: #ffd43b;
   margin-right: 5px;
 }
 div.toctree-wrapper.compound span.program-name {
   color: #a8d8ff;
 }
-div.toctree-wrapper.compound span.program-name:before{
+div.toctree-wrapper.compound span.program-name:before {
   content: "\f1c9";
   color: #a8d8ff;
   margin-right: 5px;
@@ -397,13 +462,13 @@ div.toctree-wrapper.compound span.program-name:before{
 div.toctree-wrapper.compound span.module-contents {
   color: #f2f4c3;
 }
-div.toctree-wrapper.compound span.module-contents:before{
+div.toctree-wrapper.compound span.module-contents:before {
   content: "\f03a";
   color: #f2f4c3;
   margin-right: 5px;
 }
 div.toctree-wrapper.compound span.package-subtitle {
-  color:white;
+  color: white;
   text-decoration: underline;
 }
 div.toctree-wrapper.compound a {
