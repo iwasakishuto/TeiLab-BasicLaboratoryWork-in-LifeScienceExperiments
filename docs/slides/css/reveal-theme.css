@@ -1,0 +1,694 @@
+/**
+ * Blood theme for reveal.js
+ * Author: Walther http://github.com/Walther
+ *
+ * Designed to be used with highlight.js theme
+ * "monokai_sublime.css" available from
+ * https://github.com/isagalaev/highlight.js/
+ *
+ * For other themes, change $codeBackground accordingly.
+ *
+ * Editor: iwasakishuto <https://github.com/iwasakishuto>
+ **/
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+
+@font-face {
+  font-family: Kosugi;
+  src: url(../fonts/Kosugi-Regular.ttf);
+}
+
+@font-face {
+  font-family: HachiMaruPop;
+  src: url(../fonts/HachiMaruPop-Regular.ttf);
+}
+
+:root {
+  --background-color: #222;
+  --main-font: Ubuntu, sans-serif;
+  --main-font-size: 3.5vh;
+  /* --main-font-size: 40px; */
+  --main-color: #eee;
+  --block-margin: 20px;
+  --heading-margin: 0 0 20px 0;
+  --heading-font: Ubuntu, sans-serif;
+  --heading-color: #eee;
+  --heading-line-height: 1.2;
+  --heading-letter-spacing: normal;
+  --heading-text-transform: uppercase;
+  --heading-text-shadow: 2px 2px 2px #222;
+  --heading-font-weight: normal;
+  --heading1-text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb,
+    0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1),
+    0 0 5px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.3),
+    0 3px 5px rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.25),
+    0 20px 20px rgba(0, 0, 0, 0.15);
+  --heading1-size: 3.77em;
+  --heading2-size: 2.11em;
+  --heading3-size: 1.55em;
+  --heading4-size: 1em;
+  --code-font: monospace;
+  --link-color: #a23;
+  --link-color-hover: #dd5566;
+  --selection-background-color: #a23;
+  --selection-color: #fff;
+  --material-color1: #5bc0de;
+}
+
+.reveal-viewport {
+  background: #222;
+  background-color: #222;
+}
+
+.hachi-maru-pop {
+  font-family: HachiMaruPop !important;
+}
+
+.reveal {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, Kosugi,
+    serif;
+  font-size: var(--main-font-size);
+  font-weight: normal;
+  color: #eee;
+  background-image: linear-gradient(
+      90deg,
+      rgba(155, 159, 169, 1) 0%,
+      rgba(54, 64, 80, 0.8) 2%,
+      rgba(54, 64, 80, 0.8) 98%,
+      rgba(155, 159, 169, 1) 100%
+    ),
+    url(images/bg01.png);
+}
+
+.reveal ::selection {
+  color: #fff;
+  background: #a23;
+  text-shadow: none;
+}
+
+.reveal ::-moz-selection {
+  color: #fff;
+  background: #a23;
+  text-shadow: none;
+}
+
+.reveal .slides section,
+.reveal .slides section > section {
+  line-height: 1.3;
+  font-weight: inherit;
+}
+
+.reveal .slides > section.present:not(.stack),
+.reveal .slides > section > section.present {
+  overflow: scroll;
+  max-height: calc(100vh - 50px - 70px);
+  max-width: 1080px; /** .max-w-7xl */
+  margin: 0 auto;
+  position: relative;
+}
+
+#player {
+  height: calc(100% - 23px) !important;
+  z-index: 99999;
+}
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: 0 0 20px 0;
+  color: #eee;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
+  font-weight: normal;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: none;
+  word-wrap: break-word;
+}
+.reveal header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: #222;
+  font-weight: bold;
+  font-size: 1.2em;
+  background: #eee;
+  padding: 5px 30px;
+  height: 45px;
+  display: flex;
+  -webkit-align-items: center; /* 縦方向中央揃え（Safari用） */
+  align-items: center; /* 縦方向中央揃え */
+}
+.reveal footer#title-footer {
+  background-color: #fafafa;
+  position: fixed;
+  height: 20px;
+  z-index: 20;
+  width: 100%;
+  font-size: 15px;
+  text-align: right;
+  padding-right: 4vh;
+  bottom: 0;
+  vertical-align: baseline;
+  padding-top: 3px;
+}
+.reveal footer#title-footer a {
+  color: black;
+}
+.reveal footer#title-footer a:hover {
+  color: #a23;
+}
+
+.reveal h1 {
+  font-size: 3.77em;
+}
+
+.reveal h2 {
+  font-size: 2.11em;
+}
+
+.reveal h3 {
+  font-size: 1.55em;
+}
+
+.reveal h4 {
+  font-size: 1em;
+}
+
+.reveal h1 {
+  text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9,
+    0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1),
+    0 1px 3px rgba(0, 0, 0, 0.3), 0 3px 5px rgba(0, 0, 0, 0.2),
+    0 5px 10px rgba(0, 0, 0, 0.25), 0 20px 20px rgba(0, 0, 0, 0.15);
+}
+
+/*********************************************
+ * OTHER
+ *********************************************/
+.reveal p {
+  margin: 20px 0;
+  line-height: 1.3;
+}
+
+/* Remove trailing margins after titles */
+.reveal h1:last-child,
+.reveal h2:last-child,
+.reveal h3:last-child,
+.reveal h4:last-child,
+.reveal h5:last-child,
+.reveal h6:last-child {
+  margin-bottom: 0;
+}
+
+/* Ensure certain elements are never larger than the slide itself */
+.reveal img,
+.reveal video,
+.reveal iframe {
+  max-width: 95%;
+  max-height: 95%;
+}
+
+.lb-caption strong,
+.reveal strong {
+  font-weight: bold;
+  color: #e0bb20;
+}
+
+.lb-caption b,
+.reveal b {
+  font-weight: bold;
+  color: #f64e8b;
+}
+
+.reveal em {
+  font-style: italic;
+}
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: inline-block;
+  text-align: left;
+  margin: 1em;
+}
+
+.reveal ol {
+  list-style-type: decimal;
+}
+
+.reveal ul {
+  list-style-type: disc;
+}
+
+.reveal ul ul {
+  list-style-type: square;
+}
+
+.reveal ul ul ul {
+  list-style-type: circle;
+}
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+  display: block;
+  margin-left: 40px;
+}
+
+.reveal dt {
+  font-weight: bold;
+}
+
+.reveal dd {
+  margin-left: 40px;
+}
+
+.reveal blockquote {
+  display: block;
+  position: relative;
+  width: 70%;
+  margin: 20px auto;
+  padding: 5px;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
+}
+
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+  display: inline-block;
+}
+
+.reveal q {
+  font-style: italic;
+}
+
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: 20px auto;
+  text-align: left;
+  font-size: 0.55em;
+  font-family: monaco, monospace;
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.reveal pre > code {
+  font-family: monaco, monospace;
+  text-transform: none;
+  padding: 2px 4px;
+  background-color: #282c34;
+  border: 1px solid #e1e1e8;
+  white-space: pre-wrap;
+}
+
+span.MJXc-display {
+  margin: 0;
+  padding: 0.3em;
+}
+
+.reveal pre code:not(.MJXc-display-wrapper) {
+  display: block;
+  padding: 5px;
+  color: #abb2bf;
+  overflow: auto;
+  max-height: calc(100% - 65px);
+  word-wrap: normal;
+}
+
+.reveal table {
+  max-width: 85%;
+  margin: auto;
+  border: 2.5px white solid;
+  border-spacing: 0;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+.reveal table th {
+  font-weight: bold;
+  background: #f64e8b url(images/bg01.png);
+}
+
+.reveal table th,
+.reveal table td {
+  vertical-align: top;
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border: 0.5px white solid;
+}
+
+.reveal code table {
+  border: none;
+  max-width: 100%;
+}
+
+.reveal table th[align="center"],
+.reveal table td[align="center"] {
+  text-align: center;
+}
+
+.reveal table th[align="right"],
+.reveal table td[align="right"] {
+  text-align: right;
+}
+
+.reveal table tbody tr:last-child th,
+.reveal table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.reveal sup {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+.reveal sub {
+  vertical-align: sub;
+  font-size: smaller;
+}
+
+.reveal small {
+  display: inline-block;
+  font-size: 0.6em;
+  line-height: 1.2em;
+  vertical-align: top;
+}
+
+.reveal small * {
+  vertical-align: top;
+}
+
+.reveal img {
+  margin: 20px 0;
+}
+
+/*********************************************
+ * LINKS
+ *********************************************/
+.reveal a {
+  color: #42affa;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.reveal a:hover {
+  color: #8dcffc;
+  text-shadow: none;
+  border: none;
+}
+
+.reveal .roll span:after {
+  color: #fff;
+  background: #068de9;
+}
+
+/*********************************************
+ * Frame helper
+ *********************************************/
+.reveal .r-frame {
+  border: 4px solid #eee;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.reveal a .r-frame {
+  transition: all 0.15s linear;
+}
+
+.reveal a:hover .r-frame {
+  border-color: #a23;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55);
+}
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+.reveal .controls {
+  color: #a23;
+}
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2);
+  color: #a23;
+  height: 10px;
+}
+
+/*********************************************
+ * PRINT BACKGROUND
+ *********************************************/
+@media print {
+  .backgrounds {
+    background-color: #222;
+  }
+}
+
+.reveal p {
+  font-weight: 300;
+  text-align: left;
+}
+
+section.has-light-background p,
+section.has-light-background h1,
+section.has-light-background h2,
+section.has-light-background h3,
+section.has-light-background h4 {
+  text-shadow: none;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  font-weight: 700;
+}
+
+.reveal p code {
+  background-color: #f7f7f9;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+.reveal small code {
+  vertical-align: baseline;
+}
+
+.reveal figcaption {
+  font-size: 18px;
+  padding: 5px 0;
+}
+
+/* Plugins */
+div.tweet {
+  display: inline-block;
+  position: relative;
+  margin: 10px;
+  overflow: auto;
+  max-height: 550px;
+}
+div.tweet iframe {
+  max-width: 100%;
+  max-height: 100%;
+}
+div.chalkboard-button a,
+div.slide-menu-button a,
+div.mousepointer-button a {
+  color: #e0bb20;
+}
+div.viewport i {
+  width: 20px;
+  text-align: center;
+}
+figure.photowall img {
+  max-width: 100%;
+  margin: 0 auto;
+}
+.hljs-ln-line.hljs-ln-n {
+  width: auto !important;
+}
+span[id^="MathJax-Element"] {
+  font-size: 100% !important;
+}
+/* Lightbox */
+div.lb-dataContainer {
+  min-width: 75vw !important;
+  max-width: 90vw;
+  font-family: serif;
+  border: 1px solid #e0bb20;
+  margin-top: 5px;
+}
+div#lightbox {
+  overflow: scroll;
+  height: calc(100% - 50px);
+}
+div.lb-data span.lb-caption {
+  font-size: 13px;
+  line-height: 16px;
+}
+span.lb-caption ul,
+span.lb-caption ol {
+  padding-left: 2em;
+}
+/* Added by iwasakishuto <https://github.com/iwasakishuto> */
+.reveal p code.MJXc-display-wrapper {
+  color: inherit;
+  background: transparent;
+  display: block;
+  margin: 0 auto;
+}
+.reveal code {
+  padding: 4px 10px;
+  font-family: monaco;
+  font-size: 0.8em;
+}
+.reveal pre code {
+  font-size: 1em;
+}
+.reveal kbd {
+  display: inline-block;
+  padding: 0.3em 0.5em;
+  font: 1em SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  line-height: 1em;
+  color: #444d56;
+  vertical-align: middle;
+  background-color: #fafbfc;
+  border-bottom-color: #d1d5da;
+  border: 0.1em solid #d1d5da;
+  border-radius: 0.2em;
+  box-shadow: inset 0 -0.1em 0 #d1d5da;
+}
+
+/* Original materials */
+div.label-frame {
+  display: inline-flex;
+  text-align: left;
+  position: relative;
+  margin: 1.75em 0;
+  padding: 0.25em 1em;
+  border: solid 3px var(--material-color1);
+}
+div.label-frame .label {
+  position: absolute;
+  display: inline-block;
+  top: -1.2em;
+  left: -3px;
+  padding: 0.1em 0.5em;
+  margin: 0 10px 0.1em;
+  height: 1em;
+  line-height: 1.1em;
+  font-size: 1.1em;
+  background: var(--material-color1);
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 0.5em 0.5em 0 0;
+}
+div.label-frame * {
+  margin: 5px 10px;
+  padding: 0;
+}
+/* Arrow */
+div.arrow-down {
+  width: 200px;
+  height: 100px;
+  margin: 0 auto;
+}
+div.arrow-down::before {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  width: 120px;
+  height: 50px;
+  background: var(--material-color1);
+}
+div.arrow-down::after {
+  content: "";
+  display: block;
+  border-top: 100px solid var(--material-color1);
+  border-left: 100px solid transparent;
+  border-right: 100px solid transparent;
+  transform-origin: left top;
+  transform: scaleY(0.5);
+}
+/* menu plugins */
+ul.slide-menu-items.social-links i {
+  width: 1em;
+}
+ul.slide-menu-items.contents img {
+  width: 36px;
+  height: 36px;
+}
+div.github-style-badges img {
+  margin: 0;
+  height: 1em;
+  vertical-align: middle;
+}
+div.github-style-badges a {
+  font-size: 1em;
+}
+
+/* <--- Tailwind CSS --- */
+.max-w-xs {
+  max-width: 320px !important;
+}
+.max-w-sm {
+  max-width: 384px !important;
+}
+.max-w-md {
+  max-width: 448px !important;
+}
+.max-w-lg {
+  max-width: 512px !important;
+}
+.max-w-xl {
+  max-width: 576px !important;
+}
+.max-w-2xl {
+  max-width: 672px !important;
+}
+.max-w-3xl {
+  max-width: 768px !important;
+}
+.max-w-4xl {
+  max-width: 896px !important;
+}
+.max-w-5xl {
+  max-width: 1024px !important;
+}
+.max-w-6xl {
+  max-width: 1152px !important;
+}
+.max-w-7xl {
+  max-width: 1280px !important;
+}
+.max-w-full {
+  max-width: 100% !important;
+}
+.mx-auto {
+  margin: 0 auto !important;
+}
+.my-auto {
+  margin: 0 auto !important;
+}
+.block {
+  display: block !important;
+}
+.inline-block {
+  display: inline-block !important;
+}
+/* --- END Tailwind CSS ---> */

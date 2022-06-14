@@ -1,11 +1,13 @@
-#coding: utf-8
+# coding: utf-8
 import re
-import requests
+
 import pandas as pd
+import requests
 
 from .utils._config import SEEDMATCH_URL
 
-def get_matched_mRNAs(seedseq:str) -> pd.DataFrame:
+
+def get_matched_mRNAs(seedseq: str) -> pd.DataFrame:
     """Get a list of mRNAs with ``seedseq`` in 3'UTR
 
     Args:
@@ -34,12 +36,11 @@ def get_matched_mRNAs(seedseq:str) -> pd.DataFrame:
     You can also get the data with the command like ``curl`` .
 
     .. code-block:: shell
-    
+
         $ curl -d "seedseq=gagttca" <SEEDMATCH_URL>
 
     """
     ret = requests.post(url=SEEDMATCH_URL, data={"seedseq": seedseq.lower()})
     return pd.DataFrame(
-        data=re.findall(pattern=r"\n(.+)\t([0-9]+)", string=ret.text),
-        columns=["SystematicName", "NumHits"]
+        data=re.findall(pattern=r"\n(.+)\t([0-9]+)", string=ret.text), columns=["SystematicName", "NumHits"]
     )

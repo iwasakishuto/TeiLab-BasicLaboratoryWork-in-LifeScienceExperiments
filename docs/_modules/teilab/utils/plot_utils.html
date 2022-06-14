@@ -23,8 +23,6 @@
 
   
   
-    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
-  
 
   
   
@@ -106,7 +104,7 @@
         <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
       </a></li>
       
-      <li><a class="sc-file-pdf-o" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2367719/">
+      <li><a class="sc-file-pdf-o" href="https://doi.org/10.1021/acsomega.7b00291/">
         <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
       </a></li>
       
@@ -203,21 +201,23 @@
            <div itemprop="articleBody">
             
   <h1>Source code for teilab.utils.plot_utils</h1><div class="highlight"><pre>
-<span></span><span class="c1">#coding: utf-8</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
+<span></span><span class="c1"># coding: utf-8</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Union</span>
 
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
 <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">Colormap</span>
-<span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
-<span class="kn">from</span> <span class="nn">plotly.graph_objects</span> <span class="kn">import</span> <span class="n">Trace</span>
 <span class="kn">from</span> <span class="nn">matplotlib.figure</span> <span class="kn">import</span> <span class="n">Figure</span> <span class="k">as</span> <span class="n">mplFigure</span>
+<span class="kn">from</span> <span class="nn">plotly.graph_objects</span> <span class="kn">import</span> <span class="n">Trace</span>
 <span class="kn">from</span> <span class="nn">plotly.graph_objs</span> <span class="kn">import</span> <span class="n">Figure</span> <span class="k">as</span> <span class="n">plotlyFigure</span>
-<span class="kn">from</span> <span class="nn">matplotlib.axes</span> <span class="kn">import</span> <span class="n">Axes</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span><span class="n">Dict</span><span class="p">,</span><span class="n">List</span><span class="p">,</span><span class="n">Tuple</span><span class="p">,</span><span class="n">Optional</span><span class="p">,</span><span class="n">Union</span>
+<span class="kn">from</span> <span class="nn">plotly.subplots</span> <span class="kn">import</span> <span class="n">make_subplots</span>
 
 <span class="c1"># &lt;=== Utility functions for Both Plotting modules ===</span>
 
-<div class="viewcode-block" id="get_colorList"><a class="viewcode-back" href="../../../teilab.utils.plot_utils.html#teilab.utils.plot_utils.get_colorList">[docs]</a><span class="k">def</span> <span class="nf">get_colorList</span><span class="p">(</span><span class="n">n</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">cmap</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">Colormap</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;matplotlib&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span><span class="nb">float</span><span class="p">,</span><span class="nb">float</span><span class="p">,</span><span class="nb">float</span><span class="p">]]:</span>
+
+<div class="viewcode-block" id="get_colorList"><a class="viewcode-back" href="../../../teilab.utils.plot_utils.html#teilab.utils.plot_utils.get_colorList">[docs]</a><span class="k">def</span> <span class="nf">get_colorList</span><span class="p">(</span>
+    <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">cmap</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Colormap</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;matplotlib&quot;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;Get a color List using matplotlib&#39;s colormaps. See `Choosing Colormaps in Matplotlib &lt;https://matplotlib.org/stable/tutorials/colors/colormaps.html&gt;` for details.</span>
 
 <span class="sd">    Args:</span>
@@ -253,13 +253,22 @@
 <span class="sd">        [&#39;rgba(170,170,255,1.0)&#39;, &#39;rgba(255,170,170,1.0)&#39;, &#39;rgba(255,0,0,1.0)&#39;]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cmap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
-    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmap</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">cmap</span><span class="p">((</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
     <span class="k">if</span> <span class="n">style</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;plotly&quot;</span><span class="p">,</span> <span class="s2">&quot;rgba&quot;</span><span class="p">]:</span>
-        <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;rgba(</span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">e</span><span class="o">*</span><span class="mi">255</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">color</span><span class="p">)])</span><span class="si">}</span><span class="s1">)&#39;</span> <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">]</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="sa">f</span><span class="s1">&#39;rgba(</span><span class="si">{</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">e</span><span class="o">*</span><span class="mi">255</span><span class="p">))</span> <span class="k">if</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">color</span><span class="p">)])</span><span class="si">}</span><span class="s1">)&#39;</span> <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">colors</span>
+        <span class="p">]</span>
     <span class="k">return</span> <span class="n">colors</span></div>
 
-<div class="viewcode-block" id="subplots_create"><a class="viewcode-back" href="../../../teilab.utils.plot_utils.html#teilab.utils.plot_utils.subplots_create">[docs]</a><span class="k">def</span> <span class="nf">subplots_create</span><span class="p">(</span><span class="n">nrows</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sharey</span><span class="p">:</span><span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                    <span class="n">style</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;matplotlib&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">mplFigure</span><span class="p">,</span><span class="n">Axes</span><span class="p">],</span><span class="n">plotlyFigure</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="subplots_create"><a class="viewcode-back" href="../../../teilab.utils.plot_utils.html#teilab.utils.plot_utils.subplots_create">[docs]</a><span class="k">def</span> <span class="nf">subplots_create</span><span class="p">(</span>
+    <span class="n">nrows</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">ncols</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">sharex</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">sharey</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">style</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;matplotlib&quot;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">mplFigure</span><span class="p">,</span> <span class="n">Axes</span><span class="p">],</span> <span class="n">plotlyFigure</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Create subplots for each plot style.</span>
 
 <span class="sd">    Args:</span>
@@ -288,12 +297,14 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="n">ncols</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">sharex</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="n">sharey</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
+
 <span class="c1"># === Utility functions for Both Plotting modules ===&gt;</span>
 
 
 <span class="c1"># &lt;=== Utility functions for &quot;plotly&quot; ===</span>
 
-<div class="viewcode-block" id="trace_transition"><a class="viewcode-back" href="../../../teilab.utils.plot_utils.html#teilab.utils.plot_utils.trace_transition">[docs]</a><span class="k">def</span> <span class="nf">trace_transition</span><span class="p">(</span><span class="n">from_fig</span><span class="p">:</span><span class="n">plotlyFigure</span><span class="p">,</span> <span class="n">to_fig</span><span class="p">:</span><span class="n">plotlyFigure</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plotlyFigure</span><span class="p">:</span>
+
+<div class="viewcode-block" id="trace_transition"><a class="viewcode-back" href="../../../teilab.utils.plot_utils.html#teilab.utils.plot_utils.trace_transition">[docs]</a><span class="k">def</span> <span class="nf">trace_transition</span><span class="p">(</span><span class="n">from_fig</span><span class="p">:</span> <span class="n">plotlyFigure</span><span class="p">,</span> <span class="n">to_fig</span><span class="p">:</span> <span class="n">plotlyFigure</span><span class="p">,</span> <span class="n">row</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plotlyFigure</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Trace ``Figure`` which is created by ``plotly.express``</span>
 
 <span class="sd">    Args:</span>
@@ -305,12 +316,15 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Figure: ``to_fig`` with ``from_fig`` &#39;s traces.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">transition</span><span class="p">(</span><span class="n">trace</span><span class="p">:</span><span class="n">Trace</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">transition</span><span class="p">(</span><span class="n">trace</span><span class="p">:</span> <span class="n">Trace</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Move the ``Trace`` from ``from_fig`` to ``to_fig``&quot;&quot;&quot;</span>
-        <span class="n">trace</span><span class="o">.</span><span class="n">legendgroup</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">row</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="n">trace</span><span class="o">.</span><span class="n">legendgroup</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">row</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="n">to_fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">trace</span><span class="o">=</span><span class="n">trace</span><span class="p">,</span> <span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="n">col</span><span class="p">)</span>
+
     <span class="n">from_fig</span><span class="o">.</span><span class="n">for_each_trace</span><span class="p">(</span><span class="n">fn</span><span class="o">=</span><span class="n">transition</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">to_fig</span></div>
+
 
 <span class="c1"># === Utility functions for &quot;plotly&quot; ===&gt;</span>
 

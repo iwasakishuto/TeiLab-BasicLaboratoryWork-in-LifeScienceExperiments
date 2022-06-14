@@ -1,18 +1,20 @@
-#coding: utf-8
-import matplotlib.pyplot as plt
-from plotly.subplots import make_subplots
+# coding: utf-8
+from typing import Any, Dict, List, Optional, Tuple, Union
 
+import matplotlib.pyplot as plt
+from matplotlib.axes import Axes
 from matplotlib.colors import Colormap
-from matplotlib.axes import Axes
-from plotly.graph_objects import Trace
 from matplotlib.figure import Figure as mplFigure
+from plotly.graph_objects import Trace
 from plotly.graph_objs import Figure as plotlyFigure
-from matplotlib.axes import Axes
-from typing import Any,Dict,List,Tuple,Optional,Union
+from plotly.subplots import make_subplots
 
 # <=== Utility functions for Both Plotting modules ===
 
-def get_colorList(n:int, cmap:Optional[Union[str,Colormap]]=None, style:str="matplotlib") -> List[Tuple[float,float,float,float]]:
+
+def get_colorList(
+    n: int, cmap: Optional[Union[str, Colormap]] = None, style: str = "matplotlib"
+) -> List[Tuple[float, float, float, float]]:
     """Get a color List using matplotlib's colormaps. See `Choosing Colormaps in Matplotlib <https://matplotlib.org/stable/tutorials/colors/colormaps.html>` for details.
 
     Args:
@@ -48,13 +50,22 @@ def get_colorList(n:int, cmap:Optional[Union[str,Colormap]]=None, style:str="mat
         ['rgba(170,170,255,1.0)', 'rgba(255,170,170,1.0)', 'rgba(255,0,0,1.0)']
     """
     cmap = plt.get_cmap(name=cmap)
-    colors = [cmap((i+1)/n) for i in range(n)]
+    colors = [cmap((i + 1) / n) for i in range(n)]
     if style in ["plotly", "rgba"]:
-        colors = [f'rgba({",".join([str(int(e*255)) if i<3 else str(e) for i,e in enumerate(color)])})' for color in colors]
+        colors = [
+            f'rgba({",".join([str(int(e*255)) if i<3 else str(e) for i,e in enumerate(color)])})' for color in colors
+        ]
     return colors
 
-def subplots_create(nrows:int=1, ncols:int=1, sharex:Union[bool,str]=False, sharey:Union[bool,str]=False,
-                    style:str="matplotlib", **kwargs) -> Union[Tuple[mplFigure,Axes],plotlyFigure]:
+
+def subplots_create(
+    nrows: int = 1,
+    ncols: int = 1,
+    sharex: Union[bool, str] = False,
+    sharey: Union[bool, str] = False,
+    style: str = "matplotlib",
+    **kwargs,
+) -> Union[Tuple[mplFigure, Axes], plotlyFigure]:
     """Create subplots for each plot style.
 
     Args:
@@ -83,12 +94,14 @@ def subplots_create(nrows:int=1, ncols:int=1, sharex:Union[bool,str]=False, shar
     else:
         return plt.subplots(nrows=nrows, ncols=ncols, sharex=sharex, sharey=sharey, **kwargs)
 
+
 # === Utility functions for Both Plotting modules ===>
 
 
 # <=== Utility functions for "plotly" ===
 
-def trace_transition(from_fig:plotlyFigure, to_fig:plotlyFigure, row:int=1, col:int=1) -> plotlyFigure:
+
+def trace_transition(from_fig: plotlyFigure, to_fig: plotlyFigure, row: int = 1, col: int = 1) -> plotlyFigure:
     """Trace ``Figure`` which is created by ``plotly.express``
 
     Args:
@@ -100,12 +113,15 @@ def trace_transition(from_fig:plotlyFigure, to_fig:plotlyFigure, row:int=1, col:
     Returns:
         Figure: ``to_fig`` with ``from_fig`` 's traces.
     """
-    def transition(trace:Trace):
+
+    def transition(trace: Trace):
         """Move the ``Trace`` from ``from_fig`` to ``to_fig``"""
-        trace.legendgroup = f'{col}-{row}'
+        trace.legendgroup = f"{col}-{row}"
         to_fig.add_trace(trace=trace, row=row, col=col)
+
     from_fig.for_each_trace(fn=transition)
     return to_fig
+
 
 # === Utility functions for "plotly" ===>
 

@@ -1,8 +1,6 @@
-#coding: utf-8
+# coding: utf-8
 
-from . import matplotlib
-from . import plotly
-
+from . import matplotlib, plotly
 
 # from .matplotlib import density_plot
 # from .matplotlib import cumulative_density_plot

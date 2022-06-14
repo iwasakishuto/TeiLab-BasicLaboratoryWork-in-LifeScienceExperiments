@@ -23,8 +23,6 @@
 
   
   
-    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
-  
 
   
   
@@ -106,7 +104,7 @@
         <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
       </a></li>
       
-      <li><a class="sc-file-pdf-o" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2367719/">
+      <li><a class="sc-file-pdf-o" href="https://doi.org/10.1021/acsomega.7b00291/">
         <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
       </a></li>
       
@@ -208,59 +206,58 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">urllib</span>
 <span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
+
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span><span class="n">Dict</span><span class="p">,</span><span class="n">List</span><span class="p">,</span><span class="n">Tuple</span>
 
-<span class="kn">from</span> <span class="nn">.generic_utils</span> <span class="kn">import</span> <span class="n">now_str</span>
-<span class="kn">from</span> <span class="nn">.generic_utils</span> <span class="kn">import</span> <span class="n">readable_bytes</span>
-<span class="kn">from</span> <span class="nn">.generic_utils</span> <span class="kn">import</span> <span class="n">progress_reporthook_create</span>
-<span class="kn">from</span> <span class="nn">.generic_utils</span> <span class="kn">import</span> <span class="n">verbose2print</span>
+<span class="kn">from</span> <span class="nn">.generic_utils</span> <span class="kn">import</span> <span class="n">now_str</span><span class="p">,</span> <span class="n">progress_reporthook_create</span><span class="p">,</span> <span class="n">readable_bytes</span><span class="p">,</span> <span class="n">verbose2print</span>
 
-<span class="n">CONTENT_ENCODING2EXT</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;gzip&quot;</span>                      <span class="p">:</span> <span class="s2">&quot;.gz&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;x-gzip&quot;</span>                    <span class="p">:</span> <span class="s2">&quot;.gz&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/jpeg&quot;</span>                <span class="p">:</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/jpx&quot;</span>                 <span class="p">:</span> <span class="s2">&quot;.jpx&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;image/png&quot;</span>                 <span class="p">:</span> <span class="s2">&quot;.png&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/gif&quot;</span>                 <span class="p">:</span> <span class="s2">&quot;.gif&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/webp&quot;</span>                <span class="p">:</span> <span class="s2">&quot;.webp&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/x-canon-cr2&quot;</span>         <span class="p">:</span> <span class="s2">&quot;.cr2&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/tiff&quot;</span>                <span class="p">:</span> <span class="s2">&quot;.tif&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/bmp&quot;</span>                 <span class="p">:</span> <span class="s2">&quot;.bmp&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/vnd.ms-photo&quot;</span>        <span class="p">:</span> <span class="s2">&quot;.jxr&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/vnd.adobe.photoshop&quot;</span> <span class="p">:</span> <span class="s2">&quot;.psd&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/x-icon&quot;</span>              <span class="p">:</span> <span class="s2">&quot;.ico&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;image/heic&quot;</span>                <span class="p">:</span> <span class="s2">&quot;.heic&quot;</span><span class="p">,</span>
+<span class="n">CONTENT_ENCODING2EXT</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;gzip&quot;</span><span class="p">:</span> <span class="s2">&quot;.gz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;x-gzip&quot;</span><span class="p">:</span> <span class="s2">&quot;.gz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/jpeg&quot;</span><span class="p">:</span> <span class="s2">&quot;.jpg&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/jpx&quot;</span><span class="p">:</span> <span class="s2">&quot;.jpx&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/png&quot;</span><span class="p">:</span> <span class="s2">&quot;.png&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/gif&quot;</span><span class="p">:</span> <span class="s2">&quot;.gif&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/webp&quot;</span><span class="p">:</span> <span class="s2">&quot;.webp&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/x-canon-cr2&quot;</span><span class="p">:</span> <span class="s2">&quot;.cr2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/tiff&quot;</span><span class="p">:</span> <span class="s2">&quot;.tif&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/bmp&quot;</span><span class="p">:</span> <span class="s2">&quot;.bmp&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/vnd.ms-photo&quot;</span><span class="p">:</span> <span class="s2">&quot;.jxr&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/vnd.adobe.photoshop&quot;</span><span class="p">:</span> <span class="s2">&quot;.psd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/x-icon&quot;</span><span class="p">:</span> <span class="s2">&quot;.ico&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;image/heic&quot;</span><span class="p">:</span> <span class="s2">&quot;.heic&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
-<span class="n">CONTENT_TYPE2EXT</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;application/epub+zip&quot;</span>                  <span class="p">:</span> <span class="s2">&quot;.epub&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/zip&quot;</span>                       <span class="p">:</span> <span class="s2">&quot;.zip&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-tar&quot;</span>                     <span class="p">:</span> <span class="s2">&quot;.tar&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-rar-compressed&quot;</span>          <span class="p">:</span> <span class="s2">&quot;.rar&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/gzip&quot;</span>                      <span class="p">:</span> <span class="s2">&quot;.gz&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-bzip2&quot;</span>                   <span class="p">:</span> <span class="s2">&quot;.bz2&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-7z-compressed&quot;</span>           <span class="p">:</span> <span class="s2">&quot;.7z&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-xz&quot;</span>                      <span class="p">:</span> <span class="s2">&quot;.xz&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/pdf&quot;</span>                       <span class="p">:</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-msdownload&quot;</span>              <span class="p">:</span> <span class="s2">&quot;.exe&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-shockwave-flash&quot;</span>         <span class="p">:</span> <span class="s2">&quot;.swf&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/rtf&quot;</span>                       <span class="p">:</span> <span class="s2">&quot;.rtf&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/octet-stream&quot;</span>              <span class="p">:</span> <span class="s2">&quot;.eot&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/postscript&quot;</span>                <span class="p">:</span> <span class="s2">&quot;.ps&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-sqlite3&quot;</span>                 <span class="p">:</span> <span class="s2">&quot;.sqlite&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-nintendo-nes-rom&quot;</span>        <span class="p">:</span> <span class="s2">&quot;.nes&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-google-chrome-extension&quot;</span> <span class="p">:</span> <span class="s2">&quot;.crx&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/vnd.ms-cab-compressed&quot;</span>     <span class="p">:</span> <span class="s2">&quot;.cab&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-deb&quot;</span>                     <span class="p">:</span> <span class="s2">&quot;.deb&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-unix-archive&quot;</span>            <span class="p">:</span> <span class="s2">&quot;.ar&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-compress&quot;</span>                <span class="p">:</span> <span class="s2">&quot;.Z&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;application/x-lzip&quot;</span>                    <span class="p">:</span> <span class="s2">&quot;.lz&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;text/html&quot;</span>                             <span class="p">:</span> <span class="s2">&quot;.txt&quot;</span><span class="p">,</span>
+<span class="n">CONTENT_TYPE2EXT</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;application/epub+zip&quot;</span><span class="p">:</span> <span class="s2">&quot;.epub&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/zip&quot;</span><span class="p">:</span> <span class="s2">&quot;.zip&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-tar&quot;</span><span class="p">:</span> <span class="s2">&quot;.tar&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-rar-compressed&quot;</span><span class="p">:</span> <span class="s2">&quot;.rar&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/gzip&quot;</span><span class="p">:</span> <span class="s2">&quot;.gz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-bzip2&quot;</span><span class="p">:</span> <span class="s2">&quot;.bz2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-7z-compressed&quot;</span><span class="p">:</span> <span class="s2">&quot;.7z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-xz&quot;</span><span class="p">:</span> <span class="s2">&quot;.xz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/pdf&quot;</span><span class="p">:</span> <span class="s2">&quot;.pdf&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-msdownload&quot;</span><span class="p">:</span> <span class="s2">&quot;.exe&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-shockwave-flash&quot;</span><span class="p">:</span> <span class="s2">&quot;.swf&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/rtf&quot;</span><span class="p">:</span> <span class="s2">&quot;.rtf&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/octet-stream&quot;</span><span class="p">:</span> <span class="s2">&quot;.eot&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/postscript&quot;</span><span class="p">:</span> <span class="s2">&quot;.ps&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-sqlite3&quot;</span><span class="p">:</span> <span class="s2">&quot;.sqlite&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-nintendo-nes-rom&quot;</span><span class="p">:</span> <span class="s2">&quot;.nes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-google-chrome-extension&quot;</span><span class="p">:</span> <span class="s2">&quot;.crx&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/vnd.ms-cab-compressed&quot;</span><span class="p">:</span> <span class="s2">&quot;.cab&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-deb&quot;</span><span class="p">:</span> <span class="s2">&quot;.deb&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-unix-archive&quot;</span><span class="p">:</span> <span class="s2">&quot;.ar&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-compress&quot;</span><span class="p">:</span> <span class="s2">&quot;.Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;application/x-lzip&quot;</span><span class="p">:</span> <span class="s2">&quot;.lz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;text/html&quot;</span><span class="p">:</span> <span class="s2">&quot;.txt&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
-<div class="viewcode-block" id="unzip"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.unzip">[docs]</a><span class="k">def</span> <span class="nf">unzip</span><span class="p">(</span><span class="n">path</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+
+<div class="viewcode-block" id="unzip"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.unzip">[docs]</a><span class="k">def</span> <span class="nf">unzip</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;Unzip a zipped file ( Only support the file with ``.zip`` extension. )</span>
 
 <span class="sd">    Args:</span>
@@ -276,7 +273,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">extracted_file_paths</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="nb">print</span> <span class="o">=</span> <span class="n">verbose2print</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
-    <span class="n">root</span><span class="p">,</span><span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">root</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">ext</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;.zip&quot;</span><span class="p">,</span> <span class="s2">&quot;.gz&quot;</span><span class="p">]:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Do not support to extract files with the &#39;</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&#39; extension.&quot;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -285,8 +282,8 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Unzip] Show file contents:&quot;</span><span class="p">)</span>
         <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="n">z</span><span class="o">.</span><span class="n">infolist</span><span class="p">():</span>
-                <span class="n">info</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">orig_filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">&#39;cp437&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">!=</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">filename</span><span class="p">):</span>
+                <span class="n">info</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">orig_filename</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;cp437&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">!=</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">filename</span><span class="p">):</span>
                     <span class="n">info</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">info</span><span class="o">.</span><span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">)</span>
                 <span class="n">z</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="n">member</span><span class="o">=</span><span class="n">info</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">root</span><span class="p">)</span>
                 <span class="n">extracted_file_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">filename</span><span class="p">)</span>
@@ -294,7 +291,10 @@
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">* </span><span class="si">{</span><span class="n">info</span><span class="o">.</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">root</span><span class="p">,</span> <span class="n">extracted_file_paths</span></div>
 
-<div class="viewcode-block" id="decide_extension"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.decide_extension">[docs]</a><span class="k">def</span> <span class="nf">decide_extension</span><span class="p">(</span><span class="n">content_encoding</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">content_type</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">basename</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="decide_extension"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.decide_extension">[docs]</a><span class="k">def</span> <span class="nf">decide_extension</span><span class="p">(</span>
+    <span class="n">content_encoding</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">content_type</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">basename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Decide File Extension based on ``content_encoding`` and ``content_type``</span>
 
 <span class="sd">    Args:</span>
@@ -316,13 +316,26 @@
 <span class="sd">        &gt;&gt;&gt; decide_extension(basename=&quot;hoge.zip&quot;)</span>
 <span class="sd">        &#39;.zip&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ext</span> <span class="o">=</span> <span class="n">CONTENT_ENCODING2EXT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">content_encoding</span><span class="p">,</span> <span class="n">CONTENT_TYPE2EXT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">content_type</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">basename</span><span class="p">))[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
-    <span class="k">return</span> <span class="n">ext</span>     </div>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">CONTENT_ENCODING2EXT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="n">content_encoding</span><span class="p">,</span> <span class="n">CONTENT_TYPE2EXT</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">content_type</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">basename</span><span class="p">))[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">ext</span></div>
 
-<div class="viewcode-block" id="Downloader"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.Downloader">[docs]</a><span class="k">class</span> <span class="nc">Downloader</span><span class="p">():</span>
+
+<div class="viewcode-block" id="Downloader"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.Downloader">[docs]</a><span class="k">class</span> <span class="nc">Downloader</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;General Downloader&quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="Downloader.download_file"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.Downloader.download_file">[docs]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">basename</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">expand</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">dirname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+        <span class="n">basename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">expand</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Download a file and expand it if you want.</span>
 
 <span class="sd">        Args:</span>
@@ -335,7 +348,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            path (str) : The path to the downloaded file.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; import os</span>
 <span class="sd">            &gt;&gt;&gt; from teilab.utils import Downloader</span>
@@ -357,7 +370,15 @@
         <span class="k">return</span> <span class="n">path</span></div>
 
 <div class="viewcode-block" id="Downloader.download_target_file"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.Downloader.download_target_file">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">download_target_file</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">basename</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bar_width</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">download_target_file</span><span class="p">(</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">dirname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+        <span class="n">basename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">bar_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Download the target file.</span>
 
 <span class="sd">        Args:</span>
@@ -370,7 +391,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            path (str) : The path to the downloaded file.</span>
-<span class="sd">        </span>
+
 <span class="sd">        Examples:</span>
 <span class="sd">            &gt;&gt;&gt; import os</span>
 <span class="sd">            &gt;&gt;&gt; from teilab.utils import Downloader</span>
@@ -388,9 +409,16 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">web_file</span><span class="p">:</span>
                 <span class="n">headers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">web_file</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">_headers</span><span class="p">)</span>
-            <span class="n">filename</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">Downloader</span><span class="o">.</span><span class="n">prepare_for_download</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">basename</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">),</span> <span class="n">dirname</span><span class="o">=</span><span class="n">dirname</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===== Progress =====&quot;</span><span class="p">)</span>
-            <span class="n">_</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_reporthook_create</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">bar_width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">))</span>
+            <span class="n">filename</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">Downloader</span><span class="o">.</span><span class="n">prepare_for_download</span><span class="p">(</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">basename</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">url</span><span class="p">),</span> <span class="n">dirname</span><span class="o">=</span><span class="n">dirname</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;===== Progress =====&quot;</span><span class="p">)</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">res</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+                <span class="n">filename</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                <span class="n">reporthook</span><span class="o">=</span><span class="n">progress_reporthook_create</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span> <span class="n">bar_width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">),</span>
+            <span class="p">)</span>
         <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">URLError</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[URLError] Please check if the URL is correct, given </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -398,7 +426,14 @@
         <span class="k">return</span> <span class="n">path</span></div>
 
 <div class="viewcode-block" id="Downloader.prepare_for_download"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.Downloader.prepare_for_download">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">prepare_for_download</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">basename</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">prepare_for_download</span><span class="p">(</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">dirname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+        <span class="n">basename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">headers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Get Information from webfile header and prepare for downloading.</span>
 
 <span class="sd">        Args:</span>
@@ -433,66 +468,88 @@
             <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">web_file</span><span class="p">:</span>
                 <span class="n">headers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">web_file</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">_headers</span><span class="p">)</span>
         <span class="n">content_encoding</span> <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Encoding&quot;</span><span class="p">)</span>
-        <span class="n">content_length</span>   <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:.1f}</span><span class="s2"> [</span><span class="si">{1}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">readable_bytes</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))))</span>
-        <span class="n">content_type</span>     <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">content_length</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{0:.1f}</span><span class="s2"> [</span><span class="si">{1}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">readable_bytes</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Length&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))))</span>
+        <span class="n">content_type</span> <span class="o">=</span> <span class="n">headers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;;&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="c1"># Decide the download destination</span>
-        <span class="k">if</span> <span class="n">basename</span><span class="o">==</span><span class="s2">&quot;&quot;</span><span class="p">:</span> 
+        <span class="k">if</span> <span class="n">basename</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="n">basename</span> <span class="o">=</span> <span class="n">now_str</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">root</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">)</span>
             <span class="n">guessed_ext</span> <span class="o">=</span> <span class="n">decide_extension</span><span class="p">(</span><span class="n">content_encoding</span><span class="p">,</span> <span class="n">content_type</span><span class="p">,</span> <span class="n">basename</span><span class="p">)</span>
-            <span class="n">filename</span> <span class="o">=</span> <span class="n">root</span><span class="o">+</span><span class="n">guessed_ext</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">root</span> <span class="o">+</span> <span class="n">guessed_ext</span>
             <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="c1"># Show the results.</span>
-        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;[Download] URL: </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;* Content-Encoding : </span><span class="si">{</span><span class="n">content_encoding</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;* Content-Length   : </span><span class="si">{</span><span class="n">content_length</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;* Content-Type     : </span><span class="si">{</span><span class="n">content_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s2">&quot;* Save Destination : </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;[Download] URL: </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;* Content-Encoding : </span><span class="si">{</span><span class="n">content_encoding</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;* Content-Length   : </span><span class="si">{</span><span class="n">content_length</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;* Content-Type     : </span><span class="si">{</span><span class="n">content_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;* Save Destination : </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div></div>
+
 
 <div class="viewcode-block" id="GoogleDriveDownloader"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.GoogleDriveDownloader">[docs]</a><span class="k">class</span> <span class="nc">GoogleDriveDownloader</span><span class="p">(</span><span class="n">Downloader</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Specific Downloader for files in GoogleDrive&quot;&quot;&quot;</span>
+
     <span class="n">CHUNK_SIZE</span> <span class="o">=</span> <span class="mi">32768</span>
-    <span class="n">DRIVE_URL</span>  <span class="o">=</span> <span class="s2">&quot;https://docs.google.com/uc?export=download&quot;</span>
+    <span class="n">DRIVE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://docs.google.com/uc?export=download&quot;</span>
 
 <div class="viewcode-block" id="GoogleDriveDownloader.prepare_for_download"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.GoogleDriveDownloader.prepare_for_download">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">prepare_for_download</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">basename</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">headers</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">str</span><span class="p">]]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">driveId</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span><span class="nb">str</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">prepare_for_download</span><span class="p">(</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">dirname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+        <span class="n">basename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">headers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">driveId</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">driveId</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">q</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">parse_qs</span><span class="p">(</span><span class="n">urllib</span><span class="o">.</span><span class="n">parse</span><span class="o">.</span><span class="n">urlparse</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">q</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Please specify the target Google Drive Id using ``url`` or ``driveId`` arguments.&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">driveId</span><span class="o">=</span><span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">basename</span><span class="o">==</span><span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">driveId</span> <span class="o">=</span> <span class="n">q</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">basename</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
             <span class="n">basename</span> <span class="o">=</span> <span class="n">driveId</span>
         <span class="c1"># Start a Session</span>
-        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span><span class="n">driveId</span><span class="p">}</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">driveId</span><span class="p">}</span>
         <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">()</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">DRIVE_URL</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span><span class="n">val</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">cookies</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;download_warning&quot;</span><span class="p">):</span>
-                <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;confirm&quot;</span><span class="p">:</span><span class="n">val</span><span class="p">})</span>
+                <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;confirm&quot;</span><span class="p">:</span> <span class="n">val</span><span class="p">})</span>
                 <span class="k">break</span>
         <span class="c1"># Get Information from headers</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">DRIVE_URL</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span><span class="o">.</span><span class="n">headers</span>
-        <span class="k">return</span> <span class="p">[</span><span class="o">*</span><span class="n">Downloader</span><span class="o">.</span><span class="n">prepare_for_download</span><span class="p">(</span>
-            <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
-            <span class="n">dirname</span><span class="o">=</span><span class="n">dirname</span><span class="p">,</span>
-            <span class="n">basename</span><span class="o">=</span><span class="n">basename</span><span class="p">,</span>
-            <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
-            <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
-            <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
-        <span class="p">),</span> <span class="n">session</span><span class="p">,</span> <span class="n">params</span><span class="p">]</span></div>
-
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="o">*</span><span class="n">Downloader</span><span class="o">.</span><span class="n">prepare_for_download</span><span class="p">(</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+                <span class="n">dirname</span><span class="o">=</span><span class="n">dirname</span><span class="p">,</span>
+                <span class="n">basename</span><span class="o">=</span><span class="n">basename</span><span class="p">,</span>
+                <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+                <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
+                <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">session</span><span class="p">,</span>
+            <span class="n">params</span><span class="p">,</span>
+        <span class="p">]</span></div>
 
 <div class="viewcode-block" id="GoogleDriveDownloader.download_target_file"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.GoogleDriveDownloader.download_target_file">[docs]</a>    <span class="nd">@staticmethod</span>
-    <span class="k">def</span> <span class="nf">download_target_file</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">dirname</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">basename</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">driveId</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">download_target_file</span><span class="p">(</span>
+        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">dirname</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;.&quot;</span><span class="p">,</span>
+        <span class="n">basename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">driveId</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;Download the target Google Drive file.</span>
 
 <span class="sd">        Args:</span>
@@ -507,20 +564,29 @@
 <span class="sd">            TypeError: When Google Drive File ID is not detected from ``driveId`` and ``url`` .</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            str: The path to the downloaded file.        </span>
+<span class="sd">            str: The path to the downloaded file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">filename</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">prepare_for_download</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">basename</span><span class="o">=</span><span class="n">basename</span><span class="p">,</span> <span class="n">dirname</span><span class="o">=</span><span class="n">dirname</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="n">filename</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">params</span> <span class="o">=</span> <span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">prepare_for_download</span><span class="p">(</span>
+            <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">basename</span><span class="o">=</span><span class="n">basename</span><span class="p">,</span> <span class="n">dirname</span><span class="o">=</span><span class="n">dirname</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span>
+        <span class="p">)</span>
         <span class="c1"># Get contents</span>
         <span class="n">response</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">DRIVE_URL</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="k">with</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">iter_content</span><span class="p">(</span><span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">CHUNK_SIZE</span><span class="p">),</span> <span class="n">desc</span><span class="o">=</span><span class="n">driveId</span><span class="p">)</span> <span class="k">as</span> <span class="n">pbar</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pbar</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pbar</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">chunk</span><span class="p">:</span>
                         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span>
-                        <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">({</span><span class="s2">&quot;Downloaded&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{0:.1f}</span><span class="s2"> [</span><span class="si">{1}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">readable_bytes</span><span class="p">(</span><span class="n">i</span><span class="o">*</span><span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">CHUNK_SIZE</span><span class="p">))})</span>
+                        <span class="n">pbar</span><span class="o">.</span><span class="n">set_postfix</span><span class="p">(</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;Downloaded&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{0:.1f}</span><span class="s2"> [</span><span class="si">{1}</span><span class="s2">]&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                    <span class="o">*</span><span class="n">readable_bytes</span><span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="n">GoogleDriveDownloader</span><span class="o">.</span><span class="n">CHUNK_SIZE</span><span class="p">)</span>
+                                <span class="p">)</span>
+                            <span class="p">}</span>
+                        <span class="p">)</span>
         <span class="k">return</span> <span class="n">path</span></div></div>
 
-<div class="viewcode-block" id="decide_downloader"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.decide_downloader">[docs]</a><span class="k">def</span> <span class="nf">decide_downloader</span><span class="p">(</span><span class="n">url</span><span class="p">:</span><span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Downloader</span><span class="p">:</span>
+
+<div class="viewcode-block" id="decide_downloader"><a class="viewcode-back" href="../../../teilab.utils.download_utils.html#teilab.utils.download_utils.decide_downloader">[docs]</a><span class="k">def</span> <span class="nf">decide_downloader</span><span class="p">(</span><span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Downloader</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Decide ``Downloader`` from ``url``</span>
 
 <span class="sd">    Args:</span>
@@ -538,8 +604,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">url_domain</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;^https?:\/\/(.+?)\/&quot;</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;drive.google.com&quot;</span> <span class="p">:</span> <span class="n">GoogleDriveDownloader</span><span class="p">,</span>
-    <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_domain</span><span class="p">,</span> <span class="n">Downloader</span><span class="p">)</span>    </div>
+        <span class="s2">&quot;drive.google.com&quot;</span><span class="p">:</span> <span class="n">GoogleDriveDownloader</span><span class="p">,</span>
+    <span class="p">}</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url_domain</span><span class="p">,</span> <span class="n">Downloader</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

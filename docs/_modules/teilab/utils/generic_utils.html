@@ -23,8 +23,6 @@
 
   
   
-    <link rel="shortcut icon" href="../../../_static/favicon.png"/>
-  
 
   
   
@@ -106,7 +104,7 @@
         <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
       </a></li>
       
-      <li><a class="sc-file-pdf-o" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2367719/">
+      <li><a class="sc-file-pdf-o" href="https://doi.org/10.1021/acsomega.7b00291/">
         <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
       </a></li>
       
@@ -203,17 +201,18 @@
            <div itemprop="articleBody">
             
   <h1>Source code for teilab.utils.generic_utils</h1><div class="highlight"><pre>
-<span></span><span class="c1">#coding: utf-8</span>
+<span></span><span class="c1"># coding: utf-8</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">time</span>
-<span class="kn">import</span> <span class="nn">datetime</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Tuple</span><span class="p">,</span><span class="n">Callable</span><span class="p">,</span><span class="n">Optional</span><span class="p">,</span><span class="n">Dict</span><span class="p">,</span><span class="n">Any</span><span class="p">,</span><span class="n">List</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">from</span> <span class="nn">._exceptions</span> <span class="kn">import</span> <span class="ne">KeyError</span>
 
-<div class="viewcode-block" id="now_str"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.now_str">[docs]</a><span class="k">def</span> <span class="nf">now_str</span><span class="p">(</span><span class="n">tz</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">@%H.%M.%S&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+<div class="viewcode-block" id="now_str"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.now_str">[docs]</a><span class="k">def</span> <span class="nf">now_str</span><span class="p">(</span><span class="n">tz</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">datetime</span><span class="o">.</span><span class="n">timezone</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">fmt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">@%H.%M.%S&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns new datetime string representing current time local to tz under the control of an explicit format string.</span>
 
 <span class="sd">    Args:</span>
@@ -234,7 +233,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span><span class="o">=</span><span class="n">tz</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="readable_bytes"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.readable_bytes">[docs]</a><span class="k">def</span> <span class="nf">readable_bytes</span><span class="p">(</span><span class="n">byte</span><span class="p">:</span><span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span><span class="nb">str</span><span class="p">]:</span>
+
+<div class="viewcode-block" id="readable_bytes"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.readable_bytes">[docs]</a><span class="k">def</span> <span class="nf">readable_bytes</span><span class="p">(</span><span class="n">byte</span><span class="p">:</span> <span class="n">Number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Number</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Unit conversion for readability.</span>
 
 <span class="sd">    Args:</span>
@@ -257,15 +257,18 @@
 <span class="sd">        1e+25[B] = 8.27[YB]</span>
 <span class="sd">        1e+28[B] = 8271.81[YB]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="s2">&quot;K&quot;</span><span class="p">,</span><span class="s2">&quot;M&quot;</span><span class="p">,</span><span class="s2">&quot;G&quot;</span><span class="p">,</span><span class="s2">&quot;T&quot;</span><span class="p">,</span><span class="s2">&quot;P&quot;</span><span class="p">,</span><span class="s2">&quot;E&quot;</span><span class="p">,</span><span class="s2">&quot;Z&quot;</span><span class="p">,</span><span class="s2">&quot;Y&quot;</span><span class="p">]</span>
+    <span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;K&quot;</span><span class="p">,</span> <span class="s2">&quot;M&quot;</span><span class="p">,</span> <span class="s2">&quot;G&quot;</span><span class="p">,</span> <span class="s2">&quot;T&quot;</span><span class="p">,</span> <span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">,</span> <span class="s2">&quot;Z&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">unit</span> <span class="ow">in</span> <span class="n">units</span><span class="p">:</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">1024.0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">unit</span><span class="o">==</span><span class="n">units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">byte</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1024.0</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">unit</span> <span class="o">==</span> <span class="n">units</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
             <span class="k">break</span>
-        <span class="n">byte</span> <span class="o">/=</span> <span class="mf">1024.0</span> <span class="c1"># size &gt;&gt; 10</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="n">unit</span><span class="o">+</span><span class="s2">&quot;B&quot;</span><span class="p">)</span></div>
+        <span class="n">byte</span> <span class="o">/=</span> <span class="mf">1024.0</span>  <span class="c1"># size &gt;&gt; 10</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">byte</span><span class="p">,</span> <span class="n">unit</span> <span class="o">+</span> <span class="s2">&quot;B&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="progress_reporthook_create"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.progress_reporthook_create">[docs]</a><span class="k">def</span> <span class="nf">progress_reporthook_create</span><span class="p">(</span><span class="n">filename</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bar_width</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">,</span><span class="nb">int</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Create a progress reporthook for ``urllib.request.urlretrieve``        </span>
+
+<div class="viewcode-block" id="progress_reporthook_create"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.progress_reporthook_create">[docs]</a><span class="k">def</span> <span class="nf">progress_reporthook_create</span><span class="p">(</span>
+    <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bar_width</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="kc">None</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Create a progress reporthook for ``urllib.request.urlretrieve``</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        filename (str, optional)  : Downloading filename.. Defaults to ``&quot;&quot;``.</span>
@@ -281,7 +284,8 @@
 <span class="sd">        &gt;&gt;&gt; urllib.request.urlretrieve(url=&quot;hoge.zip&quot;, filename=&quot;hoge.zip&quot;, reporthook=progress_reporthook_create(filename=&quot;hoge.zip&quot;))</span>
 <span class="sd">        hoge.zip	1.5%[--------------------] 21.5[s] 8.0[GB/s]	eta 1415.1[s]</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">progress_reporthook_verbose</span><span class="p">(</span><span class="n">block_count</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">block_size</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">total_size</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">progress_reporthook_verbose</span><span class="p">(</span><span class="n">block_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">block_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">total_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;``reporthook`` to report the current status.</span>
 
 <span class="sd">        Args:</span>
@@ -293,26 +297,32 @@
         <span class="k">if</span> <span class="n">block_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">_reporthook_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
             <span class="k">return</span>
-        <span class="n">progress_size</span> <span class="o">=</span> <span class="n">block_count</span><span class="o">*</span><span class="n">block_size</span>
-        <span class="n">percentage</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">progress_size</span><span class="o">/</span><span class="n">total_size</span><span class="p">)</span>
+        <span class="n">progress_size</span> <span class="o">=</span> <span class="n">block_count</span> <span class="o">*</span> <span class="n">block_size</span>
+        <span class="n">percentage</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">progress_size</span> <span class="o">/</span> <span class="n">total_size</span><span class="p">)</span>
         <span class="n">progress_bar</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;#&quot;</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">percentage</span> <span class="o">*</span> <span class="n">bar_width</span><span class="p">))</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="n">bar_width</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
-        
+
         <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">_reporthook_start_time</span>
         <span class="n">speed</span> <span class="o">=</span> <span class="n">progress_size</span> <span class="o">/</span> <span class="n">duration</span>
-        <span class="n">eta</span> <span class="o">=</span> <span class="p">(</span><span class="n">total_size</span><span class="o">-</span><span class="n">progress_size</span><span class="p">)</span><span class="o">/</span><span class="n">speed</span>
+        <span class="n">eta</span> <span class="o">=</span> <span class="p">(</span><span class="n">total_size</span> <span class="o">-</span> <span class="n">progress_size</span><span class="p">)</span> <span class="o">/</span> <span class="n">speed</span>
 
         <span class="n">speed</span><span class="p">,</span> <span class="n">speed_unit</span> <span class="o">=</span> <span class="n">readable_bytes</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span>
-        
-        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\r</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">percentage</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">progress_bar</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">[s] </span><span class="si">{</span><span class="n">speed</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">speed_unit</span><span class="si">}</span><span class="s2">/s] eta </span><span class="si">{</span><span class="n">eta</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">[s]&quot;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">progress_size</span> <span class="o">&gt;=</span> <span class="n">total_size</span><span class="p">:</span> <span class="nb">print</span><span class="p">()</span>
-    <span class="k">def</span> <span class="nf">progress_reporthook_non_verbose</span><span class="p">(</span><span class="n">block_count</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">block_size</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">total_size</span><span class="p">:</span><span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\r</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="se">\t</span><span class="si">{</span><span class="n">percentage</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">progress_bar</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">[s] </span><span class="si">{</span><span class="n">speed</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">[</span><span class="si">{</span><span class="n">speed_unit</span><span class="si">}</span><span class="s2">/s] eta </span><span class="si">{</span><span class="n">eta</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">[s]&quot;</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">progress_size</span> <span class="o">&gt;=</span> <span class="n">total_size</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">progress_reporthook_non_verbose</span><span class="p">(</span><span class="n">block_count</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">block_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">total_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;``reporthook`` not to report the current status.&quot;&quot;&quot;</span>
         <span class="k">pass</span>
+
     <span class="k">return</span> <span class="n">progress_reporthook_verbose</span> <span class="k">if</span> <span class="n">verbose</span> <span class="k">else</span> <span class="n">progress_reporthook_non_verbose</span></div>
 
-<div class="viewcode-block" id="verbose2print"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.verbose2print">[docs]</a><span class="k">def</span> <span class="nf">verbose2print</span><span class="p">(</span><span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">callable</span><span class="p">:</span>
+
+<div class="viewcode-block" id="verbose2print"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.verbose2print">[docs]</a><span class="k">def</span> <span class="nf">verbose2print</span><span class="p">(</span><span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">callable</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Create a simple print function based on verbose</span>
-<span class="sd">    </span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        verbose (bool, optional) : Whether to print or not. Defaults to ``True``.</span>
 
@@ -325,14 +335,15 @@
 <span class="sd">        &gt;&gt;&gt; print_non_verbose = verbose2print(verbose=False)</span>
 <span class="sd">        &gt;&gt;&gt; print_verbose(&quot;Hello, world.&quot;)</span>
 <span class="sd">        Hello, world.</span>
-<span class="sd">        &gt;&gt;&gt; print_non_verbose(&quot;Hello, world.&quot;)    </span>
+<span class="sd">        &gt;&gt;&gt; print_non_verbose(&quot;Hello, world.&quot;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">print</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="dict2str"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.dict2str">[docs]</a><span class="k">def</span> <span class="nf">dict2str</span><span class="p">(</span><span class="n">d</span><span class="p">:</span><span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span><span class="n">Any</span><span class="p">],</span> <span class="n">item_separator</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="n">key_separator</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;=&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+<div class="viewcode-block" id="dict2str"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.dict2str">[docs]</a><span class="k">def</span> <span class="nf">dict2str</span><span class="p">(</span><span class="n">d</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">item_separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="p">,</span> <span class="n">key_separator</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Convert a dictionary to string.</span>
 
 <span class="sd">    Args:</span>
@@ -352,9 +363,10 @@
 <span class="sd">        &gt;&gt;&gt; dict2str({&quot;key1&quot;:&quot;val&quot;, &quot;key2&quot;:1}, item_separator=&quot;🤔&quot;)</span>
 <span class="sd">        &#39;key1=val🤔key2=1&#39;</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">item_separator</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}{</span><span class="n">key_separator</span><span class="si">}{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span></div>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">item_separator</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}{</span><span class="n">key_separator</span><span class="si">}{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span></div>
 
-<div class="viewcode-block" id="check_supported"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.check_supported">[docs]</a><span class="k">def</span> <span class="nf">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+<div class="viewcode-block" id="check_supported"><a class="viewcode-back" href="../../../teilab.utils.generic_utils.html#teilab.utils.generic_utils.check_supported">[docs]</a><span class="k">def</span> <span class="nf">check_supported</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Check whether all ``kwargs.values()`` in the ``lst``.</span>
 
 <span class="sd">    Args:</span>
@@ -373,9 +385,9 @@
 <span class="sd">    Raise:</span>
 <span class="sd">        KeyError: If ``kwargs.values()`` not in the ``lst``</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">v</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">:</span>
-            <span class="n">lst</span> <span class="o">=</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">])</span>
+            <span class="n">lst</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;&#39;</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&#39;&quot;</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">lst</span><span class="p">])</span>
             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Please choose the argment &#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&#39; from [</span><span class="si">{</span><span class="n">lst</span><span class="si">}</span><span class="s2">], but you chose &#39;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span></div>
 </pre></div>
 

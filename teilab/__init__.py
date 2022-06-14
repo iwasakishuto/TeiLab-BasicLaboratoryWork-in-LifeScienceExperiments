@@ -1,13 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 
-from . import datasets
-from . import enrichment
-from . import normalizations
-from . import pcr
-from . import question
-from . import seedmatch
-from . import statistics
-from . import plot
-from . import utils
-
+from . import datasets, enrichment, normalizations, pcr, plot, question, seedmatch, statistics, utils
 from .__meta__ import *
