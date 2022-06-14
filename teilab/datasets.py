@@ -444,15 +444,15 @@ class TeiLabDataSets:
         path = ""
         ret = requests.post(url=GAS_WEBAPP_URL, data={"password": password})
         data = ret.json()
-        dataURL = data.get("dataURL", "")
-        message = data.get("message", "")
+        dataURL: str = data.get("dataURL", "")
+        message: str = data.get("message", "")
         if len(dataURL) == 0:
             self.print(f"Could not get the valid URL.\n{message}")
         else:
             self.print(f"Try to get data from {dataURL}\n{message}")
             downloader = decide_downloader(url=dataURL)
             ret: Tuple[str, str] = downloader.prepare_for_download(
-                url=dataURL, basename=password, dirname=DATA_DIR, path=None, verbose=False
+                url=dataURL, basename=password, dirname=DATA_DIR, path=None, headers=None, verbose=False
             )
             path = ret[1]
             if os.path.exists(path):

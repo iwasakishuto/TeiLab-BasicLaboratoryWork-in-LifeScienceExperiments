@@ -262,17 +262,20 @@ class Downloader:
         """
         # Get the information of the file you want to download from the header.
         if headers is None:
+            print(f"Get headers from '{url}'")
             with urllib.request.urlopen(url) as web_file:
                 headers = dict(web_file.headers._headers)
-        content_encoding = headers.get("Content-Encoding")
-        content_length = "{0:.1f} [{1}]".format(*readable_bytes(int(headers.get("Content-Length", 0))))
-        content_type = headers.get("Content-Type").split(";")[0]
+        content_encoding: str = headers.get("Content-Encoding")
+        content_length: str = "{0:.1f} [{1}]".format(*readable_bytes(int(headers.get("Content-Length", 0))))
+        content_type: str = headers.get("Content-Type").split(";")[0]
         # Decide the download destination
         if basename == "":
             basename = now_str()
         if path is None:
             root, _ = os.path.splitext(basename)
-            guessed_ext = decide_extension(content_encoding, content_type, basename)
+            guessed_ext = decide_extension(
+                content_encoding=content_encoding, content_type=content_type, basename=basename
+            )
             filename = root + guessed_ext
             path = os.path.join(dirname, filename)
         else:
@@ -400,6 +403,7 @@ def decide_downloader(url: str) -> Downloader:
         'GoogleDriveDownloader'
     """
     url_domain = re.match(pattern=r"^https?:\/\/(.+?)\/", string=url).group(1)
+    print(f"Downloader Type: {url_domain}")
     return {
         "drive.google.com": GoogleDriveDownloader,
     }.get(url_domain, Downloader)
