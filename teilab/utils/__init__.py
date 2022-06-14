@@ -1,31 +1,16 @@
-#coding: utf-8
+# coding: utf-8
+from . import _wilcoxon_data, download_utils, generic_utils, math_utils, plot_utils
 from ._config import *
 from ._path import *
 from ._warnings import *
-from . import _wilcoxon_data
-from . import download_utils
-from . import generic_utils
-from . import math_utils
-from . import plot_utils
-
-
-from .download_utils import unzip
-from .download_utils import decide_extension
-from .download_utils import Downloader
-from .download_utils import GoogleDriveDownloader
-from .download_utils import decide_downloader
-
-from .generic_utils import now_str
-from .generic_utils import readable_bytes
-from .generic_utils import progress_reporthook_create
-from .generic_utils import verbose2print
-from .generic_utils import dict2str
-from .generic_utils import check_supported
-
-from .math_utils import assign_rank
-from .math_utils import tiecorrect
-from .math_utils import optimize_linear
-
-from .plot_utils import get_colorList
-from .plot_utils import subplots_create
-from .plot_utils import trace_transition
+from .download_utils import Downloader, GoogleDriveDownloader, decide_downloader, decide_extension, unzip
+from .generic_utils import (
+    check_supported,
+    dict2str,
+    now_str,
+    progress_reporthook_create,
+    readable_bytes,
+    verbose2print,
+)
+from .math_utils import assign_rank, optimize_linear, tiecorrect
+from .plot_utils import get_colorList, subplots_create, trace_transition

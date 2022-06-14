@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 r"""
 **Gene set enrichment analysis (GSEA)** (or **functional enrichment analysis**) is a method to determine whether an a priori defined set of genes or proteins (i.e. classes of genes or proteins that are over-represented in a large set of genes or proteins) show statistically significant differences, and may have an association with disease phenotypes.
 

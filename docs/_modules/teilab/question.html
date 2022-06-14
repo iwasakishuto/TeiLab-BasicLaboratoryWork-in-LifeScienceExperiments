@@ -23,8 +23,6 @@
 
   
   
-    <link rel="shortcut icon" href="../../_static/favicon.png"/>
-  
 
   
   
@@ -106,7 +104,7 @@
         <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
       </a></li>
       
-      <li><a class="sc-file-pdf-o" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2367719/">
+      <li><a class="sc-file-pdf-o" href="https://doi.org/10.1021/acsomega.7b00291/">
         <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
       </a></li>
       
@@ -203,21 +201,29 @@
            <div itemprop="articleBody">
             
   <h1>Source code for teilab.question</h1><div class="highlight"><pre>
-<span></span><span class="c1">#coding: utf-8</span>
+<span></span><span class="c1"># coding: utf-8</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
 
-<span class="kn">from</span> <span class="nn">.utils._config</span> <span class="kn">import</span> <span class="n">SLACK_WEBHOOK_URL</span>
-<span class="kn">from</span> <span class="nn">.utils._config</span> <span class="kn">import</span> <span class="n">GAS_WEBAPP_URL</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 
-<div class="viewcode-block" id="ask"><a class="viewcode-back" href="../../teilab.question.html#teilab.question.ask">[docs]</a><span class="k">def</span> <span class="nf">ask</span><span class="p">(</span><span class="n">text</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> 
-        <span class="n">username</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-        <span class="n">icon_url</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">icon_emoji</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-        <span class="n">fallback</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pretext</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
-        <span class="n">attachment_text</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">color</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;good&quot;</span><span class="p">,</span>
-        <span class="n">fields_title</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">fields_value</span><span class="p">:</span><span class="nb">str</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">fields_short</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
-        <span class="n">webhook_url</span><span class="p">:</span><span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
+<span class="kn">from</span> <span class="nn">.utils._config</span> <span class="kn">import</span> <span class="n">GAS_WEBAPP_URL</span><span class="p">,</span> <span class="n">SLACK_WEBHOOK_URL</span>
+
+
+<div class="viewcode-block" id="ask"><a class="viewcode-back" href="../../teilab.question.html#teilab.question.ask">[docs]</a><span class="k">def</span> <span class="nf">ask</span><span class="p">(</span>
+    <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">username</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">icon_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">icon_emoji</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">fallback</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">pretext</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">attachment_text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">color</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;good&quot;</span><span class="p">,</span>
+    <span class="n">fields_title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">fields_value</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+    <span class="n">fields_short</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">webhook_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Send a question anonymously to Author&#39;s Slack using `Incoming Webhook &lt;https://slack.com/help/articles/115005265063-Incoming-webhooks-for-Slack&gt;`_</span>
 
 <span class="sd">    Args:</span>
@@ -246,28 +252,34 @@
         <span class="n">webhook_url</span> <span class="o">=</span> <span class="n">ret</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;dataURL&quot;</span><span class="p">]</span>
 
     <span class="n">fields</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields_title</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">fields_value</span><span class="p">))</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
-        <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-            <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">fields_title</span><span class="p">,</span>
-            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">fields_value</span><span class="p">,</span>
-            <span class="s2">&quot;short&quot;</span><span class="p">:</span> <span class="n">fields_short</span><span class="p">,</span>            
-        <span class="p">})</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fields_title</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields_value</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">fields_title</span><span class="p">,</span>
+                <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">fields_value</span><span class="p">,</span>
+                <span class="s2">&quot;short&quot;</span><span class="p">:</span> <span class="n">fields_short</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span>
         <span class="n">url</span><span class="o">=</span><span class="n">webhook_url</span><span class="p">,</span>
-        <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
-            <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">text</span><span class="p">,</span>
-            <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
-            <span class="s2">&quot;icon_url&quot;</span><span class="p">:</span> <span class="n">icon_url</span><span class="p">,</span>
-            <span class="s2">&quot;icon_emoji&quot;</span><span class="p">:</span> <span class="n">icon_emoji</span><span class="p">,</span>
-            <span class="s2">&quot;attachments&quot;</span><span class="p">:</span> <span class="p">[{</span>
-                <span class="s2">&quot;fallback&quot;</span><span class="p">:</span> <span class="n">fallback</span><span class="p">,</span>
-                <span class="s2">&quot;pretext&quot;</span><span class="p">:</span> <span class="n">pretext</span><span class="p">,</span>
-                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">attachment_text</span><span class="p">,</span>
-                <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">color</span><span class="p">,</span>
-                <span class="s2">&quot;fields&quot;</span><span class="p">:</span> <span class="n">fields</span><span class="p">,</span>
-            <span class="p">}]</span>
-        <span class="p">})</span>
+        <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">text</span><span class="p">,</span>
+                <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+                <span class="s2">&quot;icon_url&quot;</span><span class="p">:</span> <span class="n">icon_url</span><span class="p">,</span>
+                <span class="s2">&quot;icon_emoji&quot;</span><span class="p">:</span> <span class="n">icon_emoji</span><span class="p">,</span>
+                <span class="s2">&quot;attachments&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;fallback&quot;</span><span class="p">:</span> <span class="n">fallback</span><span class="p">,</span>
+                        <span class="s2">&quot;pretext&quot;</span><span class="p">:</span> <span class="n">pretext</span><span class="p">,</span>
+                        <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">attachment_text</span><span class="p">,</span>
+                        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="n">color</span><span class="p">,</span>
+                        <span class="s2">&quot;fields&quot;</span><span class="p">:</span> <span class="n">fields</span><span class="p">,</span>
+                    <span class="p">}</span>
+                <span class="p">],</span>
+            <span class="p">}</span>
+        <span class="p">),</span>
     <span class="p">)</span></div>
 </pre></div>
 

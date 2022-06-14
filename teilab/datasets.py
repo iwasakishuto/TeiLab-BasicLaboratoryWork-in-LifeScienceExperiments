@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 """This module handles Datasets used in the lecture. The table below describes the meaning of the values in each column of the data used in the lecture. If you want to refer each class or method, click :py:class:`HERE <teilab.datasets.Samples>` to skip it.
 
 Reference: `Agilent Feature Extraction 12.0 Reference Guide <https://www.agilent.com/cs/library/usermanuals/public/G4460-90052_FE_RefGuide.pdf>`_
@@ -207,23 +207,24 @@ The BGSubMethod of ``7`` corresponds to "No Background Subtraction method" (see 
         True
 """
 import os
-import requests
+from pathlib import Path
+from typing import Any, List, Optional, Tuple, Union
+
 import numpy as np
 import pandas as pd
-from tabulate import tabulate
-
-from pathlib import Path
-from typing import List,Union,Optional,Any
+import requests
 from nptyping import NDArray
+from tabulate import tabulate
 
 from .utils._config import GAS_WEBAPP_URL
 from .utils._path import DATA_DIR, SAMPLE_LIST_PATH
 from .utils.download_utils import decide_downloader
 from .utils.generic_utils import verbose2print
 
-class Samples():
+
+class Samples:
     """Utility Sample Class for this lecture.
-    
+
     Attributes:
         _df (pd.DataFrame)                     : Sample information described in text file at ``sample_list_path`` .
         SampleNumber (NDArray[Any,str])        : Index numbers for each sample.
@@ -239,34 +240,38 @@ class Samples():
         >>> print(sorted(samples.__dict__.keys()))
         ['Condition', 'FileName', 'SampleNumber', '_df', '_group_names', '_group_numbers']
     """
-    def __init__(self, sample_list_path:str):
+
+    def __init__(self, sample_list_path: str):
         self._df = pd.read_csv(sample_list_path)
         for col in self._df.columns:
             setattr(self, col, self._df[col].values)
         self.grouping()
-    
+
     def grouping(self) -> None:
         """Grouping the samples based on their filenames."""
-        group_names:List[str] = []
-        group_numbers:List[int] = []
+        group_names: List[str] = []
+        group_numbers: List[int] = []
         for fn in self.FileName:
-            gn:str = "_".join(fn.split("_")[:-3])
+            gn: str = "_".join(fn.split("_")[:-3])
             if gn not in group_names:
                 group_names.append(gn)
             group_numbers.append(group_names.index(gn))
-        self._group_names:NDArray[Any,str] = np.asarray(group_names)
-        self._group_numbers:NDArray[Any,np.uint8] = np.asarray(group_numbers, dtype=np.uint8)
+        self._group_names: NDArray[Any, str] = np.asarray(group_names)
+        self._group_numbers: NDArray[Any, np.uint8] = np.asarray(group_numbers, dtype=np.uint8)
 
     @property
     def groups(self):
-        return [[i,cnd,gn,self._group_names[gn],fn] for i,(gn,fn,cnd) in enumerate(zip(self._group_numbers,self.FileName, self.Condition))]
+        return [
+            [i, cnd, gn, self._group_names[gn], fn]
+            for i, (gn, fn, cnd) in enumerate(zip(self._group_numbers, self.FileName, self.Condition))
+        ]
 
-    def show_groups(self, tablefmt:str="simple") -> None:
+    def show_groups(self, tablefmt: str = "simple") -> None:
         """Show groups neatly.
 
         Args:
             tablefmt (str, optional) : Table formats. Please choose from [``"plain"``, ``"simple"``, ``"grid"``, ``"pipe"``, ``"orgtbl"``, ``"rst"``, ``"mediawiki"``, ``"latex"``, ``"latex_raw"``, ``"latex_booktabs"``, ``"latex_longtable"``, ``"tsv"``] . Defaults to ``"simple"``.
-        
+
         Examples:
             >>> from teilab.datasets import Samples
             >>> from teilab.utils._path import SAMPLE_LIST_PATH
@@ -280,9 +285,15 @@ class Samples():
                11     1  US91503671_253949442637_S01_GE1_105    US91503671_253949442637_S01_GE1_105_Dec08_1_4.txt
                12     1  US91503671_253949442637_S01_GE1_105    US91503671_253949442637_S01_GE1_105_Dec08_2_2.txt
         """
-        print(tabulate(tabular_data=self.groups, tablefmt=tablefmt, headers=["idx","Condition","gn","GroupName","FileName"]))
+        print(
+            tabulate(
+                tabular_data=self.groups,
+                tablefmt=tablefmt,
+                headers=["idx", "Condition", "gn", "GroupName", "FileName"],
+            )
+        )
 
-    def get_group_numbers(self, group_no:Optional[int]=None, group_name:Optional[str]=None) -> List[int]:
+    def get_group_numbers(self, group_no: Optional[int] = None, group_name: Optional[str] = None) -> List[int]:
         """Get the specified group index List.
 
         Args:
@@ -307,9 +318,10 @@ class Samples():
         """
         if group_name is not None:
             group_no = self._group_names.index(group_name)
-        return [i for i,gn in enumerate(self._group_numbers) if gn==group_no]
+        return [i for i, gn in enumerate(self._group_numbers) if gn == group_no]
 
-class TeiLabDataSets():
+
+class TeiLabDataSets:
     """Utility Datasets Class for this lecture.
 
     Args:
@@ -318,7 +330,7 @@ class TeiLabDataSets():
     Attributes:
         verbose (bool)   : Whether print verbose or not. Defaults to ``True``.
         print (callable) : Print function.
-        sample (Samples) : Datasts Samples. 
+        sample (Samples) : Datasts Samples.
         root (Path)      : Root Directory for Datasets. ( ``DATA_DIR`` )
 
     Examples:
@@ -332,23 +344,31 @@ class TeiLabDataSets():
         >>> datasets.satisfied
         True
     """
-    TARGET_GeneName:str = "VIM"             #: TARGET_GeneName (str) ``GeneName`` of the target RNA (vimentin)
-    TARGET_SystematicName:str = "NM_003380" #: TARGET_SystematicName (str) ``SystematicName`` of the target RNA (vimentin)
-    ANNO_COLNAMES:List[str] = ["FeatureNum","ProbeName","SystematicName"] #: ANNO_COLNAMES (List[str]) Column names for annotation.
-    TARGET_COLNAME:str = "gProcessedSignal"                               #: TARGET_COLNAME (str) Column name for expression data.
-    def __init__(self, verbose:bool=True):
+
+    TARGET_GeneName: str = "VIM"  #: TARGET_GeneName (str) ``GeneName`` of the target RNA (vimentin)
+    TARGET_SystematicName: str = (
+        "NM_003380"  #: TARGET_SystematicName (str) ``SystematicName`` of the target RNA (vimentin)
+    )
+    ANNO_COLNAMES: List[str] = [
+        "FeatureNum",
+        "ProbeName",
+        "SystematicName",
+    ]  #: ANNO_COLNAMES (List[str]) Column names for annotation.
+    TARGET_COLNAME: str = "gProcessedSignal"  #: TARGET_COLNAME (str) Column name for expression data.
+
+    def __init__(self, verbose: bool = True):
         self.verbose = verbose
-        self.print:callable = verbose2print(verbose=verbose)
+        self.print: callable = verbose2print(verbose=verbose)
         self.init()
 
     def init(self):
         """Initialization"""
-        self.samples:Samples = Samples(SAMPLE_LIST_PATH)
-        self.root:Path = Path(DATA_DIR)
+        self.samples: Samples = Samples(SAMPLE_LIST_PATH)
+        self.root: Path = Path(DATA_DIR)
         if not self.satisfied:
             self.print(f"There are not enough datasets. Use ``.get_data`` to prepare all the required datasets.")
-    
-    def get_data(self, password:str) -> str:
+
+    def get_data(self, password: str) -> str:
         """Get data which is necessary for this lecture.
 
         Args:
@@ -395,7 +415,7 @@ class TeiLabDataSets():
             function doPost(e) {
               var password = e.parameter.password;
               var response = {
-                message  : "Invalid Password", 
+                message  : "Invalid Password",
                 dataURL  : "",
                 password : password
               };
@@ -415,7 +435,7 @@ class TeiLabDataSets():
         You can also get the data with the command like ``curl`` .
 
         .. code-block:: shell
-        
+
             $ curl -L <GAS_WEBAPP_URL> \\
                    -d password=<PASSWORD> \\
                    -H "Content-Type: application/x-www-form-urlencoded"
@@ -426,12 +446,14 @@ class TeiLabDataSets():
         data = ret.json()
         dataURL = data.get("dataURL", "")
         message = data.get("message", "")
-        if len(dataURL)==0:
+        if len(dataURL) == 0:
             self.print(f"Could not get the valid URL.\n{message}")
         else:
             self.print(f"Try to get data from {dataURL}\n{message}")
             downloader = decide_downloader(url=dataURL)
-            ret = downloader.prepare_for_download(url=dataURL, basename=password, dirname=DATA_DIR, path=None, verbose=False)
+            ret: Tuple[str, str] = downloader.prepare_for_download(
+                url=dataURL, basename=password, dirname=DATA_DIR, path=None, verbose=False
+            )
             path = ret[1]
             if os.path.exists(path):
                 self.print(f"Data already exists, so do nothing here.")
@@ -443,7 +465,7 @@ class TeiLabDataSets():
         self.samples.grouping()
         return path
 
-    def get_filePaths(self) -> NDArray[Any,Path]:
+    def get_filePaths(self) -> NDArray[Any, Path]:
         """Get the path list of files used in the lecture.
 
         Returns:
@@ -459,10 +481,15 @@ class TeiLabDataSets():
             'US91503671_253949442637_S01_GE1_105_Dec08_1_1.txt'
         """
         fnLists = self.samples.FileName.tolist()
-        return np.asarray(sorted([path for path in self.root.glob("**/*.txt") if path.name in fnLists], key=lambda x:fnLists.index(x.name)))
+        return np.asarray(
+            sorted(
+                [path for path in self.root.glob("**/*.txt") if path.name in fnLists],
+                key=lambda x: fnLists.index(x.name),
+            )
+        )
 
     @property
-    def filePaths(self) -> NDArray[Any,Path]:
+    def filePaths(self) -> NDArray[Any, Path]:
         """The path lists for datasets."""
         return self.get_filePaths()
 
@@ -471,7 +498,15 @@ class TeiLabDataSets():
         """Whether to get all necessary data or not."""
         return len(self.filePaths) == len(self.samples.FileName)
 
-    def read(self, no:Union[int,str,List[int]], sep:Optional[str]="\t", header:Union[int,List[int]]="infer", nrows:Optional[int]=None, usecols:Optional[Union[List[str],callable]]=None, **kwargs) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    def read(
+        self,
+        no: Union[int, str, List[int]],
+        sep: Optional[str] = "\t",
+        header: Union[int, List[int]] = "infer",
+        nrows: Optional[int] = None,
+        usecols: Optional[Union[List[str], callable]] = None,
+        **kwargs,
+    ) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """Read sample(s) data as ``pd.DataFrame``
 
         Args:
@@ -497,19 +532,19 @@ class TeiLabDataSets():
             >>> type(dfs[0])
             pandas.core.frame.DataFrame
         """
-        kwargs.update({"sep":sep, "header":header, "nrows":nrows,"usecols":usecols})
+        kwargs.update({"sep": sep, "header": header, "nrows": nrows, "usecols": usecols})
         if isinstance(no, list):
             return [self._read_csv(no=n, **kwargs) for n in no]
         elif isinstance(no, str):
-            if no=="all":
+            if no == "all":
                 return [self._read_csv(no=n, **kwargs) for n in range(len(self.filePaths))]
             else:
                 raise TypeError("Please specify the sample number.")
         else:
             return self._read_csv(no=no, **kwargs)
 
-    def _read_csv(self, no:int, **kwargs) -> pd.DataFrame:
-        """Read the sample as ``pd.DataFrame``        
+    def _read_csv(self, no: int, **kwargs) -> pd.DataFrame:
+        """Read the sample as ``pd.DataFrame``
 
         Args:
             no (int)      : Target sample number.
@@ -531,7 +566,7 @@ class TeiLabDataSets():
         self.print(f"Read data from '{filepath.relative_to(self.root)}'")
         return pd.read_csv(filepath_or_buffer=filepath, **kwargs)
 
-    def read_data(self, no:Union[int,str,List[int]], **kwargs) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    def read_data(self, no: Union[int, str, List[int]], **kwargs) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """Read sample(s) 'expression' data as ``pd.DataFrame``
 
         Args:
@@ -551,7 +586,7 @@ class TeiLabDataSets():
         """
         return self.read(no=no, header=9, **kwargs)
 
-    def read_meta(self, no:Union[int,str,List[int]], **kwargs) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    def read_meta(self, no: Union[int, str, List[int]], **kwargs) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """Read sample(s) 'meta' data as ``pd.DataFrame``
 
         Args:
@@ -571,7 +606,7 @@ class TeiLabDataSets():
         """
         return self.read(no=no, header=1, nrows=1, **kwargs)
 
-    def read_summary(self, no:Union[int,str,List[int]], **kwargs) -> Union[pd.DataFrame, List[pd.DataFrame]]:
+    def read_summary(self, no: Union[int, str, List[int]], **kwargs) -> Union[pd.DataFrame, List[pd.DataFrame]]:
         """Read sample(s) 'summary' data as ``pd.DataFrame``
 
         Args:
@@ -592,7 +627,7 @@ class TeiLabDataSets():
         return self.read(no=no, header=5, nrows=1, **kwargs)
 
     @staticmethod
-    def reliable_filter(df:pd.DataFrame, name:Optional[str]=None) -> pd.DataFrame:
+    def reliable_filter(df: pd.DataFrame, name: Optional[str] = None) -> pd.DataFrame:
         """Create a dataframe which means whether data is reliable or not.
 
         Args:
@@ -613,10 +648,10 @@ class TeiLabDataSets():
             >>> len(df_us), datasets.reliable_filter(df_us).sum().values[0]
             (62976, 23434)
         """
-        control   = df.ControlType      == 0
-        present   = df.gIsPosAndSignif  == 1
-        uniform   = df.gIsFeatNonUnifOL == 0
-        wellabove = df.gIsWellAboveBG   == 1
-        saturated = df.gIsSaturated     == 0
-        popnol    = df.gIsFeatPopnOL    == 0
+        control = df.ControlType == 0
+        present = df.gIsPosAndSignif == 1
+        uniform = df.gIsFeatNonUnifOL == 0
+        wellabove = df.gIsWellAboveBG == 1
+        saturated = df.gIsSaturated == 0
+        popnol = df.gIsFeatPopnOL == 0
         return df[(control & present & uniform & wellabove & saturated & popnol)].index

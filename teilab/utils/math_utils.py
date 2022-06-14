@@ -1,11 +1,12 @@
-#coding: utf-8
-import numpy as np
-
-from typing import Any,Optional,Dict,List,Tuple
-from nptyping import NDArray
+# coding: utf-8
 from numbers import Number
+from typing import Any, Dict, List, Optional, Tuple
 
-def assign_rank(arr:NDArray[Any,Number], method:str="average") -> NDArray[Any,float]:
+import numpy as np
+from nptyping import NDArray
+
+
+def assign_rank(arr: NDArray[Any, Number], method: str = "average") -> NDArray[Any, float]:
     """Assign rank to data, dealing with ties appropriately.
 
     Args:
@@ -26,7 +27,7 @@ def assign_rank(arr:NDArray[Any,Number], method:str="average") -> NDArray[Any,fl
     | ``"dense"``   | Like ``"min"``, but the rank of the next highest element is assigned the rank immediately after those assigned to the tied elements. |
     +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
     | ``"ordinal"`` | All values are given a distinct rank, corresponding to the order that the values occur in ``arr``                                    |
-    +---------------+--------------------------------------------------------------------------------------------------------------------------------------+    
+    +---------------+--------------------------------------------------------------------------------------------------------------------------------------+
 
     Returns:
         NDArray[Any,float]: An array of size equal to the size of ``arr``, containing rank scores.
@@ -50,25 +51,30 @@ def assign_rank(arr:NDArray[Any,Number], method:str="average") -> NDArray[Any,fl
         - :fa:`wikipedia-w` `Ranking <https://en.wikipedia.org/wiki/Ranking>`_
         - `scipy.stats.rankdata(a, method='average') <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.rankdata.html>`_
     """
-    sorter = np.argsort(arr, kind="mergesort" if method=="ordinal" else "quicksort") #: arr[sorter[i]] is i-th ranked values.
+    sorter = np.argsort(
+        arr, kind="mergesort" if method == "ordinal" else "quicksort"
+    )  #: arr[sorter[i]] is i-th ranked values.
     inv = np.empty(sorter.size, dtype=np.intp)
-    inv[sorter] = np.arange(sorter.size, dtype=np.intp) #: inv[i] stores (original) arr[i]'s ranking (0-based index).
+    inv[sorter] = np.arange(sorter.size, dtype=np.intp)  #: inv[i] stores (original) arr[i]'s ranking (0-based index).
     if method == "ordinal":
-        return inv+1 #: 1-based ranking.
-    arr = arr[sorter] #: Sort the input array (arr)
-    obs = np.r_[True, arr[1:] != arr[:-1]].astype(np.intp) #: obs[i] means arr[i]!=a[i-1]
-    dense = obs.cumsum()[inv] #: dense[i] means (original) arr[i]'s ranking within unique values. (1-based index)
+        return inv + 1  #: 1-based ranking.
+    arr = arr[sorter]  #: Sort the input array (arr)
+    obs = np.r_[True, arr[1:] != arr[:-1]].astype(np.intp)  #: obs[i] means arr[i]!=a[i-1]
+    dense = obs.cumsum()[inv]  #: dense[i] means (original) arr[i]'s ranking within unique values. (1-based index)
     if method == "dense":
         return dense
-    count = np.r_[np.nonzero(obs)[0], len(obs)] # count[i] means the cumulative counts of unique values under i-th rank's unique value.
+    count = np.r_[
+        np.nonzero(obs)[0], len(obs)
+    ]  # count[i] means the cumulative counts of unique values under i-th rank's unique value.
     if method == "max":
         return count[dense]
     if method == "min":
-        return count[dense-1] + 1
+        return count[dense - 1] + 1
     # average method
-    return .5 * (count[dense] + count[dense-1] + 1)
+    return 0.5 * (count[dense] + count[dense - 1] + 1)
 
-def tiecorrect(ranks:NDArray[Any,Number]) -> float:
+
+def tiecorrect(ranks: NDArray[Any, Number]) -> float:
     """Tie correction factor for Mann-Whitney U and Kruskal-Wallis H tests.
 
     Args:
@@ -92,13 +98,14 @@ def tiecorrect(ranks:NDArray[Any,Number]) -> float:
         - :fa:`home` `Nonparametric Statistics for the Behavioral Sciences. <https://www.amazon.co.jp/-/en/Sidney-Siegel/dp/0070573484>`_
         - `scipy.stats.tiecorrect(rankvals) <https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.tiecorrect.html>`_
     """
-    arr  = np.sort(ranks)
-    idx  = np.nonzero(np.r_[True, arr[1:] != arr[:-1], True])[0]
-    cnt  = np.diff(idx).astype(np.float64)
+    arr = np.sort(ranks)
+    idx = np.nonzero(np.r_[True, arr[1:] != arr[:-1], True])[0]
+    cnt = np.diff(idx).astype(np.float64)
     size = np.float64(arr.size)
-    return 1.0 if size<2 else 1.0-(cnt**3-cnt).sum() / (size**3-size)
+    return 1.0 if size < 2 else 1.0 - (cnt ** 3 - cnt).sum() / (size ** 3 - size)
 
-def optimize_linear(X:NDArray[Any,Number], Y:NDArray[Any,Number]) -> Tuple[float,float,callable]:
+
+def optimize_linear(X: NDArray[Any, Number], Y: NDArray[Any, Number]) -> Tuple[float, float, callable]:
     r"""Optimize linear function using least-squares method.
 
     .. math::
@@ -115,6 +122,6 @@ def optimize_linear(X:NDArray[Any,Number], Y:NDArray[Any,Number]) -> Tuple[float
         Tuple[float,float,callable]: Optimal linear functions and their components.
     """
     n = len(X)
-    a = (n*np.sum(X*Y)-np.sum(X)*np.sum(Y) ) / ( n*np.sum(X*X)-np.square(np.sum(X)) )
-    b = (np.sum(X*X)*np.sum(Y)-np.sum(X*Y)*np.sum(X) ) / ( n*np.sum(X*X)-np.square(np.sum(X)))
-    return (a,b,np.vectorize(lambda x:a*x+b))
+    a = (n * np.sum(X * Y) - np.sum(X) * np.sum(Y)) / (n * np.sum(X * X) - np.square(np.sum(X)))
+    b = (np.sum(X * X) * np.sum(Y) - np.sum(X * Y) * np.sum(X)) / (n * np.sum(X * X) - np.square(np.sum(X)))
+    return (a, b, np.vectorize(lambda x: a * x + b))

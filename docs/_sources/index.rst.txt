@@ -7,12 +7,11 @@
 Welcome to UiTei-Lab!!
 ######################
 
-.. figure:: https://camo.githubusercontent.com/207bfad0a9138764bcfb51e04353f209de425aaf201648b706936e255b749dd6/687474703a2f2f75692d7465692e726e61692e6a702f6173736574732f696d616765732f746f702d3230303830372e6a7067
+.. figure:: http://ui-tei.rnai.jp/assets/images/top_211021_gifversion2.gif
    :alt: Members-in-UiTei-Laboratory
    :target: http://ui-tei.rnai.jp/
 
-|GitHub version| |Install This Package| |license| |実習wiki| |程研HP| |Documentation| |twitter badge| |Open in Colab 1st| |Open in Colab 2nd| 
-
+|GitHub version| |Install This Package| |GitHub repo size| |license| |実習wiki| |程研HP| |Documentation| |twitter badge| |Open in Colab 1st| |Open in Colab 2nd|
 
 *************************************************
 Basic Laboratory Work in Life Science Experiments
@@ -38,7 +37,7 @@ You can install this package with the following command etc.
 
    $ pip install "git+https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.git"
 
-This package is for facilitating the lecture, so it contains many utility functions, such as data handling and anonymous questions. 
+This package is for facilitating the lecture, so it contains many utility functions, such as data handling and anonymous questions.
 
 However, it also contains functions to easily plot **MAplot** and **XYplot** . If you want to know how to use those plotting functions, please refer to the followings.
 
@@ -62,7 +61,7 @@ Package Contents
 Installation
 ************
 
-I recommend you to use `Pyenv <https://github.com/pyenv/pyenv#installation>`__ and `Poetry <https://github.com/python-poetry/poetry#installation>`__ to set up the required environment. 
+I recommend you to use `Pyenv <https://github.com/pyenv/pyenv#installation>`__ and `Poetry <https://github.com/python-poetry/poetry#installation>`__ to set up the required environment.
 
 .. code:: sh
 
@@ -87,6 +86,7 @@ Indices and tables
    :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments
 .. |Install This Package| image:: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/workflows/Install%20This%20Package/badge.svg
    :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/.github/workflows/install_this_package.yml
+.. |GitHub repo size| image::https://img.shields.io/github/repo-size/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments
 .. |license| image:: https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000
    :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/LICENSE
 .. |実習wiki| image:: https://img.shields.io/badge/website-wiki-9ecca4

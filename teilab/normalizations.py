@@ -1,4 +1,4 @@
-#coding: utf-8
+# coding: utf-8
 """This submodule contains various functions and classes that are useful for normalization.
 
 ############
@@ -77,7 +77,7 @@ Defined as :func:`percentile <teilab.normalizations.percentile>` in this package
 
 Quantile Normalization is a technique for making all distributions identical in statistical properties. It was introduced as **"quantile standardization"** (in :fa:`file-pdf-o` `Analysis of Data from Viral DNA Microchips <https://doi.org/10.1198%2F016214501753381814>`_ ) and then renamed as **"quantile normalization"** (in :fa:`file-pdf-o` `A comparison of normalization methods for high density oligonucleotide array data based on variance and bias <https://doi.org/10.1093%2Fbioinformatics%2F19.2.185>`_ )
 
-To quantile normalize the all distributions, 
+To quantile normalize the all distributions,
 
 1. Sort each distribution.
 2. Average the data in the same rank.
@@ -107,17 +107,17 @@ https://github.com/scipy/scipy/blob/v1.6.3/scipy/signal/signaltools.py#L3384-L34
 Python Objects
 ##############
 """
+from numbers import Number
+from typing import Any
+
 import numpy as np
+from nptyping import NDArray
+from pandas.core.generic import NDFrame
 from scipy.stats.mstats import gmean
 from tqdm import tqdm
 
-from typing import Any
-from nptyping import NDArray
-from pandas.core.generic import NDFrame
-from numbers import Number
 
-
-def percentile(data:NDArray[(Any,Any),Number], percent:Number=75) -> NDArray[(Any,Any),Number]:
+def percentile(data: NDArray[(Any, Any), Number], percent: Number = 75) -> NDArray[(Any, Any), Number]:
     """Perform Percentile Normalization.
 
     Args:
@@ -140,22 +140,26 @@ def percentile(data:NDArray[(Any,Any),Number], percent:Number=75) -> NDArray[(An
         >>> fig, axes = plt.subplots(ncols=2, nrows=1, figsize=(12,4))
         >>> ax = densityplot(data=data, title="Before Percentile", ax=axes[0])
         >>> ax = densityplot(data=data_percentiled, title="After Percentile", ax=axes[1])
-    
+
     +--------------------------------------------------+
     |                      Results                     |
     +==================================================+
     | .. image:: _images/normalizations.percentile.jpg |
     |    :class: popup-img                             |
     +--------------------------------------------------+
-    """    
+    """
     a = np.percentile(a=data, q=percent, axis=1)
-    if np.any(a<0):
-        for i,val in enumerate(a):
-            if val<0: break
-        raise ValueError(f"Geometric mean cannot be calculated because the {percent}%tiles contain negative values (ex. {i}-th data's {percent}%tile = {val} < 0) ")
-    return data * np.expand_dims(gmean(a)/a, axis=1)
+    if np.any(a < 0):
+        for i, val in enumerate(a):
+            if val < 0:
+                break
+        raise ValueError(
+            f"Geometric mean cannot be calculated because the {percent}%tiles contain negative values (ex. {i}-th data's {percent}%tile = {val} < 0) "
+        )
+    return data * np.expand_dims(gmean(a) / a, axis=1)
 
-def quantile(data:NDArray[(Any,Any),Number]) -> NDArray[(Any,Any),Number]:
+
+def quantile(data: NDArray[(Any, Any), Number]) -> NDArray[(Any, Any), Number]:
     """Perform Quantile Normalization.
 
     Args:
@@ -185,15 +189,20 @@ def quantile(data:NDArray[(Any,Any),Number]) -> NDArray[(Any,Any),Number]:
     |    :class: popup-img                           |
     +------------------------------------------------+
     """
-    if np.any(data<0):
+    if np.any(data < 0):
         for i in range(data.shape[0]):
             for j in range(data.shape[1]):
-                if data[i,j] < 0:
+                if data[i, j] < 0:
                     break
-        raise ValueError(f"Geometric mean cannot be calculated because ``data`` contain negative values. (ex. data[{i}][{j}] = {data[i,j]} < 0)")
+        raise ValueError(
+            f"Geometric mean cannot be calculated because ``data`` contain negative values. (ex. data[{i}][{j}] = {data[i,j]} < 0)"
+        )
     return gmean(a=np.sort(a=data, axis=1), axis=0)[np.argsort(np.argsort(data, axis=1), axis=1)]
 
-def median_polish(data:NDArray[(Any,Any),Number], labels:NDArray[(Any),Any], rtol:float=1e-05, atol:float=1e-08) -> NDArray[(Any,Any),Number]:
+
+def median_polish(
+    data: NDArray[(Any, Any), Number], labels: NDArray[(Any), Any], rtol: float = 1e-05, atol: float = 1e-08
+) -> NDArray[(Any, Any), Number]:
     """Median Polish
 
     Args:
@@ -233,20 +242,23 @@ def median_polish(data:NDArray[(Any,Any),Number], labels:NDArray[(Any),Any], rto
     if n_features != len(labels):
         raise TypeError(f"data.shape[1] must be the same as len(labels), but got {n_features}!={len(labels)}")
     for label in tqdm(np.unique(labels), desc="median polish"):
-        ith_data = data[:,labels==label]
-        if len(ith_data)>1:
+        ith_data = data[:, labels == label]
+        if len(ith_data) > 1:
             ith_data_original = ith_data.copy()
-            while True:    
+            while True:
                 feature_median = np.median(ith_data, axis=0)
-                ith_data = ith_data - feature_median[None,:]
+                ith_data = ith_data - feature_median[None, :]
                 sample_median = np.median(ith_data, axis=1)
-                ith_data = ith_data - sample_median[:,None]
-                if np.allclose(a=feature_median, b=0, atol=atol, rtol=rtol) and np.allclose(a=sample_median, b=0, atol=atol, rtol=rtol):
+                ith_data = ith_data - sample_median[:, None]
+                if np.allclose(a=feature_median, b=0, atol=atol, rtol=rtol) and np.allclose(
+                    a=sample_median, b=0, atol=atol, rtol=rtol
+                ):
                     break
-            data[:,labels==label] = ith_data_original - ith_data
+            data[:, labels == label] = ith_data_original - ith_data
     return data
 
-def median_polish_group_wise(data:NDFrame, rtol:float=1e-05, atol:float=1e-08) -> NDFrame:
+
+def median_polish_group_wise(data: NDFrame, rtol: float = 1e-05, atol: float = 1e-08) -> NDFrame:
     """Apply Median polish group-wise.
 
     Args:
@@ -276,9 +288,11 @@ def median_polish_group_wise(data:NDFrame, rtol:float=1e-05, atol:float=1e-08) -
     data_original = data.copy()
     while True:
         sample_median = np.median(data, axis=1)
-        data = data - sample_median[:,None]
+        data = data - sample_median[:, None]
         feature_median = np.median(data, axis=0)
-        data = data - feature_median[None,:]
-        if np.allclose(a=feature_median, b=0, atol=atol, rtol=rtol) and np.allclose(a=sample_median, b=0, atol=atol, rtol=rtol):
+        data = data - feature_median[None, :]
+        if np.allclose(a=feature_median, b=0, atol=atol, rtol=rtol) and np.allclose(
+            a=sample_median, b=0, atol=atol, rtol=rtol
+        ):
             break
     return data_original - data

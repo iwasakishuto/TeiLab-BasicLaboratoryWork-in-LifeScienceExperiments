@@ -1,18 +1,26 @@
-#coding: utf-8
+# coding: utf-8
 import json
-import requests
 from typing import Optional
 
-from .utils._config import SLACK_WEBHOOK_URL
-from .utils._config import GAS_WEBAPP_URL
+import requests
 
-def ask(text:str, 
-        username:Optional[str]=None, 
-        icon_url:Optional[str]=None, icon_emoji:Optional[str]=None, 
-        fallback:Optional[str]=None, pretext:Optional[str]=None, 
-        attachment_text:Optional[str]=None, color:str="good",
-        fields_title:str="", fields_value:str="", fields_short:bool=True, 
-        webhook_url:Optional[str]=None) -> requests.Response:
+from .utils._config import GAS_WEBAPP_URL, SLACK_WEBHOOK_URL
+
+
+def ask(
+    text: str,
+    username: Optional[str] = None,
+    icon_url: Optional[str] = None,
+    icon_emoji: Optional[str] = None,
+    fallback: Optional[str] = None,
+    pretext: Optional[str] = None,
+    attachment_text: Optional[str] = None,
+    color: str = "good",
+    fields_title: str = "",
+    fields_value: str = "",
+    fields_short: bool = True,
+    webhook_url: Optional[str] = None,
+) -> requests.Response:
     """Send a question anonymously to Author's Slack using `Incoming Webhook <https://slack.com/help/articles/115005265063-Incoming-webhooks-for-Slack>`_
 
     Args:
@@ -41,26 +49,32 @@ def ask(text:str,
         webhook_url = ret.json()["dataURL"]
 
     fields = []
-    if (len(fields_title)+len(fields_value))>0:
-        fields.append({
-            "title": fields_title,
-            "value": fields_value,
-            "short": fields_short,            
-        })
+    if (len(fields_title) + len(fields_value)) > 0:
+        fields.append(
+            {
+                "title": fields_title,
+                "value": fields_value,
+                "short": fields_short,
+            }
+        )
 
     return requests.post(
         url=webhook_url,
-        data=json.dumps({
-            "text": text,
-            "username": username,
-            "icon_url": icon_url,
-            "icon_emoji": icon_emoji,
-            "attachments": [{
-                "fallback": fallback,
-                "pretext": pretext,
-                "text": attachment_text,
-                "color": color,
-                "fields": fields,
-            }]
-        })
+        data=json.dumps(
+            {
+                "text": text,
+                "username": username,
+                "icon_url": icon_url,
+                "icon_emoji": icon_emoji,
+                "attachments": [
+                    {
+                        "fallback": fallback,
+                        "pretext": pretext,
+                        "text": attachment_text,
+                        "color": color,
+                        "fields": fields,
+                    }
+                ],
+            }
+        ),
     )

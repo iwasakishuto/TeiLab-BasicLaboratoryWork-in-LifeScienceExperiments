@@ -1,14 +1,15 @@
-#coding: utf-8
+# coding: utf-8
+import datetime
 import os
 import sys
 import time
-import datetime
-from typing import Tuple,Callable,Optional,Dict,Any,List
 from numbers import Number
+from typing import Any, Callable, Dict, List, Optional, Tuple
 
 from ._exceptions import KeyError
 
-def now_str(tz:Optional[datetime.timezone]=None, fmt:str="%Y-%m-%d@%H.%M.%S") -> str:
+
+def now_str(tz: Optional[datetime.timezone] = None, fmt: str = "%Y-%m-%d@%H.%M.%S") -> str:
     """Returns new datetime string representing current time local to tz under the control of an explicit format string.
 
     Args:
@@ -29,7 +30,8 @@ def now_str(tz:Optional[datetime.timezone]=None, fmt:str="%Y-%m-%d@%H.%M.%S") ->
     """
     return datetime.datetime.now(tz=tz).strftime(fmt)
 
-def readable_bytes(byte:Number) -> Tuple[Number,str]:
+
+def readable_bytes(byte: Number) -> Tuple[Number, str]:
     """Unit conversion for readability.
 
     Args:
@@ -52,15 +54,18 @@ def readable_bytes(byte:Number) -> Tuple[Number,str]:
         1e+25[B] = 8.27[YB]
         1e+28[B] = 8271.81[YB]
     """
-    units = ["","K","M","G","T","P","E","Z","Y"]
+    units = ["", "K", "M", "G", "T", "P", "E", "Z", "Y"]
     for unit in units:
-        if (abs(byte)<1024.0) or (unit==units[-1]):
+        if (abs(byte) < 1024.0) or (unit == units[-1]):
             break
-        byte /= 1024.0 # size >> 10
-    return (byte, unit+"B")
+        byte /= 1024.0  # size >> 10
+    return (byte, unit + "B")
 
-def progress_reporthook_create(filename:str="", bar_width:int=20, verbose:bool=True) -> Callable[[int,int,int], None]:
-    """Create a progress reporthook for ``urllib.request.urlretrieve``        
+
+def progress_reporthook_create(
+    filename: str = "", bar_width: int = 20, verbose: bool = True
+) -> Callable[[int, int, int], None]:
+    """Create a progress reporthook for ``urllib.request.urlretrieve``
 
     Args:
         filename (str, optional)  : Downloading filename.. Defaults to ``""``.
@@ -76,7 +81,8 @@ def progress_reporthook_create(filename:str="", bar_width:int=20, verbose:bool=T
         >>> urllib.request.urlretrieve(url="hoge.zip", filename="hoge.zip", reporthook=progress_reporthook_create(filename="hoge.zip"))
         hoge.zip	1.5%[--------------------] 21.5[s] 8.0[GB/s]	eta 1415.1[s]
     """
-    def progress_reporthook_verbose(block_count:int, block_size:int, total_size:int) -> None:
+
+    def progress_reporthook_verbose(block_count: int, block_size: int, total_size: int) -> None:
         """``reporthook`` to report the current status.
 
         Args:
@@ -88,26 +94,32 @@ def progress_reporthook_create(filename:str="", bar_width:int=20, verbose:bool=T
         if block_count == 0:
             _reporthook_start_time = time.time()
             return
-        progress_size = block_count*block_size
-        percentage = min(1.0, progress_size/total_size)
+        progress_size = block_count * block_size
+        percentage = min(1.0, progress_size / total_size)
         progress_bar = ("#" * int(percentage * bar_width)).ljust(bar_width, "-")
-        
+
         duration = time.time() - _reporthook_start_time
         speed = progress_size / duration
-        eta = (total_size-progress_size)/speed
+        eta = (total_size - progress_size) / speed
 
         speed, speed_unit = readable_bytes(speed)
-        
-        sys.stdout.write(f"\r{filename}\t{percentage:.1%}[{progress_bar}] {duration:.1f}[s] {speed:.1f}[{speed_unit}/s] eta {eta:.1f}[s]")
-        if progress_size >= total_size: print()
-    def progress_reporthook_non_verbose(block_count:int, block_size:int, total_size:int) -> None:
+
+        sys.stdout.write(
+            f"\r{filename}\t{percentage:.1%}[{progress_bar}] {duration:.1f}[s] {speed:.1f}[{speed_unit}/s] eta {eta:.1f}[s]"
+        )
+        if progress_size >= total_size:
+            print()
+
+    def progress_reporthook_non_verbose(block_count: int, block_size: int, total_size: int) -> None:
         """``reporthook`` not to report the current status."""
         pass
+
     return progress_reporthook_verbose if verbose else progress_reporthook_non_verbose
 
-def verbose2print(verbose:bool=True) -> callable:
+
+def verbose2print(verbose: bool = True) -> callable:
     """Create a simple print function based on verbose
-    
+
     Args:
         verbose (bool, optional) : Whether to print or not. Defaults to ``True``.
 
@@ -120,14 +132,15 @@ def verbose2print(verbose:bool=True) -> callable:
         >>> print_non_verbose = verbose2print(verbose=False)
         >>> print_verbose("Hello, world.")
         Hello, world.
-        >>> print_non_verbose("Hello, world.")    
+        >>> print_non_verbose("Hello, world.")
     """
     if verbose:
         return print
     else:
-        return lambda *args,**kwargs: None
+        return lambda *args, **kwargs: None
 
-def dict2str(d:Dict[Any,Any], item_separator:str=", ", key_separator:str="=") -> str:
+
+def dict2str(d: Dict[Any, Any], item_separator: str = ", ", key_separator: str = "=") -> str:
     """Convert a dictionary to string.
 
     Args:
@@ -147,9 +160,10 @@ def dict2str(d:Dict[Any,Any], item_separator:str=", ", key_separator:str="=") ->
         >>> dict2str({"key1":"val", "key2":1}, item_separator="🤔")
         'key1=val🤔key2=1'
     """
-    return str(item_separator).join([f"{k}{key_separator}{v}" for k,v in d.items()])
+    return str(item_separator).join([f"{k}{key_separator}{v}" for k, v in d.items()])
 
-def check_supported(lst:List[Any], **kwargs):
+
+def check_supported(lst: List[Any], **kwargs):
     """Check whether all ``kwargs.values()`` in the ``lst``.
 
     Args:
@@ -168,7 +182,7 @@ def check_supported(lst:List[Any], **kwargs):
     Raise:
         KeyError: If ``kwargs.values()`` not in the ``lst``
     """
-    for k,v in kwargs.items():
+    for k, v in kwargs.items():
         if v not in lst:
-            lst = ', '.join([f"'{e}'" for e in lst])
+            lst = ", ".join([f"'{e}'" for e in lst])
             raise KeyError(f"Please choose the argment '{k}' from [{lst}], but you chose '{v}'")
