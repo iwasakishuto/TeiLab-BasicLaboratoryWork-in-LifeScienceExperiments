@@ -6,15 +6,13 @@
 
 [![GitHub version](https://badge.fury.io/gh/iwasakishuto%2FTeiLab-BasicLaboratoryWork-in-LifeScienceExperiments.svg)](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments)
 [![Install This Package](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/workflows/Install%20This%20Package/badge.svg)](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/.github/workflows/install_this_package.yml)
-
-![GitHub repo size](https://img.shields.io/github/repo-size/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments)
-
+[![GitHub repo size](https://img.shields.io/github/repo-size/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments)](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/LICENSE)
 [![実習wiki](https://img.shields.io/badge/website-wiki-9ecca4)](http://ui-tei.rnai.jp/microarray/doku.php?id=%E7%A8%8B%E7%A0%94%E5%AE%9F%E7%BF%92:2022)
 [![程研HP](https://img.shields.io/badge/website-HP-9ecca4)](http://ui-tei.rnai.jp/)
 [![Documentation](https://img.shields.io/badge/Documentation-portfolio-1f441e?style=flat-radius)](https://iwasakishuto.github.io/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/index.html)
 [![twitter badge](https://img.shields.io/badge/twitter-Ask%20Author-1da1f2?style=flat-radius&logo=twitter)](https://www.twitter.com/messages/compose?recipient_id=1042783905697288193&text=2021年度の生命科学基礎実験を受講しているものですが、)
-[![Open in Colab](https://img.shields.io/badge/1st%20week-open%20in%20Colab-3d80bc?style=flat-radius&logo=google-colab)](https://colab.research.google.com/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Colaboratory/microarray2022S.ipynb)
+[![Open in Colab](https://img.shields.io/badge/2022S-open%20in%20Colab-3d80bc?style=flat-radius&logo=google-colab)](https://colab.research.google.com/github/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/main/notebook/Colaboratory/microarray2022S.ipynb)
 
 ## 講義基本情報
 
