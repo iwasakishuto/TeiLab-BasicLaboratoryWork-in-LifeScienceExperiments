@@ -86,7 +86,7 @@ Indices and tables
    :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments
 .. |Install This Package| image:: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/workflows/Install%20This%20Package/badge.svg
    :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/.github/workflows/install_this_package.yml
-.. |GitHub repo size| image::https://img.shields.io/github/repo-size/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments
+.. |GitHub repo size| image:: https://img.shields.io/github/repo-size/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments
    :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments
 .. |license| image:: https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000
    :target: https://github.com/iwasakishuto/TeiLab-BasicLaboratoryWork-in-LifeScienceExperiments/blob/master/LICENSE
