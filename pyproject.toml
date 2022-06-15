@@ -18,7 +18,7 @@ nptyping = "^1.4.2"
 tabulate = "^0.8.9"
 gseapy = "^0.10.4"
 Pillow = "^9.1.1"
-numpy = "^1.22.4"
+numpy = "1.20.3"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"
