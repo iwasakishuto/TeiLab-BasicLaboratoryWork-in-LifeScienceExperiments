@@ -283,6 +283,11 @@ ul.social a.sc-slideshare {
   background-color: #3980ae;
   color: white;
 }
+div.sidebarlogo ul.social a.youtube-play,
+ul.social a.youtube-play {
+  background-color: #9b252f;
+  color: white;
+}
 div.sidebarlogo ul.social a.sc-github,
 ul.social a.sc-github-alt {
   background-color: #111010;
